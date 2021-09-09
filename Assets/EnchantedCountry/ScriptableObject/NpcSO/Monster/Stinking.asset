@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c60b08c8e169e44ada7857ff78790c, type: 3}
+  m_Name: Stinking
+  m_EditorClassIdentifier: 
+  Name: Stinking
+  Alignment: 2
+  NpcType: 3
+  ClassOfArmor: 7
+  LifeDice: 1
+  RiskPoints: 0
+  Morality: 10
+  _weaponObjects:
+  - {fileID: 11400000, guid: 8f0b738b9804ce94a9af7cd629b4b5e4, type: 2}
+  Experience: 40
+  EscapePossibility: 0100000002000000030000000400000005000000
+  Description: 
+  Property: 
+  Immoral: 0
+  Immortal: 0
+  DeadlyAttack: 0
+  Id: 1230

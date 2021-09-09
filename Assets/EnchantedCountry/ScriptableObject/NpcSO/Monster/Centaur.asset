@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c60b08c8e169e44ada7857ff78790c, type: 3}
+  m_Name: Centaur
+  m_EditorClassIdentifier: 
+  Name: Centaur
+  Alignment: 2
+  NpcType: 3
+  ClassOfArmor: 5
+  LifeDice: 7
+  RiskPoints: 0
+  Morality: 12
+  _weaponObjects:
+  - {fileID: 11400000, guid: f61863f56bc567d4f8e936a57b08ee07, type: 2}
+  - {fileID: 11400000, guid: feb8e2c79af6f86449a1c410f60b2aa5, type: 2}
+  _impactObjects: []
+  Experience: 1000
+  EscapePossibility: 010000000200000003000000
+  Description: 
+  Property: 
+  Immoral: 0
+  Immortal: 0
+  DeadlyAttack: 0
+  AttackEveryAtOnce: 1
+  Id: 1241

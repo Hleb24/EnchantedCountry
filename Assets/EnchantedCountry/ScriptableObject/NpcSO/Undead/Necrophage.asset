@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c60b08c8e169e44ada7857ff78790c, type: 3}
+  m_Name: Necrophage
+  m_EditorClassIdentifier: 
+  Name: Necrophage
+  Alignment: 2
+  NpcType: 7
+  ClassOfArmor: 10
+  LifeDice: 2
+  RiskPoints: 0
+  Morality: 8
+  _weaponObjects:
+  - {fileID: 11400000, guid: e6101c32c4d57104f96bb0e263bd4cc8, type: 2}
+  _impactObjects:
+  - {fileID: 11400000, guid: 1c6c9b8dec81193438ee5e30a7d296df, type: 2}
+  Experience: 30
+  EscapePossibility: 0100000002000000030000000400000005000000
+  Description: 
+  Property: 
+  Immoral: 0
+  Immortal: 0
+  DeadlyAttack: 0
+  Id: 1608

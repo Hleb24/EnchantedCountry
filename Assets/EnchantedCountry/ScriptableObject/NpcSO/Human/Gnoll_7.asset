@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c60b08c8e169e44ada7857ff78790c, type: 3}
+  m_Name: Gnoll_7
+  m_EditorClassIdentifier: 
+  Name: Gnoll_7
+  Alignment: 1
+  NpcType: 5
+  ClassOfArmor: 2
+  LifeDice: 2
+  RiskPoints: 0
+  Morality: 0
+  _weaponObjects:
+  - {fileID: 11400000, guid: fe660d66f5a10e2409cf3b44de511f2e, type: 2}
+  Experience: 180
+  EscapePossibility: 0100000002000000030000000400000005000000
+  Description: 
+  Property: 
+  Immoral: 0
+  Immortal: 0
+  DeadlyAttack: 0
+  Id: 1311

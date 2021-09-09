@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c60b08c8e169e44ada7857ff78790c, type: 3}
+  m_Name: Bargul
+  m_EditorClassIdentifier: 
+  Name: Bargul
+  Alignment: 2
+  NpcType: 2
+  ClassOfArmor: -2
+  LifeDice: 50
+  RiskPoints: 0
+  Morality: 19
+  _weaponObjects: []
+  _impactObjects:
+  - {fileID: 11400000, guid: 5fa1ac04232a65d43bc3b1a14cfdb49e, type: 2}
+  Experience: 2500
+  EscapePossibility: 0100000002000000030000000400000005000000
+  Description: 
+  Property: 
+  Immoral: 1
+  Immortal: 0
+  DeadlyAttack: 0
+  AttackEveryAtOnce: 0
+  Id: 2005

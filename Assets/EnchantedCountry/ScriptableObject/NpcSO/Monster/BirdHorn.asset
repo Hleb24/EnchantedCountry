@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c60b08c8e169e44ada7857ff78790c, type: 3}
+  m_Name: BirdHorn
+  m_EditorClassIdentifier: 
+  Name: BirdHorn
+  Alignment: 2
+  NpcType: 3
+  ClassOfArmor: 1
+  LifeDice: 8
+  RiskPoints: 0
+  Morality: 12
+  _weaponObjects:
+  - {fileID: 11400000, guid: ec86bba0d6af33f43b4eaa1cb6b2b7d3, type: 2}
+  - {fileID: 11400000, guid: 2ca2c070e95db6242b2f0f563452fa51, type: 2}
+  - {fileID: 11400000, guid: be331bfa7510d0e45bb9ff4b2db0fa4a, type: 2}
+  _impactObjects: []
+  Experience: 2800
+  EscapePossibility: 0100000002000000
+  Description: 
+  Property: 
+  Immoral: 0
+  Immortal: 0
+  DeadlyAttack: 0
+  AttackEveryAtOnce: 1
+  Id: 1237

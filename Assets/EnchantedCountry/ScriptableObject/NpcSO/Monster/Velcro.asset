@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c60b08c8e169e44ada7857ff78790c, type: 3}
+  m_Name: Velcro
+  m_EditorClassIdentifier: 
+  Name: Velcro
+  Alignment: 2
+  NpcType: 3
+  ClassOfArmor: 11
+  LifeDice: 0
+  RiskPoints: 1
+  Morality: 8
+  _weaponObjects: []
+  _impactObjects: []
+  Experience: 45
+  EscapePossibility: 
+  Description: 
+  Property: 
+  Immoral: 0
+  Immortal: 0
+  DeadlyAttack: 1
+  Id: 1200

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c60b08c8e169e44ada7857ff78790c, type: 3}
+  m_Name: Hydra
+  m_EditorClassIdentifier: 
+  Name: Hydra
+  Alignment: 2
+  NpcType: 3
+  ClassOfArmor: 6
+  LifeDice: 0
+  RiskPoints: 6
+  Morality: 11
+  _weaponObjects:
+  - {fileID: 11400000, guid: 353637d35ee66fa4e94bdbbab8a34727, type: 2}
+  _impactObjects: []
+  Experience: 650
+  EscapePossibility: 0100000002000000030000000400000005000000
+  Description: 
+  Property: 
+  Immoral: 0
+  Immortal: 0
+  DeadlyAttack: 0
+  AttackEveryAtOnce: 1
+  Id: 1203

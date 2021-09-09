@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e790fb2ca22944aae32ed4bde2981b, type: 3}
+  m_Name: Durgaf_Sword_WSO
+  m_EditorClassIdentifier: 
+  weaponType: 2048
+  weaponName: Durgaf_Sword_WSO
+  minDamage: 2
+  maxDamage: 3
+  damageList:
+  - 2
+  - 3
+  accurancy: 0
+  effectName: 
+  id: 3121

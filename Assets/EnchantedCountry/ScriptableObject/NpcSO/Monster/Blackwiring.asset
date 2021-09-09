@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c60b08c8e169e44ada7857ff78790c, type: 3}
+  m_Name: Blackwiring
+  m_EditorClassIdentifier: 
+  Name: Blackwiring
+  Alignment: 1
+  NpcType: 3
+  ClassOfArmor: 3
+  LifeDice: 3
+  RiskPoints: 0
+  Morality: 12
+  _weaponObjects:
+  - {fileID: 11400000, guid: c83c13dbfb3a5e249b34f6fc842a41ef, type: 2}
+  Experience: 2355
+  EscapePossibility: 0100000002000000
+  Description: 
+  Property: 
+  Immoral: 0
+  Immortal: 0
+  DeadlyAttack: 0
+  Id: 1233
