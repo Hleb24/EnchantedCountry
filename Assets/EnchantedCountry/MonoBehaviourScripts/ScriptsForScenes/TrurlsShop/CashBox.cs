@@ -38,9 +38,9 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 		}
 
 		private void Start() {
-			_walletData = GSSSingleton.Singleton;
+			_walletData = GSSSingleton.Instance;
 			_wallet = new Wallet(_walletData);
-			_equipmentsOfCharacterDataHandler = new EquipmentsOfCharacterDataHandler(GSSSingleton.Singleton);
+			_equipmentsOfCharacterDataHandler = new EquipmentsOfCharacterDataHandler(GSSSingleton.Instance);
 		}
 
 		private void OnEnable() {
@@ -88,7 +88,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 				AddProductToEquipmentCard(_selectedId);
 				BuyProductSuccess?.Invoke();
 				BuyProductSuccessAndCheckPrice?.Invoke(_selectedId);
-				GSSSingleton.Singleton.SaveInGame();
+				GSSSingleton.Instance.SaveInGame();
 			}
 			if (!CanBuyProduct(_walletIn.Wallet.coins, GetPrice(_selectedId))) {
 				DisableInteractableForBuyProductButton();
@@ -96,13 +96,13 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 		}
 		
 		private void OnOpenTrurlsShopCanvas() {
-			_walletData = GSSSingleton.Singleton;
+			_walletData = GSSSingleton.Instance;
 			_wallet = new Wallet(_walletData);
 		}
 		#endregion
 		#region FIRST_OPENING
 		private void RemoveAllEquipmentCardsForFirstTrurlsShopOpening() {
-			if (GSSSingleton.Singleton.IsNewGame) {
+			if (GSSSingleton.Instance.IsNewGame) {
 				_equipment.RemoveAllEquipmentCards();
 			}
 		}
@@ -120,7 +120,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 		private void AddProductToEquipmentCard(int id, int amount = 1) {
 			_equipment.IncreaseQuantityOfProduct(id, amount);
 			_equipmentsOfCharacterDataHandler.IncreaseQuantityOfProduct(id, amount);
-			GSSSingleton.Singleton.SaveInGame();
+			GSSSingleton.Instance.SaveInGame();
 		}
 		#endregion
 		#region TOGGLE_BUTTON

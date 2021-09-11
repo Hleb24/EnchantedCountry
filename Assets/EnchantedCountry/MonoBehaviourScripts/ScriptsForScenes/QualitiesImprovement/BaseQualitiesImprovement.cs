@@ -29,7 +29,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.QualitiesI
 		#region MONOBEHAVIOUR_METHODS
 		private void Start() {
 			if (_useGameSave) {
-				_qualitiesData = GSSSingleton.Singleton;
+				_qualitiesData = GSSSingleton.Instance;
 				_qualities = new Qualities(_qualitiesData);
 			}
 			_qualities = new Qualities();
@@ -76,7 +76,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.QualitiesI
 				_qualitiesData.constitution += diceRollQualityIncrease[2];
 				_qualitiesData.wisdom += diceRollQualityIncrease[3];
 				_qualitiesData.courage += diceRollQualityIncrease[4];
-				GSSSingleton.Singleton.SaveInGame();
+				GSSSingleton.Instance.SaveInGame();
 			} else {
 				_qualities[Quality.QualityType.Strength].ValueOfQuality += diceRollQualityIncrease[0];
 				_qualities[Quality.QualityType.Agility].ValueOfQuality += diceRollQualityIncrease[1];

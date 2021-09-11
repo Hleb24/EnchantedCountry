@@ -43,7 +43,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
 		private void Start() {
 			if (_usedGameSave) {
-				_diceRollData = GSSSingleton.Singleton;
+				_diceRollData = GSSSingleton.Instance;
 			}
 		}
 
@@ -83,11 +83,11 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
 		private void LoadAndSetDiceRollData() {
 			if (_usedGameSave) {
-				_diceRollData = GSSSingleton.Singleton.GetDiceRollDataWithLoad();
+				_diceRollData = GSSSingleton.Instance.GetDiceRollDataWithLoad();
 				SetTextsInListWithSave();
 				Invoke(nameof(SetTextsInListWithSave), 0.3f);
 			} else {
-				SaveSystem.LoadWithInvoke(_diceRollData, SaveSystem.Constants.DICE_ROll_DATA, 
+				SaveSystem.LoadWithInvoke(_diceRollData, SaveSystem.Constants.DiceROllData, 
 				(nameInvoke, time) => Invoke(nameInvoke, time), nameof(SetTextsInListWithSave), 0.05f);
 			}
 			GenericTools.SetUIText(_info, "Info: values load.");
@@ -116,7 +116,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 		}
 
 		private void ResetValuesOfDiceRoll() {
-			GSSSingleton.Singleton.SaveInGame();
+			GSSSingleton.Instance.SaveInGame();
 			GenericTools.SetUIText(_info, "Info: reset.");
 			for (int i = 0; i < _diceRollValuesText.Count; i++) {
 				GenericTools.SetUIText(_diceRollValuesText[i], "0");
@@ -129,9 +129,9 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
 		private void Save() {
 			if (_usedGameSave) {
-				GSSSingleton.Singleton.SaveInGame();
+				GSSSingleton.Instance.SaveInGame();
 			} else {
-				SaveSystem.Save(_diceRollData, SaveSystem.Constants.DICE_ROll_DATA);
+				SaveSystem.Save(_diceRollData, SaveSystem.Constants.DiceROllData);
 			}
 			AllDiceRollCompleteOrLoad?.Invoke();
 			GenericTools.SetUIText(_info, "Info: save.");

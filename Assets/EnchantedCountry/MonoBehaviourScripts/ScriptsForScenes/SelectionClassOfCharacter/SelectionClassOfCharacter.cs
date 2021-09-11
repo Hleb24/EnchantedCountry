@@ -42,9 +42,9 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.SelectionC
 		#endregion
 		#region MONOBEHAVIOUR_METHODS
 		private void Start() {
-			_qualitiesData = GSSSingleton.Singleton;
+			_qualitiesData = GSSSingleton.Instance;
 			_qualities = new Qualities(_qualitiesData);
-			_classOfCharacterData = GSSSingleton.Singleton;
+			_classOfCharacterData = GSSSingleton.Instance;
 			Invoke(nameof(SetAllowedClassesAndEnableInteractableForButtonsIfAllowedByCondition), 0.03f);
 		}
 
@@ -185,9 +185,9 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.SelectionC
 		private void SaveClassOfCharacter() {
 			_classOfCharacterData.nameOfClass = _characterType.ToString();
 			if (_useGameSave) {
-				GSSSingleton.Singleton.SaveInGame();
+				GSSSingleton.Instance.SaveInGame();
 			} else {
-				SaveSystem.Save(_classOfCharacterData, SaveSystem.Constants.CLASS_OF_CHARACTER);
+				SaveSystem.Save(_classOfCharacterData, SaveSystem.Constants.ClassOfCharacter);
 			}
 			InvokeCharacterTypeEvent();
 		}

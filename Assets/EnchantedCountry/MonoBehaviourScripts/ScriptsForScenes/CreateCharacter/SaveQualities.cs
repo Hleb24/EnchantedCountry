@@ -38,10 +38,10 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
 		private void LoadQualitiesAfterDistributing() {
 			if (_usedQualitiesData) {
-				_qualitiesData = GSSSingleton.Singleton.GetQualitiesData();
+				_qualitiesData = GSSSingleton.Instance.GetQualitiesData();
 				SetQualitiesInScriptableObject();
 			} else {
-				SaveSystem.LoadWithInvoke(_qualitiesAfterDistributing, SaveSystem.Constants.QUALITIES_AFTER_DISTRIBUTING,
+				SaveSystem.LoadWithInvoke(_qualitiesAfterDistributing, SaveSystem.Constants.QualitiesAfterDistributing,
 					(nameInvoke, time) => Invoke(nameInvoke, time	), nameof(SetQualitiesInScriptableObject), 0.3f);
 			}
 		}

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8269518827467542313}
-  - component: {fileID: 8269518827467542312}
+  - component: {fileID: 4872809131202647143}
   m_Layer: 0
-  m_Name: GAME_SAVE_SYSTEM
+  m_Name: Loader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8269518827467542312
+--- !u!114 &4872809131202647143
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,10 +40,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8269518827467542319}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8423ad3df72214429322261be430251, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c756e2497bb66846bb1fd89e31b1baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameSaveSystem:
-    gameSaves: []
-  _dontLoadInAwake: 0
-  _dontSaveInDestroy: 0

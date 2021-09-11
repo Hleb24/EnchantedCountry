@@ -48,10 +48,10 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 			if (_testCharacterType)
 				return;
 			if (_useGameSave) {
-				classOfCharacterData = GSSSingleton.Singleton;
+				classOfCharacterData = GSSSingleton.Instance;
 				Invoke(nameof(TrySetCharacterType), 0.3f);
 			} else {
-				SaveSystem.LoadWithInvoke(classOfCharacterData, SaveSystem.Constants.CLASS_OF_CHARACTER,
+				SaveSystem.LoadWithInvoke(classOfCharacterData, SaveSystem.Constants.ClassOfCharacter,
 				(nameInvoke, time) => Invoke(nameInvoke, time), nameof(TrySetCharacterType), 0.3f);
 			}
 		}

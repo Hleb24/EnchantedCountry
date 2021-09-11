@@ -49,8 +49,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 		#endregion
 		#region MONOBEHAVIOUR_METHODS
 		private void Start() {
-			_qualitiesData = GSSSingleton.Singleton;
-			_diceRollData = GSSSingleton.Singleton;
+			_qualitiesData = GSSSingleton.Instance;
+			_diceRollData = GSSSingleton.Instance;
 			_isValueNotSelected = new bool[_diceRollData.values.Length];
 			_qualities = new int[_diceRollData.values.Length];
 			_indexOfCurrentValueInQualityText = new int[_diceRollData.values.Length];
@@ -603,9 +603,9 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
 		private void SaveQualitiesAfterDistributing() {
 			if (_useGameSave) {
-				GSSSingleton.Singleton.SaveInGame();
+				GSSSingleton.Instance.SaveInGame();
 			} else {
-				SaveSystem.Save(_qualitiesAfterDistributing, SaveSystem.Constants.QUALITIES_AFTER_DISTRIBUTING);
+				SaveSystem.Save(_qualitiesAfterDistributing, SaveSystem.Constants.QualitiesAfterDistributing);
 			}
 		}
 		#endregion

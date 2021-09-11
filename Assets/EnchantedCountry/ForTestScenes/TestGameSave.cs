@@ -8,17 +8,17 @@ namespace Core.EnchantedCountry.ForTestScenes {
 
         private void Start() {
             if (CheckSaves) {
-                SaveSystem.Load(GameSave, SaveSystem.Constants.GAME_SAVE);
+                SaveSystem.Load(GameSave, SaveSystem.Constants.GameSave);
             }
         }
 
         private void OnDestroy() {
-            SaveSystem.Save(GameSave, SaveSystem.Constants.GAME_SAVE);
+            SaveSystem.Save(GameSave, SaveSystem.Constants.GameSave);
         }
 
         [ContextMenu("Save")]
         private void Save() {
-            SaveSystem.Save(GameSave, SaveSystem.Constants.GAME_SAVE);
+            SaveSystem.Save(GameSave, SaveSystem.Constants.GameSave);
         }
     }
 }

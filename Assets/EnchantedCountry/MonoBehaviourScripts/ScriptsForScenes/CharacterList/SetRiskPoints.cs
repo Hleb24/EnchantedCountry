@@ -55,10 +55,10 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 		}
 		private void LoadData() {
 			if (_useGameSave) {
-				_riskPointsData = GSSSingleton.Singleton;
+				_riskPointsData = GSSSingleton.Instance;
 				Invoke(nameof(SetNumberOfRiskPointsText), 0.2f);
 			} else {
-				SaveSystem.LoadWithInvoke(_riskPointsData, SaveSystem.Constants.RISK_POINTS,
+				SaveSystem.LoadWithInvoke(_riskPointsData, SaveSystem.Constants.RiskPoints,
 				(nameInvoke, time) => Invoke(nameInvoke, time), nameof(SetNumberOfRiskPointsText), 0.1f);
 			}
 		}

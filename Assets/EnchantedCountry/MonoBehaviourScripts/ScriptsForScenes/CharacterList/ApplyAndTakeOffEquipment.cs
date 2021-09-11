@@ -588,10 +588,10 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     #region LOAD_AND_SAVE_DATA
     private void SaveUsedEquipmentData() {
       if (_useGameSave) {
-        GSSSingleton.Singleton.SaveInGame();
+        GSSSingleton.Instance.SaveInGame();
         EquipmentChanged?.Invoke();
       } else {
-        SaveSystem.Save(_equipmentUsedData, SaveSystem.Constants.USED_EQUIPMENT);
+        SaveSystem.Save(_equipmentUsedData, SaveSystem.Constants.UsedEquipment);
       }
     }
 
@@ -599,10 +599,10 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
       if (_testUsedEquipment)
         return;
       if (_useGameSave) {
-        _equipmentUsedData = GSSSingleton.Singleton;
+        _equipmentUsedData = GSSSingleton.Instance;
         Invoke(nameof(SetTuplesAfterLoadUsedEquipmentData), 0.3f);
       } else {
-        SaveSystem.LoadWithInvoke(_equipmentUsedData, SaveSystem.Constants.USED_EQUIPMENT,
+        SaveSystem.LoadWithInvoke(_equipmentUsedData, SaveSystem.Constants.UsedEquipment,
         (nameInvoke, time) => Invoke(nameInvoke, time), nameof(SetTuplesAfterLoadUsedEquipmentData), 0.3f);
       }
     }

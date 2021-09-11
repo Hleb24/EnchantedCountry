@@ -22,7 +22,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.QualitiesI
 		#endregion
 		#region MONOBEHAVIOUR_METHODS
 		protected void Start() {
-			qualities = new Qualities(GSSSingleton.Singleton);
+			qualities = new Qualities(GSSSingleton.Instance);
 			diceRollQualityIncrease = new DiceRollQualityIncrease();
 			diceRollQualityIncrease.Initialization();
 		}

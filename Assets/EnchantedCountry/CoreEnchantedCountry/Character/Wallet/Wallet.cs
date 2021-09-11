@@ -27,12 +27,12 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Wallet {
 			set {
 				if (value >= BottomBorder || value <= _maxAmountOfCoins) {
 					_coins = value;
-					GSSSingleton.Singleton.GetWalletData().NumberOfCoins = value;
-					GSSSingleton.Singleton.SaveInGame();
+					GSSSingleton.Instance.GetWalletData().NumberOfCoins = value;
+					GSSSingleton.Instance.SaveInGame();
 				} else {
 					_coins = BottomBorder;
-					GSSSingleton.Singleton.GetWalletData().NumberOfCoins = value;
-					GSSSingleton.Singleton.SaveInGame();
+					GSSSingleton.Instance.GetWalletData().NumberOfCoins = value;
+					GSSSingleton.Instance.SaveInGame();
 				}
 			}
 		}
@@ -42,8 +42,8 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Wallet {
 			}
 			set {
 				_maxAmountOfCoins = value;
-				GSSSingleton.Singleton.GetWalletData().MaxAmountOfCoins = value;
-				GSSSingleton.Singleton.SaveInGame();
+				GSSSingleton.Instance.GetWalletData().MaxAmountOfCoins = value;
+				GSSSingleton.Instance.SaveInGame();
 			}
 		}
 		#endregion

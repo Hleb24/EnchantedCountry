@@ -20,7 +20,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.Intro {
     #endregion
     #region LOAD_NEXT_SCENE
     private void SetNameOfNextScene() {
-      if (GSSSingleton.Singleton.IsNewGame) {
+      if (GSSSingleton.Instance.IsNewGame) {
         _nameOfScene = SceneNameConstants.SceneDiceRollsForQualities;
       } else {
         _nameOfScene = SceneNameConstants.SceneCharacterList;

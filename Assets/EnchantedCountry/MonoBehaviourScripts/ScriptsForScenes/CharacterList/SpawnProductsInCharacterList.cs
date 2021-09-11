@@ -82,7 +82,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 			_characterInCharacterList.GetCharacterType -= SetListsSoAndSpawnProducts;
 		}
 		private void Start() {
-			_equipmentsOfCharacterDataHandler = new EquipmentsOfCharacterDataHandler(GSSSingleton.Singleton);
+			_equipmentsOfCharacterDataHandler = new EquipmentsOfCharacterDataHandler(GSSSingleton.Instance);
 		}
 		#endregion
 		#region SET_LISTS

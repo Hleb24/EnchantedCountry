@@ -61,7 +61,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
     #region BUILDER
     public void BuildPlayer() {
-      _equipmentsOfCharacterDataHandler = new EquipmentsOfCharacterDataHandler(GSSSingleton.Singleton);
+      _equipmentsOfCharacterDataHandler = new EquipmentsOfCharacterDataHandler(GSSSingleton.Instance);
       _playerCharacter = new PlayerCharacter(
         GetCharacterQualities(), 
         GetCharacterType(),
@@ -80,14 +80,14 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private CharacterType GetCharacterType() {
-      if (Enum.TryParse(GSSSingleton.Singleton.GetClassOfCharacterData().nameOfClass, out CharacterType characterType)) {
+      if (Enum.TryParse(GSSSingleton.Instance.GetClassOfCharacterData().nameOfClass, out CharacterType characterType)) {
         return characterType;
       }
       return default;
     }
 
     private CharacterQualities GetCharacterQualities() {
-       QualitiesData qualitiesData =  GSSSingleton.Singleton;
+       QualitiesData qualitiesData =  GSSSingleton.Instance;
        CharacterQualities characterQualities = new CharacterQualities(Quality.QualityType.Strength, qualitiesData.strength, Quality.QualityType.Agility, qualitiesData.agility,
          Quality.QualityType.Constitution, qualitiesData.constitution, Quality.QualityType.Wisdom, qualitiesData.wisdom, Quality.QualityType.Courage, qualitiesData.courage);
        return characterQualities;
@@ -95,40 +95,40 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     #endregion
 
     private GamePoints GetGamePoints() {
-      GamePoints gamePoints = new GamePoints(GSSSingleton.Singleton.GetGamePointsData().Points);
+      GamePoints gamePoints = new GamePoints(GSSSingleton.Instance.GetGamePointsData().Points);
       return gamePoints;
     }
 
     private Levels GetLevels() {
-      Levels levels = new Levels(GSSSingleton.Singleton.GetGamePointsData().Points);
+      Levels levels = new Levels(GSSSingleton.Instance.GetGamePointsData().Points);
       return levels;
     }
 
     private RiskPoints GetRiskPoints() {
-      RiskPoints riskPoints = new RiskPoints(GSSSingleton.Singleton.GetRiskPointsData().riskPoints);
+      RiskPoints riskPoints = new RiskPoints(GSSSingleton.Instance.GetRiskPointsData().riskPoints);
       return riskPoints;
     }
 
     private Wallet GetWallet() {
-      Wallet wallet = new Wallet(GSSSingleton.Singleton.GetWalletData().NumberOfCoins);
+      Wallet wallet = new Wallet(GSSSingleton.Instance.GetWalletData().NumberOfCoins);
       return wallet;
     }
 
     private EquipmentsOfCharacter GetEquipmentsOfCharacter() {
       EquipmentsOfCharacter equipmentsOfCharacter = new EquipmentsOfCharacter(
-        GSSSingleton.Singleton.GetEquipmentsOfCharacterData().EquipmentCards);
+        GSSSingleton.Instance.GetEquipmentsOfCharacterData().EquipmentCards);
       return equipmentsOfCharacter;
     }
 
     private EquipmentsUsed GetEquipmentsUsed() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Singleton;
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       EquipmentsUsed equipmentsUsed = new EquipmentsUsed(equipmentUsedData.armorId, equipmentUsedData.shieldId, equipmentUsedData.oneHandedId, equipmentUsedData.twoHandedId,
         equipmentUsedData.rangeId, equipmentUsedData.projectiliesId, equipmentUsedData.bagId, equipmentUsedData.animalId, equipmentUsedData.carriageId);
       return equipmentsUsed;
     }
 
     private Armor GetArmor() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Singleton;
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       if (equipmentUsedData.armorId != 0) {
         ProductSO armorSo = _storageSo.GetArmorFromList(equipmentUsedData.armorId);
         Armor armor = armorSo.GetArmor();
@@ -138,7 +138,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
     
     private Armor GetShield() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Singleton;
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       if (equipmentUsedData.shieldId != 0) {
         ProductSO shieldSo = _storageSo.GetArmorFromList(equipmentUsedData.animalId);
         Armor shield = shieldSo.GetArmor();
@@ -148,7 +148,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
     
     private Weapon GetMeleeWeapon() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Singleton;
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       if (equipmentUsedData.oneHandedId != 0) {
         ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.oneHandedId);
         Weapon weapon = weaponSo.GetWeapon();
@@ -163,7 +163,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
     
     private Weapon GetRangeWeapon() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Singleton;
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       if (equipmentUsedData.rangeId != 0) {
         ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.rangeId);
         Weapon weapon = weaponSo.GetWeapon();
@@ -173,7 +173,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
     
     private Weapon GetProjectiles() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Singleton;
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       if (equipmentUsedData.projectiliesId != 0) {
         ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.projectiliesId);
         Weapon weapon = weaponSo.GetWeapon();
@@ -223,14 +223,14 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private CharacterType GetCharacterType() {
-      if (Enum.TryParse(GSSSingleton.Singleton.GetClassOfCharacterData().nameOfClass, out CharacterType characterType)) {
+      if (Enum.TryParse(GSSSingleton.Instance.GetClassOfCharacterData().nameOfClass, out CharacterType characterType)) {
         return characterType;
       }
       return default;
     }
 
     private CharacterQualities GetCharacterQualities() {
-       QualitiesData qualitiesData =  GSSSingleton.Singleton;
+       QualitiesData qualitiesData =  GSSSingleton.Instance;
        CharacterQualities characterQualities = new CharacterQualities(Quality.QualityType.Strength, qualitiesData.strength, Quality.QualityType.Agility, qualitiesData.agility,
          Quality.QualityType.Constitution, qualitiesData.constitution, Quality.QualityType.Wisdom, qualitiesData.wisdom, Quality.QualityType.Courage, qualitiesData.courage);
        return characterQualities;
@@ -238,40 +238,40 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     #endregion
 
     private GamePoints GetGamePoints() {
-      GamePoints gamePoints = new GamePoints(GSSSingleton.Singleton.GetGamePointsData().Points);
+      GamePoints gamePoints = new GamePoints(GSSSingleton.Instance.GetGamePointsData().Points);
       return gamePoints;
     }
 
     private Levels GetLevels() {
-      Levels levels = new Levels(GSSSingleton.Singleton.GetGamePointsData().Points);
+      Levels levels = new Levels(GSSSingleton.Instance.GetGamePointsData().Points);
       return levels;
     }
 
     private RiskPoints GetRiskPoints() {
-      RiskPoints riskPoints = new RiskPoints(GSSSingleton.Singleton.GetRiskPointsData().riskPoints);
+      RiskPoints riskPoints = new RiskPoints(GSSSingleton.Instance.GetRiskPointsData().riskPoints);
       return riskPoints;
     }
 
     private Wallet GetWallet() {
-      Wallet wallet = new Wallet(GSSSingleton.Singleton.GetWalletData().NumberOfCoins);
+      Wallet wallet = new Wallet(GSSSingleton.Instance.GetWalletData().NumberOfCoins);
       return wallet;
     }
 
     private EquipmentsOfCharacter GetEquipmentsOfCharacter() {
       EquipmentsOfCharacter equipmentsOfCharacter = new EquipmentsOfCharacter(
-        GSSSingleton.Singleton.GetEquipmentsOfCharacterData().EquipmentCards);
+        GSSSingleton.Instance.GetEquipmentsOfCharacterData().EquipmentCards);
       return equipmentsOfCharacter;
     }
 
     private EquipmentsUsed GetEquipmentsUsed() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Singleton;
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       EquipmentsUsed equipmentsUsed = new EquipmentsUsed(equipmentUsedData.armorId, equipmentUsedData.shieldId, equipmentUsedData.oneHandedId, equipmentUsedData.twoHandedId,
         equipmentUsedData.rangeId, equipmentUsedData.projectiliesId, equipmentUsedData.bagId, equipmentUsedData.animalId, equipmentUsedData.carriageId);
       return equipmentsUsed;
     }
 
     private Armor GetArmor() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Singleton;
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       if (equipmentUsedData.armorId != 0) {
         ProductSO armorSo = _storageSo.GetArmorFromList(equipmentUsedData.armorId);
         Armor armor = armorSo.GetArmor();
@@ -281,7 +281,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
     
     private Armor GetShield() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Singleton;
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       if (equipmentUsedData.shieldId != 0) {
         ProductSO shieldSo = _storageSo.GetArmorFromList(equipmentUsedData.animalId);
         Armor shield = shieldSo.GetArmor();
@@ -291,7 +291,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
     
     private Weapon GetMeleeWeapon() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Singleton;
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       if (equipmentUsedData.oneHandedId != 0) {
         ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.oneHandedId);
         Weapon weapon = weaponSo.GetWeapon();
@@ -306,7 +306,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
     
     private Weapon GetRangeWeapon() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Singleton;
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       if (equipmentUsedData.rangeId != 0) {
         ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.rangeId);
         Weapon weapon = weaponSo.GetWeapon();
@@ -316,7 +316,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
     
     private Weapon GetProjectiles() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Singleton;
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       if (equipmentUsedData.projectiliesId != 0) {
         ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.projectiliesId);
         Weapon weapon = weaponSo.GetWeapon();

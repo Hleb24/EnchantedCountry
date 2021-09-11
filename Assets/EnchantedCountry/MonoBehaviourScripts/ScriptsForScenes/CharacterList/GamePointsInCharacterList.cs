@@ -40,18 +40,18 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     #region SAVE_AND_LOAD
     private void SaveGamePointsData() {
       if (_useGameSave) {
-        GSSSingleton.Singleton.SaveInGame();
+        GSSSingleton.Instance.SaveInGame();
       } else {
-        SaveSystem.Save(_gamePointsData, SaveSystem.Constants.GAME_POINTS);
+        SaveSystem.Save(_gamePointsData, SaveSystem.Constants.GamePoints);
       }
     }
 
     private void LoadGamePointsDataWithInvoke() {
       if (_useGameSave) {
-        _gamePointsData = GSSSingleton.Singleton;
+        _gamePointsData = GSSSingleton.Instance;
         Invoke(nameof(SetGamePointsAndGamePointsTextAfterLoad), 0.3f);
       } else {
-        SaveSystem.LoadWithInvoke(_gamePointsData, SaveSystem.Constants.GAME_POINTS
+        SaveSystem.LoadWithInvoke(_gamePointsData, SaveSystem.Constants.GamePoints
         , (nameInvoke, time) => Invoke(nameInvoke, time), nameof(SetGamePointsAndGamePointsTextAfterLoad), 0.3f);
       }
     }

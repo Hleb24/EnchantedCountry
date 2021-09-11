@@ -19,8 +19,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.QualitiesI
     #endregion
     #region MONOBEHAVIOUR_METHODS
     private void Start() {
-      _qualitiesData = GSSSingleton.Singleton;
-      _qualities = new Qualities(GSSSingleton.Singleton);
+      _qualitiesData = GSSSingleton.Instance;
+      _qualities = new Qualities(GSSSingleton.Instance);
       IfSetQualitiesTextsOnStart();
     }
     #endregion

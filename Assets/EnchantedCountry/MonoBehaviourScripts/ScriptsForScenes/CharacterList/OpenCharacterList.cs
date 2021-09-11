@@ -39,7 +39,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 
     #region WHICH_CANVAS_TO_OPEN_FIRST
     private void WhichCanvasToOpenFirst() {
-      if (GSSSingleton.Singleton.IsNewGame) {
+      if (GSSSingleton.Instance.IsNewGame) {
         OpenDiceRollForRiskPointsCanvas();
       } else {
         OpenCharacterListCanvas();
@@ -50,7 +50,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     private void OpenDiceRollForRiskPointsCanvas() {
       ToggleForCanvas(_diceRollForRiskPointsCanvas, true);
       ToggleForCanvas(_characterListCanvas, false);
-      GSSSingleton.Singleton.SetIsNewGameFalse();
+      GSSSingleton.Instance.SetIsNewGameFalse();
     }
 
     private void OpenCharacterListCanvas() {

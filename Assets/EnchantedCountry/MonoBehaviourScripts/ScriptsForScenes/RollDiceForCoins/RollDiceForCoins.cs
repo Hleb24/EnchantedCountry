@@ -26,7 +26,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.RollDiceFo
 		#region MONOBEHAVIOUR_METHODS
 		private void Start() {
 			if (_useGameSave) {
-				_walletData = GSSSingleton.Singleton;
+				_walletData = GSSSingleton.Instance;
 			}
 		}
 
@@ -62,12 +62,12 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.RollDiceFo
 		// ReSharper disable once UnusedMethodReturnValue.Local
 		private int SetNumberOfCoinsInWalletDataAndReturnValue() {
 			_walletData.NumberOfCoins = _numberOfCoins;
-			GSSSingleton.Singleton.SaveInGame();
+			GSSSingleton.Instance.SaveInGame();
 			return _walletData.NumberOfCoins;
 		}
 
 		private void SaveNumberOfCoinsInWallet() {
-			SaveSystem.Save(_walletData, SaveSystem.Constants.WALLET);
+			SaveSystem.Save(_walletData, SaveSystem.Constants.Wallet);
 		}
 
 		private void SetUITextForNumberOfCoins() {

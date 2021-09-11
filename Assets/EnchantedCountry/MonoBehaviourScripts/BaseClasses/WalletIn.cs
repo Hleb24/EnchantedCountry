@@ -21,7 +21,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.BaseClasses {
 		#endregion
 		#region MONOBEHAVIOUR_METHODS
 		private void Start() {
-			_walletData = GSSSingleton.Singleton;
+			_walletData = GSSSingleton.Instance;
 			Invoke(nameof(InitializeWallet), 0.1f);
 		}
 
@@ -35,7 +35,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.BaseClasses {
 
 		protected virtual void OnDisable() {
 			_walletData.NumberOfCoins = _wallet.coins;
-			GSSSingleton.Singleton.SaveInGame();
+			GSSSingleton.Instance.SaveInGame();
 		}
 		#endregion
 		#region SET_WALLET_TEXT

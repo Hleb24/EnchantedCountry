@@ -41,7 +41,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     #endregion
     #region MONOBEHAVIOUR_METHODS
     private void Start() {
-      _equipmentUsedData = GSSSingleton.Singleton;
+      _equipmentUsedData = GSSSingleton.Instance;
       Invoke(nameof(SetQualities), 0.1f);
     }
 
@@ -56,7 +56,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     #endregion
     #region SET_QUALITIES
     private void SetQualities() {
-      _qualities = new Qualities(GSSSingleton.Singleton);
+      _qualities = new Qualities(GSSSingleton.Instance);
     }
     #endregion    
     #region HANDLERS

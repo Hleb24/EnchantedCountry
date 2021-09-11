@@ -36,7 +36,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 		#endregion
 		#region FIRST_TIME_TRURLS_SHOP_OPENING
 		private void FirstTimeOpenTrurlsShop() {
-			if (GSSSingleton.Singleton.IsNewGame) {
+			if (GSSSingleton.Instance.IsNewGame) {
 				OpenDiceRollForCoinsCanvas();
 			}else {
 				OpenShopOfTrurl();

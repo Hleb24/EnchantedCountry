@@ -61,21 +61,21 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 		#region LOAD_AND_SAVE_DATA
 		private void LoadData() {
 			if (_useGameSave) {
-				_classOfCharacterData = GSSSingleton.Singleton;
-				_riskPointsData = GSSSingleton.Singleton;
-				_qualities = new Qualities(GSSSingleton.Singleton);
+				_classOfCharacterData = GSSSingleton.Instance;
+				_riskPointsData = GSSSingleton.Instance;
+				_qualities = new Qualities(GSSSingleton.Instance);
 				Invoke(nameof(SetCharacterType), 0.3f);
 			} else {
-				SaveSystem.LoadWithInvoke(_classOfCharacterData, SaveSystem.Constants.CLASS_OF_CHARACTER, 
+				SaveSystem.LoadWithInvoke(_classOfCharacterData, SaveSystem.Constants.ClassOfCharacter, 
 				(nameInvoke, time) => Invoke(nameInvoke, time), nameof(SetCharacterType), 0.3f);
 			}
 		}
 
 		private void SaveData() {
 			if (_useGameSave) {
-				GSSSingleton.Singleton.SaveInGame();
+				GSSSingleton.Instance.SaveInGame();
 			} else {
-				SaveSystem.Save(_riskPointsData, SaveSystem.Constants.RISK_POINTS);
+				SaveSystem.Save(_riskPointsData, SaveSystem.Constants.RiskPoints);
 			}
 		}
 		#endregion
