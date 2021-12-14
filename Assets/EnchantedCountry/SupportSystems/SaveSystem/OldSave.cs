@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Core.EnchantedCountry.SupportSystems.SaveSystem {
   [Serializable]
-  public class GameSave {
+  public class OldSave {
     public DiceRollData diceRollData;
     public ClassOfCharacterData classOfCharacterData;
     public WalletData walletData;
@@ -15,7 +15,7 @@ namespace Core.EnchantedCountry.SupportSystems.SaveSystem {
     public GamePointsData gamePointsData;
     public QualitiesData qualitiesData;
     private List<ResetSave> _resetSaves;
-    public GameSave() {
+    public OldSave() {
       diceRollData = new DiceRollData();
       classOfCharacterData = new ClassOfCharacterData();
       walletData = new WalletData();

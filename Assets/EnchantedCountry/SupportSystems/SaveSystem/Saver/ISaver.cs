@@ -5,8 +5,8 @@ using UnityEngine;
 namespace Core
 {
     public interface ISaver {
-        void Save(Save save);
+        void Save(SaveGame saveGame);
 
-        Save Load();
+        SaveGame Load();
     }
 }

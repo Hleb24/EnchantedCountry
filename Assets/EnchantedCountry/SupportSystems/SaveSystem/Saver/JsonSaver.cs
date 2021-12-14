@@ -7,19 +7,19 @@ namespace Core {
     private readonly string _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "Save"), "Save.json");
     private readonly string _pathToFolder = Path.Combine(Application.persistentDataPath, "Save");
 
-    public void Save(Save save) {
+    public void Save(SaveGame saveGame) {
       CreateDirectory();
-      string jsonSave = JsonUtility.ToJson(save, true);
+      string jsonSave = JsonUtility.ToJson(saveGame, true);
       using var streamWriter = new StreamWriter(_pathToFile);
       streamWriter.WriteLine(jsonSave);
     }
 
-    public Save Load() {
+    public SaveGame Load() {
       var jsonSave = string.Empty;
       try {
         using var streamReader = new StreamReader(_pathToFile);
         jsonSave = streamReader.ReadToEnd();
-        var save = JsonUtility.FromJson<Save>(jsonSave);
+        var save = JsonUtility.FromJson<SaveGame>(jsonSave);
         ;
         return save;
       } catch (Exception e) {
@@ -29,8 +29,8 @@ namespace Core {
           throw;
         }
 
-        Save newSave = new Save().LoadDefault();
-        return newSave;
+        SaveGame newSaveGame = new SaveGame().NewSaveGame();
+        return newSaveGame;
       }
     }
 
