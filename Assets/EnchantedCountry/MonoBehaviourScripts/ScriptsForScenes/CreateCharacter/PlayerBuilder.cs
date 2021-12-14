@@ -222,6 +222,12 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
       );
     }
 
+    private void Foo() {
+      int i = 5 + 45;
+      
+    }
+    
+    
     private CharacterType GetCharacterType() {
       if (Enum.TryParse(GSSSingleton.Instance.GetClassOfCharacterData().nameOfClass, out CharacterType characterType)) {
         return characterType;
