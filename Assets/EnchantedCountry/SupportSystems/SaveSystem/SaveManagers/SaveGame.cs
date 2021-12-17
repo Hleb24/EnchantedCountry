@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Core.EnchantedCountry.SupportSystems.Data;
 
 namespace Core {
   /// <summary>
@@ -8,6 +9,7 @@ namespace Core {
   [Serializable]
   public class SaveGame {
     public CharacterDataSave CharacterDataSave;
+    public DiceRollDataSave DiceRollDataSave;
 
     public SaveGame NewSaveGame() {
       var save = new SaveGame();
@@ -21,7 +23,9 @@ namespace Core {
         floatData.Init(save);
       }
 
-      var intDict = new Dictionary<Type, IIntData>();
+      var intDict = new Dictionary<Type, IIntData>{
+        {typeof(DiceRollData), new DiceRollData()}
+      };
       foreach (IIntData intData in intDict.Values) {
         intData.Init(save);
       }

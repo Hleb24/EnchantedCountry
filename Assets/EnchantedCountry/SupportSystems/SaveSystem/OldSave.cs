@@ -25,7 +25,7 @@ namespace Core.EnchantedCountry.SupportSystems.SaveSystem {
       qualitiesData = new QualitiesData();
       equipmentsOfCharacterData = new EquipmentsOfCharacterData();
       _resetSaves = new List<ResetSave>() {
-        diceRollData, classOfCharacterData, walletData,
+         classOfCharacterData, walletData,
         riskPointsData, equipmentUsedData, gamePointsData,
         qualitiesData, equipmentsOfCharacterData
       };

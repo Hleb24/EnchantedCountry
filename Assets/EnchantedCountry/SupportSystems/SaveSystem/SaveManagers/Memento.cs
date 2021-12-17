@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.EnchantedCountry.SupportSystems.Data;
 
 namespace Core {
   
@@ -28,7 +29,7 @@ namespace Core {
       };
 
       _integerMemento = new Dictionary<Type, IIntData> {
-        // { typeof(CharacterData), new CharacterData() },
+        {typeof(DiceRollData), new DiceRollData()}
       };
       
       _stringMemento = new Dictionary<Type, IStringData> {
