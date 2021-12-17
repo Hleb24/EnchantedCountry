@@ -76,7 +76,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     private bool _useGameSave;
     [Inject]
     private QualitiesAfterDistributing _qualitiesAfterDistributing;
-    private DiceRollData _diceRollData;
+    private IDiceRoll _diceRollData;
     private QualitiesData _qualitiesData;
 
     private int[] _qualities;
@@ -90,7 +90,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
     private void Start() {
       _qualitiesData = GSSSingleton.Instance;
-      _diceRollData = GSSSingleton.Instance;
+      _diceRollData = DataDealer.Peek<DiceRollData>();
       _isValueNotSelected = new bool[_diceRollData.GetDiceRollValues().Length];
       _qualities = new int[_diceRollData.GetDiceRollValues().Length];
       _indexOfCurrentValueInQualityText = new int[_diceRollData.GetDiceRollValues().Length];

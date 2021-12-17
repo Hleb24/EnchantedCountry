@@ -33,13 +33,13 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     [Inject]
     private CharacterCreation _characterCreation;
     private int _numberOfDiceRoll;
-    private DiceRollData _diceRollData;
+    private IDiceRoll _diceRollData;
     private bool _isNumberOfDiceRollOverlay;
 
     private void Start() {
-      if (_usedGameSave) {
+      // if (_usedGameSave) {
         _diceRollData = DataDealer.Peek<DiceRollData>();
-      }
+      // }
     }
 
     private void OnEnable() {
@@ -56,7 +56,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
         return;
       }
 
-      _diceRollData.SetDiceRollValues(new int[5]);
     }
 
     private void AddListener() {
@@ -77,7 +76,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
     private void LoadAndSetDiceRollData() {
       if (_usedGameSave) {
-        _diceRollData = GSSSingleton.Instance.GetDiceRollDataWithLoad();
+        _diceRollData = DataDealer.Peek<DiceRollData>();
         SetTextsInListWithSave();
         Invoke(nameof(SetTextsInListWithSave), 0.3f);
       } else {
@@ -92,7 +91,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
     private void SetTextsInListWithSave() {
       for (var i = 0; i < _diceRollValuesText.Count; i++) {
-        _diceRollValuesText[i].text = _diceRollData.GetInt((SupportSystems.Data.StatRolls)i).ToString();
+        _diceRollValuesText[i].text = _diceRollData.GetStatsRoll((StatRolls)i).ToString();
       }
     }
 
@@ -117,7 +116,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
       GenericTools.SetUIText(_info, "Info: reset.");
       for (var i = 0; i < _diceRollValuesText.Count; i++) {
         GenericTools.SetUIText(_diceRollValuesText[i], "0");
-        _diceRollData.SetInt((SupportSystems.Data.StatRolls)i, 0);
+        _diceRollData.SetStarsRoll((StatRolls)i, 0);
       }
 
       _numberOfDiceRoll = 0;
@@ -143,8 +142,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     private void SetRollValues() {
       GenericTools.SetUIText(_info, "Info: dice roll.");
       _valuesWithRollOfDice[_numberOfDiceRoll] = _characterCreation.GetSumDiceRollForQuality();
-      Debug.Log($"Dice roll data in start: {_diceRollData}; {_diceRollData.GetDiceRollValues().Length}");
-      _diceRollData.SetInt((SupportSystems.Data.StatRolls)_numberOfDiceRoll, _valuesWithRollOfDice[_numberOfDiceRoll]);
+      Debug.Log($"Number dice roll: {(StatRolls)_numberOfDiceRoll}; {_diceRollData.GetDiceRollValues().Length}");
+      _diceRollData.SetStarsRoll((StatRolls)_numberOfDiceRoll, _valuesWithRollOfDice[_numberOfDiceRoll]);
       _diceRollValuesText[_numberOfDiceRoll].text = _valuesWithRollOfDice[_numberOfDiceRoll].ToString();
     }
 

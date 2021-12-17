@@ -20,7 +20,6 @@ namespace Core {
         using var streamReader = new StreamReader(_pathToFile);
         jsonSave = streamReader.ReadToEnd();
         var save = JsonUtility.FromJson<SaveGame>(jsonSave);
-        ;
         return save;
       } catch (Exception e) {
         ClearPrefs();
