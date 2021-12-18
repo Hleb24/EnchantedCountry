@@ -17,7 +17,8 @@ namespace Core {
       InitializeSaver();
 
       _scribesMemento = new Dictionary<Type, IScribe> {
-        { typeof(DiceRollData), new DiceRollData() }
+        { typeof(DiceRollScribe), new DiceRollScribe() },
+        { typeof(EquipmentsScribe), new EquipmentsScribe() }
       };
 
       foreach (IScribe scribe in _scribesMemento.Values) {

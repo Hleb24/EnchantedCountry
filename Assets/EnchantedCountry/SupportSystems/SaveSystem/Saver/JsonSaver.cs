@@ -22,6 +22,7 @@ namespace Core {
         var save = JsonUtility.FromJson<SaveGame>(jsonSave);
         return save;
       } catch (Exception e) {
+        Debug.Log("Новая игра началась " + e.Data);
         ClearPrefs();
         CreateDirectory();
         if (!string.IsNullOrEmpty(jsonSave)) {

@@ -28,7 +28,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 		// ReSharper disable once Unity.RedundantSerializeFieldAttribute
 		[SerializeField]
 		// ReSharper disable once NotAccessedField.Local
-		private EquipmentsOfCharacterDataHandler _equipmentsOfCharacterDataHandler;
+		private IEquipment _equipments;
 		[SerializeField]
 		private bool _buildOnStart;
 		#endregion
@@ -61,7 +61,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
 		#region BUILDER
 		public void BuildPlayer() {
-			_equipmentsOfCharacterDataHandler = new EquipmentsOfCharacterDataHandler(GSSSingleton.Instance);
+			_equipments = DataDealer.Peek<EquipmentsScribe>();
 			_playerCharacter = new PlayerCharacter(
 				GetCharacterQualities(), 
 				GetCharacterType(),
@@ -115,7 +115,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
 		private EquipmentsOfCharacter GetEquipmentsOfCharacter() {
 			EquipmentsOfCharacter equipmentsOfCharacter = new EquipmentsOfCharacter(
-				GSSSingleton.Instance.GetEquipmentsOfCharacterData().EquipmentCards);
+				_equipments.GetEquipmentCards());
 			return equipmentsOfCharacter;
 		}
 

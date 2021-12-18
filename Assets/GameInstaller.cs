@@ -13,7 +13,7 @@ namespace Aberrance {
       Container.Bind<RiskPointsData>().AsSingle();
       Container.Bind<EquipmentUsedData>().AsSingle();
       Container.Bind<GamePointsData>().AsSingle();
-      Container.Bind<DiceRollData>().AsSingle();
+      Container.Bind<DiceRollScribe>().AsSingle();
       Container.Bind<CharacterCreation>().AsSingle();
       Container.Bind<QualitiesAfterDistributing>().AsSingle();
       Container.Bind<GamePoints>().AsSingle();

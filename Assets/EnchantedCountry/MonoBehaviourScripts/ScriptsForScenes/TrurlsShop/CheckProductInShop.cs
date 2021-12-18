@@ -27,13 +27,13 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 		#region IF_CHARACTER_HAS_EQUIPMENT
 		private void IfCharacterHasEquipmentSetCharacterHasTrueAndGreenBackground() {
 			IfCharacterHasArmorSetChatacterHasTrueAndGreenBackground(_spawnProductInTrulsShop.ProductViewListForArmor
-																															, _cashBox.EquipmentsOfCharacterDataHandler.EquipmentsOfCharacter.EquipmentCards);
+																															, _cashBox.Equipments.GetEquipmentCards());
 			IfCharacterHasWeaponSetChatacterHasTrueAndGreenBackground(_spawnProductInTrulsShop.ProductViewListForWeapon
-																															, _cashBox.EquipmentsOfCharacterDataHandler.EquipmentsOfCharacter.EquipmentCards);
+																															, _cashBox.Equipments.GetEquipmentCards());
 			IfCharacterHasProjectiliesSetChatacterHasTrueAndGreenBackground(_spawnProductInTrulsShop.ProductViewListForProjectiles
-																															, _cashBox.EquipmentsOfCharacterDataHandler.EquipmentsOfCharacter.EquipmentCards);
+																															, _cashBox.Equipments.GetEquipmentCards());
 			IfCharacterHasItemSetChatacterHasTrueAndGreenBackground(_spawnProductInTrulsShop.ProductViewListForItems
-																															, _cashBox.EquipmentsOfCharacterDataHandler.EquipmentsOfCharacter.EquipmentCards);
+																															, _cashBox.Equipments.GetEquipmentCards());
 		}
 
 		private void IfCharacterHasArmorSetChatacterHasTrueAndGreenBackground(List<ProductView> productsViewList, List<EquipmentCard> equipmentsCardList) {

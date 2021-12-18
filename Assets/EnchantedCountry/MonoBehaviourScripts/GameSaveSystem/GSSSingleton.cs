@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Core.EnchantedCountry.CoreEnchantedCountry.Character.Equipment;
 using Core.EnchantedCountry.SupportSystems.Data;
 using Core.EnchantedCountry.SupportSystems.SaveSystem;
 using UnityEngine;
@@ -15,9 +13,9 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
     #endregion
 
     #region GET_DAT_WITH_LOAD
-    public DiceRollData GetDiceRollDataWithLoad(int numberOfSave = 0) {
+    public DiceRollScribe GetDiceRollDataWithLoad(int numberOfSave = 0) {
       Load();
-      return _gameSaveSystem.gameSaves[numberOfSave].diceRollData;
+      return _gameSaveSystem.gameSaves[numberOfSave].DiceRollScribe;
     }
     #endregion
 
@@ -41,7 +39,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
     #endregion
 
     #region CONSTRUCTS
-    
     private GSSSingleton() {
       _gameSaveSystem = CreateGameSaveSystem();
       LoadData();
@@ -57,7 +54,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
     #endregion
 
     #region SAVE_AND_LOAD
-    
     public void LoadData() {
       Load();
       //TODO Invoke(nameof(AfterLoad), 0.2f);
@@ -95,10 +91,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
     #endregion
 
     #region GET_DATA
-    public DiceRollData GetDiceRollData(int numberOfSave = 0) {
-      return _gameSaveSystem.gameSaves[numberOfSave].diceRollData;
-    }
-
+    
     public ClassOfCharacterData GetClassOfCharacterData(int numberOfSave = 0) {
       return _gameSaveSystem.gameSaves.Count == numberOfSave ? new ClassOfCharacterData() : _gameSaveSystem.gameSaves[numberOfSave].classOfCharacterData;
     }
@@ -121,12 +114,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
 
     public QualitiesData GetQualitiesData(int numberOfSave = 0) {
       return _gameSaveSystem.gameSaves.Count == numberOfSave ? new QualitiesData() : _gameSaveSystem.gameSaves[numberOfSave].qualitiesData;
-    }
-
-    public EquipmentsOfCharacterData GetEquipmentsOfCharacterData(int numberOfSave = 0) {
-      return _gameSaveSystem.gameSaves.Count == numberOfSave
-        ? new EquipmentsOfCharacterData(new List<EquipmentCard>())
-        : _gameSaveSystem.gameSaves[numberOfSave].equipmentsOfCharacterData;
     }
     #endregion
 
@@ -151,10 +138,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
     #endregion
 
     #region OPERATORS
-    public static implicit operator DiceRollData(GSSSingleton value) {
-      return Instance.GetDiceRollData();
-    }
-
     public static implicit operator ClassOfCharacterData(GSSSingleton value) {
       return Instance.GetClassOfCharacterData();
     }
@@ -177,10 +160,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
 
     public static implicit operator QualitiesData(GSSSingleton value) {
       return Instance.GetQualitiesData();
-    }
-
-    public static implicit operator EquipmentsOfCharacterData(GSSSingleton value) {
-      return Instance.GetEquipmentsOfCharacterData();
     }
     #endregion
   }

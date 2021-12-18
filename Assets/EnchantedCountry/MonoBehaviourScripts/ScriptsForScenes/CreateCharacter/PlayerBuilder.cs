@@ -18,8 +18,7 @@ using UnityEngine.UI;
 
 namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateCharacter {
   public class PlayerBuilder : MonoBehaviour {
-    #region FIELDS
-    [FormerlySerializedAs("_storageSO"),SerializeField]
+    [FormerlySerializedAs("_storageSO"), SerializeField]
     private StorageSO _storageSo;
     [SerializeField]
     private PlayerCharacter _playerCharacter;
@@ -28,15 +27,13 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     // ReSharper disable once Unity.RedundantSerializeFieldAttribute
     [SerializeField]
     // ReSharper disable once NotAccessedField.Local
-    private EquipmentsOfCharacterDataHandler _equipmentsOfCharacterDataHandler;
+    private IEquipment _equipments;
     [SerializeField]
     private bool _buildOnStart;
-    #endregion
-    
-    #region MONOBEGAVIOR_METHDOS
+
     private void Start() {
       if (_buildOnStart) {
-       Invoke(nameof (BuildPlayer), 0.5f);
+        Invoke(nameof(BuildPlayer), 0.5f);
       }
     }
 
@@ -47,9 +44,106 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     private void OnDisable() {
       RemoveListeners();
     }
-    #endregion
 
-    #region HANDLERS
+    public void BuildPlayer() {
+      _equipments = DataDealer.Peek<EquipmentsScribe>();
+      _playerCharacter = new PlayerCharacter(GetCharacterQualities(), GetCharacterType(), GetLevels(), GetGamePoints(), GetRiskPoints(), GetWallet(), GetEquipmentsOfCharacter(),
+        GetEquipmentsUsed(), GetArmor(), GetShield(), GetRangeWeapon(), GetMeleeWeapon(), GetProjectiles());
+    }
+
+    private GamePoints GetGamePoints() {
+      var gamePoints = new GamePoints(GSSSingleton.Instance.GetGamePointsData().Points);
+      return gamePoints;
+    }
+
+    private Levels GetLevels() {
+      var levels = new Levels(GSSSingleton.Instance.GetGamePointsData().Points);
+      return levels;
+    }
+
+    private RiskPoints GetRiskPoints() {
+      var riskPoints = new RiskPoints(GSSSingleton.Instance.GetRiskPointsData().riskPoints);
+      return riskPoints;
+    }
+
+    private Wallet GetWallet() {
+      var wallet = new Wallet(GSSSingleton.Instance.GetWalletData().NumberOfCoins);
+      return wallet;
+    }
+
+    private EquipmentsOfCharacter GetEquipmentsOfCharacter() {
+      var equipmentsOfCharacter = new EquipmentsOfCharacter(_equipments.GetEquipmentCards());
+      return equipmentsOfCharacter;
+    }
+
+    private EquipmentsUsed GetEquipmentsUsed() {
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
+      var equipmentsUsed = new EquipmentsUsed(equipmentUsedData.armorId, equipmentUsedData.shieldId, equipmentUsedData.oneHandedId, equipmentUsedData.twoHandedId,
+        equipmentUsedData.rangeId, equipmentUsedData.projectiliesId, equipmentUsedData.bagId, equipmentUsedData.animalId, equipmentUsedData.carriageId);
+      return equipmentsUsed;
+    }
+
+    private Armor GetArmor() {
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
+      if (equipmentUsedData.armorId != 0) {
+        ProductSO armorSo = _storageSo.GetArmorFromList(equipmentUsedData.armorId);
+        Armor armor = armorSo.GetArmor();
+        return armor;
+      }
+
+      return null;
+    }
+
+    private Armor GetShield() {
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
+      if (equipmentUsedData.shieldId != 0) {
+        ProductSO shieldSo = _storageSo.GetArmorFromList(equipmentUsedData.animalId);
+        Armor shield = shieldSo.GetArmor();
+        return shield;
+      }
+
+      return null;
+    }
+
+    private Weapon GetMeleeWeapon() {
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
+      if (equipmentUsedData.oneHandedId != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.oneHandedId);
+        Weapon weapon = weaponSo.GetWeapon();
+        return weapon;
+      }
+
+      if (equipmentUsedData.twoHandedId != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.twoHandedId);
+        Weapon weapon = weaponSo.GetWeapon();
+        return weapon;
+      }
+
+      return null;
+    }
+
+    private Weapon GetRangeWeapon() {
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
+      if (equipmentUsedData.rangeId != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.rangeId);
+        Weapon weapon = weaponSo.GetWeapon();
+        return weapon;
+      }
+
+      return null;
+    }
+
+    private Weapon GetProjectiles() {
+      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
+      if (equipmentUsedData.projectiliesId != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.projectiliesId);
+        Weapon weapon = weaponSo.GetWeapon();
+        return weapon;
+      }
+
+      return null;
+    }
+
     private void AddListeners() {
       _createPlayer.onClick.AddListener(BuildPlayer);
     }
@@ -57,221 +151,71 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     private void RemoveListeners() {
       _createPlayer.onClick.RemoveListener(BuildPlayer);
     }
-    #endregion
-
-    #region BUILDER
-    public void BuildPlayer() {
-      _equipmentsOfCharacterDataHandler = new EquipmentsOfCharacterDataHandler(GSSSingleton.Instance);
-      _playerCharacter = new PlayerCharacter(
-        GetCharacterQualities(), 
-        GetCharacterType(),
-        GetLevels(),
-        GetGamePoints(),
-        GetRiskPoints(),
-        GetWallet(),
-        GetEquipmentsOfCharacter(),
-        GetEquipmentsUsed(),
-        GetArmor(),
-        GetShield(),
-        GetRangeWeapon(),
-        GetMeleeWeapon(),
-        GetProjectiles()
-      );
-    }
 
     private CharacterType GetCharacterType() {
       if (Enum.TryParse(GSSSingleton.Instance.GetClassOfCharacterData().nameOfClass, out CharacterType characterType)) {
         return characterType;
       }
+
       return default;
     }
 
     private CharacterQualities GetCharacterQualities() {
-       QualitiesData qualitiesData =  GSSSingleton.Instance;
-       CharacterQualities characterQualities = new CharacterQualities(Quality.QualityType.Strength, qualitiesData.strength, Quality.QualityType.Agility, qualitiesData.agility,
-         Quality.QualityType.Constitution, qualitiesData.constitution, Quality.QualityType.Wisdom, qualitiesData.wisdom, Quality.QualityType.Courage, qualitiesData.courage);
-       return characterQualities;
-    }
-    #endregion
-
-    private GamePoints GetGamePoints() {
-      GamePoints gamePoints = new GamePoints(GSSSingleton.Instance.GetGamePointsData().Points);
-      return gamePoints;
+      QualitiesData qualitiesData = GSSSingleton.Instance;
+      var characterQualities = new CharacterQualities(Quality.QualityType.Strength, qualitiesData.strength, Quality.QualityType.Agility, qualitiesData.agility,
+        Quality.QualityType.Constitution, qualitiesData.constitution, Quality.QualityType.Wisdom, qualitiesData.wisdom, Quality.QualityType.Courage, qualitiesData.courage);
+      return characterQualities;
     }
 
-    private Levels GetLevels() {
-      Levels levels = new Levels(GSSSingleton.Instance.GetGamePointsData().Points);
-      return levels;
-    }
-
-    private RiskPoints GetRiskPoints() {
-      RiskPoints riskPoints = new RiskPoints(GSSSingleton.Instance.GetRiskPointsData().riskPoints);
-      return riskPoints;
-    }
-
-    private Wallet GetWallet() {
-      Wallet wallet = new Wallet(GSSSingleton.Instance.GetWalletData().NumberOfCoins);
-      return wallet;
-    }
-
-    private EquipmentsOfCharacter GetEquipmentsOfCharacter() {
-      EquipmentsOfCharacter equipmentsOfCharacter = new EquipmentsOfCharacter(
-        GSSSingleton.Instance.GetEquipmentsOfCharacterData().EquipmentCards);
-      return equipmentsOfCharacter;
-    }
-
-    private EquipmentsUsed GetEquipmentsUsed() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      EquipmentsUsed equipmentsUsed = new EquipmentsUsed(equipmentUsedData.armorId, equipmentUsedData.shieldId, equipmentUsedData.oneHandedId, equipmentUsedData.twoHandedId,
-        equipmentUsedData.rangeId, equipmentUsedData.projectiliesId, equipmentUsedData.bagId, equipmentUsedData.animalId, equipmentUsedData.carriageId);
-      return equipmentsUsed;
-    }
-
-    private Armor GetArmor() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      if (equipmentUsedData.armorId != 0) {
-        ProductSO armorSo = _storageSo.GetArmorFromList(equipmentUsedData.armorId);
-        Armor armor = armorSo.GetArmor();
-        return armor;
-      } 
-      return null;
-    }
-    
-    private Armor GetShield() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      if (equipmentUsedData.shieldId != 0) {
-        ProductSO shieldSo = _storageSo.GetArmorFromList(equipmentUsedData.animalId);
-        Armor shield = shieldSo.GetArmor();
-        return shield;
-      }
-      return null;
-    }
-    
-    private Weapon GetMeleeWeapon() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      if (equipmentUsedData.oneHandedId != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.oneHandedId);
-        Weapon weapon = weaponSo.GetWeapon();
-        return weapon;
-      } 
-      if (equipmentUsedData.twoHandedId != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.twoHandedId);
-        Weapon weapon = weaponSo.GetWeapon();
-        return weapon;
-      }
-      return null;
-    }
-    
-    private Weapon GetRangeWeapon() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      if (equipmentUsedData.rangeId != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.rangeId);
-        Weapon weapon = weaponSo.GetWeapon();
-        return weapon;
-      } 
-      return null;
-    }
-    
-    private Weapon GetProjectiles() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      if (equipmentUsedData.projectiliesId != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.projectiliesId);
-        Weapon weapon = weaponSo.GetWeapon();
-        return weapon;
-      } 
-      return null;
-    }
-
-    #region PROPERTIES
     public PlayerCharacter PlayerCharacter {
       get {
         return _playerCharacter;
       }
     }
-    #endregion
   }
 
   public class Builder {
-    #region FIELDS
     private const string STORAGE_PATH = "ForBuilder/Storage";
     private readonly StorageSO _storageSo;
-    private PlayerCharacter _playerCharacter;
-    #endregion
 
-    #region CONSTRUCTOR
     public Builder() {
       _storageSo = Resources.Load<StorageSO>(STORAGE_PATH);
     }
-    #endregion
-    #region BUILDER
+
     public PlayerCharacter BuildPlayer() {
-      return new PlayerCharacter(
-        GetCharacterQualities(), 
-        GetCharacterType(),
-        GetLevels(),
-        GetGamePoints(),
-        GetRiskPoints(),
-        GetWallet(),
-        GetEquipmentsOfCharacter(),
-        GetEquipmentsUsed(),
-        GetArmor(),
-        GetShield(),
-        GetRangeWeapon(),
-        GetMeleeWeapon(),
-        GetProjectiles()
-      );
+      return new PlayerCharacter(GetCharacterQualities(), GetCharacterType(), GetLevels(), GetGamePoints(), GetRiskPoints(), GetWallet(), GetEquipmentsOfCharacter(),
+        GetEquipmentsUsed(), GetArmor(), GetShield(), GetRangeWeapon(), GetMeleeWeapon(), GetProjectiles());
     }
-
-    private void Foo() {
-      int i = 5 + 45;
-      
-    }
-    
-    
-    private CharacterType GetCharacterType() {
-      if (Enum.TryParse(GSSSingleton.Instance.GetClassOfCharacterData().nameOfClass, out CharacterType characterType)) {
-        return characterType;
-      }
-      return default;
-    }
-
-    private CharacterQualities GetCharacterQualities() {
-       QualitiesData qualitiesData =  GSSSingleton.Instance;
-       CharacterQualities characterQualities = new CharacterQualities(Quality.QualityType.Strength, qualitiesData.strength, Quality.QualityType.Agility, qualitiesData.agility,
-         Quality.QualityType.Constitution, qualitiesData.constitution, Quality.QualityType.Wisdom, qualitiesData.wisdom, Quality.QualityType.Courage, qualitiesData.courage);
-       return characterQualities;
-    }
-    #endregion
 
     private GamePoints GetGamePoints() {
-      GamePoints gamePoints = new GamePoints(GSSSingleton.Instance.GetGamePointsData().Points);
+      var gamePoints = new GamePoints(GSSSingleton.Instance.GetGamePointsData().Points);
       return gamePoints;
     }
 
     private Levels GetLevels() {
-      Levels levels = new Levels(GSSSingleton.Instance.GetGamePointsData().Points);
+      var levels = new Levels(GSSSingleton.Instance.GetGamePointsData().Points);
       return levels;
     }
 
     private RiskPoints GetRiskPoints() {
-      RiskPoints riskPoints = new RiskPoints(GSSSingleton.Instance.GetRiskPointsData().riskPoints);
+      var riskPoints = new RiskPoints(GSSSingleton.Instance.GetRiskPointsData().riskPoints);
       return riskPoints;
     }
 
     private Wallet GetWallet() {
-      Wallet wallet = new Wallet(GSSSingleton.Instance.GetWalletData().NumberOfCoins);
+      var wallet = new Wallet(GSSSingleton.Instance.GetWalletData().NumberOfCoins);
       return wallet;
     }
 
     private EquipmentsOfCharacter GetEquipmentsOfCharacter() {
-      EquipmentsOfCharacter equipmentsOfCharacter = new EquipmentsOfCharacter(
-        GSSSingleton.Instance.GetEquipmentsOfCharacterData().EquipmentCards);
+      IEquipment equipments = DataDealer.Peek<EquipmentsScribe>();
+      var equipmentsOfCharacter = new EquipmentsOfCharacter(equipments.GetEquipmentCards());
       return equipmentsOfCharacter;
     }
 
     private EquipmentsUsed GetEquipmentsUsed() {
       EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      EquipmentsUsed equipmentsUsed = new EquipmentsUsed(equipmentUsedData.armorId, equipmentUsedData.shieldId, equipmentUsedData.oneHandedId, equipmentUsedData.twoHandedId,
+      var equipmentsUsed = new EquipmentsUsed(equipmentUsedData.armorId, equipmentUsedData.shieldId, equipmentUsedData.oneHandedId, equipmentUsedData.twoHandedId,
         equipmentUsedData.rangeId, equipmentUsedData.projectiliesId, equipmentUsedData.bagId, equipmentUsedData.animalId, equipmentUsedData.carriageId);
       return equipmentsUsed;
     }
@@ -282,10 +226,11 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
         ProductSO armorSo = _storageSo.GetArmorFromList(equipmentUsedData.armorId);
         Armor armor = armorSo.GetArmor();
         return armor;
-      } 
+      }
+
       return null;
     }
-    
+
     private Armor GetShield() {
       EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       if (equipmentUsedData.shieldId != 0) {
@@ -293,50 +238,64 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
         Armor shield = shieldSo.GetArmor();
         return shield;
       }
+
       return null;
     }
-    
+
     private Weapon GetMeleeWeapon() {
       EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       if (equipmentUsedData.oneHandedId != 0) {
         ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.oneHandedId);
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
-      } 
+      }
+
       if (equipmentUsedData.twoHandedId != 0) {
         ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.twoHandedId);
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
       }
+
       return null;
     }
-    
+
     private Weapon GetRangeWeapon() {
       EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       if (equipmentUsedData.rangeId != 0) {
         ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.rangeId);
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
-      } 
+      }
+
       return null;
     }
-    
+
     private Weapon GetProjectiles() {
       EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
       if (equipmentUsedData.projectiliesId != 0) {
         ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.projectiliesId);
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
-      } 
+      }
+
       return null;
     }
 
-    #region PROPERTIES
-    public PlayerCharacter PlayerCharacter {
-      get {
-        return _playerCharacter;
+    private CharacterType GetCharacterType() {
+      if (Enum.TryParse(GSSSingleton.Instance.GetClassOfCharacterData().nameOfClass, out CharacterType characterType)) {
+        return characterType;
       }
+
+      return default;
     }
-    #endregion
+
+    private CharacterQualities GetCharacterQualities() {
+      QualitiesData qualitiesData = GSSSingleton.Instance;
+      var characterQualities = new CharacterQualities(Quality.QualityType.Strength, qualitiesData.strength, Quality.QualityType.Agility, qualitiesData.agility,
+        Quality.QualityType.Constitution, qualitiesData.constitution, Quality.QualityType.Wisdom, qualitiesData.wisdom, Quality.QualityType.Courage, qualitiesData.courage);
+      return characterQualities;
+    }
+
+    public PlayerCharacter PlayerCharacter { get; }
   }
 }

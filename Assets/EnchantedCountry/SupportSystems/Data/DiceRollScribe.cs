@@ -3,15 +3,47 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace Core.EnchantedCountry.SupportSystems.Data {
+  /// <summary>
+  ///   Интерфейс для работы с бросками характеристик.
+  /// </summary>
   public interface IDiceRoll {
+    /// <summary>
+    ///   Получить бросок характеристики.
+    /// </summary>
+    /// <param name="statRolls">Номер броска харасктеристики.</param>
+    /// <returns>Значение броска характеристики.</returns>
     public int GetStatsRoll(StatRolls statRolls);
+
+    /// <summary>
+    ///   Установить значение броска характеристики.
+    /// </summary>
+    /// <param name="statRolls">Номер броска харасктеристики.</param>
+    /// <param name="value">Значение броска характеристики.</param>
     public void SetStarsRoll(StatRolls statRolls, int value);
+
+    /// <summary>
+    ///   Изменить  значение броска характеристики.
+    /// </summary>
+    /// <param name="statRolls">Номер броска харасктеристики.</param>
+    /// <param name="value">Значение на сколько надо изменить бросок характеристики.</param>
     public void ChangeStatsRoll(StatRolls statRolls, int value);
 
+    /// <summary>
+    ///   Получить все броски характеристики.
+    /// </summary>
+    /// <returns>Броски характеристи.</returns>
     public int[] GetDiceRollValues();
 
+    /// <summary>
+    ///   Получить количество бросков характеристики.
+    /// </summary>
+    /// <returns>Количество бросков характеристики.</returns>
     public int GetNumberOfDiceRolls();
 
+    /// <summary>
+    ///   Установить новые значение бросков характеристики.
+    /// </summary>
+    /// <param name="diceRollValues">Новые значение бросков характеристики.</param>
     public void SetDiceRollValues(int[] diceRollValues);
   }
 
@@ -30,7 +62,7 @@ namespace Core.EnchantedCountry.SupportSystems.Data {
   ///   Класс для сохранения значений, полученых броском костей характеристик.
   /// </summary>
   [Serializable]
-  public class DiceRollData : IScribe, IDiceRoll {
+  public class DiceRollScribe : IScribe, IDiceRoll {
     private readonly int[] _startRollValues = { 0, 0, 0, 0, 0 };
     private DiceRollDataSave _diceRollDataSave;
 
@@ -116,7 +148,7 @@ namespace Core.EnchantedCountry.SupportSystems.Data {
       _diceRollDataSave.DiceRollValues = diceRollValues;
     }
 
-    public void Init(SaveGame saveGame = null) {
+    void IScribe.Init(SaveGame saveGame) {
       _diceRollDataSave = new DiceRollDataSave(_startRollValues);
       if (saveGame is null) {
         return;
@@ -125,13 +157,13 @@ namespace Core.EnchantedCountry.SupportSystems.Data {
       saveGame.DiceRollDataSave = _diceRollDataSave;
     }
 
-    public void Save(SaveGame saveGame) {
+    void IScribe.Save(SaveGame saveGame) {
       saveGame.DiceRollDataSave = _diceRollDataSave;
     }
 
-    public void Loaded(SaveGame saveGame) {
+    void IScribe.Loaded(SaveGame saveGame) {
       _diceRollDataSave.DiceRollValues = saveGame.DiceRollDataSave.DiceRollValues;
-      for (int i = 0; i < _diceRollDataSave.DiceRollValues.Length; i++) {
+      for (var i = 0; i < _diceRollDataSave.DiceRollValues.Length; i++) {
         Debug.LogWarning(_diceRollDataSave.DiceRollValues[i]);
       }
     }
@@ -155,7 +187,7 @@ namespace Core.EnchantedCountry.SupportSystems.Data {
         Debug.LogWarning($"Броска характеристики не существует: индекс {index}, длина массива {DiceRollValues.Length}");
         return;
       }
-      
+
       DiceRollValues[index] = diceRollValue;
     }
 

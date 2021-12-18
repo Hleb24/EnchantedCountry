@@ -6,96 +6,93 @@ using static Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Armor.Armor;
 using static Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Weapon.Weapon;
 
 namespace Core.EnchantedCountry.ScriptableObject.ProductObject {
-	[CreateAssetMenu(fileName = "New Products", menuName = "Product", order = 54)]
-	public class ProductSO : UnityEngine.ScriptableObject {
-		#region Emums
-		public enum ProductType {
-			None,
-			Weapon,
-			Armor,
-			Item
-		}
-		#endregion
-		#region Fields
-		public ProductType productType;
-		public UnityEngine.ScriptableObject item;
-		public string productName = "";
-		public string description = "";
-		public string Property;
-		public int price;
-		public int id;
-		public Sprite icon;
-		#endregion
-		#region Methods
-		public void OnValidate() {
-			GetNameWithItem();
-		}
+  [CreateAssetMenu(fileName = "New Products", menuName = "Product", order = 54)]
+  public class ProductSO : UnityEngine.ScriptableObject {
+    public static implicit operator Armor(ProductSO productSo) {
+      return productSo.GetArmor();
+    }
 
-		public void OnEnable() {
-			GetNameWithItem();
-		}
+    public static implicit operator Weapon(ProductSO productSo) {
+      return productSo.GetWeapon();
+    }
 
-		private void GetNameWithItem() {
-			IsWeaponObject();
-			IsArmorObject();
-		}
+    public enum ProductType {
+      None,
+      Weapon,
+      Armor,
+      Item
+    }
 
-		private void IsWeaponObject() {
-			if (item is WeaponObject w) {
-				if (w.effectName != string.Empty) {
-					string tempName = w.effectName + " " + w.weaponName;
-					productName = tempName;
-				} else {
-					productName = w.weaponName;
-				}
-				Property = w.minDamage.ToString() + " - " + w.maxDamage.ToString();
-				id = w.id;
-			}
-		}
+    public ProductType productType;
+    public UnityEngine.ScriptableObject item;
+    public string productName = "";
+    public string description = "";
+    public string Property;
+    public int price;
+    public int id;
+    public Sprite icon;
 
-		private void IsArmorObject() {
-			if (item is ArmorObject.ArmorObject a) {
-				if (a.effectName != string.Empty) {
-					string tempName = a.effectName + " " + a.armorName;
-					productName = tempName;
-				} else {
-					productName = a.armorName;
-				}
-				Property = a.classOfArmor.ToString();
-				id = a.id;
-			}
-		}
+    public void OnEnable() {
+      GetNameWithItem();
+    }
 
-		public WeaponType GetWeaponType() {
-			WeaponObject weapon = item as WeaponObject;
-			return weapon.weaponType;
-		}
+    public void OnValidate() {
+      GetNameWithItem();
+    }
 
-		public ArmorType GetArmorType() {
-			ArmorObject.ArmorObject armor = item as ArmorObject.ArmorObject;
-			return armor.armorType;
-		}
+    public WeaponType GetWeaponType() {
+      var weapon = item as WeaponObject;
+      return weapon.weaponType;
+    }
 
-		public Armor GetArmor() {
-			ArmorObject.ArmorObject armorObject = item as ArmorObject.ArmorObject;
-			Armor armor = armorObject.InitArmor();
-			return armor;
-		}
-		
-		public Weapon GetWeapon() {
-			WeaponObject weaponObject = item as WeaponObject;
-			Weapon weapon = weaponObject.InitWeapon();
-			return weapon;
-		}
-		#endregion
+    public ArmorType GetArmorType() {
+      var armor = item as ArmorObject.ArmorObject;
+      return armor.armorType;
+    }
 
-		#region OPERATIONS
-		public static implicit operator Armor(ProductSO productSo) {
-			return productSo.GetArmor();
-		}
-		public static implicit operator Weapon(ProductSO productSo) {
-			return productSo.GetWeapon();
-		}
-		#endregion
-	}
+    public Armor GetArmor() {
+      var armorObject = item as ArmorObject.ArmorObject;
+      Armor armor = armorObject.InitArmor();
+      return armor;
+    }
+
+    public Weapon GetWeapon() {
+      var weaponObject = item as WeaponObject;
+      Weapon weapon = weaponObject.InitWeapon();
+      return weapon;
+    }
+
+    private void GetNameWithItem() {
+      IsWeaponObject();
+      IsArmorObject();
+    }
+
+    private void IsWeaponObject() {
+      if (item is WeaponObject w) {
+        if (w.effectName != string.Empty) {
+          string tempName = w.effectName + " " + w.weaponName;
+          productName = tempName;
+        } else {
+          productName = w.weaponName;
+        }
+
+        Property = w.minDamage + " - " + w.maxDamage;
+        id = w.id;
+      }
+    }
+
+    private void IsArmorObject() {
+      if (item is ArmorObject.ArmorObject a) {
+        if (a.effectName != string.Empty) {
+          string tempName = a.effectName + " " + a.armorName;
+          productName = tempName;
+        } else {
+          productName = a.armorName;
+        }
+
+        Property = a.classOfArmor.ToString();
+        id = a.id;
+      }
+    }
+  }
 }

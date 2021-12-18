@@ -21,7 +21,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 		private StorageSO _storage;
 		[SerializeField]
 		private Button _buyProduct;
-		private EquipmentsOfCharacterDataHandler _equipmentsOfCharacterDataHandler;
+		private IEquipment _equipments;
 		private WalletData _walletData;
 		// ReSharper disable once NotAccessedField.Local
 		private Wallet _wallet;
@@ -40,7 +40,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 		private void Start() {
 			_walletData = GSSSingleton.Instance;
 			_wallet = new Wallet(_walletData);
-			_equipmentsOfCharacterDataHandler = new EquipmentsOfCharacterDataHandler(GSSSingleton.Instance);
+			_equipments = DataDealer.Peek<EquipmentsScribe>();
 		}
 
 		private void OnEnable() {
@@ -119,7 +119,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 
 		private void AddProductToEquipmentCard(int id, int amount = 1) {
 			_equipment.IncreaseQuantityOfProduct(id, amount);
-			_equipmentsOfCharacterDataHandler.IncreaseQuantityOfProduct(id, amount);
+			_equipments.ChangeQuantity(id, amount);
 			GSSSingleton.Instance.SaveInGame();
 		}
 		#endregion
@@ -138,9 +138,9 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 			}
 		}
 
-		public EquipmentsOfCharacterDataHandler EquipmentsOfCharacterDataHandler {
+		public IEquipment Equipments {
 			get {
-				return _equipmentsOfCharacterDataHandler;
+				return _equipments;
 			}
 		}
 		#endregion
