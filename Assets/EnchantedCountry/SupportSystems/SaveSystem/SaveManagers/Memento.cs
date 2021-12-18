@@ -19,7 +19,8 @@ namespace Core {
       _scribesMemento = new Dictionary<Type, IScribe> {
         { typeof(DiceRollScribe), new DiceRollScribe() },
         { typeof(EquipmentsScribe), new EquipmentsScribe() },
-        { typeof(EquipmentUsedScribe), new EquipmentUsedScribe() }
+        { typeof(EquipmentUsedScribe), new EquipmentUsedScribe() },
+        { typeof(WalletScribe), new WalletScribe() }
       };
 
       foreach (IScribe scribe in _scribesMemento.Values) {

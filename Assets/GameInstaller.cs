@@ -9,7 +9,7 @@ namespace Aberrance {
   public class GameInstaller : MonoInstaller {
     public override void InstallBindings() {
       Container.Bind<ClassOfCharacterData>().AsSingle();
-      Container.Bind<WalletData>().AsSingle();
+      Container.Bind<WalletDataSave>().AsSingle();
       Container.Bind<RiskPointsData>().AsSingle();
       Container.Bind<EquipmentUsedDataSave>().AsSingle();
       Container.Bind<GamePointsData>().AsSingle();

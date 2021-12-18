@@ -100,9 +100,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 			return riskPoints;
 		}
 
-		private Wallet GetWallet() {
-			Wallet wallet = new Wallet(GSSSingleton.Instance.GetWalletData().NumberOfCoins);
-			return wallet;
+		private IWallet GetWallet() {
+			return ScribeDealer.Peek<WalletScribe>();
 		}
 
 		private EquipmentsOfCharacter GetEquipmentsOfCharacter() {

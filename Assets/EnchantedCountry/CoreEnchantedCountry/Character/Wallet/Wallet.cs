@@ -7,16 +7,18 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Wallet {
 		private const int BottomBorder = 0;
 		private int _maxAmountOfCoins = 0;
 		private int _coins;
+		private IWallet _wallet;
 		#endregion
 		#region Constructors
 		public Wallet() { }
 		public Wallet(int startCoins) {
+			_wallet = ScribeDealer.Peek<WalletScribe>();
 			coins = startCoins;
 		}
 
-		public Wallet(WalletData walletData) {
-			_coins = walletData.NumberOfCoins;
-			_maxAmountOfCoins = walletData.MaxAmountOfCoins;
+		public Wallet(WalletDataSave walletDataSave) {
+			_coins = walletDataSave.Coins;
+			_maxAmountOfCoins = walletDataSave.MaxCoins;
 		}
 		#endregion
 		#region Properties
@@ -27,11 +29,12 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Wallet {
 			set {
 				if (value >= BottomBorder || value <= _maxAmountOfCoins) {
 					_coins = value;
-					GSSSingleton.Instance.GetWalletData().NumberOfCoins = value;
+					
+					_wallet.SetCoins(value);
 					GSSSingleton.Instance.SaveInGame();
 				} else {
 					_coins = BottomBorder;
-					GSSSingleton.Instance.GetWalletData().NumberOfCoins = value;
+					_wallet.SetCoins(value);
 					GSSSingleton.Instance.SaveInGame();
 				}
 			}
@@ -42,7 +45,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Wallet {
 			}
 			set {
 				_maxAmountOfCoins = value;
-				GSSSingleton.Instance.GetWalletData().MaxAmountOfCoins = value;
+				_wallet.SetMaxCoins(value);
 				GSSSingleton.Instance.SaveInGame();
 			}
 		}

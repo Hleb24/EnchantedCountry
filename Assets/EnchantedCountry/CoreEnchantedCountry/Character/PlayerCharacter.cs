@@ -8,6 +8,7 @@ using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Impact;
 using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Initiative;
 using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.RiskPoints;
 using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Weapon;
+using Core.EnchantedCountry.SupportSystems.Data;
 using UnityEngine;
 
 namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
@@ -29,7 +30,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
     private Levels.Levels _levels;
     private GamePoints.GamePoints _gamePoints;
     private RiskPoints _riskPoints;
-    private Wallet.Wallet _wallet;
+    private IWallet _wallet;
     private ArmorClass _armorClassOfCharacter;
     private EquipmentsOfCharacter _equipmentsOfCharacter;
     private EquipmentsUsed _equipmentsUsed;
@@ -146,7 +147,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
     #endregion
     #region CONSTRUCTORS
     public PlayerCharacter(CharacterQualities characterQualities, CharacterType characterType, Levels.Levels levels, GamePoints.GamePoints gamePoints, RiskPoints riskPoints,
-      Wallet.Wallet wallet, EquipmentsOfCharacter equipmentsOfCharacter, EquipmentsUsed equipmentsUsed, Armor armor, Armor shield, Weapon rangeWeapon, Weapon meleeWeapon,
+      IWallet wallet, EquipmentsOfCharacter equipmentsOfCharacter, EquipmentsUsed equipmentsUsed, Armor armor, Armor shield, Weapon rangeWeapon, Weapon meleeWeapon,
       Weapon projectiles) {
       _characterQualities = characterQualities;
       _characterType = characterType;
@@ -215,7 +216,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
       }
     }
 
-    public Wallet.Wallet Wallet {
+    public IWallet Wallet {
       get {
         return _wallet;
       }

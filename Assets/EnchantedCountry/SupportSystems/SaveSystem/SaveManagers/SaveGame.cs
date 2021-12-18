@@ -11,6 +11,7 @@ namespace Core {
     public DiceRollDataSave DiceRollDataSave;
     public EquipmentsDataSave EquipmentsDataSave;
     public EquipmentUsedDataSave EquipmentUsedDataSave;
+    public WalletDataSave WalletDataSave;
 
     /// <summary>
     ///   Создаёт новые сохранённые данные.
@@ -22,7 +23,8 @@ namespace Core {
       var scribes = new Dictionary<Type, IScribe> {
         { typeof(DiceRollScribe), new DiceRollScribe() },
         { typeof(EquipmentsScribe), new EquipmentsScribe() },
-        { typeof(EquipmentUsedScribe), new EquipmentUsedScribe() }
+        { typeof(EquipmentUsedScribe), new EquipmentUsedScribe() },
+        { typeof(WalletScribe), new WalletScribe() }
         
       };
       foreach (IScribe scribe in scribes.Values) {

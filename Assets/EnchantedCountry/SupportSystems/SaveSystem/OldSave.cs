@@ -8,7 +8,7 @@ namespace Core.EnchantedCountry.SupportSystems.SaveSystem {
   public class OldSave {
     public DiceRollScribe DiceRollScribe;
     public ClassOfCharacterData classOfCharacterData;
-    public WalletData walletData;
+    public WalletDataSave WalletDataSave;
     public RiskPointsData riskPointsData;
     public EquipmentUsedDataSave EquipmentUsedDataSave;
     public EquipmentsScribe EquipmentsScribe;
@@ -18,14 +18,14 @@ namespace Core.EnchantedCountry.SupportSystems.SaveSystem {
     public OldSave() {
       DiceRollScribe = new DiceRollScribe();
       classOfCharacterData = new ClassOfCharacterData();
-      walletData = new WalletData();
+      WalletDataSave = new WalletDataSave();
       riskPointsData = new RiskPointsData();
       EquipmentUsedDataSave = new EquipmentUsedDataSave();
       gamePointsData = new GamePointsData();
       qualitiesData = new QualitiesData();
       EquipmentsScribe = new EquipmentsScribe();
       _resetSaves = new List<ResetSave>() {
-         classOfCharacterData, walletData,
+         classOfCharacterData,
         riskPointsData, gamePointsData,
         qualitiesData
       };

@@ -22,9 +22,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 		[SerializeField]
 		private Button _buyProduct;
 		private IEquipment _equipments;
-		private WalletData _walletData;
 		// ReSharper disable once NotAccessedField.Local
-		private Wallet _wallet;
+		private IWallet _wallet;
 		private int _selectedId;
 
 
@@ -38,8 +37,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 		}
 
 		private void Start() {
-			_walletData = GSSSingleton.Instance;
-			_wallet = new Wallet(_walletData);
+			_wallet = ScribeDealer.Peek<WalletScribe>();
 			_equipments = ScribeDealer.Peek<EquipmentsScribe>();
 		}
 
@@ -66,7 +64,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 				return;
 			}
 			_selectedId = id;
-			if (!CanBuyProduct(_walletIn.Wallet.coins, GetPrice(_selectedId))) {
+			if (!CanBuyProduct(_walletIn.Wallet.GetCoins(), GetPrice(_selectedId))) {
 				DisableInteractableForBuyProductButton();
 				return;
 			}
@@ -83,21 +81,20 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 			if (_selectedId == EquipmentIdConstants.NoArmorId)
 				return;
 			int price = GetPrice(_selectedId);
-			if (CanBuyProduct(_walletIn.Wallet.coins, price)) {
-				_walletIn.Wallet.coins = _walletIn.Wallet.coins - price;
+			if (CanBuyProduct(_walletIn.Wallet.GetCoins(), price)) {
+				_walletIn.Wallet.SetCoins(_walletIn.Wallet.GetCoins() - price);
 				AddProductToEquipmentCard(_selectedId);
 				BuyProductSuccess?.Invoke();
 				BuyProductSuccessAndCheckPrice?.Invoke(_selectedId);
 				GSSSingleton.Instance.SaveInGame();
 			}
-			if (!CanBuyProduct(_walletIn.Wallet.coins, GetPrice(_selectedId))) {
+			if (!CanBuyProduct(_walletIn.Wallet.GetCoins(), GetPrice(_selectedId))) {
 				DisableInteractableForBuyProductButton();
 			}
 		}
 		
 		private void OnOpenTrurlsShopCanvas() {
-			_walletData = GSSSingleton.Instance;
-			_wallet = new Wallet(_walletData);
+			_wallet = ScribeDealer.Peek<WalletScribe>();
 		}
 		#endregion
 		#region FIRST_OPENING

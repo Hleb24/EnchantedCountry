@@ -95,10 +95,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
       return _gameSaveSystem.gameSaves.Count == numberOfSave ? new ClassOfCharacterData() : _gameSaveSystem.gameSaves[numberOfSave].classOfCharacterData;
     }
 
-    public WalletData GetWalletData(int numberOfSave = 0) {
-      return _gameSaveSystem.gameSaves.Count == numberOfSave ? new WalletData() : _gameSaveSystem.gameSaves[numberOfSave].walletData;
-    }
-
     public RiskPointsData GetRiskPointsData(int numberOfSave = 0) {
       return _gameSaveSystem.gameSaves.Count == numberOfSave ? new RiskPointsData() : _gameSaveSystem.gameSaves[numberOfSave].riskPointsData;
     }
@@ -135,10 +131,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
     #region OPERATORS
     public static implicit operator ClassOfCharacterData(GSSSingleton value) {
       return Instance.GetClassOfCharacterData();
-    }
-
-    public static implicit operator WalletData(GSSSingleton value) {
-      return Instance.GetWalletData();
     }
 
     public static implicit operator RiskPointsData(GSSSingleton value) {

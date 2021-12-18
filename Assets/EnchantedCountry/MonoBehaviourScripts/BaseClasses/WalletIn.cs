@@ -14,19 +14,17 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.BaseClasses {
 		[SerializeField]
 		protected WalletSO _walletSo;
 		[SerializeField]
-		protected WalletData _walletData;
-		protected Wallet _wallet;
+		protected IWallet _wallet;
 		[SerializeField]
 		protected bool _useGameSave;
 		#endregion
 		#region MONOBEHAVIOUR_METHODS
 		private void Start() {
-			_walletData = GSSSingleton.Instance;
 			Invoke(nameof(InitializeWallet), 0.1f);
 		}
 
 		protected void InitializeWallet() {
-			_wallet = new Wallet(_walletData);
+			_wallet = ScribeDealer.Peek<WalletScribe>();
 		}
 
 		protected virtual void OnEnable() {
@@ -34,21 +32,20 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.BaseClasses {
 		}
 
 		protected virtual void OnDisable() {
-			_walletData.NumberOfCoins = _wallet.coins;
 			GSSSingleton.Instance.SaveInGame();
 		}
 		#endregion
 		#region SET_WALLET_TEXT
 		protected void SetWalletText() {
 			if (_useGameSave) {
-				_coins.text = _wallet.coins.ToString();
+				_coins.text = _wallet.GetCoins().ToString();
 			} else {
 				_coins.text = _walletSo.numberOfCoins.ToString();
 			}
 		}
 		#endregion
 		#region PROPERTIES
-		public Wallet Wallet{
+		public IWallet Wallet{
 			get {
 				return _wallet;
 			}

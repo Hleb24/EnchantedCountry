@@ -204,7 +204,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 
       maxCoins += int.Parse(storageSo.GetProductFromList(EquipmentIdConstants.Pockets).Property);
       _maxAmountOfCoins = maxCoins;
-      _walletIn.Wallet.MaxAmountOfCoins = _maxAmountOfCoins;
+      _walletIn.Wallet.SetMaxCoins(_maxAmountOfCoins);
     }
     #endregion
     #region GET_PARAMETERS
