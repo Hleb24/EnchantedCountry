@@ -10,6 +10,7 @@ namespace Core {
   public class SaveGame {
     public DiceRollDataSave DiceRollDataSave;
     public EquipmentsDataSave EquipmentsDataSave;
+    public EquipmentUsedDataSave EquipmentUsedDataSave;
 
     /// <summary>
     ///   Создаёт новые сохранённые данные.
@@ -20,7 +21,9 @@ namespace Core {
 
       var scribes = new Dictionary<Type, IScribe> {
         { typeof(DiceRollScribe), new DiceRollScribe() },
-        { typeof(EquipmentsScribe), new EquipmentsScribe() }
+        { typeof(EquipmentsScribe), new EquipmentsScribe() },
+        { typeof(EquipmentUsedScribe), new EquipmentUsedScribe() }
+        
       };
       foreach (IScribe scribe in scribes.Values) {
         scribe.Init(save);

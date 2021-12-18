@@ -28,7 +28,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     private TMP_Text _rangeDamageText;
     [SerializeField]
     private TMP_Text _maxAmountOfCoinsText;
-    private EquipmentUsedData _equipmentUsedData;
+    private IEquipmentUsed _equipmentUsed;
     private Qualities _qualities;
     private int _classOfArmor;
     private int _meleeAttack;
@@ -41,7 +41,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     #endregion
     #region MONOBEHAVIOUR_METHODS
     private void Start() {
-      _equipmentUsedData = GSSSingleton.Instance;
+      _equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
       Invoke(nameof(SetQualities), 0.1f);
     }
 
@@ -189,16 +189,16 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     #region MAX_AMOUNT_OF_COINS
     private void MaxAmountOfCoins(StorageSO storageSo) {
       int maxCoins = 0;
-      if (_equipmentUsedData.bagId != 0) {
-        ProductSO productSo = storageSo.GetProductFromList(_equipmentUsedData.bagId);
+      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.BagId) != 0) {
+        ProductSO productSo = storageSo.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.BagId) );
         maxCoins += int.Parse(productSo.Property);
       }
-      if (_equipmentUsedData.animalId != 0) {
-        ProductSO productSo = storageSo.GetProductFromList(_equipmentUsedData.animalId);
+      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.AnimalId) != 0) {
+        ProductSO productSo = storageSo.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.AnimalId));
         maxCoins += int.Parse(productSo.Property);
       }
-      if (_equipmentUsedData.carriageId != 0) {
-        ProductSO productSo = storageSo.GetProductFromList(_equipmentUsedData.carriageId);
+      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.CarriageId) != 0) {
+        ProductSO productSo = storageSo.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.CarriageId));
         maxCoins += int.Parse(productSo.Property);
       }
 
@@ -209,20 +209,20 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     #endregion
     #region GET_PARAMETERS
     private void ArmorClassParameters() {
-      GetArmorClass(_spawnProducts.StorageSo, _equipmentUsedData.armorId);
+      GetArmorClass(_spawnProducts.StorageSo, _equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId));
     }
 
     private void MeleeParameters() {
-      GetAttackForMeleeWeapon(_spawnProducts.StorageSo, _equipmentUsedData.oneHandedId, _equipmentUsedData.twoHandedId);
+      GetAttackForMeleeWeapon(_spawnProducts.StorageSo, _equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId), _equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId));
       SetTextForParameters(_meleeAttackText, _meleeAttack);
-      GetDamageForMeleeWeapon(_spawnProducts.StorageSo, _equipmentUsedData.oneHandedId, _equipmentUsedData.twoHandedId);
+      GetDamageForMeleeWeapon(_spawnProducts.StorageSo, _equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId), _equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId));
       SetTextForParameters(_meleeDamageText, _meleeMinDamage, _meleeMaxDamage);
     }
 
     private void RangeParameters() {
-      GetAttackForRangeWeapon(_spawnProducts.StorageSo, _equipmentUsedData.rangeId);
+      GetAttackForRangeWeapon(_spawnProducts.StorageSo,_equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId));
       SetTextForParameters(_rangeAttackText, _rangeAttack);
-      GetDamageForRangeWeapon(_spawnProducts.StorageSo, _equipmentUsedData.rangeId, _equipmentUsedData.projectiliesId);
+      GetDamageForRangeWeapon(_spawnProducts.StorageSo, _equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId), _equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId));
       SetTextForParameters(_rangeDamageText, _rangeMinDamage, _rangeMaxDamage);
     }
 

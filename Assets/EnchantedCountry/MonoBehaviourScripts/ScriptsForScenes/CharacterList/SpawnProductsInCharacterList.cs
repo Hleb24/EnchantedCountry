@@ -83,7 +83,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     }
 
     private void Start() {
-      _equipments = DataDealer.Peek<EquipmentsScribe>();
+      _equipments = ScribeDealer.Peek<EquipmentsScribe>();
     }
     #endregion
 

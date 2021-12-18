@@ -18,14 +18,15 @@ namespace Core {
 
       _scribesMemento = new Dictionary<Type, IScribe> {
         { typeof(DiceRollScribe), new DiceRollScribe() },
-        { typeof(EquipmentsScribe), new EquipmentsScribe() }
+        { typeof(EquipmentsScribe), new EquipmentsScribe() },
+        { typeof(EquipmentUsedScribe), new EquipmentUsedScribe() }
       };
 
       foreach (IScribe scribe in _scribesMemento.Values) {
         scribe.Init();
       }
 
-      DataDealer.Init(_scribesMemento);
+      ScribeDealer.Init(_scribesMemento);
       Load();
     }
 

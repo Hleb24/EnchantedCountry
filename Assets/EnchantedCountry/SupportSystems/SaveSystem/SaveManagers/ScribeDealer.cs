@@ -6,7 +6,7 @@ namespace Core {
   /// <summary>
   ///   Класс доступа к данным сохранений игры.
   /// </summary>
-  public static class DataDealer {
+  public static class ScribeDealer {
     private static Dictionary<Type, IScribe> _scribes;
 
     /// <summary>

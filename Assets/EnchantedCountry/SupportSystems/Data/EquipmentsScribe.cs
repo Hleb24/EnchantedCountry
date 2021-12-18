@@ -6,11 +6,17 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace Core.EnchantedCountry.SupportSystems.Data {
+  /// <summary>
+  /// Интерфейс для работы с снаряжением.
+  /// </summary>
   public interface IEquipment {
     public void ChangeQuantity(int id, int amount);
     public List<EquipmentCard> GetEquipmentCards();
   }
 
+  /// <summary>
+  /// Класс для хранения данных об снаряжении.
+  /// </summary>
   [Serializable]
   public class EquipmentsScribe : IScribe, IEquipment {
     private readonly List<int> _startEquipments = new List<int> {

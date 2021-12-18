@@ -16,7 +16,7 @@ using static Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Weapon.Weapon;
 namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterList {
   public class ApplyAndTakeOffEquipment : MonoBehaviour {
     #region FIELDS
-    private EquipmentUsedData _equipmentUsedData;
+    private IEquipmentUsed _equipmentUsed;
     [SerializeField]
     private StorageSO _storage;
     [SerializeField]
@@ -108,10 +108,11 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     }
 
     private void SetTupleByIdOnApplyButtonClicked() {
-      if (_id.Equals(0))
+      if (_id.Equals(0)) {
         return;
-      ProductSO productSo = _storage.GetProductFromList(_id) ??
-                            throw new ArgumentNullException($"_storage.GetProductFromList(_id)");
+      }
+
+      ProductSO productSo = _storage.GetProductFromList(_id) ?? throw new ArgumentNullException("_storage.GetProductFromList(_id)");
       ProductSO.ProductType productType = productSo.productType;
       switch (productType) {
         case ProductSO.ProductType.Weapon:
@@ -123,7 +124,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
               SetUsedEquipmentDataForOneHandedWeapon();
               TakeOffUsedEquipment(_twoHandedTuple.Item2);
               SetIdForTwoHandedTuple(0);
-              SetTextForTwoHandedTuple(String.Empty);
+              SetTextForTwoHandedTuple(string.Empty);
               SetUsedEquipmentDataForTwoHandedWeapon();
             }
 
@@ -136,8 +137,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
               TakeOffUsedEquipment(_oneHandedTuple.Item2);
               SetIdForShieldTuple(0);
               SetIdForOneHandedTuple(0);
-              SetTextForShieldTuple(String.Empty);
-              SetTextForOneHandedTuple(String.Empty);
+              SetTextForShieldTuple(string.Empty);
+              SetTextForOneHandedTuple(string.Empty);
               SetUsedEquipmentDataForShield();
               SetUsedEquipmentDataForOneHandedWeapon();
             }
@@ -148,17 +149,17 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
               SetIdForRangeTuple();
               SetTextForRangeTuple(productSo.productName);
               SetUsedEquipmentDataForRangeWeapon();
-              
             }
+
             if ((weapon.weaponType & _projectiliesTuple.Item1) != WeaponType.None) {
-                CheckRangeSetForProjectiles(weapon); 
-                TakeOffUsedEquipment(_projectiliesTuple.Item2);
-                SetIdForProjectiliesTuple();
-                SetTextForProjectiliesTuple(productSo.productName);
-                SetUsedEquipmentDataForProjectilies();
-              
+              CheckRangeSetForProjectiles(weapon);
+              TakeOffUsedEquipment(_projectiliesTuple.Item2);
+              SetIdForProjectiliesTuple();
+              SetTextForProjectiliesTuple(productSo.productName);
+              SetUsedEquipmentDataForProjectiles();
             }
           }
+
           break;
         case ProductSO.ProductType.Armor:
           if (productSo.item is ArmorObject armor) {
@@ -168,6 +169,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
               SetTextForArmorTuple(productSo.productName);
               SetUsedEquipmentDataForArmor();
             }
+
             if ((armor.armorType & _shieldTuple.Item1) != ArmorType.None) {
               TakeOffUsedEquipment(_shieldTuple.Item2);
               SetIdForShieldTuple();
@@ -175,10 +177,11 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
               SetUsedEquipmentDataForShield();
               TakeOffUsedEquipment(_twoHandedTuple.Item2);
               SetIdForTwoHandedTuple(0);
-              SetTextForTwoHandedTuple(String.Empty);
+              SetTextForTwoHandedTuple(string.Empty);
               SetUsedEquipmentDataForTwoHandedWeapon();
             }
           }
+
           break;
         case ProductSO.ProductType.Item:
           if (EquipmentIdConstants.Bags.Contains(_id)) {
@@ -187,20 +190,24 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
             SetTextForBag(productSo.productName);
             SetUsedEquipmentDataForBag();
           }
+
           if (EquipmentIdConstants.Animals.Contains(_id)) {
             TakeOffUsedEquipment(_animalId);
             SetIdForAnimal(_id);
             SetTextForAnimal(productSo.productName);
             SetUsedEquipmentDataForAnimal();
           }
+
           if (EquipmentIdConstants.Carriages.Contains(_id)) {
             TakeOffUsedEquipment(_carriageId);
             SetIdForCarriage(_id);
             SetTextForCarriage(productSo.productName);
             SetUsedEquipmentDataForCarriage();
           }
+
           break;
       }
+
       SaveUsedEquipmentData();
       ApplyButtonClicked?.Invoke(_id);
     }
@@ -233,7 +240,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
         if ((rangeSet & rangeType) == WeaponType.None) {
           TakeOffEquipment?.Invoke(_rangeTuple.Item2);
           SetIdForRangeTuple(0);
-          SetTextForRangeTuple(String.Empty);
+          SetTextForRangeTuple(string.Empty);
           SetUsedEquipmentDataForRangeWeapon();
           SaveUsedEquipmentData();
         }
@@ -268,8 +275,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
         if ((rangeSet & projetiliesType) == WeaponType.None) {
           TakeOffEquipment?.Invoke(_projectiliesTuple.Item2);
           SetIdForProjectiliesTuple(0);
-          SetTextForProjectiliesTuple(String.Empty);
-          SetUsedEquipmentDataForProjectilies();
+          SetTextForProjectiliesTuple(string.Empty);
+          SetUsedEquipmentDataForProjectiles();
           SaveUsedEquipmentData();
         }
       }
@@ -282,13 +289,15 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     }
 
     private void SetTextTuplesById(int id) {
-      if (id.Equals(0))
+      if (id.Equals(0)) {
         return;
+      }
+
       ProductSO productSo = _storage.GetProductFromList(id);
       ProductSO.ProductType productType = productSo.productType;
       switch (productType) {
         case ProductSO.ProductType.Weapon:
-          WeaponObject weapon = productSo.item as WeaponObject;
+          var weapon = productSo.item as WeaponObject;
           if ((weapon.weaponType & _oneHandedTuple.Item1) != WeaponType.None) {
             SetTextForOneHandedTuple(productSo.productName);
           }
@@ -307,7 +316,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 
           break;
         case ProductSO.ProductType.Armor:
-          ArmorObject armor = productSo.item as ArmorObject;
+          var armor = productSo.item as ArmorObject;
           if ((armor.armorType & _armorTuple.Item1) != ArmorType.None) {
             SetTextForArmorTuple(productSo.productName);
           }
@@ -318,12 +327,18 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 
           break;
         case ProductSO.ProductType.Item:
-          if (EquipmentIdConstants.Bags.Contains(id))
+          if (EquipmentIdConstants.Bags.Contains(id)) {
             SetTextForBag(productSo.productName);
-          if (EquipmentIdConstants.Animals.Contains(id))
+          }
+
+          if (EquipmentIdConstants.Animals.Contains(id)) {
             SetTextForAnimal(productSo.productName);
-          if (EquipmentIdConstants.Carriages.Contains(id))
+          }
+
+          if (EquipmentIdConstants.Carriages.Contains(id)) {
             SetTextForCarriage(productSo.productName);
+          }
+
           break;
       }
 
@@ -341,8 +356,10 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     }
 
     private void OnTakeOffButtonClicked() {
-      if (_id.Equals(0))
+      if (_id.Equals(0)) {
         return;
+      }
+
       if (_id == _armorTuple.Item2) {
         SetIdForArmorTuple(EquipmentIdConstants.NoArmorId);
         SetTextForArmorTuple("No");
@@ -354,7 +371,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 
       if (_id == _shieldTuple.Item2) {
         SetIdForShieldTuple(0);
-        SetTextForShieldTuple(String.Empty);
+        SetTextForShieldTuple(string.Empty);
         TakeOffEquipment?.Invoke(_id);
         SetUsedEquipmentDataForShield();
         SaveUsedEquipmentData();
@@ -363,7 +380,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 
       if (_id == _oneHandedTuple.Item2) {
         SetIdForOneHandedTuple(0);
-        SetTextForOneHandedTuple(String.Empty);
+        SetTextForOneHandedTuple(string.Empty);
         TakeOffEquipment?.Invoke(_id);
         SetUsedEquipmentDataForOneHandedWeapon();
         SaveUsedEquipmentData();
@@ -372,7 +389,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 
       if (_id == _twoHandedTuple.Item2) {
         SetIdForTwoHandedTuple(0);
-        SetTextForTwoHandedTuple(String.Empty);
+        SetTextForTwoHandedTuple(string.Empty);
         TakeOffEquipment?.Invoke(_id);
         SetUsedEquipmentDataForTwoHandedWeapon();
         SaveUsedEquipmentData();
@@ -381,7 +398,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 
       if (_id == _rangeTuple.Item2) {
         SetIdForRangeTuple(0);
-        SetTextForRangeTuple(String.Empty);
+        SetTextForRangeTuple(string.Empty);
         TakeOffEquipment?.Invoke(_id);
         SetUsedEquipmentDataForRangeWeapon();
         SaveUsedEquipmentData();
@@ -390,16 +407,16 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 
       if (_id == _projectiliesTuple.Item2) {
         SetIdForProjectiliesTuple(0);
-        SetTextForProjectiliesTuple(String.Empty);
+        SetTextForProjectiliesTuple(string.Empty);
         TakeOffEquipment?.Invoke(_id);
-        SetUsedEquipmentDataForProjectilies();
+        SetUsedEquipmentDataForProjectiles();
         SaveUsedEquipmentData();
         return;
       }
 
       if (_id == _bagId) {
         SetIdForBag(0);
-        SetTextForBag(String.Empty);
+        SetTextForBag(string.Empty);
         TakeOffEquipment?.Invoke(_id);
         SetUsedEquipmentDataForBag();
         SaveUsedEquipmentData();
@@ -408,7 +425,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 
       if (_id == _animalId) {
         SetIdForAnimal(0);
-        SetTextForAnimal(String.Empty);
+        SetTextForAnimal(string.Empty);
         TakeOffEquipment?.Invoke(_id);
         SetUsedEquipmentDataForAnimal();
         SaveUsedEquipmentData();
@@ -417,7 +434,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 
       if (_id == _carriageId) {
         SetIdForCarriage(0);
-        SetTextForCarriage(String.Empty);
+        SetTextForCarriage(string.Empty);
         TakeOffEquipment?.Invoke(_id);
         SetUsedEquipmentDataForCarriage();
         SaveUsedEquipmentData();
@@ -543,45 +560,39 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 
     #region SET_USED_EQUIPMENT
     private void SetUsedEquipmentDataForArmor() {
-      _equipmentUsedData.armorId = _armorTuple.Item2;
-      _equipmentUsedData.armorType = _armorTuple.Item1.ToString();
+      _equipmentUsed.SetEquipment(EquipmentsUsedId.ArmorId, _armorTuple.Item2);
     }
 
     private void SetUsedEquipmentDataForShield() {
-      _equipmentUsedData.shieldId = _shieldTuple.Item2;
-      _equipmentUsedData.shieldType = _shieldTuple.Item1.ToString();
+      _equipmentUsed.SetEquipment(EquipmentsUsedId.ShieldId, _shieldTuple.Item2);
     }
 
     private void SetUsedEquipmentDataForOneHandedWeapon() {
-      _equipmentUsedData.oneHandedId = _oneHandedTuple.Item2;
-      _equipmentUsedData.oneHandedType = _oneHandedTuple.Item1.ToString();
+      _equipmentUsed.SetEquipment(EquipmentsUsedId.OneHandedId, _oneHandedTuple.Item2);
     }
 
     private void SetUsedEquipmentDataForTwoHandedWeapon() {
-      _equipmentUsedData.twoHandedId = _twoHandedTuple.Item2;
-      _equipmentUsedData.twoHandedType = _twoHandedTuple.Item1.ToString();
+      _equipmentUsed.SetEquipment(EquipmentsUsedId.TwoHandedId, _twoHandedTuple.Item2);
     }
 
     private void SetUsedEquipmentDataForRangeWeapon() {
-      _equipmentUsedData.rangeId = _rangeTuple.Item2;
-      _equipmentUsedData.rangeType = _rangeTuple.Item1.ToString();
+      _equipmentUsed.SetEquipment(EquipmentsUsedId.RangeId, _rangeTuple.Item2);
     }
 
-    private void SetUsedEquipmentDataForProjectilies() {
-      _equipmentUsedData.projectiliesId = _projectiliesTuple.Item2;
-      _equipmentUsedData.projectiliesType = _projectiliesTuple.Item1.ToString();
+    private void SetUsedEquipmentDataForProjectiles() {
+      _equipmentUsed.SetEquipment(EquipmentsUsedId.ProjectilesId, _projectiliesTuple.Item2);
     }
 
     private void SetUsedEquipmentDataForBag() {
-      _equipmentUsedData.bagId = _bagId;
+      _equipmentUsed.SetEquipment(EquipmentsUsedId.BagId, _bagId);
     }
 
     private void SetUsedEquipmentDataForAnimal() {
-      _equipmentUsedData.animalId = _animalId;
+      _equipmentUsed.SetEquipment(EquipmentsUsedId.AnimalId, _animalId);
     }
 
     private void SetUsedEquipmentDataForCarriage() {
-      _equipmentUsedData.carriageId = _carriageId;
+      _equipmentUsed.SetEquipment(EquipmentsUsedId.CarriageId, _carriageId);
     }
     #endregion
 
@@ -591,32 +602,34 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
         GSSSingleton.Instance.SaveInGame();
         EquipmentChanged?.Invoke();
       } else {
-        SaveSystem.Save(_equipmentUsedData, SaveSystem.Constants.UsedEquipment);
+        SaveSystem.Save(_equipmentUsed, SaveSystem.Constants.UsedEquipment);
       }
     }
 
     private void LoadUsedEquipmentDataWithInvoke() {
-      if (_testUsedEquipment)
+      if (_testUsedEquipment) {
         return;
+      }
+
       if (_useGameSave) {
-        _equipmentUsedData = GSSSingleton.Instance;
+        _equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
         Invoke(nameof(SetTuplesAfterLoadUsedEquipmentData), 0.3f);
       } else {
-        SaveSystem.LoadWithInvoke(_equipmentUsedData, SaveSystem.Constants.UsedEquipment,
-        (nameInvoke, time) => Invoke(nameInvoke, time), nameof(SetTuplesAfterLoadUsedEquipmentData), 0.3f);
+        SaveSystem.LoadWithInvoke(_equipmentUsed, SaveSystem.Constants.UsedEquipment, (nameInvoke, time) => Invoke(nameInvoke, time), nameof(SetTuplesAfterLoadUsedEquipmentData),
+          0.3f);
       }
     }
 
     private void SetTuplesAfterLoadUsedEquipmentData() {
-      _armorTuple.Item2 = _equipmentUsedData.armorId;
-      _shieldTuple.Item2 = _equipmentUsedData.shieldId;
-      _oneHandedTuple.Item2 = _equipmentUsedData.oneHandedId;
-      _twoHandedTuple.Item2 = _equipmentUsedData.twoHandedId;
-      _rangeTuple.Item2 = _equipmentUsedData.rangeId;
-      _projectiliesTuple.Item2 = _equipmentUsedData.projectiliesId;
-      _bagId = _equipmentUsedData.bagId;
-      _animalId = _equipmentUsedData.animalId;
-      _carriageId = _equipmentUsedData.carriageId;
+      _armorTuple.Item2 = _equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId);
+      _shieldTuple.Item2 = _equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId);
+      _oneHandedTuple.Item2 = _equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId);
+      _twoHandedTuple.Item2 = _equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId);
+      _rangeTuple.Item2 = _equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId);
+      _projectiliesTuple.Item2 = _equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId);
+      _bagId = _equipmentUsed.GetEquipment(EquipmentsUsedId.BagId);
+      _animalId = _equipmentUsed.GetEquipment(EquipmentsUsedId.AnimalId);
+      _carriageId = _equipmentUsed.GetEquipment(EquipmentsUsedId.CarriageId);
       SetTextTuplesById(_armorTuple.Item2);
       SetTextTuplesById(_shieldTuple.Item2);
       SetTextTuplesById(_oneHandedTuple.Item2);

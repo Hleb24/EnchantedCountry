@@ -30,6 +30,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     private IEquipment _equipments;
     [SerializeField]
     private bool _buildOnStart;
+    private IEquipmentUsed _equipmentUsed;
 
     private void Start() {
       if (_buildOnStart) {
@@ -46,7 +47,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     public void BuildPlayer() {
-      _equipments = DataDealer.Peek<EquipmentsScribe>();
+      _equipments = ScribeDealer.Peek<EquipmentsScribe>();
+      _equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
       _playerCharacter = new PlayerCharacter(GetCharacterQualities(), GetCharacterType(), GetLevels(), GetGamePoints(), GetRiskPoints(), GetWallet(), GetEquipmentsOfCharacter(),
         GetEquipmentsUsed(), GetArmor(), GetShield(), GetRangeWeapon(), GetMeleeWeapon(), GetProjectiles());
     }
@@ -77,16 +79,16 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private EquipmentsUsed GetEquipmentsUsed() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      var equipmentsUsed = new EquipmentsUsed(equipmentUsedData.armorId, equipmentUsedData.shieldId, equipmentUsedData.oneHandedId, equipmentUsedData.twoHandedId,
-        equipmentUsedData.rangeId, equipmentUsedData.projectiliesId, equipmentUsedData.bagId, equipmentUsedData.animalId, equipmentUsedData.carriageId);
+      var equipmentsUsed = new EquipmentsUsed(_equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId), _equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId),
+        _equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId), _equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId), _equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId),
+        _equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId), _equipmentUsed.GetEquipment(EquipmentsUsedId.BagId), _equipmentUsed.GetEquipment(EquipmentsUsedId.AnimalId),
+        _equipmentUsed.GetEquipment(EquipmentsUsedId.CarriageId));
       return equipmentsUsed;
     }
 
     private Armor GetArmor() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      if (equipmentUsedData.armorId != 0) {
-        ProductSO armorSo = _storageSo.GetArmorFromList(equipmentUsedData.armorId);
+      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId) != 0) {
+        ProductSO armorSo = _storageSo.GetArmorFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId));
         Armor armor = armorSo.GetArmor();
         return armor;
       }
@@ -95,9 +97,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private Armor GetShield() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      if (equipmentUsedData.shieldId != 0) {
-        ProductSO shieldSo = _storageSo.GetArmorFromList(equipmentUsedData.animalId);
+      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId) != 0) {
+        ProductSO shieldSo = _storageSo.GetArmorFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId));
         Armor shield = shieldSo.GetArmor();
         return shield;
       }
@@ -106,15 +107,14 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private Weapon GetMeleeWeapon() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      if (equipmentUsedData.oneHandedId != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.oneHandedId);
+      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId) != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId));
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
       }
 
-      if (equipmentUsedData.twoHandedId != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.twoHandedId);
+      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId) != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId));
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
       }
@@ -123,9 +123,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private Weapon GetRangeWeapon() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      if (equipmentUsedData.rangeId != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.rangeId);
+      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId) != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId));
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
       }
@@ -134,9 +133,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private Weapon GetProjectiles() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      if (equipmentUsedData.projectiliesId != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.projectiliesId);
+      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId) != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId));
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
       }
@@ -208,22 +206,24 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private EquipmentsOfCharacter GetEquipmentsOfCharacter() {
-      IEquipment equipments = DataDealer.Peek<EquipmentsScribe>();
+      IEquipment equipments = ScribeDealer.Peek<EquipmentsScribe>();
       var equipmentsOfCharacter = new EquipmentsOfCharacter(equipments.GetEquipmentCards());
       return equipmentsOfCharacter;
     }
 
     private EquipmentsUsed GetEquipmentsUsed() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      var equipmentsUsed = new EquipmentsUsed(equipmentUsedData.armorId, equipmentUsedData.shieldId, equipmentUsedData.oneHandedId, equipmentUsedData.twoHandedId,
-        equipmentUsedData.rangeId, equipmentUsedData.projectiliesId, equipmentUsedData.bagId, equipmentUsedData.animalId, equipmentUsedData.carriageId);
+      IEquipmentUsed equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
+      var equipmentsUsed = new EquipmentsUsed(equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId), equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId),
+        equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId), equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId), equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId),
+        equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId), equipmentUsed.GetEquipment(EquipmentsUsedId.BagId), equipmentUsed.GetEquipment(EquipmentsUsedId.AnimalId),
+        equipmentUsed.GetEquipment(EquipmentsUsedId.CarriageId));
       return equipmentsUsed;
     }
 
     private Armor GetArmor() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      if (equipmentUsedData.armorId != 0) {
-        ProductSO armorSo = _storageSo.GetArmorFromList(equipmentUsedData.armorId);
+      IEquipmentUsed equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
+      if (equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId) != 0) {
+        ProductSO armorSo = _storageSo.GetArmorFromList(equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId));
         Armor armor = armorSo.GetArmor();
         return armor;
       }
@@ -232,9 +232,9 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private Armor GetShield() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      if (equipmentUsedData.shieldId != 0) {
-        ProductSO shieldSo = _storageSo.GetArmorFromList(equipmentUsedData.animalId);
+      IEquipmentUsed equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
+      if (equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId) != 0) {
+        ProductSO shieldSo = _storageSo.GetArmorFromList(equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId));
         Armor shield = shieldSo.GetArmor();
         return shield;
       }
@@ -243,15 +243,16 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private Weapon GetMeleeWeapon() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      if (equipmentUsedData.oneHandedId != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.oneHandedId);
+      IEquipmentUsed equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
+
+      if (equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId) != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId));
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
       }
 
-      if (equipmentUsedData.twoHandedId != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.twoHandedId);
+      if (equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId) != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId));
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
       }
@@ -260,9 +261,9 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private Weapon GetRangeWeapon() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      if (equipmentUsedData.rangeId != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.rangeId);
+      IEquipmentUsed equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
+      if (equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId) != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId));
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
       }
@@ -271,9 +272,9 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private Weapon GetProjectiles() {
-      EquipmentUsedData equipmentUsedData = GSSSingleton.Instance;
-      if (equipmentUsedData.projectiliesId != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsedData.projectiliesId);
+      IEquipmentUsed equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
+      if (equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId) != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId));
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
       }

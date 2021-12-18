@@ -3860,7 +3860,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _diceRollButton: {fileID: 792231545}
   _numberOfCoinsText: {fileID: 986324297}
-  _useGameSave: 1
+  _useGameSave: 0
 --- !u!1001 &1408108204
 PrefabInstance:
   m_ObjectHideFlags: 0

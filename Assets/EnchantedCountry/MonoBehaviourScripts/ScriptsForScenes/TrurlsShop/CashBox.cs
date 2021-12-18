@@ -40,7 +40,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 		private void Start() {
 			_walletData = GSSSingleton.Instance;
 			_wallet = new Wallet(_walletData);
-			_equipments = DataDealer.Peek<EquipmentsScribe>();
+			_equipments = ScribeDealer.Peek<EquipmentsScribe>();
 		}
 
 		private void OnEnable() {

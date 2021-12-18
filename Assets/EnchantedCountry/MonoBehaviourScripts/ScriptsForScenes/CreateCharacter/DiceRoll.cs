@@ -38,7 +38,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
     private void Start() {
       // if (_usedGameSave) {
-        _diceRollData = DataDealer.Peek<DiceRollScribe>();
+        _diceRollData = ScribeDealer.Peek<DiceRollScribe>();
       // }
     }
 
@@ -76,7 +76,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
     private void LoadAndSetDiceRollData() {
       if (_usedGameSave) {
-        _diceRollData = DataDealer.Peek<DiceRollScribe>();
+        _diceRollData = ScribeDealer.Peek<DiceRollScribe>();
         SetTextsInListWithSave();
         Invoke(nameof(SetTextsInListWithSave), 0.3f);
       } else {

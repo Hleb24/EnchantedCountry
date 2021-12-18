@@ -91,7 +91,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
     #endregion
 
     #region GET_DATA
-    
     public ClassOfCharacterData GetClassOfCharacterData(int numberOfSave = 0) {
       return _gameSaveSystem.gameSaves.Count == numberOfSave ? new ClassOfCharacterData() : _gameSaveSystem.gameSaves[numberOfSave].classOfCharacterData;
     }
@@ -106,10 +105,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
 
     public GamePointsData GetGamePointsData(int numberOfSave = 0) {
       return _gameSaveSystem.gameSaves.Count == numberOfSave ? new GamePointsData() : _gameSaveSystem.gameSaves[numberOfSave].gamePointsData;
-    }
-
-    public EquipmentUsedData GetEquipmentUsedData(int numberOfSave = 0) {
-      return _gameSaveSystem.gameSaves.Count == numberOfSave ? new EquipmentUsedData() : _gameSaveSystem.gameSaves[numberOfSave].equipmentUsedData;
     }
 
     public QualitiesData GetQualitiesData(int numberOfSave = 0) {
@@ -152,10 +147,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
 
     public static implicit operator GamePointsData(GSSSingleton value) {
       return Instance.GetGamePointsData();
-    }
-
-    public static implicit operator EquipmentUsedData(GSSSingleton value) {
-      return Instance.GetEquipmentUsedData();
     }
 
     public static implicit operator QualitiesData(GSSSingleton value) {

@@ -25,9 +25,10 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.RollDiceFo
 		#endregion
 		#region MONOBEHAVIOUR_METHODS
 		private void Start() {
-			if (_useGameSave) {
-				_walletData = GSSSingleton.Instance;
-			}
+			_walletData = new WalletData();
+			// if (_useGameSave) {
+			// 	_walletData = GSSSingleton.Instance;
+			// }
 		}
 
 		private void OnEnable() {

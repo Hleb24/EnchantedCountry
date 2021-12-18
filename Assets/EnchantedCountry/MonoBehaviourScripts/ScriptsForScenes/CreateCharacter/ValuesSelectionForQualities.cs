@@ -90,7 +90,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
     private void Start() {
       _qualitiesData = GSSSingleton.Instance;
-      _diceRollData = DataDealer.Peek<DiceRollScribe>();
+      _diceRollData = ScribeDealer.Peek<DiceRollScribe>();
       _isValueNotSelected = new bool[_diceRollData.GetDiceRollValues().Length];
       _qualities = new int[_diceRollData.GetDiceRollValues().Length];
       _indexOfCurrentValueInQualityText = new int[_diceRollData.GetDiceRollValues().Length];
