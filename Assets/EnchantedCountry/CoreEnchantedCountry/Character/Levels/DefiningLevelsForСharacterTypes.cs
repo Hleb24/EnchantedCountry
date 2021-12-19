@@ -4,29 +4,25 @@ using System.Collections.Generic;
 using Core.EnchantedCountry.CoreEnchantedCountry.Character;
 using Core.EnchantedCountry.CoreEnchantedCountry.Character.GamePoints;
 using Core.EnchantedCountry.CoreEnchantedCountry.Character.Levels;
+using Core.EnchantedCountry.SupportSystems.Data;
 
 namespace Character {
   public class DefiningLevelsForСharacterTypes {
     #region FIELDS
-    private GamePoints _gamePoints;
+    private IGamePoints _gamePoints;
     private Levels _levels;
     private CharacterType _characterType;
     private int _levelSpell;
     #endregion
     #region CONTSTRUCTOR
-    public DefiningLevelsForСharacterTypes(CharacterType characterType, int gamePoints) {
+    public DefiningLevelsForСharacterTypes(CharacterType characterType, IGamePoints gamePoints) {
       _levels = new Levels();
-      _characterType = characterType;
-      _gamePoints = new GamePoints(gamePoints);
-      SetLevelByGamePoints();
-      SetSpellLevelForCharacterType();
-    }
-    public DefiningLevelsForСharacterTypes(CharacterType characterType, GamePoints gamePoints) {
       _characterType = characterType;
       _gamePoints = gamePoints;
       SetLevelByGamePoints();
       SetSpellLevelForCharacterType();
     }
+  
     #endregion
     #region SET_FIELD
     private void SetLevelByGamePoints() {
@@ -35,7 +31,7 @@ namespace Character {
       List<int> levelsList = new List<int>();
       levelsList.AddRange(LevelDictionaries.DefiningLevelsForСharacterTypes[_characterType]);
       for (int i = 0; i < levelsList.Count; i++) {
-        if (_gamePoints.Points >= levelsList[i]) {
+        if (_gamePoints.GetPoints() >= levelsList[i]) {
           lvl++;
         }
       }

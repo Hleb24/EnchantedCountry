@@ -20,7 +20,8 @@ namespace Core {
         { typeof(DiceRollScribe), new DiceRollScribe() },
         { typeof(EquipmentsScribe), new EquipmentsScribe() },
         { typeof(EquipmentUsedScribe), new EquipmentUsedScribe() },
-        { typeof(WalletScribe), new WalletScribe() }
+        { typeof(WalletScribe), new WalletScribe() },
+        { typeof(GamePointsScribe), new GamePointsScribe() }
       };
 
       foreach (IScribe scribe in _scribesMemento.Values) {

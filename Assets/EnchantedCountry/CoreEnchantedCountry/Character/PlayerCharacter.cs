@@ -28,12 +28,12 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
     private CharacterQualities _characterQualities;
     private CharacterType _characterType;
     private Levels.Levels _levels;
-    private GamePoints.GamePoints _gamePoints;
+    private IGamePoints _gamePoints;
     private RiskPoints _riskPoints;
     private IWallet _wallet;
     private ArmorClass _armorClassOfCharacter;
     private EquipmentsOfCharacter _equipmentsOfCharacter;
-    private EquipmentsUsed _equipmentsUsed;
+    private IEquipmentUsed _equipmentsUsed;
     private Armor _armor;
     private Armor _shield;
     private Weapon _meleeWeapon;
@@ -146,8 +146,8 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
     }
     #endregion
     #region CONSTRUCTORS
-    public PlayerCharacter(CharacterQualities characterQualities, CharacterType characterType, Levels.Levels levels, GamePoints.GamePoints gamePoints, RiskPoints riskPoints,
-      IWallet wallet, EquipmentsOfCharacter equipmentsOfCharacter, EquipmentsUsed equipmentsUsed, Armor armor, Armor shield, Weapon rangeWeapon, Weapon meleeWeapon,
+    public PlayerCharacter(CharacterQualities characterQualities, CharacterType characterType, Levels.Levels levels, IGamePoints gamePoints, RiskPoints riskPoints,
+      IWallet wallet, EquipmentsOfCharacter equipmentsOfCharacter, IEquipmentUsed equipmentsUsed, Armor armor, Armor shield, Weapon rangeWeapon, Weapon meleeWeapon,
       Weapon projectiles) {
       _characterQualities = characterQualities;
       _characterType = characterType;
@@ -198,7 +198,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
       }
     }
 
-    public GamePoints.GamePoints GamePoints {
+    public IGamePoints GamePoints {
       get {
         return _gamePoints;
       }
@@ -234,7 +234,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
       }
     }
 
-    public EquipmentsUsed EquipmentsUsed {
+    public IEquipmentUsed EquipmentsUsed {
       get {
         return _equipmentsUsed;
       }

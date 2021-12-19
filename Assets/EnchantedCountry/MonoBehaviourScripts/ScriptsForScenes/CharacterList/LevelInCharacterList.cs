@@ -1,4 +1,5 @@
 using Character;
+using Core.EnchantedCountry.SupportSystems.Data;
 using TMPro;
 using UnityEngine;
 
@@ -53,7 +54,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     #region SET_LEVEL_TEXT
     private void SetLevelText() {
         _definingLevels = new DefiningLevelsForСharacterTypes(_characterInCharacterList.CharacterType
-          , _gamePointsInCharacterList.GamePoints.Points);
+          , ScribeDealer.Peek<GamePointsScribe>());
       _level = _definingLevels.Levels.Level;
       _levelText.text = _level.ToString();
     }

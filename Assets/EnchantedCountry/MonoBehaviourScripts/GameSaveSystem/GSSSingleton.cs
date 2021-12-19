@@ -99,8 +99,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
       return _gameSaveSystem.gameSaves.Count == numberOfSave ? new RiskPointsData() : _gameSaveSystem.gameSaves[numberOfSave].riskPointsData;
     }
 
-    public GamePointsData GetGamePointsData(int numberOfSave = 0) {
-      return _gameSaveSystem.gameSaves.Count == numberOfSave ? new GamePointsData() : _gameSaveSystem.gameSaves[numberOfSave].gamePointsData;
+    public GamePointsScribe GetGamePointsData(int numberOfSave = 0) {
+      return _gameSaveSystem.gameSaves.Count == numberOfSave ? new GamePointsScribe() : _gameSaveSystem.gameSaves[numberOfSave].GamePointsScribe;
     }
 
     public QualitiesData GetQualitiesData(int numberOfSave = 0) {
@@ -137,7 +137,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
       return Instance.GetRiskPointsData();
     }
 
-    public static implicit operator GamePointsData(GSSSingleton value) {
+    public static implicit operator GamePointsScribe(GSSSingleton value) {
       return Instance.GetGamePointsData();
     }
 

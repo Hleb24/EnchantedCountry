@@ -4,7 +4,6 @@ using Core.EnchantedCountry.CoreEnchantedCountry.Character.Equipment;
 using Core.EnchantedCountry.CoreEnchantedCountry.Character.GamePoints;
 using Core.EnchantedCountry.CoreEnchantedCountry.Character.Levels;
 using Core.EnchantedCountry.CoreEnchantedCountry.Character.Qualities;
-using Core.EnchantedCountry.CoreEnchantedCountry.Character.Wallet;
 using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Armor;
 using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.RiskPoints;
 using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Weapon;
@@ -31,6 +30,11 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     [SerializeField]
     private bool _buildOnStart;
     private IEquipmentUsed _equipmentUsed;
+    private IGamePoints _gamePoints;
+
+    private void Awake() {
+      _gamePoints = ScribeDealer.Peek<GamePointsScribe>();
+    }
 
     private void Start() {
       if (_buildOnStart) {
@@ -53,13 +57,12 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
         GetEquipmentsUsed(), GetArmor(), GetShield(), GetRangeWeapon(), GetMeleeWeapon(), GetProjectiles());
     }
 
-    private GamePoints GetGamePoints() {
-      var gamePoints = new GamePoints(GSSSingleton.Instance.GetGamePointsData().Points);
-      return gamePoints;
+    private IGamePoints GetGamePoints() {
+      return _gamePoints;
     }
 
     private Levels GetLevels() {
-      var levels = new Levels(GSSSingleton.Instance.GetGamePointsData().Points);
+      var levels = new Levels(_gamePoints.GetPoints());
       return levels;
     }
 
@@ -77,12 +80,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
       return equipmentsOfCharacter;
     }
 
-    private EquipmentsUsed GetEquipmentsUsed() {
-      var equipmentsUsed = new EquipmentsUsed(_equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId), _equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId),
-        _equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId), _equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId), _equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId),
-        _equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId), _equipmentUsed.GetEquipment(EquipmentsUsedId.BagId), _equipmentUsed.GetEquipment(EquipmentsUsedId.AnimalId),
-        _equipmentUsed.GetEquipment(EquipmentsUsedId.CarriageId));
-      return equipmentsUsed;
+    private IEquipmentUsed GetEquipmentsUsed() {
+      return _equipmentUsed;
     }
 
     private Armor GetArmor() {
@@ -174,9 +173,13 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
   public class Builder {
     private const string STORAGE_PATH = "ForBuilder/Storage";
     private readonly StorageSO _storageSo;
+    private readonly IGamePoints _gamePoints;
+    private readonly IEquipmentUsed _equipmentUsed;
 
     public Builder() {
       _storageSo = Resources.Load<StorageSO>(STORAGE_PATH);
+      _gamePoints = ScribeDealer.Peek<GamePointsScribe>();
+      _equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
     }
 
     public PlayerCharacter BuildPlayer() {
@@ -184,13 +187,12 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
         GetEquipmentsUsed(), GetArmor(), GetShield(), GetRangeWeapon(), GetMeleeWeapon(), GetProjectiles());
     }
 
-    private GamePoints GetGamePoints() {
-      var gamePoints = new GamePoints(GSSSingleton.Instance.GetGamePointsData().Points);
-      return gamePoints;
+    private IGamePoints GetGamePoints() {
+      return _gamePoints;
     }
 
     private Levels GetLevels() {
-      var levels = new Levels(GSSSingleton.Instance.GetGamePointsData().Points);
+      var levels = new Levels(_gamePoints.GetPoints());
       return levels;
     }
 
@@ -209,19 +211,13 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
       return equipmentsOfCharacter;
     }
 
-    private EquipmentsUsed GetEquipmentsUsed() {
-      IEquipmentUsed equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
-      var equipmentsUsed = new EquipmentsUsed(equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId), equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId),
-        equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId), equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId), equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId),
-        equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId), equipmentUsed.GetEquipment(EquipmentsUsedId.BagId), equipmentUsed.GetEquipment(EquipmentsUsedId.AnimalId),
-        equipmentUsed.GetEquipment(EquipmentsUsedId.CarriageId));
-      return equipmentsUsed;
+    private IEquipmentUsed GetEquipmentsUsed() {
+      return _equipmentUsed;
     }
 
     private Armor GetArmor() {
-      IEquipmentUsed equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
-      if (equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId) != 0) {
-        ProductSO armorSo = _storageSo.GetArmorFromList(equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId));
+      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId) != 0) {
+        ProductSO armorSo = _storageSo.GetArmorFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId));
         Armor armor = armorSo.GetArmor();
         return armor;
       }
@@ -230,9 +226,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private Armor GetShield() {
-      IEquipmentUsed equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
-      if (equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId) != 0) {
-        ProductSO shieldSo = _storageSo.GetArmorFromList(equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId));
+      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId) != 0) {
+        ProductSO shieldSo = _storageSo.GetArmorFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId));
         Armor shield = shieldSo.GetArmor();
         return shield;
       }
@@ -241,16 +236,14 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private Weapon GetMeleeWeapon() {
-      IEquipmentUsed equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
-
-      if (equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId) != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId));
+      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId) != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId));
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
       }
 
-      if (equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId) != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId));
+      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId) != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId));
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
       }
@@ -259,9 +252,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private Weapon GetRangeWeapon() {
-      IEquipmentUsed equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
-      if (equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId) != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId));
+      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId) != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId));
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
       }
@@ -271,8 +263,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
     private Weapon GetProjectiles() {
       IEquipmentUsed equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
-      if (equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId) != 0) {
-        ProductSO weaponSo = _storageSo.GetWeaponFromList(equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId));
+      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId) != 0) {
+        ProductSO weaponSo = _storageSo.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId));
         Weapon weapon = weaponSo.GetWeapon();
         return weapon;
       }
