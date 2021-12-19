@@ -58,10 +58,10 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.FightScene
       _cardViews = new List<CardView>();
       GameObject cardPlayer = Instantiate(_cardPrefab, _anchorForPlayer);
       _cardViews.Add(cardPlayer.GetComponent<CardView>());
-      _cardViews[0].SetFieldsInCard(_sprites[0], _playerCharacter.Name, _playerCharacter.RiskPoints.Points, _playerCharacter.Armor.ArmorClass.ClassOfArmor);
+      _cardViews[0].SetFieldsInCard(_sprites[0], _playerCharacter.Name, _playerCharacter.RiskPoints.GetPoints(), _playerCharacter.Armor.ArmorClass.ClassOfArmor);
       GameObject cardNpc = Instantiate(_cardPrefab, _anchorForNpc);
       _cardViews.Add(cardNpc.GetComponent<CardView>());
-      _cardViews[1].SetFieldsInCard(_sprites[1], _npc.Name, _npc.RiskPoints.Points, _npc.ArmorClass.ClassOfArmor);
+      _cardViews[1].SetFieldsInCard(_sprites[1], _npc.Name, _npc.RiskPoints.GetPoints(), _npc.ArmorClass.ClassOfArmor);
     }
     #endregion
   }

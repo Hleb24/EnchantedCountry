@@ -12,66 +12,24 @@ using UnityEngine.UI;
 
 namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterList {
   public class DiceRollForRiskPoints : MonoBehaviour {
-    #region SET_CHARACTER_TYPE
-    private void SetCharacterType() {
-      if (_useCharacterTypeForTest) {
-        return;
-      }
-
-      if (Enum.TryParse(_classOfCharacterData.nameOfClass, out CharacterType characterType)) {
-        _characterType = characterType;
-      } else {
-        Debug.LogError("Can not parse CharacterType!");
-      }
-    }
-    #endregion
-
-    #region GET_DICE_ROLL_VALUE_FOR_CHARACTER_TYPE
-    private int GetDiceRollValueForCharacterType() {
-      _dice = new SixSidedDice(DiceType.SixEdges);
-      var riskPoints = 0;
-      switch (_characterType) {
-        case CharacterType.Warrior:
-          riskPoints = _dice.RollOfDice(2) + 6;
-          break;
-        case CharacterType.Elf:
-          riskPoints = _dice.RollOfDice() + 3;
-          break;
-        case CharacterType.Wizard:
-          riskPoints = _dice.RollOfDice() + 4;
-          break;
-        case CharacterType.Kron:
-          riskPoints = _dice.RollOfDice(3) + 4;
-          break;
-        case CharacterType.Gnom:
-          riskPoints = _dice.RollOfDice(3) + 5;
-          break;
-      }
-
-      return riskPoints;
-    }
-    #endregion
-
-    #region FIELDS
-    private ClassOfCharacterData _classOfCharacterData;
-    private RiskPointsData _riskPointsData;
+    public static event Action DiceRollForRiskPointsCompleted;
     [SerializeField]
     private TMP_Text _numberOfRiskPointsText;
     [SerializeField]
     private Button _diceRollForRiskPointsButton;
     [SerializeField]
-    private CharacterType _characterType;
+    private ClassType _classType;
     [SerializeField]
     private bool _useCharacterTypeForTest;
     [SerializeField]
     private bool _useGameSave;
+
+    private IClassType _type;
+    private IRiskPoints _riskPoints;
     private Dices _dice;
     private Qualities _qualities;
     private int _numberOfRiskPoints;
-    public static event Action DiceRollForRiskPointsCompleted;
-    #endregion
 
-    #region MONOBEHAVIOUR_METHODS
     private void Start() {
       LoadData();
     }
@@ -83,9 +41,39 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     private void OnDisable() {
       _diceRollForRiskPointsButton.onClick.RemoveListener(OnDiceRollForRiskPointsButtonClicked);
     }
-    #endregion
 
-    #region HANDLERS
+    private void SetCharacterType() {
+      if (_useCharacterTypeForTest) {
+        return;
+      }
+
+      _classType = _type.GetClassType();
+    }
+
+    private int GetDiceRollValueForCharacterType() {
+      _dice = new SixSidedDice(DiceType.SixEdges);
+      var riskPoints = 0;
+      switch (_classType) {
+        case ClassType.Warrior:
+          riskPoints = _dice.RollOfDice(2) + 6;
+          break;
+        case ClassType.Elf:
+          riskPoints = _dice.RollOfDice() + 3;
+          break;
+        case ClassType.Wizard:
+          riskPoints = _dice.RollOfDice() + 4;
+          break;
+        case ClassType.Kron:
+          riskPoints = _dice.RollOfDice(3) + 4;
+          break;
+        case ClassType.Gnom:
+          riskPoints = _dice.RollOfDice(3) + 5;
+          break;
+      }
+
+      return riskPoints;
+    }
+
     private void OnDiceRollForRiskPointsButtonClicked() {
       PlayerPrefsTools.WritteInPlayerPrefs(PlayerPrefsConstans.DiceRollForRiskPoints, PlayerPrefsConstans.Completed);
       _numberOfRiskPoints = GetDiceRollValueForCharacterType();
@@ -93,44 +81,32 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
       SetRiskPointsData(_numberOfRiskPoints);
       SetNumberOfRiskPointsText(_numberOfRiskPointsText, _numberOfRiskPoints);
       DisableDiceRollButton();
-      SaveData();
       DiceRollForRiskPointsCompleted?.Invoke();
     }
 
     private void DisableDiceRollButton() {
       _diceRollForRiskPointsButton.gameObject.SetActive(false);
     }
-    #endregion
 
-    #region LOAD_AND_SAVE_DATA
     private void LoadData() {
       if (_useGameSave) {
-        _classOfCharacterData = GSSSingleton.Instance;
-        _riskPointsData = GSSSingleton.Instance;
+        _type = ScribeDealer.Peek<ClassTypeScribe>();
+        _riskPoints = ScribeDealer.Peek<RiskPointsScribe>();
         _qualities = new Qualities(ScribeDealer.Peek<QualityPointsScribe>());
         Invoke(nameof(SetCharacterType), 0.3f);
       } else {
-        SaveSystem.LoadWithInvoke(_classOfCharacterData, SaveSystem.Constants.ClassOfCharacter, (nameInvoke, time) => Invoke(nameInvoke, time), nameof(SetCharacterType), 0.3f);
+        // SaveSystem.LoadWithInvoke(_type, SaveSystem.Constants.ClassOfCharacter, (nameInvoke, time) => Invoke(nameInvoke, time), nameof(SetCharacterType), 0.3f);
       }
     }
 
-    private void SaveData() {
-      if (_useGameSave) {
-        GSSSingleton.Instance.SaveInGame();
-      } else {
-        SaveSystem.Save(_riskPointsData, SaveSystem.Constants.RiskPoints);
-      }
-    }
-    #endregion
+   
 
-    #region SET_RISK_POINTS
     private void SetRiskPointsData(int riskPoints) {
-      _riskPointsData.riskPoints = riskPoints;
+      _riskPoints.SetRiskPoints(riskPoints);
     }
 
     private void SetNumberOfRiskPointsText(TMP_Text riskPointsText, int riskPoints) {
       riskPointsText.text = riskPoints.ToString();
     }
-    #endregion
   }
 }

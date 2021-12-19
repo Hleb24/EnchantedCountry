@@ -53,7 +53,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     #endregion
     #region SET_LEVEL_TEXT
     private void SetLevelText() {
-        _definingLevels = new DefiningLevelsForСharacterTypes(_characterInCharacterList.CharacterType
+        _definingLevels = new DefiningLevelsForСharacterTypes(_characterInCharacterList.ClassType
           , ScribeDealer.Peek<GamePointsScribe>());
       _level = _definingLevels.Levels.Level;
       _levelText.text = _level.ToString();

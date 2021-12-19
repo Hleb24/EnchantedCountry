@@ -1,12 +1,10 @@
 using System;
 using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.EquipmentIdConstants;
-using Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem;
 using Core.EnchantedCountry.ScriptableObject.ArmorObject;
 using Core.EnchantedCountry.ScriptableObject.ProductObject;
 using Core.EnchantedCountry.ScriptableObject.Storage;
 using Core.EnchantedCountry.ScriptableObject.WeaponObjects;
 using Core.EnchantedCountry.SupportSystems.Data;
-using Core.EnchantedCountry.SupportSystems.SaveSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,8 +13,9 @@ using static Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Weapon.Weapon;
 
 namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterList {
   public class ApplyAndTakeOffEquipment : MonoBehaviour {
-    #region FIELDS
-    private IEquipmentUsed _equipmentUsed;
+    public static event Action<int> ApplyButtonClicked;
+    public static event Action<int> TakeOffEquipment;
+    public static event Action EquipmentChanged;
     [SerializeField]
     private StorageSO _storage;
     [SerializeField]
@@ -45,6 +44,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     private bool _testUsedEquipment;
     [SerializeField]
     private bool _useGameSave;
+    private IEquipmentUsed _equipmentUsed;
     private (ArmorType, TMP_Text) _armorTupleForText;
     private (ArmorType, TMP_Text) _shieldTupleForText;
     private (WeaponType, TMP_Text) _oneHandedTupleForText;
@@ -61,12 +61,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     private int _animalId;
     private int _carriageId;
     private int _id;
-    public static event Action<int> ApplyButtonClicked;
-    public static event Action<int> TakeOffEquipment;
-    public static event Action EquipmentChanged;
-    #endregion
 
-    #region MONOBEHAVIOUR_NETHODS
     private void Start() {
       SetTuples();
       LoadUsedEquipmentDataWithInvoke();
@@ -89,9 +84,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
       _applyButton.onClick.RemoveListener(OnApplyButtonClicked);
       _takeOffButton.onClick.RemoveListener(OnTakeOffButtonClicked);
     }
-    #endregion
 
-    #region SET_TUPLES
     private void SetTuples() {
       _armorTupleForText = (ArmorType.OnlyArmor, _armorText);
       _shieldTupleForText = (ArmorType.Shield, _shieldText);
@@ -344,9 +337,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 
       ApplyButtonClicked?.Invoke(id);
     }
-    #endregion
 
-    #region HANDLERS
     private void OnProductSelected(int id) {
       _id = id;
     }
@@ -458,9 +449,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
       ApplyButtonClicked?.Invoke(_animalId);
       ApplyButtonClicked?.Invoke(_carriageId);
     }
-    #endregion
 
-    #region SET_ID_AND_TEXT_FOR_TUPLES
     private void SetIdForArmorTuple() {
       _armorTuple.Item2 = _id;
     }
@@ -556,9 +545,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     private void SetTextForCarriage(string productName) {
       _carriage.text = productName;
     }
-    #endregion
 
-    #region SET_USED_EQUIPMENT
     private void SetUsedEquipmentDataForArmor() {
       _equipmentUsed.SetEquipment(EquipmentsUsedId.ArmorId, _armorTuple.Item2);
     }
@@ -594,15 +581,11 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     private void SetUsedEquipmentDataForCarriage() {
       _equipmentUsed.SetEquipment(EquipmentsUsedId.CarriageId, _carriageId);
     }
-    #endregion
 
-    #region LOAD_AND_SAVE_DATA
     private void SaveUsedEquipmentData() {
       if (_useGameSave) {
-        GSSSingleton.Instance.SaveInGame();
+        // GSSSingleton.Instance.SaveInGame();
         EquipmentChanged?.Invoke();
-      } else {
-        SaveSystem.Save(_equipmentUsed, SaveSystem.Constants.UsedEquipment);
       }
     }
 
@@ -614,9 +597,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
       if (_useGameSave) {
         _equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
         Invoke(nameof(SetTuplesAfterLoadUsedEquipmentData), 0.3f);
-      } else {
-        SaveSystem.LoadWithInvoke(_equipmentUsed, SaveSystem.Constants.UsedEquipment, (nameInvoke, time) => Invoke(nameInvoke, time), nameof(SetTuplesAfterLoadUsedEquipmentData),
-          0.3f);
       }
     }
 
@@ -641,6 +621,5 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
       SetTextTuplesById(_carriageId);
       EquipmentChanged?.Invoke();
     }
-    #endregion
   }
 }

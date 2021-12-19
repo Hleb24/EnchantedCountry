@@ -841,63 +841,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 138329861}
   m_CullTransparentMesh: 1
---- !u!1001 &145817798
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_RootOrder
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542319, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_Name
-      value: GAME_SAVE_SYSTEM
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
 --- !u!1 &193949970
 GameObject:
   m_ObjectHideFlags: 0
@@ -1294,7 +1237,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 523928102}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2524,8 +2467,8 @@ RectTransform:
   - {fileID: 1187750636}
   - {fileID: 1439748086}
   - {fileID: 1208662535}
-  - {fileID: 5240748088833005127}
   - {fileID: 326829163}
+  - {fileID: 5240748088833005127}
   - {fileID: 1554010898}
   - {fileID: 1726937561}
   - {fileID: 1327537451}
@@ -2540,8 +2483,8 @@ RectTransform:
   - {fileID: 731666528}
   - {fileID: 1113983603}
   - {fileID: 26659630}
-  - {fileID: 2820767184599764323}
   - {fileID: 979902545}
+  - {fileID: 2820767184599764323}
   - {fileID: 1287435487}
   - {fileID: 17173497}
   - {fileID: 296499086}
@@ -2552,9 +2495,9 @@ RectTransform:
   - {fileID: 1474399366}
   - {fileID: 1515577789}
   - {fileID: 1942647557}
+  - {fileID: 918827135}
   - {fileID: 431681633}
   - {fileID: 1602652371}
-  - {fileID: 918827135}
   - {fileID: 1518734966}
   - {fileID: 1471598622}
   m_Father: {fileID: 0}
@@ -3491,9 +3434,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _coins: {fileID: 1917971111}
   _walletSo: {fileID: 0}
-  _walletData:
-    NumberOfCoins: 0
-    MaxAmountOfCoins: 0
   _useGameSave: 1
 --- !u!1 &743330946
 GameObject:
@@ -3807,7 +3747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1700259267c779b40a1dc453dda0ae4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterType: 0
+  _classType: 0
   _testCharacterType: 0
   _useGameSave: 1
   _characterTypeText: {fileID: 419729354}
@@ -3842,7 +3782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _numberOfRiskPointsText: {fileID: 498618157}
   _diceRollForRiskPointsButton: {fileID: 1337308853}
-  _characterType: 0
+  _classType: 0
   _useCharacterTypeForTest: 0
   _useGameSave: 1
 --- !u!4 &814800290
@@ -4417,7 +4357,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 523928102}
-  m_RootOrder: 35
+  m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4663,7 +4603,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 523928102}
-  m_RootOrder: 22
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

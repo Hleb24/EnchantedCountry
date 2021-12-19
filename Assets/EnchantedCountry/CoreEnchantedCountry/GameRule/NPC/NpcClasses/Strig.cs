@@ -12,7 +12,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.GameRule.NPC.NpcClasses {
     }
 
     private void VampireHealing(float damage) {
-      _riskPoints.Points += damage;
+      _riskPoints.ChangeRiskPoints(damage);
     }
   }
 }

@@ -5,7 +5,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.GameRule.NPC.NpcClasses {
     public override bool IsHit(int hit) {
       bool isHit = _armorClass.IsHit(hit);
       if (!isHit) {
-        _riskPoints.Points++;
+        _riskPoints.ChangeRiskPoints(1);
       }
 
       NumberOfAttacks();
@@ -14,7 +14,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.GameRule.NPC.NpcClasses {
     }
 
     protected override void NumberOfAttacks() {
-      _numberOfAttack = (int) Math.Round(_riskPoints.Points, MidpointRounding.AwayFromZero);
+      _numberOfAttack = (int) Math.Round(_riskPoints.GetPoints(), MidpointRounding.AwayFromZero);
     }
   }
 }

@@ -63,10 +63,10 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.FightScene
         if (_playerCharacter.MeleeWeapon != null) {
           int diceRollValue = GetDiceRollValue(_playerCharacter.GetMeleeAccuracy());
           float meleeDamage = _playerCharacter.GetMeleeDamage();
-          Debug.Log($"<color=green>{_playerCharacter.CharacterType}</color>, dice roll value <color=green>{diceRollValue}</color> to melee <color=green>{meleeDamage}</color> damage, weapont type <color=green>{_playerCharacter.MeleeWeapon.weaponType}</color>");
+          Debug.Log($"<color=green>{_playerCharacter.ClassType}</color>, dice roll value <color=green>{diceRollValue}</color> to melee <color=green>{meleeDamage}</color> damage, weapont type <color=green>{_playerCharacter.MeleeWeapon.weaponType}</color>");
           _npc.GetDamaged(diceRollValue, meleeDamage,
             _playerCharacter.MeleeWeapon.Id, _playerCharacter.MeleeWeapon.weaponType);
-          AttackButtonClicked?.Invoke(_npc.Name, _npc.RiskPoints.Points);
+          AttackButtonClicked?.Invoke(_npc.Name, _npc.RiskPoints.GetPoints());
         }
       }
       if (IsNpc(_initiativeController.GetIInitiative())) {
@@ -79,7 +79,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.FightScene
               float damage = _npc.ToDamage(diceRollValue,_playerCharacter,index);
               Debug.Log($"<color=red>{_npc.Name}</color>, dice roll value <color=red>{diceRollValue}</color> to index <size=12>{index}</size> - <color=red>{damage}</color> damage");
               _playerCharacter.GetDamaged(diceRollValue, damage);
-              AttackButtonClicked?.Invoke(_playerCharacter.Name, _playerCharacter.RiskPoints.Points);
+              AttackButtonClicked?.Invoke(_playerCharacter.Name, _playerCharacter.RiskPoints.GetPoints());
             }
           }
 
@@ -90,7 +90,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.FightScene
             float damage = _npc.ToDamage(diceRollValue,_playerCharacter,weapon);
             Debug.Log($"<color=red>{_npc.Name}</color>, dice roll value <color=red>{diceRollValue}</color> to weapon <color=red>{damage}</color> damage");
             _playerCharacter.GetDamaged(diceRollValue, damage);
-            AttackButtonClicked?.Invoke(_playerCharacter.Name, _playerCharacter.RiskPoints.Points);
+            AttackButtonClicked?.Invoke(_playerCharacter.Name, _playerCharacter.RiskPoints.GetPoints());
           }
         }
       }

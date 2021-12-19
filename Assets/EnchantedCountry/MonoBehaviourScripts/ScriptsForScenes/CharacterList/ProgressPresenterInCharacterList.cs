@@ -78,15 +78,15 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
       for (int i = 0; i < _progressViewList.Count; i++) {
         int level = i;
         bool isCurrentLevel = currentLevel == level;
-        if (!LevelDictionaries.DefiningSpellLevelsForСharacterTypes[_characterInCharacterList.CharacterType]
+        if (!LevelDictionaries.DefiningSpellLevelsForСharacterTypes[_characterInCharacterList.ClassType]
           .ContainsKey(level)) {
           _progressViewList[level].SetTextFields(level
-            ,LevelDictionaries.DefiningLevelsForСharacterTypes[_characterInCharacterList.CharacterType][level]
+            ,LevelDictionaries.DefiningLevelsForСharacterTypes[_characterInCharacterList.ClassType][level]
             , isCurrentLevel);
         } else {
           _progressViewList[level].SetTextFields(level
-            ,LevelDictionaries.DefiningLevelsForСharacterTypes[_characterInCharacterList.CharacterType][level]
-            ,LevelDictionaries.DefiningSpellLevelsForСharacterTypes[_characterInCharacterList.CharacterType][level]
+            ,LevelDictionaries.DefiningLevelsForСharacterTypes[_characterInCharacterList.ClassType][level]
+            ,LevelDictionaries.DefiningSpellLevelsForСharacterTypes[_characterInCharacterList.ClassType][level]
             , isCurrentLevel);
         }
       }

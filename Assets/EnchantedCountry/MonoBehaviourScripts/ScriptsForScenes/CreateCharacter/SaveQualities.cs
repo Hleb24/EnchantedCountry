@@ -41,8 +41,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
         _qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
         SetQualitiesInScriptableObject();
       } else {
-        SaveSystem.LoadWithInvoke(_qualitiesAfterDistributing, SaveSystem.Constants.QualitiesAfterDistributing, (nameInvoke, time) => Invoke(nameInvoke, time),
-          nameof(SetQualitiesInScriptableObject), 0.3f);
+        // SaveSystem.LoadWithInvoke(_qualitiesAfterDistributing, SaveSystem.Constants.QualitiesAfterDistributing, (nameInvoke, time) => Invoke(nameInvoke, time),
+        //   nameof(SetQualitiesInScriptableObject), 0.3f);
       }
     }
 

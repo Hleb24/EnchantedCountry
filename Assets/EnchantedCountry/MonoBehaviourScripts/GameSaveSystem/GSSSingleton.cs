@@ -6,39 +6,20 @@ using UnityEngine;
 namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
   [Serializable]
   public class GSSSingleton {
-    #region CREATE_GAME_SAVE_SYSTEM
-    public SupportSystems.SaveSystem.GameSaveSystem CreateGameSaveSystem() {
-      return new SupportSystems.SaveSystem.GameSaveSystem();
-    }
-    #endregion
-
-    #region GET_DAT_WITH_LOAD
-    public DiceRollScribe GetDiceRollDataWithLoad(int numberOfSave = 0) {
-      Load();
-      return _gameSaveSystem.gameSaves[numberOfSave].DiceRollScribe;
-    }
-    #endregion
-
-    #region PROPERTIES
-    public bool IsNewGame { get; private set; }
-    #endregion
-
-    #region FIELDS
     private static readonly Lazy<GSSSingleton> Lazy = new Lazy<GSSSingleton>(() => new GSSSingleton());
-    private readonly SupportSystems.SaveSystem.GameSaveSystem _gameSaveSystem;
-    private bool _doNotСheckNewGame;
-    private bool _resetSave;
-    private bool _dontLoadInAwake;
-    private bool _dontSaveInDestroy;
 
     public static GSSSingleton Instance {
       get {
         return Lazy.Value;
       }
     }
-    #endregion
 
-    #region CONSTRUCTS
+    private readonly SupportSystems.SaveSystem.GameSaveSystem _gameSaveSystem;
+    private bool _doNotСheckNewGame;
+    private bool _resetSave;
+    private bool _dontLoadInAwake;
+    private bool _dontSaveInDestroy;
+
     private GSSSingleton() {
       _gameSaveSystem = CreateGameSaveSystem();
       LoadData();
@@ -51,21 +32,32 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
 
       Save();
     }
-    #endregion
 
-    #region SAVE_AND_LOAD
+    public SupportSystems.SaveSystem.GameSaveSystem CreateGameSaveSystem() {
+      return new SupportSystems.SaveSystem.GameSaveSystem();
+    }
+
+    public DiceRollScribe GetDiceRollDataWithLoad(int numberOfSave = 0) {
+      Load();
+      return _gameSaveSystem.gameSaves[numberOfSave].DiceRollScribe;
+    }
+
     public void LoadData() {
       Load();
       //TODO Invoke(nameof(AfterLoad), 0.2f);
     }
 
+    public void SaveInGame() {
+      Save();
+    }
+
+    public void SetIsNewGameFalse() {
+      _gameSaveSystem.isNewGame = 1;
+    }
+
     private void AfterLoad() {
       ResetGameSave();
       GetIsNewGame();
-    }
-
-    public void SaveInGame() {
-      Save();
     }
 
     private void Save() {
@@ -88,23 +80,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
         IsNewGame = true;
       }
     }
-    #endregion
 
-    #region GET_DATA
-    public ClassOfCharacterData GetClassOfCharacterData(int numberOfSave = 0) {
-      return _gameSaveSystem.gameSaves.Count == numberOfSave ? new ClassOfCharacterData() : _gameSaveSystem.gameSaves[numberOfSave].classOfCharacterData;
-    }
-
-    public RiskPointsData GetRiskPointsData(int numberOfSave = 0) {
-      return _gameSaveSystem.gameSaves.Count == numberOfSave ? new RiskPointsData() : _gameSaveSystem.gameSaves[numberOfSave].riskPointsData;
-    }
-
-    public GamePointsScribe GetGamePointsData(int numberOfSave = 0) {
-      return _gameSaveSystem.gameSaves.Count == numberOfSave ? new GamePointsScribe() : _gameSaveSystem.gameSaves[numberOfSave].GamePointsScribe;
-    }
-    #endregion
-
-    #region IS_NEW_GAME
     private void GetIsNewGame() {
       if (_doNotСheckNewGame) {
         IsNewGame = false;
@@ -119,23 +95,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
       }
     }
 
-    public void SetIsNewGameFalse() {
-      _gameSaveSystem.isNewGame = 1;
-    }
-    #endregion
-
-    #region OPERATORS
-    public static implicit operator ClassOfCharacterData(GSSSingleton value) {
-      return Instance.GetClassOfCharacterData();
-    }
-
-    public static implicit operator RiskPointsData(GSSSingleton value) {
-      return Instance.GetRiskPointsData();
-    }
-
-    public static implicit operator GamePointsScribe(GSSSingleton value) {
-      return Instance.GetGamePointsData();
-    }
-    #endregion
+    public bool IsNewGame { get; private set; }
   }
 }

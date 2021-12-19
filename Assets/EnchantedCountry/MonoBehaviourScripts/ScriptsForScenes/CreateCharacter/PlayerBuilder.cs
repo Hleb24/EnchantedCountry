@@ -1,13 +1,10 @@
-using System;
 using Core.EnchantedCountry.CoreEnchantedCountry.Character;
 using Core.EnchantedCountry.CoreEnchantedCountry.Character.Equipment;
-using Core.EnchantedCountry.CoreEnchantedCountry.Character.GamePoints;
 using Core.EnchantedCountry.CoreEnchantedCountry.Character.Levels;
 using Core.EnchantedCountry.CoreEnchantedCountry.Character.Qualities;
 using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Armor;
 using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.RiskPoints;
 using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Weapon;
-using Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem;
 using Core.EnchantedCountry.ScriptableObject.ProductObject;
 using Core.EnchantedCountry.ScriptableObject.Storage;
 using Core.EnchantedCountry.SupportSystems.Data;
@@ -31,9 +28,13 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     private bool _buildOnStart;
     private IEquipmentUsed _equipmentUsed;
     private IGamePoints _gamePoints;
+    private IRiskPoints _riskPoints;
+    private IClassType _type;
 
     private void Awake() {
       _gamePoints = ScribeDealer.Peek<GamePointsScribe>();
+      _riskPoints = ScribeDealer.Peek<RiskPointsScribe>();
+      _type = ScribeDealer.Peek<ClassTypeScribe>();
     }
 
     private void Start() {
@@ -67,8 +68,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private RiskPoints GetRiskPoints() {
-      var riskPoints = new RiskPoints(GSSSingleton.Instance.GetRiskPointsData().riskPoints);
-      return riskPoints;
+      return new RiskPoints(_riskPoints);
     }
 
     private IWallet GetWallet() {
@@ -148,18 +148,15 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
       _createPlayer.onClick.RemoveListener(BuildPlayer);
     }
 
-    private CharacterType GetCharacterType() {
-      if (Enum.TryParse(GSSSingleton.Instance.GetClassOfCharacterData().nameOfClass, out CharacterType characterType)) {
-        return characterType;
-      }
-
-      return default;
+    private ClassType GetCharacterType() {
+      return _type.GetClassType();
     }
 
     private CharacterQualities GetCharacterQualities() {
       IQualityPoints qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
-      var characterQualities = new CharacterQualities(QualityType.Strength, qualityPoints.GetQualityPoints(QualityType.Strength), QualityType.Agility, qualityPoints.GetQualityPoints(QualityType.Agility),
-        QualityType.Constitution, qualityPoints.GetQualityPoints(QualityType.Constitution), QualityType.Wisdom, qualityPoints.GetQualityPoints(QualityType.Wisdom), QualityType.Courage, qualityPoints.GetQualityPoints(QualityType.Courage));
+      var characterQualities = new CharacterQualities(QualityType.Strength, qualityPoints.GetQualityPoints(QualityType.Strength), QualityType.Agility,
+        qualityPoints.GetQualityPoints(QualityType.Agility), QualityType.Constitution, qualityPoints.GetQualityPoints(QualityType.Constitution), QualityType.Wisdom,
+        qualityPoints.GetQualityPoints(QualityType.Wisdom), QualityType.Courage, qualityPoints.GetQualityPoints(QualityType.Courage));
       return characterQualities;
     }
 
@@ -171,15 +168,19 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
   }
 
   public class Builder {
-    private const string STORAGE_PATH = "ForBuilder/Storage";
+    private const string StoragePath = "ForBuilder/Storage";
     private readonly StorageSO _storageSo;
     private readonly IGamePoints _gamePoints;
     private readonly IEquipmentUsed _equipmentUsed;
+    private readonly IRiskPoints _riskPoints;
+    private readonly IClassType _type;
 
     public Builder() {
-      _storageSo = Resources.Load<StorageSO>(STORAGE_PATH);
+      _storageSo = Resources.Load<StorageSO>(StoragePath);
       _gamePoints = ScribeDealer.Peek<GamePointsScribe>();
       _equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
+      _riskPoints = ScribeDealer.Peek<RiskPointsScribe>();
+      _type = ScribeDealer.Peek<ClassTypeScribe>();
     }
 
     public PlayerCharacter BuildPlayer() {
@@ -197,8 +198,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private RiskPoints GetRiskPoints() {
-      var riskPoints = new RiskPoints(GSSSingleton.Instance.GetRiskPointsData().riskPoints);
-      return riskPoints;
+      return new RiskPoints(_riskPoints);
     }
 
     private IWallet GetWallet() {
@@ -272,18 +272,15 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
       return null;
     }
 
-    private CharacterType GetCharacterType() {
-      if (Enum.TryParse(GSSSingleton.Instance.GetClassOfCharacterData().nameOfClass, out CharacterType characterType)) {
-        return characterType;
-      }
-
-      return default;
+    private ClassType GetCharacterType() {
+      return _type.GetClassType();
     }
 
     private CharacterQualities GetCharacterQualities() {
       IQualityPoints qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
-      var characterQualities = new CharacterQualities(QualityType.Strength, qualityPoints.GetQualityPoints(QualityType.Strength), QualityType.Agility, qualityPoints.GetQualityPoints(QualityType.Agility),
-        QualityType.Constitution, qualityPoints.GetQualityPoints(QualityType.Constitution), QualityType.Wisdom, qualityPoints.GetQualityPoints(QualityType.Wisdom), QualityType.Courage, qualityPoints.GetQualityPoints(QualityType.Courage));
+      var characterQualities = new CharacterQualities(QualityType.Strength, qualityPoints.GetQualityPoints(QualityType.Strength), QualityType.Agility,
+        qualityPoints.GetQualityPoints(QualityType.Agility), QualityType.Constitution, qualityPoints.GetQualityPoints(QualityType.Constitution), QualityType.Wisdom,
+        qualityPoints.GetQualityPoints(QualityType.Wisdom), QualityType.Courage, qualityPoints.GetQualityPoints(QualityType.Courage));
       return characterQualities;
     }
 

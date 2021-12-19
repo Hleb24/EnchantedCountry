@@ -1,4 +1,5 @@
 using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.RiskPoints;
+using Core.EnchantedCountry.SupportSystems.Data;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.CharacterTests.RiscPointsTest {
@@ -9,7 +10,7 @@ namespace Editor.NTest.PlayModeTests.CharacterTests.RiscPointsTest {
 
     [SetUp]
     public void InitFields() {
-      _riskPoints = new RiskPoints();
+      _riskPoints = new RiskPoints(new RiskPointsMock());
     }
 
     [TearDown]
@@ -21,17 +22,36 @@ namespace Editor.NTest.PlayModeTests.CharacterTests.RiscPointsTest {
     #region Tests
     [Test, Description("Risk point at least zero"), Repeat(1)]
     public void RiskPointAtLeastZero([Values(0, 1.25f, 2.50f)] float points) {
-      _riskPoints.Points = points;
-      Assert.That(_riskPoints.Points, Is.AtLeast(0));
+      _riskPoints.SetRiskPoints(points);
+      Assert.That(_riskPoints.GetPoints, Is.AtLeast(0));
     }
 
     [Test, Description("Is dead"), Repeat(1)]
     public void RiskPoinsZeroOrLessAndIsDead() {
-      _riskPoints.Points = 0;
-      Assert.That(_riskPoints.isDead, Is.True);
-      _riskPoints.Points = -1;
-      Assert.That(_riskPoints.isDead, Is.True);
+      _riskPoints.SetRiskPoints(0);
+      Assert.That(_riskPoints.IsDead(), Is.True);
+      _riskPoints.SetRiskPoints(-1);
+      Assert.That(_riskPoints.IsDead(), Is.True);
     }
     #endregion
+
+    internal class RiskPointsMock : IRiskPoints {
+      private float _riskPoints;
+      public float GetRiskPoints() {
+        return _riskPoints;
+      }
+
+      public void SetRiskPoints(float riskPoints) {
+         _riskPoints = riskPoints;
+      }
+
+      public void ChangeRiskPoints(float riskPoints) {
+        _riskPoints += riskPoints;
+      }
+
+      public bool EnoughRiskPoints(float riskPoints) {
+        return _riskPoints - riskPoints >= 0;
+      }
+    }
   }
 }

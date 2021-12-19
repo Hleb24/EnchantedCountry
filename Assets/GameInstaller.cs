@@ -8,9 +8,9 @@ using Zenject;
 namespace Aberrance {
   public class GameInstaller : MonoInstaller {
     public override void InstallBindings() {
-      Container.Bind<ClassOfCharacterData>().AsSingle();
+      Container.Bind<ClassTypeDataScroll>().AsSingle();
       Container.Bind<WalletDataScroll>().AsSingle();
-      Container.Bind<RiskPointsData>().AsSingle();
+      Container.Bind<RiskPointsScribe>().AsSingle();
       Container.Bind<EquipmentUsedDataScroll>().AsSingle();
       Container.Bind<GamePointsScribe>().AsSingle();
       Container.Bind<DiceRollScribe>().AsSingle();

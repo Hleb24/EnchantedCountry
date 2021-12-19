@@ -6,6 +6,7 @@ using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.NPC;
 using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.RiskPoints;
 using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Weapon;
 using Core.EnchantedCountry.ScriptableObject.WeaponObjects;
+using Core.EnchantedCountry.SupportSystems.Data;
 using UnityEngine;
 
 namespace Core.EnchantedCountry.ScriptableObject.NpcSO {
@@ -36,7 +37,7 @@ namespace Core.EnchantedCountry.ScriptableObject.NpcSO {
     }
 
     public Npc GetNpc () {
-      _npc = new Npc(Name, Alignment, NpcType, new RiskPoints(GetRiskPoints()), new ArmorClass(ClassOfArmor), Morality,  Immoral, Immortal,
+      _npc = new Npc(Name, Alignment, NpcType, new RiskPoints(ScribeDealer.Peek<RiskPointsScribe>(), GetRiskPoints()), new ArmorClass(ClassOfArmor), Morality,  Immoral, Immortal,
         DeadlyAttack, AttackEveryAtOnce,Experience, EscapePossibility, Description, Property, Id, GetListOfWeapon(), GetListOfImpacts());
       return _npc;
     }

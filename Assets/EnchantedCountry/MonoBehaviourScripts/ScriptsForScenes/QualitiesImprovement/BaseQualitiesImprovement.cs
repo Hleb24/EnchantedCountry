@@ -17,7 +17,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.QualitiesI
         _qualityPoints.ChangeQualityPoints(QualityType.Constitution, diceRollQualityIncrease[2]);
         _qualityPoints.ChangeQualityPoints(QualityType.Wisdom, diceRollQualityIncrease[3]);
         _qualityPoints.ChangeQualityPoints(QualityType.Courage, diceRollQualityIncrease[4]);
-        GSSSingleton.Instance.SaveInGame();
       } else {
         _qualities[QualityType.Strength].ValueOfQuality += diceRollQualityIncrease[0];
         _qualities[QualityType.Agility].ValueOfQuality += diceRollQualityIncrease[1];

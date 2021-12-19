@@ -19,7 +19,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 		#endregion
 		#region SET_TEXT_OF_CHARACTER_TYPE
 		private void OnGetCharacterType() {
-			_characterTypeText.text = _characterType.ToString();
+			_characterTypeText.text = _classType.ToString();
 		}
 		#endregion
 	}

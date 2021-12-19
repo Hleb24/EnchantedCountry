@@ -31,9 +31,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.BaseClasses {
 			Invoke(nameof(SetWalletText), 0.2f);
 		}
 
-		protected virtual void OnDisable() {
-			GSSSingleton.Instance.SaveInGame();
-		}
+		protected virtual void OnDisable() { }
 		#endregion
 		#region SET_WALLET_TEXT
 		protected void SetWalletText() {

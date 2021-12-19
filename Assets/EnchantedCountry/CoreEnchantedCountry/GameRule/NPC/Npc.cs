@@ -17,13 +17,13 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.GameRule.NPC {
 
       switch (impactType) {
         case ImpactType.Positive:
-          _riskPoints.Points += points;
+          _riskPoints.ChangeRiskPoints(points);
           break;
         case ImpactType.Negative:
-          _riskPoints.Points -= points;
+          _riskPoints.ChangeRiskPoints(-points);
           break;
         case ImpactType.Neutral:
-          _riskPoints.Points = points;
+          _riskPoints.SetRiskPoints(points);
           break;
         default:
           throw new InvalidOperationException("Impact type is invalid");
@@ -198,11 +198,11 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.GameRule.NPC {
         return false;
       }
 
-      _riskPoints.Points -= damage;
-      if (_riskPoints.isDead) {
+      _riskPoints.ChangeRiskPoints(-damage);;
+      if (_riskPoints.IsDead()) {
         IsDead?.Invoke(_name);
       }
-      return _riskPoints.isDead;
+      return _riskPoints.IsDead();
     }
 
     protected virtual bool СanKillIfIsKillOnlySpell(bool isSpell) {
@@ -222,8 +222,8 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.GameRule.NPC {
         return false;
       }
 
-      _riskPoints.Points -= damage;
-      return _riskPoints.isDead;
+      _riskPoints.ChangeRiskPoints(-damage);
+      return _riskPoints.IsDead();
     }
     #endregion
 

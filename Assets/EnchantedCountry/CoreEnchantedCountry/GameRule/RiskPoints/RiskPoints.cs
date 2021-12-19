@@ -1,45 +1,40 @@
-﻿using System;
+﻿using Core.EnchantedCountry.SupportSystems.Data;
 
 namespace Core.EnchantedCountry.CoreEnchantedCountry.GameRule.RiskPoints {
-    public class RiskPoints {
-        #region Fields
-        private const float BOTTOM_BORDER = 0f;
-        public bool isDead;
-        private float _points;
-        #endregion
-        #region Constructors
-        public RiskPoints() { }
-        public RiskPoints(float startPoints) {
-            _points = startPoints;
-        }
-        #endregion
-        #region Properties
-        public float Points {
-            get {
-                return _points;
-            }
-            set {
-                if (IsWithinBorders(value)) {
-                    _points = value;
+  public class RiskPoints {
+    private readonly IRiskPoints _riskPoints;
 
-                } else if (IsBecomeDead(value)) {
-                    _points = BOTTOM_BORDER;
-                    isDead = true;
-                } else {
-                    throw new InvalidOperationException("Value is invalid");
-                }
-            }
-        }
-        #endregion
-        #region Methods
-        private static bool IsBecomeDead(float value) {
-            return value <= BOTTOM_BORDER;
-        }
-
-        private bool IsWithinBorders(float value) {
-            return value > BOTTOM_BORDER && !isDead;
-        }
-        #endregion
+    public RiskPoints(IRiskPoints riskPoints) {
+      _riskPoints = riskPoints;
     }
-  
+
+    public RiskPoints(IRiskPoints riskPoints, float startPoints) {
+      _riskPoints = riskPoints;
+      _riskPoints.SetRiskPoints(startPoints);
+    }
+
+    public float GetPoints() {
+      return _riskPoints.GetRiskPoints();
+    }
+
+    public void SetRiskPoints(float riskPoints) {
+      _riskPoints.SetRiskPoints(riskPoints);
+    }
+
+    public void ChangeRiskPoints(float riskPoints) {
+      _riskPoints.ChangeRiskPoints(riskPoints);
+    }
+
+    public bool IsDead() {
+      return _riskPoints.GetRiskPoints() <= 0;
+    }
+
+    public bool IsAlive() {
+      return _riskPoints.GetRiskPoints() > 0;
+    }
+
+    public bool WillDie(float damage) {
+      return !_riskPoints.EnoughRiskPoints(damage);
+    }
+  }
 }

@@ -12,7 +12,8 @@ using Core.EnchantedCountry.SupportSystems.Data;
 using UnityEngine;
 
 namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
-  public enum CharacterType {
+  public enum ClassType {
+    Human,
     Warrior,
     Elf,
     Wizard,
@@ -22,11 +23,67 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
 
   [Serializable]
   public class PlayerCharacter : ImpactOnRiskPoints, IInitiative {
+    #region COMPARE_TO
+    public int CompareTo(IInitiative other) {
+      if (other != null) {
+        return Initiative.CompareTo(other.Initiative);
+      }
+
+      return -1;
+    }
+    #endregion
+
+    #region IMPLEMENTATIONS_SET_RISK_POINTS
+    void ImpactOnRiskPoints.SetRiskPoints(ImpactType impactType, int points, int protectiveThrow) {
+      int playerLuckRoll = KitOfDice.diceKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].SumRollsOfDice();
+      if (playerLuckRoll >= protectiveThrow) {
+        return;
+      }
+
+      switch (impactType) {
+        case ImpactType.Poison:
+          _riskPoints.ChangeRiskPoints(-points);
+          Debug.Log($"<color=red>Poison</color> {points}, luck roll {playerLuckRoll}, protective throw {protectiveThrow}");
+          break;
+        case ImpactType.Paralysis:
+          _riskPoints.ChangeRiskPoints(-points);
+
+          Debug.Log($"<color=red>Paralysis</color> {points}");
+          break;
+        case ImpactType.Petrification:
+          _riskPoints.ChangeRiskPoints(-points);
+
+          Debug.Log($"<color=red>Petrification</color> {points}");
+          break;
+        case ImpactType.Acid:
+          _riskPoints.ChangeRiskPoints(-points);
+
+          Debug.Log($"<color=red>Acid</color> {points}");
+          break;
+        case ImpactType.Gas:
+          _riskPoints.ChangeRiskPoints(-points);
+
+          Debug.Log($"<color=red>Gas</color> {points}");
+          break;
+        case ImpactType.Fire:
+          _riskPoints.ChangeRiskPoints(-points);
+
+          Debug.Log($"<color=red>Fire</color> {points}");
+          break;
+        case ImpactType.DragonBreath:
+          _riskPoints.ChangeRiskPoints(-points);
+
+          Debug.Log($"<color=red>DragonBreath</color> {points}");
+          break;
+      }
+    }
+    #endregion
+
     #region FIELDS
     public event Action<string> IsDead;
     public string Name = "Kell";
     private CharacterQualities _characterQualities;
-    private CharacterType _characterType;
+    private ClassType _classType;
     private Levels.Levels _levels;
     private IGamePoints _gamePoints;
     private RiskPoints _riskPoints;
@@ -40,54 +97,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
     private Weapon _rangeWeapon;
     private Weapon _projectiles;
     #endregion
-    #region COMPARE_TO
-    public int CompareTo(IInitiative other) {
-      if (other != null) {
-        return Initiative.CompareTo(other.Initiative);
-      }
 
-      return -1;
-    }
-    #endregion
-    #region IMPLEMENTATIONS_SET_RISK_POINTS
-    void ImpactOnRiskPoints.SetRiskPoints(ImpactType impactType, int points, int protectiveThrow) {
-      int playerLuckRoll = KitOfDice.diceKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].SumRollsOfDice();
-      if (playerLuckRoll >= protectiveThrow) {
-        return;
-      }
-
-      switch (impactType) {
-        case ImpactType.Poison:
-          _riskPoints.Points -= points;
-          Debug.Log($"<color=red>Poison</color> {points}, luck roll {playerLuckRoll}, protective throw {protectiveThrow}"); 
-          break;
-        case ImpactType.Paralysis:
-          _riskPoints.Points -= points;
-          Debug.Log($"<color=red>Paralysis</color> {points}"); 
-          break;
-        case ImpactType.Petrification:
-          _riskPoints.Points -= points;
-          Debug.Log($"<color=red>Petrification</color> {points}"); 
-          break;
-        case ImpactType.Acid:
-          _riskPoints.Points -= points;
-          Debug.Log($"<color=red>Acid</color> {points}"); 
-          break;
-        case ImpactType.Gas:
-          _riskPoints.Points -= points;
-          Debug.Log($"<color=red>Gas</color> {points}"); 
-          break;
-        case ImpactType.Fire:
-          _riskPoints.Points -= points;
-          Debug.Log($"<color=red>Fire</color> {points}"); 
-          break;
-        case ImpactType.DragonBreath:
-          _riskPoints.Points -= points;
-          Debug.Log($"<color=red>DragonBreath</color> {points}"); 
-          break;
-      }
-    }
-    #endregion
     #region BATTLE_METHODS
     public int GetMeleeAccuracy() {
       if (_meleeWeapon == null) {
@@ -133,24 +143,25 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
       if (!IsHit(diceRoll)) {
         return false;
       }
-      _riskPoints.Points -= damage;
-      if (_riskPoints.isDead) {
+
+      _riskPoints.ChangeRiskPoints(-damage);
+      if (_riskPoints.IsDead()) {
         IsDead?.Invoke(Name);
       }
 
-      return _riskPoints.isDead;
+      return _riskPoints.IsDead();
     }
 
     public bool IsHit(int hit) {
       return _armorClassOfCharacter.IsHit(hit);
     }
     #endregion
+
     #region CONSTRUCTORS
-    public PlayerCharacter(CharacterQualities characterQualities, CharacterType characterType, Levels.Levels levels, IGamePoints gamePoints, RiskPoints riskPoints,
-      IWallet wallet, EquipmentsOfCharacter equipmentsOfCharacter, IEquipmentUsed equipmentsUsed, Armor armor, Armor shield, Weapon rangeWeapon, Weapon meleeWeapon,
-      Weapon projectiles) {
+    public PlayerCharacter(CharacterQualities characterQualities, ClassType classType, Levels.Levels levels, IGamePoints gamePoints, RiskPoints riskPoints, IWallet wallet,
+      EquipmentsOfCharacter equipmentsOfCharacter, IEquipmentUsed equipmentsUsed, Armor armor, Armor shield, Weapon rangeWeapon, Weapon meleeWeapon, Weapon projectiles) {
       _characterQualities = characterQualities;
-      _characterType = characterType;
+      _classType = classType;
       _levels = levels;
       _gamePoints = gamePoints;
       _riskPoints = riskPoints;
@@ -170,6 +181,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
 
     public PlayerCharacter() { }
     #endregion
+
     #region PROPERTIES
     public CharacterQualities CharacterQualities {
       get {
@@ -180,12 +192,12 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
       }
     }
 
-    public CharacterType CharacterType {
+    public ClassType ClassType {
       get {
-        return _characterType;
+        return _classType;
       }
       set {
-        _characterType = value;
+        _classType = value;
       }
     }
 

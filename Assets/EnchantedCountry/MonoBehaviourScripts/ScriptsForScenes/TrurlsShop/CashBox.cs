@@ -86,7 +86,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 				AddProductToEquipmentCard(_selectedId);
 				BuyProductSuccess?.Invoke();
 				BuyProductSuccessAndCheckPrice?.Invoke(_selectedId);
-				GSSSingleton.Instance.SaveInGame();
 			}
 			if (!CanBuyProduct(_walletIn.Wallet.GetCoins(), GetPrice(_selectedId))) {
 				DisableInteractableForBuyProductButton();
@@ -99,7 +98,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 		#endregion
 		#region FIRST_OPENING
 		private void RemoveAllEquipmentCardsForFirstTrurlsShopOpening() {
-			if (GSSSingleton.Instance.IsNewGame) {
+			if (Leviathan.IsNewGame) {
 				_equipment.RemoveAllEquipmentCards();
 			}
 		}
@@ -117,7 +116,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 		private void AddProductToEquipmentCard(int id, int amount = 1) {
 			_equipment.IncreaseQuantityOfProduct(id, amount);
 			_equipments.ChangeQuantity(id, amount);
-			GSSSingleton.Instance.SaveInGame();
 		}
 		#endregion
 		#region TOGGLE_BUTTON

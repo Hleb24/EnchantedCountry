@@ -2,9 +2,9 @@
 
 namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Levels {
   public class LevelDictionaries {
-    public static readonly Dictionary<CharacterType, List<int>> DefiningLevelsForСharacterTypes = 
-      new Dictionary<CharacterType, List<int>>() {
-        [CharacterType.Warrior] = new List<int>() {
+    public static readonly Dictionary<ClassType, List<int>> DefiningLevelsForСharacterTypes = 
+      new Dictionary<ClassType, List<int>>() {
+        [ClassType.Warrior] = new List<int>() {
           0,
           2_000,
           4_000,
@@ -19,7 +19,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Levels {
           20_000,
           25_000
         },
-        [CharacterType.Elf] = new List<int>() {
+        [ClassType.Elf] = new List<int>() {
           0,
           2_000,
           4_000,
@@ -34,7 +34,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Levels {
           21_000,
           26_000
         },
-        [CharacterType.Wizard] = new List<int>() {
+        [ClassType.Wizard] = new List<int>() {
           0,
           500,
           1_000,
@@ -49,7 +49,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Levels {
           12_000,
           15_000
         },
-        [CharacterType.Kron] = new List<int>() {
+        [ClassType.Kron] = new List<int>() {
           0,
           1_000,
           2_000,
@@ -64,7 +64,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Levels {
           16_000,
           19_000
         },
-        [CharacterType.Gnom] = new List<int>() {
+        [ClassType.Gnom] = new List<int>() {
           0,
           1_400,
           2_300,
@@ -80,16 +80,16 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Levels {
           23_000
         },
       };
-    public static readonly Dictionary<CharacterType, Dictionary<int, int>> DefiningSpellLevelsForСharacterTypes =
-      new Dictionary<CharacterType, Dictionary<int, int>>() {
-        [CharacterType.Warrior] = new Dictionary<int, int>() {
+    public static readonly Dictionary<ClassType, Dictionary<int, int>> DefiningSpellLevelsForСharacterTypes =
+      new Dictionary<ClassType, Dictionary<int, int>>() {
+        [ClassType.Warrior] = new Dictionary<int, int>() {
           [3] = 1,
           [6] = 2,
           [8] = 3,
           [10] = 4,
           [12] = 5
         },
-        [CharacterType.Elf] = new Dictionary<int, int>() {
+        [ClassType.Elf] = new Dictionary<int, int>() {
           [0] = 1,
           [1] = 2,
           [2] = 3,
@@ -104,7 +104,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Levels {
           [11] = 11,
           [12] = 12
         },
-        [CharacterType.Wizard] = new Dictionary<int, int>() {
+        [ClassType.Wizard] = new Dictionary<int, int>() {
           [1] = 1,
           [2] = 2,
           [3] = 3,
@@ -118,7 +118,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Levels {
           [11] = 11,
           [12] = 12
         },
-        [CharacterType.Kron] = new Dictionary<int, int>() {
+        [ClassType.Kron] = new Dictionary<int, int>() {
           [1] = 1,
           [2] = 2,
           [3] = 3,
@@ -132,7 +132,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Levels {
           [11] = 11,
           [12] = 12
         },
-        [CharacterType.Gnom] = new Dictionary<int, int>() {
+        [ClassType.Gnom] = new Dictionary<int, int>() {
           [1] = 1,
           [3] = 2,
           [5] = 3,

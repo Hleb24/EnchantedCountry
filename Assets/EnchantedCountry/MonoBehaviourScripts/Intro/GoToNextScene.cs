@@ -1,3 +1,4 @@
+using System;
 using Core.EnchantedCountry.MonoBehaviourScripts.BaseClasses;
 using Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.Intro {
     private string _nameOfScene;
     #endregion
     #region MONOBEHAVIOUR_METHODS
+
     private void Start() {
       Invoke(nameof(NextScene), 0.3f);
     }

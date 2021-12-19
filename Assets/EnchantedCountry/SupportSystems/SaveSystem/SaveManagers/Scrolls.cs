@@ -14,6 +14,8 @@ namespace Core {
     public WalletDataScroll WalletDataScroll;
     public GamePointsDataScroll GamePointsDataScroll;
     public QualityPointsDataScroll QualityPointsDataScroll;
+    public RiskPointDataScroll RiskPointsDataScroll;
+    public ClassTypeDataScroll ClassTypeDataScroll;
 
     /// <summary>
     ///   Создаёт новые сохранённые данные.
@@ -27,8 +29,10 @@ namespace Core {
         { typeof(EquipmentsScribe), new EquipmentsScribe() },
         { typeof(EquipmentUsedScribe), new EquipmentUsedScribe() },
         { typeof(WalletScribe), new WalletScribe() },
-        { typeof(GamePointsScribe), new GamePointsScribe() }
-        
+        { typeof(GamePointsScribe), new GamePointsScribe() },
+        { typeof(QualityPointsScribe), new QualityPointsScribe() },
+        { typeof(RiskPointsScribe), new RiskPointsScribe() },
+        { typeof(ClassTypeScribe), new ClassTypeScribe() }
       };
       foreach (IScribe scribe in scribes.Values) {
         scribe.Init(save);

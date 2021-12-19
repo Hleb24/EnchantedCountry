@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem;
 using Core.EnchantedCountry.SupportSystems.Data;
-using Core.EnchantedCountry.SupportSystems.SaveSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -589,9 +587,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
 
     private void SaveQualitiesAfterDistributing() {
       if (_useGameSave) {
-        GSSSingleton.Instance.SaveInGame();
-      } else {
-        SaveSystem.Save(_qualitiesAfterDistributing, SaveSystem.Constants.QualitiesAfterDistributing);
+        // GSSSingleton.Instance.SaveInGame();
       }
     }
 
