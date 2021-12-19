@@ -27,7 +27,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.SelectionC
 		private bool _useGameSave;
 		// [Inject]
 		[SerializeField]
-		private QualitiesData _qualitiesData;
+		private IQualityPoints _qualityPoints;
 		private ClassOfCharacterData _classOfCharacterData;
 		private CharacterType _characterType;
 		private bool _isCanBeWarrior;
@@ -42,8 +42,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.SelectionC
 		#endregion
 		#region MONOBEHAVIOUR_METHODS
 		private void Start() {
-			_qualitiesData = GSSSingleton.Instance;
-			_qualities = new Qualities(_qualitiesData);
+			_qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
+			_qualities = new Qualities(_qualityPoints);
 			_classOfCharacterData = GSSSingleton.Instance;
 			Invoke(nameof(SetAllowedClassesAndEnableInteractableForButtonsIfAllowedByCondition), 0.03f);
 		}
@@ -111,47 +111,47 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.SelectionC
 		#region IS_CAN_BE
 		private void IsCanBeWarrior() {
 			if (_useGameSave) {
-				_isCanBeWarrior = _qualitiesData.strength >= _lowerLimitQualityValueForClass;
+				_isCanBeWarrior = _qualityPoints.GetQualityPoints(QualityType.Strength) >= _lowerLimitQualityValueForClass;
 			} else {
-				_isCanBeWarrior = _qualities[Quality.QualityType.Strength].ValueOfQuality >= _lowerLimitQualityValueForClass;
+				_isCanBeWarrior = _qualities[QualityType.Strength].ValueOfQuality >= _lowerLimitQualityValueForClass;
 			}
 		}
 
 		private void IsCanBeElf() {
 			if (_useGameSave) {
-				_isCanBeElf = _qualitiesData.strength >= _lowerLimitQualityValueForClass
-				              && _qualitiesData.courage >= _lowerLimitQualityValueForClass;
+				_isCanBeElf = _qualityPoints.GetQualityPoints(QualityType.Strength) >= _lowerLimitQualityValueForClass
+				              && _qualityPoints.GetQualityPoints(QualityType.Courage)>= _lowerLimitQualityValueForClass;
 			} else {
-				_isCanBeElf = _qualities[Quality.QualityType.Strength].ValueOfQuality >= _lowerLimitQualityValueForClass
-				              && _qualities[Quality.QualityType.Courage].ValueOfQuality >= _lowerLimitQualityValueForClass;
+				_isCanBeElf = _qualities[QualityType.Strength].ValueOfQuality >= _lowerLimitQualityValueForClass
+				              && _qualities[QualityType.Courage].ValueOfQuality >= _lowerLimitQualityValueForClass;
 			}
 		}
 
 		private void IsCanBeWizard() {
 			if (_useGameSave) {
-				_isCanBeWizard = _qualitiesData.wisdom >= _lowerLimitQualityValueForClass;
+				_isCanBeWizard =_qualityPoints.GetQualityPoints(QualityType.Wisdom) >= _lowerLimitQualityValueForClass;
 			} else {
-				_isCanBeWizard = _qualities[Quality.QualityType.Wisdom].ValueOfQuality >= _lowerLimitQualityValueForClass;
+				_isCanBeWizard = _qualities[QualityType.Wisdom].ValueOfQuality >= _lowerLimitQualityValueForClass;
 			}
 		}
 
 		private void IsCanBeKron() {
 			if (_useGameSave) {
-				_isCanBeKron = _qualitiesData.agility >= _lowerLimitQualityValueForClass
-				               && _qualitiesData.wisdom >= _lowerLimitQualityValueForClass;
+				_isCanBeKron = _qualityPoints.GetQualityPoints(QualityType.Agility) >= _lowerLimitQualityValueForClass
+				               && _qualityPoints.GetQualityPoints(QualityType.Wisdom) >= _lowerLimitQualityValueForClass;
 			} else {
-				_isCanBeKron = _qualities[Quality.QualityType.Agility].ValueOfQuality >= _lowerLimitQualityValueForClass
-				               && _qualities[Quality.QualityType.Wisdom].ValueOfQuality >= _lowerLimitQualityValueForClass;
+				_isCanBeKron = _qualities[QualityType.Agility].ValueOfQuality >= _lowerLimitQualityValueForClass
+				               && _qualities[QualityType.Wisdom].ValueOfQuality >= _lowerLimitQualityValueForClass;
 			}
 		}
 
 		private void IsCanBeGnom() {
 			if (_useGameSave) {
-				_isCanBeGnom = _qualitiesData.agility >= _lowerLimitQualityValueForClass
-				               && _qualitiesData.constitution >= _lowerLimitQualityValueForClass;
+				_isCanBeGnom = _qualityPoints.GetQualityPoints(QualityType.Agility) >= _lowerLimitQualityValueForClass
+				               && _qualityPoints.GetQualityPoints(QualityType.Constitution) >= _lowerLimitQualityValueForClass;
 			} else {
-				_isCanBeGnom = _qualities[Quality.QualityType.Agility].ValueOfQuality >= _lowerLimitQualityValueForClass
-				               && _qualities[Quality.QualityType.Constitution].ValueOfQuality >= _lowerLimitQualityValueForClass;
+				_isCanBeGnom = _qualities[QualityType.Agility].ValueOfQuality >= _lowerLimitQualityValueForClass
+				               && _qualities[QualityType.Constitution].ValueOfQuality >= _lowerLimitQualityValueForClass;
 			}
 		}
 		#endregion

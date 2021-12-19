@@ -64,38 +64,38 @@ namespace Core.EnchantedCountry.SupportSystems.Data {
   [Serializable]
   public class DiceRollScribe : IScribe, IDiceRoll {
     private readonly int[] _startRollValues = { 0, 0, 0, 0, 0 };
-    private DiceRollDataSave _diceRollDataSave;
+    private DiceRollDataScroll _diceRollDataScroll;
 
     int IDiceRoll.GetStatsRoll(StatRolls statRolls) {
       // Assert.IsNotNull(_diceRollDataSave.DiceRollValues);
       return statRolls switch {
-               StatRolls.First => _diceRollDataSave.GetDiceRollValue((int)StatRolls.First),
-               StatRolls.Second => _diceRollDataSave.GetDiceRollValue((int)StatRolls.Second),
-               StatRolls.Third => _diceRollDataSave.GetDiceRollValue((int)StatRolls.Third),
-               StatRolls.Fourth => _diceRollDataSave.GetDiceRollValue((int)StatRolls.Fourth),
-               StatRolls.Fifth => _diceRollDataSave.GetDiceRollValue((int)StatRolls.Fifth),
+               StatRolls.First => _diceRollDataScroll.GetDiceRollValue((int)StatRolls.First),
+               StatRolls.Second => _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Second),
+               StatRolls.Third => _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Third),
+               StatRolls.Fourth => _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Fourth),
+               StatRolls.Fifth => _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Fifth),
                _ => default
              };
     }
 
     void IDiceRoll.SetStarsRoll(StatRolls statRolls, int value) {
-      Debug.LogWarning(_diceRollDataSave.DiceRollValues == null);
-      Assert.IsNotNull(_diceRollDataSave.DiceRollValues);
+      Debug.LogWarning(_diceRollDataScroll.DiceRollValues == null);
+      Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
       switch (statRolls) {
         case StatRolls.First:
-          _diceRollDataSave.SetDiceValue((int)StatRolls.First, value);
+          _diceRollDataScroll.SetDiceValue((int)StatRolls.First, value);
           break;
         case StatRolls.Second:
-          _diceRollDataSave.SetDiceValue((int)StatRolls.Second, value);
+          _diceRollDataScroll.SetDiceValue((int)StatRolls.Second, value);
           break;
         case StatRolls.Third:
-          _diceRollDataSave.SetDiceValue((int)StatRolls.Third, value);
+          _diceRollDataScroll.SetDiceValue((int)StatRolls.Third, value);
           break;
         case StatRolls.Fourth:
-          _diceRollDataSave.SetDiceValue((int)StatRolls.Fourth, value);
+          _diceRollDataScroll.SetDiceValue((int)StatRolls.Fourth, value);
           break;
         case StatRolls.Fifth:
-          _diceRollDataSave.SetDiceValue((int)StatRolls.Fifth, value);
+          _diceRollDataScroll.SetDiceValue((int)StatRolls.Fifth, value);
           break;
         default:
           Debug.LogWarning("Броска характеристики не существует");
@@ -104,76 +104,76 @@ namespace Core.EnchantedCountry.SupportSystems.Data {
     }
 
     void IDiceRoll.ChangeStatsRoll(StatRolls statRolls, int value) {
-      Debug.LogWarning(_diceRollDataSave.DiceRollValues == null);
+      Debug.LogWarning(_diceRollDataScroll.DiceRollValues == null);
 
-      Assert.IsNotNull(_diceRollDataSave.DiceRollValues);
+      Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
 
       switch (statRolls) {
         case StatRolls.First:
-          value += _diceRollDataSave.GetDiceRollValue((int)StatRolls.First);
-          _diceRollDataSave.SetDiceValue((int)StatRolls.First, value);
+          value += _diceRollDataScroll.GetDiceRollValue((int)StatRolls.First);
+          _diceRollDataScroll.SetDiceValue((int)StatRolls.First, value);
           break;
         case StatRolls.Second:
-          value += _diceRollDataSave.GetDiceRollValue((int)StatRolls.Second);
-          _diceRollDataSave.SetDiceValue((int)StatRolls.Second, value);
+          value += _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Second);
+          _diceRollDataScroll.SetDiceValue((int)StatRolls.Second, value);
           break;
         case StatRolls.Third:
-          value += _diceRollDataSave.GetDiceRollValue((int)StatRolls.Third);
-          _diceRollDataSave.SetDiceValue((int)StatRolls.Third, value);
+          value += _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Third);
+          _diceRollDataScroll.SetDiceValue((int)StatRolls.Third, value);
           break;
         case StatRolls.Fourth:
-          value += _diceRollDataSave.GetDiceRollValue((int)StatRolls.Fourth);
-          _diceRollDataSave.SetDiceValue((int)StatRolls.Fourth, value);
+          value += _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Fourth);
+          _diceRollDataScroll.SetDiceValue((int)StatRolls.Fourth, value);
           break;
         case StatRolls.Fifth:
-          value += _diceRollDataSave.GetDiceRollValue((int)StatRolls.Fifth);
-          _diceRollDataSave.SetDiceValue((int)StatRolls.Fifth, value);
+          value += _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Fifth);
+          _diceRollDataScroll.SetDiceValue((int)StatRolls.Fifth, value);
           break;
       }
     }
 
     int[] IDiceRoll.GetDiceRollValues() {
-      Assert.IsNotNull(_diceRollDataSave.DiceRollValues);
-      return _diceRollDataSave.DiceRollValues;
+      Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
+      return _diceRollDataScroll.DiceRollValues;
     }
 
     int IDiceRoll.GetNumberOfDiceRolls() {
-      Assert.IsNotNull(_diceRollDataSave.DiceRollValues);
-      Assert.IsTrue(_diceRollDataSave.DiceRollValues.Length > 0);
-      return _diceRollDataSave.DiceRollValues.Length;
+      Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
+      Assert.IsTrue(_diceRollDataScroll.DiceRollValues.Length > 0);
+      return _diceRollDataScroll.DiceRollValues.Length;
     }
 
     void IDiceRoll.SetDiceRollValues(int[] diceRollValues) {
-      Assert.IsNotNull(_diceRollDataSave.DiceRollValues);
-      _diceRollDataSave.DiceRollValues = diceRollValues;
+      Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
+      _diceRollDataScroll.DiceRollValues = diceRollValues;
     }
 
-    void IScribe.Init(SaveGame saveGame) {
-      _diceRollDataSave = new DiceRollDataSave(_startRollValues);
-      if (saveGame is null) {
+    void IScribe.Init(Scrolls scrolls) {
+      _diceRollDataScroll = new DiceRollDataScroll(_startRollValues);
+      if (scrolls is null) {
         return;
       }
 
-      saveGame.DiceRollDataSave = _diceRollDataSave;
+      scrolls.DiceRollDataScroll = _diceRollDataScroll;
     }
 
-    void IScribe.Save(SaveGame saveGame) {
-      saveGame.DiceRollDataSave = _diceRollDataSave;
+    void IScribe.Save(Scrolls scrolls) {
+      scrolls.DiceRollDataScroll = _diceRollDataScroll;
     }
 
-    void IScribe.Loaded(SaveGame saveGame) {
-      _diceRollDataSave.DiceRollValues = saveGame.DiceRollDataSave.DiceRollValues;
-      for (var i = 0; i < _diceRollDataSave.DiceRollValues.Length; i++) {
-        Debug.LogWarning(_diceRollDataSave.DiceRollValues[i]);
+    void IScribe.Loaded(Scrolls scrolls) {
+      _diceRollDataScroll.DiceRollValues = scrolls.DiceRollDataScroll.DiceRollValues;
+      for (var i = 0; i < _diceRollDataScroll.DiceRollValues.Length; i++) {
+        Debug.LogWarning(_diceRollDataScroll.DiceRollValues[i]);
       }
     }
   }
 
   [Serializable]
-  public struct DiceRollDataSave {
+  public struct DiceRollDataScroll {
     public int[] DiceRollValues;
 
-    public DiceRollDataSave(int[] diceRollValues) {
+    public DiceRollDataScroll(int[] diceRollValues) {
       DiceRollValues = diceRollValues;
     }
 

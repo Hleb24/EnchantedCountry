@@ -50,62 +50,62 @@ namespace Core.EnchantedCountry.SupportSystems.Data {
   [Serializable]
   public class WalletScribe : IScribe, IWallet {
     private const int StartMaxCoins = 100;
-    private WalletDataSave _walletDataSave;
+    private WalletDataScroll _walletDataScroll;
 
-    void IScribe.Init(SaveGame saveGame) {
-      _walletDataSave = new WalletDataSave(0, StartMaxCoins);
-      if (saveGame is null) {
+    void IScribe.Init(Scrolls scrolls) {
+      _walletDataScroll = new WalletDataScroll(0, StartMaxCoins);
+      if (scrolls is null) {
         return;
       }
 
-      saveGame.WalletDataSave = _walletDataSave;
+      scrolls.WalletDataScroll = _walletDataScroll;
     }
 
-    void IScribe.Save(SaveGame saveGame) {
-      saveGame.WalletDataSave = _walletDataSave;
+    void IScribe.Save(Scrolls scrolls) {
+      scrolls.WalletDataScroll = _walletDataScroll;
     }
 
-    void IScribe.Loaded(SaveGame saveGame) {
-      _walletDataSave.Coins = saveGame.WalletDataSave.Coins;
-      _walletDataSave.MaxCoins = saveGame.WalletDataSave.MaxCoins;
+    void IScribe.Loaded(Scrolls scrolls) {
+      _walletDataScroll.Coins = scrolls.WalletDataScroll.Coins;
+      _walletDataScroll.MaxCoins = scrolls.WalletDataScroll.MaxCoins;
     }
 
     int IWallet.GetCoins() {
-      return _walletDataSave.Coins;
+      return _walletDataScroll.Coins;
     }
 
     void IWallet.SetCoins(int coins) {
-      _walletDataSave.Coins = coins;
+      _walletDataScroll.Coins = coins;
     }
 
     void IWallet.ChangeCoins(int coins) {
-      _walletDataSave.Coins += coins;
-      if (_walletDataSave.Coins < 0) {
-        _walletDataSave.Coins = 0;
+      _walletDataScroll.Coins += coins;
+      if (_walletDataScroll.Coins < 0) {
+        _walletDataScroll.Coins = 0;
       }
     }
 
     int IWallet.GetMaxCoins() {
-      return _walletDataSave.MaxCoins;
+      return _walletDataScroll.MaxCoins;
     }
 
     void IWallet.SetMaxCoins(int maxCoins) {
       Assert.IsTrue(maxCoins >= 0);
-      _walletDataSave.MaxCoins = maxCoins;
+      _walletDataScroll.MaxCoins = maxCoins;
     }
 
     bool IWallet.CoinsEnough(int coins) {
-      _walletDataSave.Coins -= coins;
-      return _walletDataSave.Coins >= 0;
+      _walletDataScroll.Coins -= coins;
+      return _walletDataScroll.Coins >= 0;
     }
   }
 
   [Serializable]
-  public struct WalletDataSave {
+  public struct WalletDataScroll {
     public int Coins;
     public int MaxCoins;
 
-    public WalletDataSave(int coins, int maxCoins) {
+    public WalletDataScroll(int coins, int maxCoins) {
       Coins = coins;
       MaxCoins = maxCoins;
     }

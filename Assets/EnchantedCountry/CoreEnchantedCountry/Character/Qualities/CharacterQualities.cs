@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Core.EnchantedCountry.SupportSystems.Data;
 
 namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Qualities {
   public class CharacterQualities {
@@ -8,14 +9,14 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Qualities {
     private  Quality _constitution;
     private  Quality _wisdom;
     private  Quality _courage;
-    private Dictionary<Quality.QualityType, Quality> _dictionaryOfQualities;
+    private Dictionary<QualityType, Quality> _dictionaryOfQualities;
     #endregion
     #region CONTSTRUCTORS
-    public CharacterQualities(Quality.QualityType strength, int strengthValue,
-      Quality.QualityType agility, int agilityValue,
-      Quality.QualityType constitution, int constitutionValue,
-      Quality.QualityType wisdom, int wisdomValue,
-      Quality.QualityType courage, int courageValue) {
+    public CharacterQualities(QualityType strength, int strengthValue,
+      QualityType agility, int agilityValue,
+      QualityType constitution, int constitutionValue,
+      QualityType wisdom, int wisdomValue,
+      QualityType courage, int courageValue) {
       _strength = new Quality(strength, strengthValue);
       _agility = new Quality(agility, agilityValue);
       _constitution = new Quality(constitution, constitutionValue);
@@ -25,7 +26,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Qualities {
     }
     #endregion
     #region INDEXERS
-    public Quality this[Quality.QualityType type] {
+    public Quality this[QualityType type] {
       get {
         return _dictionaryOfQualities[type];
       }
@@ -36,12 +37,12 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Qualities {
     #endregion
     #region METHODS
     private void InitializationDictionaryOfQualities() {
-      _dictionaryOfQualities = new Dictionary<Quality.QualityType, Quality> {
-        [Quality.QualityType.Strength] = _strength,
-        [Quality.QualityType.Agility] = _agility,
-        [Quality.QualityType.Constitution] = _constitution,
-        [Quality.QualityType.Wisdom] = _wisdom,
-        [Quality.QualityType.Courage] = _courage
+      _dictionaryOfQualities = new Dictionary<QualityType, Quality> {
+        [QualityType.Strength] = _strength,
+        [QualityType.Agility] = _agility,
+        [QualityType.Constitution] = _constitution,
+        [QualityType.Wisdom] = _wisdom,
+        [QualityType.Courage] = _courage
       };
     }
     #endregion

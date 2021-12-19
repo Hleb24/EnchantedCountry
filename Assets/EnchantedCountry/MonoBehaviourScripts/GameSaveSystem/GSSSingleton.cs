@@ -102,10 +102,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
     public GamePointsScribe GetGamePointsData(int numberOfSave = 0) {
       return _gameSaveSystem.gameSaves.Count == numberOfSave ? new GamePointsScribe() : _gameSaveSystem.gameSaves[numberOfSave].GamePointsScribe;
     }
-
-    public QualitiesData GetQualitiesData(int numberOfSave = 0) {
-      return _gameSaveSystem.gameSaves.Count == numberOfSave ? new QualitiesData() : _gameSaveSystem.gameSaves[numberOfSave].qualitiesData;
-    }
     #endregion
 
     #region IS_NEW_GAME
@@ -139,10 +135,6 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem {
 
     public static implicit operator GamePointsScribe(GSSSingleton value) {
       return Instance.GetGamePointsData();
-    }
-
-    public static implicit operator QualitiesData(GSSSingleton value) {
-      return Instance.GetQualitiesData();
     }
     #endregion
   }

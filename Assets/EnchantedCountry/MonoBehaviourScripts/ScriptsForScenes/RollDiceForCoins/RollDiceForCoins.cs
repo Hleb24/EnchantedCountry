@@ -17,7 +17,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.RollDiceFo
 		private TMP_Text _numberOfCoinsText;
 		[SerializeField]
 		private bool _useGameSave;
-		private WalletDataSave _walletDataSave;
+		private WalletDataScroll _walletDataScroll;
 		[Inject]
 		private CharacterCreation _characterCreation;
 		private int _numberOfCoins;
@@ -25,7 +25,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.RollDiceFo
 		#endregion
 		#region MONOBEHAVIOUR_METHODS
 		private void Start() {
-			_walletDataSave = new WalletDataSave();
+			_walletDataScroll = new WalletDataScroll();
 			// if (_useGameSave) {
 			// 	_walletData = GSSSingleton.Instance;
 			// }
@@ -62,17 +62,17 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.RollDiceFo
 
 		// ReSharper disable once UnusedMethodReturnValue.Local
 		private int SetNumberOfCoinsInWalletDataAndReturnValue() {
-			_walletDataSave.Coins = _numberOfCoins;
+			_walletDataScroll.Coins = _numberOfCoins;
 			GSSSingleton.Instance.SaveInGame();
-			return _walletDataSave.Coins;
+			return _walletDataScroll.Coins;
 		}
 
 		private void SaveNumberOfCoinsInWallet() {
-			SaveSystem.Save(_walletDataSave, SaveSystem.Constants.Wallet);
+			SaveSystem.Save(_walletDataScroll, SaveSystem.Constants.Wallet);
 		}
 
 		private void SetUITextForNumberOfCoins() {
-			GenericTools.SetUIText(_numberOfCoinsText, _walletDataSave.Coins.ToString());
+			GenericTools.SetUIText(_numberOfCoinsText, _walletDataScroll.Coins.ToString());
 		}
 
 		private void DeactivateDiceRollButton() {

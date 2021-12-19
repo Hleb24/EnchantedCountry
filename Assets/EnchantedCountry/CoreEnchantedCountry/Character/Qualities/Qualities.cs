@@ -1,52 +1,54 @@
+using System;
 using System.Collections.Generic;
 using Core.EnchantedCountry.SupportSystems.Data;
 
 namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Qualities {
-	public class Qualities {
-		#region Fields
-		private Quality _strength;
-		private Quality _agility;
-		private Quality _constitution;
-		private Quality _wisdom;
-		private Quality _courage;
-		private Dictionary<Quality.QualityType, Quality> _listOfQualities;
-		#endregion
-		#region CONSTRUCTORS
-		public Qualities(int strength = 0, int agility = 0, int constitution = 0, int wisdom = 0, int courage = 0) {
-			_strength = new Quality(Quality.QualityType.Strength, strength);
-			_agility = new Quality(Quality.QualityType.Agility, agility);
-			_constitution = new Quality(Quality.QualityType.Constitution, constitution);
-			_wisdom = new Quality(Quality.QualityType.Wisdom, wisdom);
-			_courage = new Quality(Quality.QualityType.Courage, courage);
-			_listOfQualities = new Dictionary<Quality.QualityType, Quality>() {
-				[Quality.QualityType.Strength] = _strength,
-				[Quality.QualityType.Agility] = _agility,
-				[Quality.QualityType.Constitution] = _constitution,
-				[Quality.QualityType.Wisdom] = _wisdom,
-				[Quality.QualityType.Courage] =_courage
-			};
-		}
-		public Qualities(QualitiesData qualitiesData) {
-			_strength = new Quality(Quality.QualityType.Strength, qualitiesData.strength);
-			_agility = new Quality(Quality.QualityType.Agility, qualitiesData.agility);
-			_constitution = new Quality(Quality.QualityType.Constitution, qualitiesData.constitution);
-			_wisdom = new Quality(Quality.QualityType.Wisdom, qualitiesData.wisdom);
-			_courage = new Quality(Quality.QualityType.Courage, qualitiesData.courage);
-			_listOfQualities = new Dictionary<Quality.QualityType, Quality>() {
-				[Quality.QualityType.Strength] = _strength,
-				[Quality.QualityType.Agility] = _agility,
-				[Quality.QualityType.Constitution] = _constitution,
-				[Quality.QualityType.Wisdom] = _wisdom,
-				[Quality.QualityType.Courage] =_courage
-			};
-		}
-		#endregion
-		#region Indexers
-		public Quality this[Quality.QualityType type] {
-			get {
-				return _listOfQualities[type];
-			}
-		}
-		#endregion
-	}
+  [Serializable]
+  public class Qualities {
+    private readonly Quality _strength;
+    private readonly Quality _agility;
+    private readonly Quality _constitution;
+    private readonly Quality _wisdom;
+    private readonly Quality _courage;
+    private readonly Dictionary<QualityType, Quality> _listOfQualities;
+    private readonly IQualityPoints _qualityPoints;
+
+    public Qualities(IQualityPoints qualityPoints, int[] points) {
+      _qualityPoints = qualityPoints;
+      _strength = new Quality(QualityType.Strength, points[0]);
+      _agility = new Quality(QualityType.Agility, points[1]);
+      _constitution = new Quality(QualityType.Constitution, points[2]);
+      _wisdom = new Quality(QualityType.Wisdom, points[3]);
+      _courage = new Quality(QualityType.Courage, points[4]);
+      _listOfQualities = new Dictionary<QualityType, Quality> {
+        [QualityType.Strength] = _strength,
+        [QualityType.Agility] = _agility,
+        [QualityType.Constitution] = _constitution,
+        [QualityType.Wisdom] = _wisdom,
+        [QualityType.Courage] = _courage
+      };
+    }
+
+    public Qualities(IQualityPoints qualityPoints) {
+      _qualityPoints = qualityPoints;
+      _strength = new Quality(QualityType.Strength, _qualityPoints.GetQualityPoints(QualityType.Strength));
+      _agility = new Quality(QualityType.Agility, _qualityPoints.GetQualityPoints(QualityType.Agility));
+      _constitution = new Quality(QualityType.Constitution, _qualityPoints.GetQualityPoints(QualityType.Constitution));
+      _wisdom = new Quality(QualityType.Wisdom, _qualityPoints.GetQualityPoints(QualityType.Wisdom));
+      _courage = new Quality(QualityType.Courage, _qualityPoints.GetQualityPoints(QualityType.Courage));
+      _listOfQualities = new Dictionary<QualityType, Quality> {
+        [QualityType.Strength] = _strength,
+        [QualityType.Agility] = _agility,
+        [QualityType.Constitution] = _constitution,
+        [QualityType.Wisdom] = _wisdom,
+        [QualityType.Courage] = _courage
+      };
+    }
+
+    public Quality this[QualityType type] {
+      get {
+        return _listOfQualities[type];
+      }
+    }
+  }
 }

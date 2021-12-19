@@ -77,7 +77,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     [Inject]
     private QualitiesAfterDistributing _qualitiesAfterDistributing;
     private IDiceRoll _diceRollData;
-    private QualitiesData _qualitiesData;
+    private IQualityPoints _qualityPoints;
 
     private int[] _qualities;
     private bool[] _isValueNotSelected;
@@ -89,7 +89,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     private int _indexOfQualityText = -1;
 
     private void Start() {
-      _qualitiesData = GSSSingleton.Instance;
+      _qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
       _diceRollData = ScribeDealer.Peek<DiceRollScribe>();
       _isValueNotSelected = new bool[_diceRollData.GetDiceRollValues().Length];
       _qualities = new int[_diceRollData.GetDiceRollValues().Length];
@@ -567,11 +567,11 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     private void SetAndSaveQualitiesAfterDistributing() {
       if (_useGameSave) {
         var index = 0;
-        _qualitiesData.strength = _qualities[index++];
-        _qualitiesData.agility = _qualities[index++];
-        _qualitiesData.constitution = _qualities[index++];
-        _qualitiesData.wisdom = _qualities[index++];
-        _qualitiesData.courage = _qualities[index];
+        _qualityPoints.SetQualityPoints(QualityType.Strength, _qualities[index++]);
+        _qualityPoints.SetQualityPoints(QualityType.Agility, _qualities[index++]);
+        _qualityPoints.SetQualityPoints(QualityType.Constitution, _qualities[index++]);
+        _qualityPoints.SetQualityPoints(QualityType.Wisdom, _qualities[index++]);
+        _qualityPoints.SetQualityPoints(QualityType.Courage, _qualities[index]);
       } else {
         InitQualitiesAfterDistributingValuesArray();
         for (var i = 0; i < _qualities.Length; i++) {

@@ -16,9 +16,9 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Wallet {
 			coins = startCoins;
 		}
 
-		public Wallet(WalletDataSave walletDataSave) {
-			_coins = walletDataSave.Coins;
-			_maxAmountOfCoins = walletDataSave.MaxCoins;
+		public Wallet(WalletDataScroll walletDataScroll) {
+			_coins = walletDataScroll.Coins;
+			_maxAmountOfCoins = walletDataScroll.MaxCoins;
 		}
 		#endregion
 		#region Properties

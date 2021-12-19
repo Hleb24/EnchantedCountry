@@ -6,19 +6,19 @@ namespace Core {
     /// <summary>
     ///   Инициализировать данные сохранений.
     /// </summary>
-    /// <param name="saveGame">Данные сохранений.</param>
-    public void Init(SaveGame saveGame = null);
+    /// <param name="scrolls">Данные сохранений.</param>
+    public void Init(Scrolls scrolls = null);
 
     /// <summary>
     ///   Сохранить данные.
     /// </summary>
-    /// <param name="saveGame">Данные сохранений.</param>
-    public void Save(SaveGame saveGame);
+    /// <param name="scrolls">Данные сохранений.</param>
+    public void Save(Scrolls scrolls);
 
     /// <summary>
     ///   Загрузить данные сохранений.
     /// </summary>
-    /// <param name="saveGame">Данные сохранений.</param>
-    public void Loaded(SaveGame saveGame);
+    /// <param name="scrolls">Данные сохранений.</param>
+    public void Loaded(Scrolls scrolls);
   }
 }

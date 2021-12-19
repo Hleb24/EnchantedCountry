@@ -94,7 +94,7 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
         return 0;
       }
 
-      return _meleeWeapon.Attack.Accuracy + _characterQualities[Quality.QualityType.Strength].Modifier;
+      return _meleeWeapon.Attack.Accuracy + _characterQualities[QualityType.Strength].Modifier;
     }
 
     public int GetRangeAccuracy() {
@@ -103,10 +103,10 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
       }
 
       if (_projectiles != null) {
-        return _rangeWeapon.Attack.Accuracy + _projectiles.Attack.Accuracy + _characterQualities[Quality.QualityType.Agility].Modifier;
+        return _rangeWeapon.Attack.Accuracy + _projectiles.Attack.Accuracy + _characterQualities[QualityType.Agility].Modifier;
       }
 
-      return _rangeWeapon.Attack.Accuracy + _characterQualities[Quality.QualityType.Agility].Modifier;
+      return _rangeWeapon.Attack.Accuracy + _characterQualities[QualityType.Agility].Modifier;
     }
 
     public float GetMeleeDamage() {
@@ -162,9 +162,9 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character {
       _meleeWeapon = meleeWeapon;
       _rangeWeapon = rangeWeapon;
       _projectiles = projectiles;
-      _armorClassOfCharacter = new ArmorClass(_armor.ArmorClass.ClassOfArmor + _characterQualities[Quality.QualityType.Agility].Modifier);
+      _armorClassOfCharacter = new ArmorClass(_armor.ArmorClass.ClassOfArmor + _characterQualities[QualityType.Agility].Modifier);
       if (_shield != null) {
-        _armorClassOfCharacter = new ArmorClass(_armor.ArmorClass.ClassOfArmor + _shield.ArmorClass.ClassOfArmor + _characterQualities[Quality.QualityType.Agility].Modifier);
+        _armorClassOfCharacter = new ArmorClass(_armor.ArmorClass.ClassOfArmor + _shield.ArmorClass.ClassOfArmor + _characterQualities[QualityType.Agility].Modifier);
       }
     }
 

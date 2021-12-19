@@ -43,7 +43,7 @@ namespace Core.EnchantedCountry.SupportSystems.Data {
   /// </summary>
   [Serializable]
   public class EquipmentUsedScribe : IScribe, IEquipmentUsed {
-    private EquipmentUsedDataSave _equipmentUsed;
+    private EquipmentUsedDataScroll _equipmentUsed;
 
     // ReSharper disable once CognitiveComplexity
     void IEquipmentUsed.SetEquipment(EquipmentsUsedId type, int newId) {
@@ -97,26 +97,26 @@ namespace Core.EnchantedCountry.SupportSystems.Data {
              };
     }
 
-    void IScribe.Init(SaveGame saveGame) {
-      _equipmentUsed = new EquipmentUsedDataSave(EquipmentIdConstants.NoArmorId);
-      if (saveGame is null) {
+    void IScribe.Init(Scrolls scrolls) {
+      _equipmentUsed = new EquipmentUsedDataScroll(EquipmentIdConstants.NoArmorId);
+      if (scrolls is null) {
         return;
       }
 
-      saveGame.EquipmentUsedDataSave = _equipmentUsed;
+      scrolls.EquipmentUsedDataScroll = _equipmentUsed;
     }
 
-    void IScribe.Save(SaveGame saveGame) {
-      saveGame.EquipmentUsedDataSave = _equipmentUsed;
+    void IScribe.Save(Scrolls scrolls) {
+      scrolls.EquipmentUsedDataScroll = _equipmentUsed;
     }
 
-    void IScribe.Loaded(SaveGame saveGame) {
-      _equipmentUsed = saveGame.EquipmentUsedDataSave;
+    void IScribe.Loaded(Scrolls scrolls) {
+      _equipmentUsed = scrolls.EquipmentUsedDataScroll;
     }
   }
 
   [Serializable]
-  public struct EquipmentUsedDataSave {
+  public struct EquipmentUsedDataScroll {
     public int ArmorId;
     public int ShieldId;
     public int OneHandedId;
@@ -127,7 +127,7 @@ namespace Core.EnchantedCountry.SupportSystems.Data {
     public int AnimalId;
     public int CarriageId;
 
-    public EquipmentUsedDataSave(int armorId) {
+    public EquipmentUsedDataScroll(int armorId) {
       ArmorId = armorId;
       ShieldId = default;
       OneHandedId = default;

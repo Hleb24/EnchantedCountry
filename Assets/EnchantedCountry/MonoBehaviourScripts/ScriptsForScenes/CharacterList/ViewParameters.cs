@@ -56,7 +56,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     #endregion
     #region SET_QUALITIES
     private void SetQualities() {
-      _qualities = new Qualities(GSSSingleton.Instance);
+      _qualities = new Qualities(ScribeDealer.Peek<QualityPointsScribe>());
     }
     #endregion    
     #region HANDLERS
@@ -75,7 +75,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
 
       ProductSO product = storageSo.GetArmorFromList(id);
       Armor armor = product;
-      _classOfArmor = armor.ArmorClass.ClassOfArmor + _qualities[Quality.QualityType.Agility].Modifier;
+      _classOfArmor = armor.ArmorClass.ClassOfArmor + _qualities[QualityType.Agility].Modifier;
       SetTextForParameters(_armorClassText, _classOfArmor);
     }
     #endregion
@@ -100,8 +100,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
         id = twoHandedId;
       }
 
-      _meleeAttack = GetAttack(storageSo, id) + _qualities[Quality.QualityType.Strength].Modifier;
-      Debug.Log($"Strength = {_qualities[Quality.QualityType.Strength].ValueOfQuality}, modifier={_qualities[Quality.QualityType.Strength].Modifier}");
+      _meleeAttack = GetAttack(storageSo, id) + _qualities[QualityType.Strength].Modifier;
+      Debug.Log($"Strength = {_qualities[QualityType.Strength].ValueOfQuality}, modifier={_qualities[QualityType.Strength].Modifier}");
     }
 
     private void GetAttackForRangeWeapon(StorageSO storageSo, int rangeId) {
@@ -110,7 +110,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
         return;
       }
 
-      _rangeAttack = GetAttack(storageSo, rangeId) + _qualities[Quality.QualityType.Agility].Modifier;
+      _rangeAttack = GetAttack(storageSo, rangeId) + _qualities[QualityType.Agility].Modifier;
     }
 
     private int GetAttack(StorageSO storageSo, int id) {

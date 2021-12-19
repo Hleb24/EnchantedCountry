@@ -4,29 +4,29 @@ namespace Core {
   public class PrefsSaver : ISaver {
     private const string NewGame = nameof(NewGame);
 
-    public void Save(SaveGame saveGame) {
-      string json = JsonUtility.ToJson(saveGame);
+    public void Save(Scrolls scrolls) {
+      string json = JsonUtility.ToJson(scrolls);
       PlayerPrefs.SetString(NewGame, json);
       PlayerPrefs.Save();
     }
 
-    public SaveGame Load() {
+    public Scrolls Load() {
       if (IsNewGame()) {
         return NewSave();
       }
 
       string json = PlayerPrefs.GetString(NewGame);
-      return JsonUtility.FromJson<SaveGame>(json);
+      return JsonUtility.FromJson<Scrolls>(json);
     }
 
     private bool IsNewGame() {
       return !IsSaveExists;
     }
 
-    private SaveGame NewSave() {
+    private Scrolls NewSave() {
       PlayerPrefs.DeleteAll();
-      SaveGame saveGame = new SaveGame().NewSaveGame();
-      return saveGame;
+      Scrolls scrolls = new Scrolls().NewScrollGame();
+      return scrolls;
     }
 
     private bool IsSaveExists {

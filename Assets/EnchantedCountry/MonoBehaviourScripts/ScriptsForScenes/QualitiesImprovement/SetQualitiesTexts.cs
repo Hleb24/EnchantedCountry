@@ -15,12 +15,12 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.QualitiesI
     private bool _setQualitiesTextsOnStart;
     [SerializeField]
     private bool _useGameSave;
-    private QualitiesData _qualitiesData;
+    private IQualityPoints _qualityPoints;
     #endregion
     #region MONOBEHAVIOUR_METHODS
     private void Start() {
-      _qualitiesData = GSSSingleton.Instance;
-      _qualities = new Qualities(GSSSingleton.Instance);
+      _qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
+      _qualities = new Qualities(_qualityPoints);
       IfSetQualitiesTextsOnStart();
     }
     #endregion
@@ -33,17 +33,17 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.QualitiesI
 
     public void SetValueOfQualitiesForText() {
       if (_useGameSave) {
-        _listOfValues[0].text = _qualitiesData.strength.ToString();
-        _listOfValues[1].text = _qualitiesData.agility.ToString();
-        _listOfValues[2].text = _qualitiesData.constitution.ToString();
-        _listOfValues[3].text = _qualitiesData.wisdom.ToString();
-        _listOfValues[4].text = _qualitiesData.courage.ToString();
+        _listOfValues[0].text = _qualityPoints.GetQualityPoints(QualityType.Strength).ToString();
+        _listOfValues[1].text = _qualityPoints.GetQualityPoints(QualityType.Agility).ToString();
+        _listOfValues[2].text =_qualityPoints.GetQualityPoints(QualityType.Constitution).ToString();
+        _listOfValues[3].text = _qualityPoints.GetQualityPoints(QualityType.Wisdom).ToString();
+        _listOfValues[4].text = _qualityPoints.GetQualityPoints(QualityType.Courage).ToString();
       } else {
-        _listOfValues[0].text = _qualities[Quality.QualityType.Strength].ValueOfQuality.ToString();
-        _listOfValues[1].text = _qualities[Quality.QualityType.Agility].ValueOfQuality.ToString();
-        _listOfValues[2].text = _qualities[Quality.QualityType.Constitution].ValueOfQuality.ToString();
-        _listOfValues[3].text = _qualities[Quality.QualityType.Wisdom].ValueOfQuality.ToString();
-        _listOfValues[4].text = _qualities[Quality.QualityType.Courage].ValueOfQuality.ToString();
+        _listOfValues[0].text = _qualities[QualityType.Strength].ValueOfQuality.ToString();
+        _listOfValues[1].text = _qualities[QualityType.Agility].ValueOfQuality.ToString();
+        _listOfValues[2].text = _qualities[QualityType.Constitution].ValueOfQuality.ToString();
+        _listOfValues[3].text = _qualities[QualityType.Wisdom].ValueOfQuality.ToString();
+        _listOfValues[4].text = _qualities[QualityType.Courage].ValueOfQuality.ToString();
       }
     }
     #endregion

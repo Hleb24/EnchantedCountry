@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Core.EnchantedCountry.CoreEnchantedCountry.Character.Qualities;
 using Core.EnchantedCountry.CoreEnchantedCountry.Dice;
+using Core.EnchantedCountry.SupportSystems.Data;
 
 namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.CharacterCreation {
   public class CharacterCreation {
@@ -17,14 +18,14 @@ namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.CharacterCreation
 
     #region Fields
     private const int MULTIPLIER = 10;
-    public Quality.QualityType qualityTypeForChoice;
+    public QualityType qualityTypeForChoice;
     private List<int> _valuesWhiteDiceRoll;
     // ReSharper disable once NotAccessedField.Local
     private int _smallerValue;
     #endregion
 
     #region Methods
-    public void SetQualityValue(Quality.QualityType qualityType, int qualityValue) {
+    public void SetQualityValue(QualityType qualityType, int qualityValue) {
       PlayerCharacter.CharacterQualities[qualityType].ValueOfQuality = qualityValue;
     }
 

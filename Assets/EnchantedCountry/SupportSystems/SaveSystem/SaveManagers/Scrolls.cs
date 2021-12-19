@@ -7,19 +7,20 @@ namespace Core {
   ///   Класс игровых сохранений.
   /// </summary>
   [Serializable]
-  public class SaveGame {
-    public DiceRollDataSave DiceRollDataSave;
-    public EquipmentsDataSave EquipmentsDataSave;
-    public EquipmentUsedDataSave EquipmentUsedDataSave;
-    public WalletDataSave WalletDataSave;
-    public GamePointsDataSave GamePointsDataSave;
+  public class Scrolls {
+    public DiceRollDataScroll DiceRollDataScroll;
+    public EquipmentsDataScroll EquipmentsDataScroll;
+    public EquipmentUsedDataScroll EquipmentUsedDataScroll;
+    public WalletDataScroll WalletDataScroll;
+    public GamePointsDataScroll GamePointsDataScroll;
+    public QualityPointsDataScroll QualityPointsDataScroll;
 
     /// <summary>
     ///   Создаёт новые сохранённые данные.
     /// </summary>
     /// <returns></returns>
-    public SaveGame NewSaveGame() {
-      var save = new SaveGame();
+    public Scrolls NewScrollGame() {
+      var save = new Scrolls();
 
       var scribes = new Dictionary<Type, IScribe> {
         { typeof(DiceRollScribe), new DiceRollScribe() },

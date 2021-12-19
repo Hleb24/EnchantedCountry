@@ -51,8 +51,8 @@ namespace Core {
 #endif
     }
 
-    private SaveGame SaveAll() {
-      var save = new SaveGame();
+    private Scrolls SaveAll() {
+      var save = new Scrolls();
 
       foreach (IScribe hollowData in _scribesMemento.Values) {
         hollowData.Save(save);
@@ -62,10 +62,10 @@ namespace Core {
     }
 
     private void LoadAll() {
-      SaveGame saveGame = _saver.Load();
+      Scrolls scrolls = _saver.Load();
 
       foreach (IScribe scribe in _scribesMemento.Values) {
-        scribe.Loaded(saveGame);
+        scribe.Loaded(scrolls);
       }
     }
   }

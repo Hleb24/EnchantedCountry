@@ -24,7 +24,7 @@ namespace Core.EnchantedCountry.SupportSystems.Data {
       EquipmentIdConstants.NoArmorId
     };
 
-    private EquipmentsDataSave _equipments;
+    private EquipmentsDataScroll _equipments;
 
     void IEquipment.ChangeQuantity(int id, int amount) {
       Assert.IsTrue(id >= 0);
@@ -40,31 +40,31 @@ namespace Core.EnchantedCountry.SupportSystems.Data {
       return _equipments.EquipmentCards;
     }
 
-    void IScribe.Init(SaveGame saveGame) {
-      _equipments = new EquipmentsDataSave(_startEquipments);
-      if (saveGame is null) {
+    void IScribe.Init(Scrolls scrolls) {
+      _equipments = new EquipmentsDataScroll(_startEquipments);
+      if (scrolls is null) {
         return;
       }
 
-      saveGame.EquipmentsDataSave = _equipments;
+      scrolls.EquipmentsDataScroll = _equipments;
     }
 
-    void IScribe.Save(SaveGame saveGame) {
-      saveGame.EquipmentsDataSave = _equipments;
+    void IScribe.Save(Scrolls scrolls) {
+      scrolls.EquipmentsDataScroll = _equipments;
     }
 
-    void IScribe.Loaded(SaveGame saveGame) {
-      _equipments.EquipmentCards = saveGame.EquipmentsDataSave.EquipmentCards;
+    void IScribe.Loaded(Scrolls scrolls) {
+      _equipments.EquipmentCards = scrolls.EquipmentsDataScroll.EquipmentCards;
     }
   }
 
   [Serializable]
-  public struct EquipmentsDataSave {
+  public struct EquipmentsDataScroll {
     private const int StartQuantity = 1;
     private readonly List<int> _startEquipments;
     public List<EquipmentCard> EquipmentCards;
 
-    public EquipmentsDataSave(IReadOnlyList<int> startEquipmentsId) {
+    public EquipmentsDataScroll(IReadOnlyList<int> startEquipmentsId) {
       EquipmentCards = new List<EquipmentCard>();
       _startEquipments = new List<int>();
       for (var i = 0; i < startEquipmentsId.Count; i++) {

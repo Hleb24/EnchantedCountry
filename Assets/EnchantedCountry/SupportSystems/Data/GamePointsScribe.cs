@@ -32,52 +32,55 @@ namespace Core.EnchantedCountry.SupportSystems.Data {
     public bool EnoughGamePoints(int gamePoints);
   }
 
+  /// <summary>
+  ///   Класс для хранения данных о игровых очках.
+  /// </summary>
   [Serializable]
   public class GamePointsScribe : IScribe, IGamePoints {
     private const int StartGamePoints = 0;
-    private GamePointsDataSave _gamePoints;
-
-    public int GetPoints() {
-      return _gamePoints.Points;
-    }
-
-    public void SetPoints(int gamePoints) {
-      Assert.IsTrue(gamePoints >= 0);
-      _gamePoints.Points = gamePoints;
-    }
-
-    public void ChangePoints(int gamePoints) {
-      _gamePoints.Points += gamePoints;
-      _gamePoints.Points = _gamePoints.Points >= 0 ? _gamePoints.Points : 0;
-    }
+    private GamePointsDataScroll _gamePoints;
 
     public bool EnoughGamePoints(int gamePoints) {
       return _gamePoints.Points - gamePoints >= 0;
     }
 
-    public void Init(SaveGame saveGame = null) {
-      _gamePoints = new GamePointsDataSave(StartGamePoints);
-      if (saveGame is null) {
+    int IGamePoints.GetPoints() {
+      return _gamePoints.Points;
+    }
+
+    void IGamePoints.SetPoints(int gamePoints) {
+      Assert.IsTrue(gamePoints >= 0);
+      _gamePoints.Points = gamePoints;
+    }
+
+    void IGamePoints.ChangePoints(int gamePoints) {
+      _gamePoints.Points += gamePoints;
+      _gamePoints.Points = _gamePoints.Points >= 0 ? _gamePoints.Points : 0;
+    }
+
+    void IScribe.Init(Scrolls scrolls) {
+      _gamePoints = new GamePointsDataScroll(StartGamePoints);
+      if (scrolls is null) {
         return;
       }
 
-      saveGame.GamePointsDataSave = _gamePoints;
+      scrolls.GamePointsDataScroll = _gamePoints;
     }
 
-    public void Save(SaveGame saveGame) {
-      saveGame.GamePointsDataSave = _gamePoints;
+    void IScribe.Save(Scrolls scrolls) {
+      scrolls.GamePointsDataScroll = _gamePoints;
     }
 
-    public void Loaded(SaveGame saveGame) {
-      _gamePoints.Points = saveGame.GamePointsDataSave.Points;
+    void IScribe.Loaded(Scrolls scrolls) {
+      _gamePoints.Points = scrolls.GamePointsDataScroll.Points;
     }
   }
 
   [Serializable]
-  public struct GamePointsDataSave {
+  public struct GamePointsDataScroll {
     public int Points;
 
-    public GamePointsDataSave(int points) {
+    public GamePointsDataScroll(int points) {
       Points = points;
     }
   }

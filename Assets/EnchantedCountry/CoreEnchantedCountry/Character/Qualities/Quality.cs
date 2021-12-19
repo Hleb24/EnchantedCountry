@@ -1,16 +1,10 @@
 ﻿using System;
+using Core.EnchantedCountry.SupportSystems.Data;
 
 namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Qualities {
 	[Serializable]
+
 	public class Quality {
-		[Serializable]
-		public enum QualityType {
-			Strength,
-			Agility,
-			Constitution,
-			Wisdom,
-			Courage
-		}
 		#region Fields
 		private const int BOTTOM_BORDER = 0;
 		private const int TOP_BORDER = 24;

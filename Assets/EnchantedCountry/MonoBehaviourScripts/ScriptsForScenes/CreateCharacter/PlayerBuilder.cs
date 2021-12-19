@@ -157,9 +157,9 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private CharacterQualities GetCharacterQualities() {
-      QualitiesData qualitiesData = GSSSingleton.Instance;
-      var characterQualities = new CharacterQualities(Quality.QualityType.Strength, qualitiesData.strength, Quality.QualityType.Agility, qualitiesData.agility,
-        Quality.QualityType.Constitution, qualitiesData.constitution, Quality.QualityType.Wisdom, qualitiesData.wisdom, Quality.QualityType.Courage, qualitiesData.courage);
+      IQualityPoints qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
+      var characterQualities = new CharacterQualities(QualityType.Strength, qualityPoints.GetQualityPoints(QualityType.Strength), QualityType.Agility, qualityPoints.GetQualityPoints(QualityType.Agility),
+        QualityType.Constitution, qualityPoints.GetQualityPoints(QualityType.Constitution), QualityType.Wisdom, qualityPoints.GetQualityPoints(QualityType.Wisdom), QualityType.Courage, qualityPoints.GetQualityPoints(QualityType.Courage));
       return characterQualities;
     }
 
@@ -281,9 +281,9 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateChar
     }
 
     private CharacterQualities GetCharacterQualities() {
-      QualitiesData qualitiesData = GSSSingleton.Instance;
-      var characterQualities = new CharacterQualities(Quality.QualityType.Strength, qualitiesData.strength, Quality.QualityType.Agility, qualitiesData.agility,
-        Quality.QualityType.Constitution, qualitiesData.constitution, Quality.QualityType.Wisdom, qualitiesData.wisdom, Quality.QualityType.Courage, qualitiesData.courage);
+      IQualityPoints qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
+      var characterQualities = new CharacterQualities(QualityType.Strength, qualityPoints.GetQualityPoints(QualityType.Strength), QualityType.Agility, qualityPoints.GetQualityPoints(QualityType.Agility),
+        QualityType.Constitution, qualityPoints.GetQualityPoints(QualityType.Constitution), QualityType.Wisdom, qualityPoints.GetQualityPoints(QualityType.Wisdom), QualityType.Courage, qualityPoints.GetQualityPoints(QualityType.Courage));
       return characterQualities;
     }
 
