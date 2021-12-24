@@ -1,6 +1,7 @@
 using System.Globalization;
 using Core.EnchantedCountry.SupportSystems;
 using Core.EnchantedCountry.SupportSystems.Data;
+using Core.EnchantedCountry.SupportSystems.PrefsTools;
 using TMPro;
 using UnityEngine;
 
@@ -8,11 +9,11 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
   public class SetRiskPoints : MonoBehaviour {
     // ReSharper disable once UnusedMember.Local
     private static bool IsDiceThrownForRiskPoints(int diceRollForRiskPointsPrefs) {
-      return diceRollForRiskPointsPrefs == PlayerPrefsConstans.Completed;
+      return diceRollForRiskPointsPrefs == PrefsConstants.COMPLETED;
     }
 
     private static bool IsDiceNotThrownForRiskPoints(int diceRollForRiskPointsPrefs) {
-      return diceRollForRiskPointsPrefs == PlayerPrefsConstans.Initial;
+      return diceRollForRiskPointsPrefs == PrefsConstants.INITIAL;
     }
 
     [SerializeField]
@@ -40,7 +41,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     }
 
     private void LoadRiskPointsData() {
-      PlayerPrefsTools.ReadFromPlayerPrefs(PlayerPrefsConstans.DiceRollForRiskPoints, out int diceRollForRiskPointsPrefs);
+      Limbo.GetOff(PrefsConstants.DICE_ROLL_FOR_RISK_POINTS, out int diceRollForRiskPointsPrefs);
       if (IsDiceNotThrownForRiskPoints(diceRollForRiskPointsPrefs) && !_useRiskPointsDataForTest) {
         return;
       }

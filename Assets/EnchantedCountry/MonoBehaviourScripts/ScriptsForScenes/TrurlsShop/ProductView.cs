@@ -1,5 +1,6 @@
 using System;
 using Core.EnchantedCountry.SupportSystems;
+using Core.EnchantedCountry.SupportSystems.PrefsTools;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -143,7 +144,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 				SetGreenColorForBackground();
 				return;
 			}
-			PlayerPrefsTools.ReadFromPlayerPrefs(PlayerPrefsConstans.CoinsInWallet, out int coinsInWallet);
+			Limbo.GetOff(PrefsConstants.COINS_IN_WALLET, out int coinsInWallet);
 			int price;
 			if (TryGetPrice(out price)) {
 				if (IsNotEnoughCoinForBuyProduct(coinsInWallet, price)) {

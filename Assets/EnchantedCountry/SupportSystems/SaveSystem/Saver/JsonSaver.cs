@@ -14,17 +14,19 @@ namespace Core {
       streamWriter.WriteLine(jsonSave);
     }
 
-    public Scrolls Load() {
+    public Scrolls Load(out bool isNewGame) {
       var jsonSave = string.Empty;
       try {
         using var streamReader = new StreamReader(_pathToFile);
         jsonSave = streamReader.ReadToEnd();
         var save = JsonUtility.FromJson<Scrolls>(jsonSave);
+        isNewGame = false;
         return save;
       } catch (Exception e) {
         Debug.Log("Новая игра началась " + e.Data);
         ClearPrefs();
         CreateDirectory();
+        isNewGame = true;
         if (!string.IsNullOrEmpty(jsonSave)) {
           throw;
         }

@@ -7,6 +7,6 @@ namespace Core
     public interface ISaver {
         void Save(Scrolls scrolls);
 
-        Scrolls Load();
+        Scrolls Load(out bool isNewGame);
     }
 }

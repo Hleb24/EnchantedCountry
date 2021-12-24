@@ -66,7 +66,7 @@ namespace Core {
     }
 
     private void LoadAll() {
-      Scrolls scrolls = _saver.Load();
+      Scrolls scrolls = _saver.Load(out bool isNewGame);
 
       foreach (IScribe scribe in _scribesMemento.Values) {
         scribe.Loaded(scrolls);

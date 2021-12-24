@@ -5,6 +5,7 @@ using Core.EnchantedCountry.CoreEnchantedCountry.Dice;
 using Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem;
 using Core.EnchantedCountry.SupportSystems;
 using Core.EnchantedCountry.SupportSystems.Data;
+using Core.EnchantedCountry.SupportSystems.PrefsTools;
 using Core.EnchantedCountry.SupportSystems.SaveSystem;
 using TMPro;
 using UnityEngine;
@@ -75,7 +76,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     }
 
     private void OnDiceRollForRiskPointsButtonClicked() {
-      PlayerPrefsTools.WritteInPlayerPrefs(PlayerPrefsConstans.DiceRollForRiskPoints, PlayerPrefsConstans.Completed);
+      Limbo.Enter(PrefsConstants.DICE_ROLL_FOR_RISK_POINTS, PrefsConstants.COMPLETED);
       _numberOfRiskPoints = GetDiceRollValueForCharacterType();
       _numberOfRiskPoints += _qualities[QualityType.Constitution].Modifier;
       SetRiskPointsData(_numberOfRiskPoints);

@@ -61,7 +61,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.RollDiceFo
     }
 
     private void SetUITextForNumberOfCoins() {
-      GenericTools.SetUIText(_numberOfCoinsText, _wallet.GetCoins().ToString());
+      _numberOfCoinsText.text = _wallet.GetCoins().ToString();
     }
 
     private void DeactivateDiceRollButton() {
