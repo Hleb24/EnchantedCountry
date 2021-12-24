@@ -8,6 +8,7 @@ using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Weapon;
 using Core.EnchantedCountry.ScriptableObject.ProductObject;
 using Core.EnchantedCountry.ScriptableObject.Storage;
 using Core.EnchantedCountry.SupportSystems.Data;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.EnchantedCountry.SupportSystems {
+namespace Core.EnchantedCountry.SupportSystems.Attributes {
   [AttributeUsage(AttributeTargets.Method)]
   public class ButtonAttribute : Attribute {
     public string Name;

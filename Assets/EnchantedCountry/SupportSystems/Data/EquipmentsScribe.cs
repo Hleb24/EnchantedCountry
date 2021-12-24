@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Core.EnchantedCountry.CoreEnchantedCountry.Character.Equipment;
 using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.EquipmentIdConstants;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.Scribe;
 using UnityEngine;
 using UnityEngine.Assertions;
 

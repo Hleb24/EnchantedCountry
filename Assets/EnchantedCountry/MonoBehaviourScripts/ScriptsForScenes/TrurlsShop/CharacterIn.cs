@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Core.EnchantedCountry.CoreEnchantedCountry.Character;
 using Core.EnchantedCountry.SupportSystems.Data;
 using Core.EnchantedCountry.SupportSystems.SaveSystem;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers;
 using UnityEngine;
 using static Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Armor.Armor;
 using static Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Weapon.Weapon;

@@ -1,4 +1,6 @@
-namespace Core {
+using Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers;
+
+namespace Core.EnchantedCountry.SupportSystems.SaveSystem.Scribe {
   /// <summary>
   ///   Интерфейс для записи и загрузки сохранненных данных.
   /// </summary>

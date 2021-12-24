@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers;
 using UnityEngine;
 
-namespace Core {
+namespace Core.EnchantedCountry.SupportSystems.SaveSystem.Saver {
   public class JsonSaver : ISaver {
     private readonly string _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "Save"), "Save.json");
     private readonly string _pathToFolder = Path.Combine(Application.persistentDataPath, "Save");

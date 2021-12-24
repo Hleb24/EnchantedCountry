@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Core {
+namespace Core.EnchantedCountry.ScriptableObject.GameSettings {
   [CreateAssetMenu(fileName = "Settings", menuName = "GameSettings")]
-  public class GameSettings : ScriptableObject {
+  public class GameSettings : UnityEngine.ScriptableObject {
     [SerializeField]
     private bool _isNewGame;
 

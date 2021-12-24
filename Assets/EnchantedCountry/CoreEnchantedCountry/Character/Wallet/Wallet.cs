@@ -1,5 +1,6 @@
 ﻿using Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem;
 using Core.EnchantedCountry.SupportSystems.Data;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers;
 
 namespace Core.EnchantedCountry.CoreEnchantedCountry.Character.Wallet {
 	public class Wallet {

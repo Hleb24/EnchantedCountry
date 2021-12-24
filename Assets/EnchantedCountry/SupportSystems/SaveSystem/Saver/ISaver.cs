@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers;
 
-namespace Core
+namespace Core.EnchantedCountry.SupportSystems.SaveSystem.Saver
 {
     public interface ISaver {
         void Save(Scrolls scrolls);

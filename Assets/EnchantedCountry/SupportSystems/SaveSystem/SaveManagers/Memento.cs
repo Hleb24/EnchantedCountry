@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.EnchantedCountry.SupportSystems.Data;
-using UnityEngine;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.Saver;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.Scribe;
 
-namespace Core {
+namespace Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers {
   /// <summary>
   ///   Класс для работы с сохранёнными данных.
   /// </summary>

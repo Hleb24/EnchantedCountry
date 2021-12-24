@@ -1,5 +1,7 @@
 ﻿using System;
 using Core.EnchantedCountry.CoreEnchantedCountry.Character;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.Scribe;
 
 namespace Core.EnchantedCountry.SupportSystems.Data {
   /// <summary>

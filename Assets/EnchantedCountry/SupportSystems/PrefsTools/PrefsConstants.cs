@@ -1,6 +1,6 @@
 ﻿using Core.EnchantedCountry.SupportSystems.Attributes;
 
-namespace Core.EnchantedCountry.SupportSystems {
+namespace Core.EnchantedCountry.SupportSystems.PrefsTools {
   public static class PrefsConstants {
     public const int INITIAL = 0;
     public const int COMPLETED = 1;

@@ -7,6 +7,7 @@ using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.RiskPoints;
 using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Weapon;
 using Core.EnchantedCountry.ScriptableObject.WeaponObjects;
 using Core.EnchantedCountry.SupportSystems.Data;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers;
 using UnityEngine;
 
 namespace Core.EnchantedCountry.ScriptableObject.NpcSO {

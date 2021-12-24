@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Core.EnchantedCountry.SupportSystems.Data;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.Scribe;
 
-namespace Core {
+namespace Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers {
   /// <summary>
   ///   Класс игровых сохранений.
   /// </summary>

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.Saver;
 using UnityEngine;
 
 namespace Core.EnchantedCountry.SupportSystems.Attributes {
@@ -22,7 +24,7 @@ namespace Core.EnchantedCountry.SupportSystems.Attributes {
 
       foreach (Type type in types) {
         IEnumerable<FieldInfo> methodInfos = type.GetFields(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public)
-          .Where(f => CustomAttributeExtensions.GetCustomAttributes((MemberInfo)f).Any(a => a.GetType() == typeof(PrefsKeysAttribute)));
+          .Where(f => f.GetCustomAttributes().Any(a => a.GetType() == typeof(PrefsKeysAttribute)));
         foreach (FieldInfo fieldInfo in methodInfos) {
           var attribute = fieldInfo.GetCustomAttribute(typeof(PrefsKeysAttribute)) as PrefsKeysAttribute;
           if (attribute == null) {

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.Scribe;
 using UnityEngine;
 
-namespace Core {
+namespace Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers {
   /// <summary>
   ///   Класс доступа к данным сохранений игры.
   /// </summary>

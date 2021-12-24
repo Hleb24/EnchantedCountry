@@ -1,7 +1,7 @@
 using Core.EnchantedCountry.SupportSystems.Attributes;
 using UnityEngine;
 
-namespace Core.EnchantedCountry.ScriptableObject.Valid {
+namespace Core.EnchantedCountry.ScriptableObject.Support {
   /// <summary>
   ///   Класс для доступа к методу <see cref="OnValidate" />.
   /// </summary>

@@ -1,9 +1,9 @@
-using System;
-using Core.EnchantedCountry.SupportSystems.Attributes;
+using Core.EnchantedCountry.ScriptableObject.GameSettings;
+using Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace Core {
+namespace Core.EnchantedCountry.MonoBehaviourScripts.MainManagers {
   /// <summary>
   ///   Класс отвечает за начальный запуск приложения.
   /// </summary>
