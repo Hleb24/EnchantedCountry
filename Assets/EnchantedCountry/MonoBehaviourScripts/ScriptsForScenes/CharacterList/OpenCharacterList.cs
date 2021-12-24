@@ -32,7 +32,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     }
 
     private void WhichCanvasToOpenFirst() {
-      if (Leviathan.IsNewGame) {
+      if (Leviathan.Instance.IsNewGame) {
         OpenDiceRollForRiskPointsCanvas();
       } else {
         OpenCharacterListCanvas();

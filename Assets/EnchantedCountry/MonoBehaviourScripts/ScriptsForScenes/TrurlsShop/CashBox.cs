@@ -98,7 +98,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
 		#endregion
 		#region FIRST_OPENING
 		private void RemoveAllEquipmentCardsForFirstTrurlsShopOpening() {
-			if (Leviathan.IsNewGame) {
+			if (Leviathan.Instance.IsNewGame) {
 				_equipment.RemoveAllEquipmentCards();
 			}
 		}

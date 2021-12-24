@@ -1,69 +1,83 @@
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Core {
   /// <summary>
   ///   Класс отвечает за начальный запуск приложения.
   /// </summary>
   public class Leviathan : MonoBehaviour {
+    private static Leviathan _instance;
+
     /// <summary>
     ///   Получить экземпляр класса.
     /// </summary>
-    public static Leviathan Instance { get; } = new GameObject(nameof(Leviathan)).AddComponent<Leviathan>();
+    public static Leviathan Instance {
+      get {
+        return _instance != null ? _instance : new GameObject(nameof(Leviathan)).AddComponent<Leviathan>();
+      }
+    }
 
-    public static bool IsNewGame { get; private set; }
-
+    private const string GameSettings = "GameSettings";
     [SerializeField]
-    private bool _isNewGame;
+    private GameSettings _gameSettings;
+
     private Memento _memento;
-    [SerializeField]
-    private GameSettings _settings;
-    
 
     private void Awake() {
-      if (Instance!= null) {
-        Destroy(gameObject);
-      }
-
-      DontDestroyOnLoad(gameObject);
-      
-      _memento = new Memento();
-      _settings = Resources.Load<GameSettings>("Settings");
+      InitGameObject();
+      InitMembers();
     }
 
     private void Start() {
-      _memento.Init();
-      IsNewGame = _settings.IsNewGame();
+      IsNewGame = _gameSettings.IsNewGame();
       Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
     private void OnDestroy() {
-      Debug.LogWarning("Save");
-
-      _memento.Save();
+      Save();
     }
 
     public void Call() {
       Debug.Log("Вызвать Левиафана.");
     }
 
+    private void Save() {
+      _memento.Save();
+    }
+
+    private void InitMembers() {
+      _memento = new Memento();
+      _memento.Init();
+      _gameSettings = Resources.Load<GameSettings>(GameSettings);
+      Assert.IsNotNull(_gameSettings);
+    }
+
+    private void InitGameObject() {
+      if (Instance != null) {
+        Destroy(gameObject);
+      }
+
+      DontDestroyOnLoad(gameObject);
+    }
+
     private void OnApplicationPause(bool pauseStatus) {
       if (pauseStatus) {
-        _memento.Save();
+        Save();
       }
     }
 
     private void OnApplicationFocus(bool hasFocus) {
-      if (!hasFocus) {
-        Debug.LogWarning("Save");
-
-        _memento.Save();
+      if (hasFocus) {
+        return;
       }
+
+      Save();
     }
 
     private void OnApplicationQuit() {
-      Debug.LogWarning("Save");
-
       _memento.Save();
     }
+
+    public bool IsNewGame { get; private set; }
   }
 }
