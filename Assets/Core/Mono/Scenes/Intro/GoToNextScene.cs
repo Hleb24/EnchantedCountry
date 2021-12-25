@@ -21,16 +21,15 @@ namespace Core.Mono.Scenes.Intro {
       }
 
       SetNameOfNextScene();
-      LoadNextScene();
+      LoadNextSceneAsync();
     }
 
     private void SetNameOfNextScene() {
-      _nameOfScene = SceneNamesConstants.SCENE_DICE_ROLLS_FOR_QUALITIES;
-
-      _nameOfScene = _startGame.IsNewGame() ? SceneNamesConstants.SCENE_DICE_ROLLS_FOR_QUALITIES : SceneNamesConstants.SCENE_CHARACTER_LIST;
+      _nameOfScene = SceneNamesConstants.SCENE_DICE_ROLLS;
+      _nameOfScene = _startGame.IsNewGame() ? SceneNamesConstants.SCENE_DICE_ROLLS : SceneNamesConstants.SCENE_CHARACTER_LIST;
     }
 
-    private void LoadNextScene() {
+    private void LoadNextSceneAsync() {
       SceneManager.LoadSceneAsync(_nameOfScene);
     }
   }

@@ -152,4 +152,8 @@ namespace Core.Mono.Scenes.CreateCharacter {
       button.interactable = false;
     }
   }
+
+  public class DiceRollVisual : MonoBehaviour {
+    
+  }
 }

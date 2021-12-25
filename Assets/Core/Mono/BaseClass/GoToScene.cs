@@ -39,10 +39,10 @@ namespace Core.Mono.BaseClass {
   }
 
   public class SceneNamesConstants {
-    public const string SCENE_DICE_ROLLS_FOR_QUALITIES = "Scene_DiceRollsForQualities";
-    public const string SCENE_SELECT_CHARACTER_CLASS = "Scene_SelectCharacterClass";
-    public const string SCENE_QUALITY_IMPROVEMENT_FOR_WIZARD = "Scene_QualityImprovementForWizard";
-    public const string SCENE_QUALITY_IMPROVEMENT_FOR_KRON = "Scene_QualityImprovementForKron";
+    public const string SCENE_DICE_ROLLS = "Scene_DiceRolls";
+    public const string SCENE_SELECT_CLASS = "Scene_SelectClass";
+    public const string SCENE_WIZARD_IMPROVEMENT = "Scene_WizardImprovement";
+    public const string SCENE_KRON_IMPROVEMENT = "Scene_KronImprovement";
     public const string SCENE_TRURLS_SHOP = "Scene_TrurlsShop";
     public const string SCENE_CHARACTER_LIST = "Scene_CharacterList";
     public const string SCENE_FIGHT = "Scene_Fight";
