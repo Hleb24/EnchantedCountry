@@ -5,9 +5,38 @@ using UnityEngine.Assertions;
 
 namespace Core.EnchantedCountry.MonoBehaviourScripts.MainManagers {
   /// <summary>
+  ///   Интерфейс для получения данных о начале игры.
+  /// </summary>
+  public interface IStartGame {
+    /// <summary>
+    ///   Это новая игра.
+    /// </summary>
+    /// <returns>Истина - новая игра, ложь - продолжение с сохранений.</returns>
+    public bool IsNewGame();
+
+    /// <summary>
+    ///   Начать новую игру.
+    /// </summary>
+    /// <returns>Истина - начать новую игру, ложь - продолжить с сохранений.</returns>
+    public bool StartNewGame();
+
+    /// <summary>
+    ///   Данные загруженый для игры.
+    /// </summary>
+    /// <returns>Истина - данные загружены, ложь - даные ещё загружаються</returns>
+    public bool DataLoaded();
+
+    /// <summary>
+    ///   Данные игры ещё инициализируются.
+    /// </summary>
+    /// <returns>Истина - данные инициализируются, ложь - данные уже инициализированы.</returns>
+    public bool StillInitializing();
+  }
+
+  /// <summary>
   ///   Класс отвечает за начальный запуск приложения.
   /// </summary>
-  public class Leviathan : MonoBehaviour {
+  public class Leviathan : MonoBehaviour, IStartGame {
     private static Leviathan _instance;
 
     /// <summary>
@@ -15,7 +44,14 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.MainManagers {
     /// </summary>
     public static Leviathan Instance {
       get {
-        return _instance != null ? _instance : new GameObject(nameof(Leviathan)).AddComponent<Leviathan>();
+        if (_instance != null) {
+          return _instance;
+        }
+
+        _instance = FindObjectOfType<Leviathan>();
+        _instance ??= new GameObject(nameof(Leviathan)).AddComponent<Leviathan>();
+
+        return _instance;
       }
     }
 
@@ -31,12 +67,27 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.MainManagers {
     }
 
     private void Start() {
-      IsNewGame = _gameSettings.IsNewGame();
-      Screen.sleepTimeout = SleepTimeout.NeverSleep;
+      StartGame();
     }
 
     private void OnDestroy() {
       Save();
+    }
+
+    bool IStartGame.IsNewGame() {
+      return IsNewGame;
+    }
+
+    bool IStartGame.StartNewGame() {
+      return StartNewGame;
+    }
+
+    bool IStartGame.DataLoaded() {
+      return DataLoaded;
+    }
+
+    bool IStartGame.StillInitializing() {
+      return StillInitializing;
     }
 
     public void Call() {
@@ -47,19 +98,34 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.MainManagers {
       _memento.Save();
     }
 
+    private void InitGameObject() {
+      if (_instance != null) {
+        Destroy(this);
+      }
+
+      DontDestroyOnLoad(this);
+    }
+
     private void InitMembers() {
       _memento = new Memento();
-      _memento.Init();
       _gameSettings = Resources.Load<GameSettings>(GameSettings);
       Assert.IsNotNull(_gameSettings);
     }
 
-    private void InitGameObject() {
-      if (Instance != null) {
-        Destroy(gameObject);
+    private void StartGame() {
+      StartNewGame = _gameSettings.StartNewGame();
+      if (StartNewGame) {
+        _memento.InitWithoutLoad(out bool isNewGame);
+        IsNewGame = isNewGame;
+        StillInitializing = false;
+      } else {
+        _memento.InitWithLoad(out bool isNewGame);
+        IsNewGame = isNewGame;
+        StillInitializing = false;
       }
 
-      DontDestroyOnLoad(gameObject);
+      DataLoaded = true;
+      Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
     private void OnApplicationPause(bool pauseStatus) {
@@ -80,6 +146,11 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.MainManagers {
       _memento.Save();
     }
 
-    public bool IsNewGame { get; private set; }
+    private bool StillInitializing { get; set; } = true;
+
+    private bool DataLoaded { get; set; }
+
+    private bool StartNewGame { get; set; }
+    private bool IsNewGame { get; set; }
   }
 }

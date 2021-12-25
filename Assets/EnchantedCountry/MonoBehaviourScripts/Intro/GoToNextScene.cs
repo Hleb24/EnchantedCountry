@@ -1,39 +1,37 @@
-using System;
+using System.Threading.Tasks;
 using Core.EnchantedCountry.MonoBehaviourScripts.BaseClasses;
-using Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem;
+using Core.EnchantedCountry.MonoBehaviourScripts.MainManagers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace Core.EnchantedCountry.MonoBehaviourScripts.Intro {
-  public class GoToNextScene: MonoBehaviour  {
-    #region FIELDS
+  public class GoToNextScene : MonoBehaviour {
+    [Inject]
+    private IStartGame _startGame;
     private string _nameOfScene;
-    #endregion
-    #region MONOBEHAVIOUR_METHODS
 
     private void Start() {
-      Invoke(nameof(NextScene), 0.3f);
+      NextScene();
     }
 
-    private void NextScene() {
+    private async void NextScene() {
+      if (_startGame.StillInitializing()) {
+        await Task.Yield();
+      }
+
       SetNameOfNextScene();
       LoadNextScene();
     }
-    #endregion
-    #region LOAD_NEXT_SCENE
-    private void SetNameOfNextScene() {
-      _nameOfScene = SceneNameConstants.SceneDiceRollsForQualities;
 
-      // if (GSSSingleton.Instance.IsNewGame) {
-        // _nameOfScene = SceneNameConstants.SceneDiceRollsForQualities;
-      // } else {
-        // _nameOfScene = SceneNameConstants.SceneCharacterList;
-      // }
+    private void SetNameOfNextScene() {
+      _nameOfScene = SceneNamesConstants.SCENE_DICE_ROLLS_FOR_QUALITIES;
+
+      _nameOfScene = _startGame.IsNewGame() ? SceneNamesConstants.SCENE_DICE_ROLLS_FOR_QUALITIES : SceneNamesConstants.SCENE_CHARACTER_LIST;
     }
 
     private void LoadNextScene() {
       SceneManager.LoadSceneAsync(_nameOfScene);
     }
-    #endregion
   }
 }

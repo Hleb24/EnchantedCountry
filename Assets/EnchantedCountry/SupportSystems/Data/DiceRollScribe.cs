@@ -166,7 +166,7 @@ namespace Core.EnchantedCountry.SupportSystems.Data {
     void IScribe.Loaded(Scrolls scrolls) {
       _diceRollDataScroll.DiceRollValues = scrolls.DiceRollDataScroll.DiceRollValues;
       for (var i = 0; i < _diceRollDataScroll.DiceRollValues.Length; i++) {
-        Debug.LogWarning(_diceRollDataScroll.DiceRollValues[i]);
+        Debug.Log(_diceRollDataScroll.DiceRollValues[i]);
       }
     }
   }

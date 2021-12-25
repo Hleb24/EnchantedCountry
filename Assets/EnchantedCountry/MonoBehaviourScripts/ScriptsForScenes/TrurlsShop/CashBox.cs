@@ -9,6 +9,7 @@ using Core.EnchantedCountry.SupportSystems.Data;
 using Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop {
   public class CashBox : MonoBehaviour {
@@ -24,6 +25,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
     private Button _buyProduct;
     // ReSharper disable once NotAccessedField.Local
     private IWallet _wallet;
+    [Inject]
+    private IStartGame _startGame;
     private int _selectedId;
 
     private void Awake() {
@@ -94,7 +97,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.TrurlsShop
     }
 
     private void RemoveAllEquipmentCardsForFirstTrurlsShopOpening() {
-      if (Leviathan.Instance.IsNewGame) {
+      if (_startGame.StartNewGame()) {
         _equipment.RemoveAllEquipmentCards();
       }
     }

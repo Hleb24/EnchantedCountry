@@ -19,7 +19,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     private bool _useTestPoints;
     [SerializeField]
     private bool _useGameSave;
-    [Inject]
+    
     private IGamePoints _gamePoints;
     public event Action<int> LoadGamePoints;
     #endregion

@@ -1,7 +1,7 @@
-using Core.EnchantedCountry.MonoBehaviourScripts.GameSaveSystem;
 using Core.EnchantedCountry.MonoBehaviourScripts.MainManagers;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterList {
   public class OpenCharacterList : MonoBehaviour {
@@ -11,6 +11,8 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     private GameObject _diceRollForRiskPointsCanvas;
     [SerializeField]
     private GameObject _characterListCanvas;
+    [Inject]
+    private IStartGame _startGame;
 
     private void Start() {
       WhichCanvasToOpenFirst();
@@ -33,7 +35,7 @@ namespace Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CharacterL
     }
 
     private void WhichCanvasToOpenFirst() {
-      if (Leviathan.Instance.IsNewGame) {
+      if (_startGame.StartNewGame()) {
         OpenDiceRollForRiskPointsCanvas();
       } else {
         OpenCharacterListCanvas();
