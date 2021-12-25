@@ -74,7 +74,7 @@ namespace Core.Mono.Scenes.CreateCharacter {
     [FormerlySerializedAs("_usedQualitiesData"), SerializeField]
     private bool _useGameSave;
     [Inject]
-    private QualitiesAfterDistributing _qualitiesAfterDistributing;
+    private DistributedQualities _distributedQualities;
     private IDiceRoll _diceRollData;
     private IQualityPoints _qualityPoints;
 
@@ -574,7 +574,7 @@ namespace Core.Mono.Scenes.CreateCharacter {
       } else {
         InitQualitiesAfterDistributingValuesArray();
         for (var i = 0; i < _qualities.Length; i++) {
-          _qualitiesAfterDistributing.Values[i] = _qualities[i];
+          _distributedQualities.Values[i] = _qualities[i];
         }
       }
 
@@ -583,7 +583,7 @@ namespace Core.Mono.Scenes.CreateCharacter {
     }
 
     private void InitQualitiesAfterDistributingValuesArray() {
-      _qualitiesAfterDistributing.Values = new int[_qualities.Length];
+      _distributedQualities.Values = new int[_qualities.Length];
     }
 
     private void SaveQualitiesAfterDistributing() {
@@ -698,8 +698,11 @@ namespace Core.Mono.Scenes.CreateCharacter {
   }
 
   [Serializable]
-  public class QualitiesAfterDistributing {
-    [FormerlySerializedAs("values")]
+  public class DistributedQualities {
     public int[] Values;
+
+    public DistributedQualities(int[] values) {
+      Values = values;
+    }
   }
 }

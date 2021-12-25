@@ -16,7 +16,7 @@ namespace Aberrance {
       Container.Bind<GamePointsScribe>().AsSingle();
       Container.Bind<DiceRollScribe>().AsSingle();
       Container.Bind<CharacterCreation>().AsSingle();
-      Container.Bind<QualitiesAfterDistributing>().AsSingle();
+      Container.Bind<DistributedQualities>().AsSingle();
       Container.Bind<GamePoints>().AsSingle();
       Container.Bind<IDataInit>().FromInstance(new Memento());
       Container.Bind<IStartGame>().FromInstance(Leviathan.Instance);
