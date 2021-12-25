@@ -54,7 +54,7 @@ namespace Core.Mono.Scenes.CreateCharacter {
       _load.onClick.AddListener(LoadAndSetDiceRollData);
       _reset.onClick.AddListener(ResetValuesOfDiceRoll);
       _save.onClick.AddListener(Save);
-      ValuesSelectionForQualities.AllValuesSelected += OnAllValuesSelected;
+      QualitiesSelector.AllValuesSelected += OnAllValuesSelected;
     }
 
     private void RemoveListener() {
@@ -62,7 +62,7 @@ namespace Core.Mono.Scenes.CreateCharacter {
       _load.onClick.RemoveListener(LoadAndSetDiceRollData);
       _reset.onClick.RemoveListener(ResetValuesOfDiceRoll);
       _save.onClick.RemoveListener(Save);
-      ValuesSelectionForQualities.AllValuesSelected -= OnAllValuesSelected;
+      QualitiesSelector.AllValuesSelected -= OnAllValuesSelected;
     }
 
     private void LoadAndSetDiceRollData() {
@@ -127,8 +127,6 @@ namespace Core.Mono.Scenes.CreateCharacter {
     private void SetRollValues() {
       _diceRollInfo.SetDiceRollForInfo();
       _valuesWithRollOfDice[_numberOfDiceRoll] = _characterCreation.GetSumDiceRollForQuality();
-      Debug.LogWarning($"{(StatRolls)_numberOfDiceRoll} = {_valuesWithRollOfDice[_numberOfDiceRoll]}");
-
       _diceRollData.SetStatsRoll((StatRolls)_numberOfDiceRoll, _valuesWithRollOfDice[_numberOfDiceRoll]);
       _diceRollInfo.SetRollValues(_numberOfDiceRoll, _valuesWithRollOfDice[_numberOfDiceRoll]);
     }

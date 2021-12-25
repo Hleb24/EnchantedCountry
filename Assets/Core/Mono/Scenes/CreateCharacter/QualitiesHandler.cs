@@ -4,16 +4,14 @@ using Core.SupportSystems.SaveSystem.SaveManagers;
 using UnityEngine;
 
 namespace Core.Mono.Scenes.CreateCharacter {
-  public class SaveQualities : MonoBehaviour {
+  public class QualitiesHandler : MonoBehaviour {
     private Qualities _qualities;
     private IQualityPoints _qualityPoints;
 
-    private void Awake() {
-      _qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
-      _qualities = new Qualities(_qualityPoints, new[] { 0, 0, 0, 0, 0 });
-    }
 
     private void Start() {
+      _qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
+      _qualities = new Qualities(_qualityPoints, new[] { 0, 0, 0, 0, 0 });
       AddListener();
     }
 
@@ -22,11 +20,11 @@ namespace Core.Mono.Scenes.CreateCharacter {
     }
 
     private void AddListener() {
-      ValuesSelectionForQualities.SaveQualities += OnSaveQualites;
+      QualitiesSelector.SaveQualities += OnSaveQualites;
     }
 
     private void RemoveListener() {
-      ValuesSelectionForQualities.SaveQualities -= OnSaveQualites;
+      QualitiesSelector.SaveQualities -= OnSaveQualites;
     }
 
     private void OnSaveQualites() {

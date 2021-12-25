@@ -81,7 +81,6 @@ namespace Core.SupportSystems.Data {
     }
 
     void IDiceRoll.SetStatsRoll(StatRolls statRolls, int value) {
-      Debug.LogWarning(_diceRollDataScroll.DiceRollValues == null);
       Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
       switch (statRolls) {
         case StatRolls.First:
