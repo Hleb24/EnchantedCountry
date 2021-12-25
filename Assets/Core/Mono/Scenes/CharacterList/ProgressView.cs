@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.CharacterList {
-  public class ProgressViewInCharacterList : MonoBehaviour {
+  public class ProgressView : MonoBehaviour {
     [SerializeField]
     private TMP_Text _level;
     [SerializeField]

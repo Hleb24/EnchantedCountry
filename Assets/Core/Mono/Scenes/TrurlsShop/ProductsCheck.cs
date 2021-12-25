@@ -1,22 +1,23 @@
 using System.Collections.Generic;
 using Core.Rule.Character.Equipment;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core.Mono.Scenes.TrurlsShop {
-	public class CheckProductInShop : MonoBehaviour {
+	public class ProductsCheck : MonoBehaviour {
 		#region FIELDS
 		[SerializeField]
 		private CashBox _cashBox;
-		[SerializeField]
-		private SpawnProductInTrulsShop _spawnProductInTrulsShop;
+		[FormerlySerializedAs("_spawnProductInTrulsShop"),SerializeField]
+		private SpawnProduct _spawnProduct;
 		#endregion
 		#region MONOBEHAVIOUR_METHODS
 		private void Start() {
-			SpawnProductInTrulsShop.SpawnCompleted += OnSpawnCompleted;
+			SpawnProduct.SpawnCompleted += OnSpawnCompleted;
 		}
 
 		private void OnDestroy() {
-			SpawnProductInTrulsShop.SpawnCompleted -= OnSpawnCompleted;
+			SpawnProduct.SpawnCompleted -= OnSpawnCompleted;
 		}
 		#region HANDLERS
 		private void OnSpawnCompleted() {
@@ -26,13 +27,13 @@ namespace Core.Mono.Scenes.TrurlsShop {
 		#endregion
 		#region IF_CHARACTER_HAS_EQUIPMENT
 		private void IfCharacterHasEquipmentSetCharacterHasTrueAndGreenBackground() {
-			IfCharacterHasArmorSetChatacterHasTrueAndGreenBackground(_spawnProductInTrulsShop.ProductViewListForArmor
+			IfCharacterHasArmorSetChatacterHasTrueAndGreenBackground(_spawnProduct.ProductViewListForArmor
 																															, _cashBox.Equipments.GetEquipmentCards());
-			IfCharacterHasWeaponSetChatacterHasTrueAndGreenBackground(_spawnProductInTrulsShop.ProductViewListForWeapon
+			IfCharacterHasWeaponSetChatacterHasTrueAndGreenBackground(_spawnProduct.ProductViewListForWeapon
 																															, _cashBox.Equipments.GetEquipmentCards());
-			IfCharacterHasProjectiliesSetChatacterHasTrueAndGreenBackground(_spawnProductInTrulsShop.ProductViewListForProjectiles
+			IfCharacterHasProjectiliesSetChatacterHasTrueAndGreenBackground(_spawnProduct.ProductViewListForProjectiles
 																															, _cashBox.Equipments.GetEquipmentCards());
-			IfCharacterHasItemSetChatacterHasTrueAndGreenBackground(_spawnProductInTrulsShop.ProductViewListForItems
+			IfCharacterHasItemSetChatacterHasTrueAndGreenBackground(_spawnProduct.ProductViewListForItems
 																															, _cashBox.Equipments.GetEquipmentCards());
 		}
 

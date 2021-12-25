@@ -3,7 +3,7 @@ using Core.Mono.BaseClass;
 
 namespace Core.Mono.Scenes.CharacterList {
 
-	public class ProductsSelectionInCharacterList : ProductSelection {
+	public class ProductsSelection : ProductSelection {
 		#region FIELDS
 		public static Action OpenArmorListOfProducts;
 		public static Action OpenWeaponListOfProducts;
@@ -13,12 +13,12 @@ namespace Core.Mono.Scenes.CharacterList {
 		#region HANDLERS
 		protected override void AddListener() {
 			base.AddListener();
-			SpawnProductsInCharacterList.SpawnCompleted += OnSpawnCompleted;
+			SpawnProducts.SpawnCompleted += OnSpawnCompleted;
 		}
 
 		protected override void RemoveListener() {
 			base.RemoveListener();
-			SpawnProductsInCharacterList.SpawnCompleted -= OnSpawnCompleted;
+			SpawnProducts.SpawnCompleted -= OnSpawnCompleted;
 		}
 
 		protected override void HandlerForArmorButton() {

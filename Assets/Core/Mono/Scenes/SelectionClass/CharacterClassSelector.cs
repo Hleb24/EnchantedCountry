@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.SelectionClass {
-  public class SelectionClassOfCharacter : MonoBehaviour {
+  public class CharacterClassSelector : MonoBehaviour {
     private readonly int _lowerLimitQualityValueForClass = 9;
     public static event Action WizardSelected;
     public static event Action KronSelected;

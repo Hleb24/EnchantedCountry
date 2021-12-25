@@ -1,7 +1,7 @@
 using Core.Mono.BaseClass;
 
 namespace Core.Mono.Scenes.CreateCharacter {
-	public class GoToSelectCharacterClassScene : GoToScene {
+	public class GoToSelectClassScene : GoToScene {
 		private void Start() {
 			QualitiesSelector.AllValuesSelected += OnAllValuesSelected;
 			QualitiesSelector.DistributeValues += OnDistributeValues;

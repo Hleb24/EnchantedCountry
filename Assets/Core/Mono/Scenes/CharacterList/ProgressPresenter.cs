@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.CharacterList {
-  public class ProgressPresenterInCharacterList : MonoBehaviour {
+  public class ProgressPresenter : MonoBehaviour {
     #region FIELDS
     [Header("Set in Inspector"),SerializeField]
     private GameObject _progressPrefab;
@@ -23,7 +23,7 @@ namespace Core.Mono.Scenes.CharacterList {
     [SerializeField]
     private Button _closeButton;
     [Header("Set dynamically"),SerializeField]
-    private List<ProgressViewInCharacterList> _progressViewList;
+    private List<ProgressView> _progressViewList;
     private bool _isSpawnProgress;
     #endregion
 
@@ -64,10 +64,10 @@ namespace Core.Mono.Scenes.CharacterList {
     private void SpawnProgress() {
       if(_isSpawnProgress)
         return;
-      _progressViewList = new List<ProgressViewInCharacterList>();
+      _progressViewList = new List<ProgressView>();
       for (int i = 0; i < LevelDictionaries.DefiningLevelsForСharacterTypes[default].Count; i++) {
         GameObject gObject = Instantiate(_progressPrefab, _contentOfProgress);
-        _progressViewList.Add(gObject.GetComponent<ProgressViewInCharacterList>());
+        _progressViewList.Add(gObject.GetComponent<ProgressView>());
       }
       SetFieldsForProgressViewPrefab();
       _isSpawnProgress = true;

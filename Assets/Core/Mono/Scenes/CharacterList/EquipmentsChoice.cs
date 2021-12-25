@@ -13,7 +13,7 @@ using static Core.Rule.GameRule.Armor.Armor;
 using static Core.Rule.GameRule.Weapon.Weapon;
 
 namespace Core.Mono.Scenes.CharacterList {
-  public class ApplyAndTakeOffEquipment : MonoBehaviour {
+  public class EquipmentsChoice : MonoBehaviour {
     public static event Action<int> ApplyButtonClicked;
     public static event Action<int> TakeOffEquipment;
     public static event Action EquipmentChanged;
@@ -69,19 +69,19 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void OnEnable() {
-      ProductsInCharacterListView.ProductSelected += OnProductSelected;
-      ProductsSelectionInCharacterList.OpenArmorListOfProducts += OnOpenArmorListOfProducts;
-      ProductsSelectionInCharacterList.OpenWeaponListOfProducts += OnWeaponListOfProducts;
-      ProductsSelectionInCharacterList.OpenItemListOfProducts += OnOpenItemListOfProducts;
+      ProductsView.ProductSelected += OnProductSelected;
+      ProductsSelection.OpenArmorListOfProducts += OnOpenArmorListOfProducts;
+      ProductsSelection.OpenWeaponListOfProducts += OnWeaponListOfProducts;
+      ProductsSelection.OpenItemListOfProducts += OnOpenItemListOfProducts;
       _applyButton.onClick.AddListener(OnApplyButtonClicked);
       _takeOffButton.onClick.AddListener(OnTakeOffButtonClicked);
     }
 
     private void OnDisable() {
-      ProductsInCharacterListView.ProductSelected -= OnProductSelected;
-      ProductsSelectionInCharacterList.OpenArmorListOfProducts -= OnOpenArmorListOfProducts;
-      ProductsSelectionInCharacterList.OpenWeaponListOfProducts -= OnWeaponListOfProducts;
-      ProductsSelectionInCharacterList.OpenItemListOfProducts -= OnOpenItemListOfProducts;
+      ProductsView.ProductSelected -= OnProductSelected;
+      ProductsSelection.OpenArmorListOfProducts -= OnOpenArmorListOfProducts;
+      ProductsSelection.OpenWeaponListOfProducts -= OnWeaponListOfProducts;
+      ProductsSelection.OpenItemListOfProducts -= OnOpenItemListOfProducts;
       _applyButton.onClick.RemoveListener(OnApplyButtonClicked);
       _takeOffButton.onClick.RemoveListener(OnTakeOffButtonClicked);
     }

@@ -3,6 +3,7 @@ using Core.SupportSystems.Data;
 using Core.SupportSystems.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class LevelInCharacterList : MonoBehaviour {
@@ -11,8 +12,8 @@ namespace Core.Mono.Scenes.CharacterList {
     private TMP_Text _levelText;
     [SerializeField]
     private CharacterInCharacterList _characterInCharacterList;
-    [SerializeField]
-    private GamePointsInCharacterList _gamePointsInCharacterList;
+    [FormerlySerializedAs("_gamePointsInCharacterList"),SerializeField]
+    private CharacterGamePoints _characterGamePoints;
     private DefiningLevelsForСharacterTypes _definingLevels;
     private int _level;
     private bool _getGamePoints;
@@ -30,15 +31,15 @@ namespace Core.Mono.Scenes.CharacterList {
     #region HANDLERS
     private void AddListenrs() {
       _characterInCharacterList.GetCharacterType += OnGetCharacterType;
-      _gamePointsInCharacterList.LoadGamePoints += OnLoadGamePoints;
+      _characterGamePoints.LoadGamePoints += OnLoadCharacterGamePoints;
     }
 
     private void RemoveListeners() {
       _characterInCharacterList.GetCharacterType -= OnGetCharacterType;
-      _gamePointsInCharacterList.LoadGamePoints -= OnLoadGamePoints;
+      _characterGamePoints.LoadGamePoints -= OnLoadCharacterGamePoints;
     }
 
-    private void OnLoadGamePoints(int points) {
+    private void OnLoadCharacterGamePoints(int points) {
       _getGamePoints = true;
       if (_getGamePoints && _getCharacterType) {
         SetLevelText();

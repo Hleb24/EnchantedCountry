@@ -13,7 +13,7 @@ using static Core.Rule.GameRule.Armor.Armor;
 using static Core.Rule.GameRule.Weapon.Weapon;
 
 namespace Core.Mono.Scenes.CharacterList {
-  public class SpawnProductsInCharacterList : MonoBehaviour {
+  public class SpawnProducts : MonoBehaviour {
     private const int TEST_NUMBER_OF_PRODUCT = 5;
     private const int NUMBER_OF_PROJECTILIES = 20;
     [SerializeField]
@@ -26,13 +26,13 @@ namespace Core.Mono.Scenes.CharacterList {
     [SerializeField]
     private StorageObject _storage;
     [SerializeField]
-    private List<ProductsInCharacterListView> _productViewListForArmor;
+    private List<ProductsView> _productViewListForArmor;
     [SerializeField]
-    private List<ProductsInCharacterListView> _productViewListForWeapon;
+    private List<ProductsView> _productViewListForWeapon;
     [SerializeField]
-    private List<ProductsInCharacterListView> _productViewListForProjectilies;
+    private List<ProductsView> _productViewListForProjectilies;
     [SerializeField]
-    private List<ProductsInCharacterListView> _productViewListForItems;
+    private List<ProductsView> _productViewListForItems;
     [SerializeField]
     private List<ProductObject> _armorListSo;
     [SerializeField]
@@ -152,10 +152,10 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SpawnArmor() {
-      _productViewListForArmor = new List<ProductsInCharacterListView>();
+      _productViewListForArmor = new List<ProductsView>();
       for (var i = 0; i < _armorListSo.Count; i++) {
         GameObject product = Instantiate(_productPrefab, _contentArmor);
-        var productView = product.GetComponent<ProductsInCharacterListView>();
+        var productView = product.GetComponent<ProductsView>();
         _productViewListForArmor.Add(productView);
       }
 
@@ -166,10 +166,10 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SpawnWeapon() {
-      _productViewListForWeapon = new List<ProductsInCharacterListView>();
+      _productViewListForWeapon = new List<ProductsView>();
       for (var i = 0; i < _weaponListSo.Count; i++) {
         GameObject product = Instantiate(_productPrefab, _contentWeapon);
-        var productView = product.GetComponent<ProductsInCharacterListView>();
+        var productView = product.GetComponent<ProductsView>();
         _productViewListForWeapon.Add(productView);
       }
 
@@ -180,10 +180,10 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SpawnProjectilies() {
-      _productViewListForProjectilies = new List<ProductsInCharacterListView>();
+      _productViewListForProjectilies = new List<ProductsView>();
       for (var i = 0; i < _projectilesListSo.Count; i++) {
         GameObject product = Instantiate(_productPrefab, _contentWeapon);
-        var productView = product.GetComponent<ProductsInCharacterListView>();
+        var productView = product.GetComponent<ProductsView>();
         _productViewListForProjectilies.Add(productView);
       }
 
@@ -194,10 +194,10 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SpawnItems() {
-      _productViewListForItems = new List<ProductsInCharacterListView>();
+      _productViewListForItems = new List<ProductsView>();
       for (var i = 0; i < _itemsListSo.Count; i++) {
         GameObject product = Instantiate(_productPrefab, _contentItem);
-        var productView = product.GetComponent<ProductsInCharacterListView>();
+        var productView = product.GetComponent<ProductsView>();
         _productViewListForItems.Add(productView);
       }
 
@@ -208,32 +208,32 @@ namespace Core.Mono.Scenes.CharacterList {
       }
     }
 
-    private void SetCanNotUsedForItem(ProductsInCharacterListView productView, ProductObject productObject) {
+    private void SetCanNotUsedForItem(ProductsView productView, ProductObject productObject) {
       if (!_itemWhatCanUsed.Contains(productObject.id)) {
         productView.ProductWhatCanNotUsed();
       }
     }
 
-    private void InitializeProductFields(ProductsInCharacterListView productView, ProductObject productObject, int amount) {
+    private void InitializeProductFields(ProductsView productView, ProductObject productObject, int amount) {
       SetProductName(productView, productObject);
       SetProductNumberOfProduct(productView, amount);
       SetProductId(productView, productObject);
       KitForCharacterType(productView, productObject);
     }
 
-    private void SetProductName(ProductsInCharacterListView productView, ProductObject productObject) {
+    private void SetProductName(ProductsView productView, ProductObject productObject) {
       productView.Name.text = productObject.productName;
     }
 
-    private void SetProductNumberOfProduct(ProductsInCharacterListView productView, int numberOfProduct) {
+    private void SetProductNumberOfProduct(ProductsView productView, int numberOfProduct) {
       productView.NumberOfProduct.text = numberOfProduct.ToString();
     }
 
-    private void SetProductId(ProductsInCharacterListView productView, ProductObject productObject) {
+    private void SetProductId(ProductsView productView, ProductObject productObject) {
       productView.Id = productObject.id;
     }
 
-    private void KitForCharacterType(ProductsInCharacterListView productView, ProductObject productObject) {
+    private void KitForCharacterType(ProductsView productView, ProductObject productObject) {
       switch (productObject.productType) {
         case ProductObject.ProductType.None:
           break;
@@ -254,7 +254,7 @@ namespace Core.Mono.Scenes.CharacterList {
       }
     }
 
-    public List<ProductsInCharacterListView> ProductViewListForArmor {
+    public List<ProductsView> ProductViewListForArmor {
       get {
         return _productViewListForArmor;
       }
@@ -263,7 +263,7 @@ namespace Core.Mono.Scenes.CharacterList {
       }
     }
 
-    public List<ProductsInCharacterListView> ProductViewListForWeapon {
+    public List<ProductsView> ProductViewListForWeapon {
       get {
         return _productViewListForWeapon;
       }
@@ -272,7 +272,7 @@ namespace Core.Mono.Scenes.CharacterList {
       }
     }
 
-    public List<ProductsInCharacterListView> ProductViewListForProjectilies {
+    public List<ProductsView> ProductViewListForProjectilies {
       get {
         return _productViewListForProjectilies;
       }
@@ -281,7 +281,7 @@ namespace Core.Mono.Scenes.CharacterList {
       }
     }
 
-    public List<ProductsInCharacterListView> ProductViewListForItems {
+    public List<ProductsView> ProductViewListForItems {
       get {
         return _productViewListForItems;
       }

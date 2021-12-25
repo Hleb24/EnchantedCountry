@@ -8,7 +8,7 @@ using static Core.Rule.GameRule.Weapon.Weapon;
 
 namespace Core.Mono.Scenes.TrurlsShop {
 
-	public class SpawnProductInTrulsShop : MonoBehaviour {
+	public class SpawnProduct : MonoBehaviour {
 		#region FIELDS
 		private const int TEST_NUMBER_OF_PRODUCT = 5;
 		private const int NUMBER_OF_PROJECTILIES = 20;

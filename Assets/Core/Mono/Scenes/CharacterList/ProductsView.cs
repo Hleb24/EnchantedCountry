@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.CharacterList {
-	public class ProductsInCharacterListView : MonoBehaviour, IPointerClickHandler {
+	public class ProductsView : MonoBehaviour, IPointerClickHandler {
 		[SerializeField]
 		private Image _background;
 		[SerializeField]
@@ -18,7 +18,7 @@ namespace Core.Mono.Scenes.CharacterList {
 		private bool _thisProductSelected;
 		private bool _thisProductUsed;
 		private static List<int> _thisProductUnusedList = new List<int>();
-		public static event Action<ProductsInCharacterListView> PointerClicked;
+		public static event Action<ProductsView> PointerClicked;
 		public static event Action<int> ProductSelected;
 		public void ProductWhatCanNotUsed() {
 			SetGreyColorForBackground();
@@ -31,15 +31,15 @@ namespace Core.Mono.Scenes.CharacterList {
 			if (_thisProductUsed) {
 				SetGreenColorForBackground();
 			}
-			ProductsInCharacterListView.PointerClicked += OnPointerClicked;
-			ApplyAndTakeOffEquipment.ApplyButtonClicked += OnApplyButtonClicked;
-			ApplyAndTakeOffEquipment.TakeOffEquipment += OnTakeOffEquipment;
+			ProductsView.PointerClicked += OnPointerClicked;
+			EquipmentsChoice.ApplyButtonClicked += OnApplyButtonClicked;
+			EquipmentsChoice.TakeOffEquipment += OnTakeOffEquipment;
 		}
 
 		private void OnDisable() {
-			ProductsInCharacterListView.PointerClicked -= OnPointerClicked;
-			ApplyAndTakeOffEquipment.ApplyButtonClicked -= OnApplyButtonClicked;
-			ApplyAndTakeOffEquipment.TakeOffEquipment -= OnTakeOffEquipment;
+			ProductsView.PointerClicked -= OnPointerClicked;
+			EquipmentsChoice.ApplyButtonClicked -= OnApplyButtonClicked;
+			EquipmentsChoice.TakeOffEquipment -= OnTakeOffEquipment;
 			SetWhiteColorForBackgroundOnDisable();
 			SetFalseForThisProductSelected();
 		}
@@ -50,7 +50,7 @@ namespace Core.Mono.Scenes.CharacterList {
 				SetWhiteColorForBackground();
 			}
 		}
-		private void OnPointerClicked(ProductsInCharacterListView productView) {
+		private void OnPointerClicked(ProductsView productView) {
 			if (productView != this) {
 				_thisProductSelected = false;
 				if (_productWhatCanNotUsed)

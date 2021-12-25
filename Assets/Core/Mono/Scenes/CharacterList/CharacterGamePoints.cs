@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 
 namespace Core.Mono.Scenes.CharacterList {
-  public class GamePointsInCharacterList : MonoBehaviour {
+  public class CharacterGamePoints : MonoBehaviour {
     #region FIELDS
     [SerializeField]
     private TMP_Text _gamePointsText;

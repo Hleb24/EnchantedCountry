@@ -12,7 +12,7 @@ using UnityEngine;
 namespace Core.Mono.Scenes.CharacterList {
   public class ViewParameters : MonoBehaviour {
     [SerializeField]
-    private SpawnProductsInCharacterList _spawnProducts;
+    private SpawnProducts _spawnProducts;
     [SerializeField]
     private WalletInCharacterList _walletIn;
     [SerializeField]
@@ -44,11 +44,11 @@ namespace Core.Mono.Scenes.CharacterList {
 
     
     private void OnEnable() {
-      ApplyAndTakeOffEquipment.EquipmentChanged += OnEquipmentChanged;
+      EquipmentsChoice.EquipmentChanged += OnEquipmentChanged;
     }
 
     private void OnDisable() {
-      ApplyAndTakeOffEquipment.EquipmentChanged -= OnEquipmentChanged;
+      EquipmentsChoice.EquipmentChanged -= OnEquipmentChanged;
     }
     private void SetQualities() {
       _qualities = new Qualities(ScribeDealer.Peek<QualityPointsScribe>());

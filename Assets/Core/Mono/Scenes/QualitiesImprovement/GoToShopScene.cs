@@ -6,11 +6,11 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
 		#region MONBEHAVIOUR_METHODS
 		private void Start() {
 			Wizard.SetSummarizeValuesForQualitiesTexts += OnSetSummarizeValuesForQualitiesTexts;
-			SelectionClassOfCharacter.ElseCharacterTypeSelected += OnElseCharacterTypeSelected;
+			CharacterClassSelector.ElseCharacterTypeSelected += OnElseCharacterTypeSelected;
 		}
 		private void OnDestroy() {
 			Wizard.SetSummarizeValuesForQualitiesTexts -= OnSetSummarizeValuesForQualitiesTexts;
-			SelectionClassOfCharacter.ElseCharacterTypeSelected -= OnElseCharacterTypeSelected;
+			CharacterClassSelector.ElseCharacterTypeSelected -= OnElseCharacterTypeSelected;
 
 		}
 
