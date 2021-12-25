@@ -5,7 +5,7 @@ using Core.Rule.GameRule.NPC;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Mono.Scenes.FightScene {
+namespace Core.Mono.Scenes.Fight {
   public class CardPresenter : MonoBehaviour {
     [SerializeField]
     private GameObject _cardPrefab;

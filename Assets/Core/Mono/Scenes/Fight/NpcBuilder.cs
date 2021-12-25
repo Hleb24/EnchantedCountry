@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace Core.Mono.Scenes.FightScene {
+namespace Core.Mono.Scenes.Fight {
   public class NpcBuilder : MonoBehaviour {
     #region FIELDS
     [FormerlySerializedAs("_setOfNpcSo"),FormerlySerializedAs("_setOfNpcSO"),SerializeField]

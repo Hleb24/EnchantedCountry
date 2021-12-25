@@ -8,7 +8,7 @@ using Core.Rule.GameRule.NPC;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Mono.Scenes.FightScene {
+namespace Core.Mono.Scenes.Fight {
   public class InitiativeController : MonoBehaviour {
     public void MoveIndexToBack() {
       if (CurrentIndexOfInitiativeList == 0) {

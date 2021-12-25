@@ -6,7 +6,7 @@ using Core.Rule.GameRule.NPC;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Mono.Scenes.FightScene {
+namespace Core.Mono.Scenes.Fight {
   public class CombatController : MonoBehaviour {
     public static event Action<string, float> AttackButtonClicked;
     [SerializeField]

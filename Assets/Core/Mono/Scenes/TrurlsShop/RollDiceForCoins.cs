@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace Core.Mono.Scenes.RollDiceForCoins {
+namespace Core.Mono.Scenes.TrurlsShop {
   public class RollDiceForCoins : MonoBehaviour {
     [SerializeField]
     private Button _diceRollButton;

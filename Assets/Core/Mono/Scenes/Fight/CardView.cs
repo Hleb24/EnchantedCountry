@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Mono.Scenes.FightScene {
+namespace Core.Mono.Scenes.Fight {
   public class CardView : MonoBehaviour {
     public void SetFieldsInCard(Sprite icon, string nameCard, float riskPoints, int armorClass) {
       _icon.sprite = icon;
