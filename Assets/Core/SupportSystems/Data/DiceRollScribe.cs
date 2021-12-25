@@ -21,7 +21,7 @@ namespace Core.SupportSystems.Data {
     /// </summary>
     /// <param name="statRolls">Номер броска харасктеристики.</param>
     /// <param name="value">Значение броска характеристики.</param>
-    public void SetStarsRoll(StatRolls statRolls, int value);
+    public void SetStatsRoll(StatRolls statRolls, int value);
 
     /// <summary>
     ///   Изменить  значение броска характеристики.
@@ -80,7 +80,7 @@ namespace Core.SupportSystems.Data {
              };
     }
 
-    void IDiceRoll.SetStarsRoll(StatRolls statRolls, int value) {
+    void IDiceRoll.SetStatsRoll(StatRolls statRolls, int value) {
       Debug.LogWarning(_diceRollDataScroll.DiceRollValues == null);
       Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
       switch (statRolls) {

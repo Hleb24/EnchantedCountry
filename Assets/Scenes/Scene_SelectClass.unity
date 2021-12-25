@@ -512,63 +512,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &153124747
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542313, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8269518827467542319, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
-      propertyPath: m_Name
-      value: GAME_SAVE_SYSTEM
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b6eb83d9fe9be5348b2e2b1119cfd118, type: 3}
 --- !u!1 &765751483
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,10 +544,10 @@ RectTransform:
   m_Father: {fileID: 921042054}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2400, y: 1080}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &765751485
 MonoBehaviour:
@@ -986,9 +929,9 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 2400, y: 1080}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 1
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1448,7 +1391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e5a81a9a858dde4aa2d28ec1393619f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameOfScene: Scene_QualityImprovementForWizard
+  _nameOfScene: 0
   _goToScene: {fileID: 776279713}
 --- !u!114 &1585015015
 MonoBehaviour:
@@ -1462,7 +1405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a040f529fbc9fa429bd0d8ea988994b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameOfScene: Scene_QualityImprovementForKron
+  _nameOfScene: 0
   _goToScene: {fileID: 776279713}
 --- !u!114 &1585015016
 MonoBehaviour:
@@ -1476,7 +1419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7456f64cdba913644b83b747782eab89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameOfScene: Scene_TrurlsShop
+  _nameOfScene: 0
   _goToScene: {fileID: 776279713}
 --- !u!1 &1867108691
 GameObject:
@@ -1563,12 +1506,6 @@ MonoBehaviour:
   _kronButton: {fileID: 1177642927}
   _gnomButton: {fileID: 876180142}
   _useGameSave: 1
-  _qualitiesData:
-    strength: 0
-    agility: 0
-    constitution: 0
-    wisdom: 0
-    courage: 0
 --- !u!224 &2007056166 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2611403032609962507, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}

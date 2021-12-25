@@ -6,5 +6,6 @@ namespace Core.SupportSystems.SaveSystem.Saver
         void Save(Scrolls scrolls);
 
         Scrolls Load(out bool isNewGame);
+        void DeleteSave();
     }
 }

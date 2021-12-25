@@ -6,7 +6,7 @@ using Core.SupportSystems.SaveSystem.Scribe;
 
 namespace Core.SupportSystems.SaveSystem.SaveManagers {
   /// <summary>
-  /// Интерфей для получение информации о процессе инициализации данных.
+  ///   Интерфей для получение информации о процессе инициализации данных.
   /// </summary>
   public interface IDataInit {
     public bool StillInitializing();
@@ -27,7 +27,7 @@ namespace Core.SupportSystems.SaveSystem.SaveManagers {
     /// <summary>
     ///   Инициализировать хранителей данных с загрузкой сохранений.
     /// </summary>
-    public void InitWithLoad(out bool isNewGame) {
+    public void Init(out bool isNewGame) {
       InitializeSaver();
 
       _scribesMemento = new Dictionary<Type, IScribe> {
@@ -50,39 +50,20 @@ namespace Core.SupportSystems.SaveSystem.SaveManagers {
       StillInitializing = false;
       isNewGame = newGame;
     }
-    
-    
-    /// <summary>
-    ///   Инициализировать хранителей данных без загрузки сохранений.
-    /// </summary>
-    public void InitWithoutLoad(out bool isNewGame) {
-      InitializeSaver();
-
-      _scribesMemento = new Dictionary<Type, IScribe> {
-        { typeof(DiceRollScribe), new DiceRollScribe() },
-        { typeof(EquipmentsScribe), new EquipmentsScribe() },
-        { typeof(EquipmentUsedScribe), new EquipmentUsedScribe() },
-        { typeof(WalletScribe), new WalletScribe() },
-        { typeof(GamePointsScribe), new GamePointsScribe() },
-        { typeof(QualityPointsScribe), new QualityPointsScribe() },
-        { typeof(RiskPointsScribe), new RiskPointsScribe() },
-        { typeof(ClassTypeScribe), new ClassTypeScribe() }
-      };
-
-      foreach (IScribe scribe in _scribesMemento.Values) {
-        scribe.Init();
-      }
-
-      ScribeDealer.Init(_scribesMemento);
-      StillInitializing = false;
-      isNewGame = true;
-    }
 
     /// <summary>
     ///   Сохранить всё.
     /// </summary>
     public void Save() {
       _saver.Save(SaveAll());
+    }
+
+    /// <summary>
+    /// Удалить сохранения.
+    /// </summary>
+    public void DeleteSave() {
+      InitializeSaver();
+      _saver.DeleteSave();
     }
 
     private void Load(out bool isNewGame) {
@@ -92,9 +73,9 @@ namespace Core.SupportSystems.SaveSystem.SaveManagers {
 
     private void InitializeSaver() {
 #if UNITY_EDITOR
-      _saver = new JsonSaver();
+      _saver ??= new JsonSaver();
 #elif UNITY_ANDROID
-      _saver = new PrefsSaver();
+      _saver ??= new PrefsSaver();
 #endif
     }
 

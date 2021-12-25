@@ -26,7 +26,7 @@ namespace Core.Mono.Scenes.Intro {
 
     private void SetNameOfNextScene() {
       _nameOfScene = SceneNamesConstants.SCENE_DICE_ROLLS;
-      _nameOfScene = _startGame.IsNewGame() ? SceneNamesConstants.SCENE_DICE_ROLLS : SceneNamesConstants.SCENE_CHARACTER_LIST;
+      _nameOfScene = _startGame.IsNewGame()? SceneNamesConstants.SCENE_DICE_ROLLS : SceneNamesConstants.SCENE_CHARACTER_LIST;
     }
 
     private void LoadNextSceneAsync() {

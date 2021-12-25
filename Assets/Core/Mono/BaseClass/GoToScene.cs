@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace Core.Mono.BaseClass {
   public class GoToScene : MonoBehaviour {
     [SerializeField]
-    protected string _nameOfScene;
+    protected Scene _nameOfScene;
     [SerializeField]
     protected Button _goToScene;
 
@@ -18,7 +18,7 @@ namespace Core.Mono.BaseClass {
     }
 
     protected void AddListener() {
-      _goToScene.onClick.AddListener(() => SceneManager.LoadScene(_nameOfScene));
+      _goToScene.onClick.AddListener(() => SceneManager.LoadSceneAsync((int)_nameOfScene));
     }
 
     protected void RemoveAllListener() {
@@ -34,7 +34,7 @@ namespace Core.Mono.BaseClass {
     }
 
     private void RemoveListener() {
-      _goToScene.onClick.RemoveListener(() => SceneManager.LoadScene(_nameOfScene));
+      _goToScene.onClick.RemoveListener(() => SceneManager.LoadSceneAsync((int)_nameOfScene));
     }
   }
 
@@ -46,5 +46,16 @@ namespace Core.Mono.BaseClass {
     public const string SCENE_TRURLS_SHOP = "Scene_TrurlsShop";
     public const string SCENE_CHARACTER_LIST = "Scene_CharacterList";
     public const string SCENE_FIGHT = "Scene_Fight";
+  }
+
+  public enum Scene {
+    Intro,
+    DiceRolls,
+    SelectClass,
+    WizardImprovement,
+    KronImprovement,
+    TrurlsShop,
+    CharacterList,
+    Fight
   }
 }

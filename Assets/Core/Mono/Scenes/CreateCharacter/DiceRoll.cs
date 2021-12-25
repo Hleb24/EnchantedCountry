@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using Core.Rule.Character.CharacterCreation;
 using Core.SupportSystems.Data;
 using Core.SupportSystems.SaveSystem.SaveManagers;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
 namespace Core.Mono.Scenes.CreateCharacter {
   public class DiceRoll : MonoBehaviour {
-    private const string AllDiceAreRolled = "all dice are rolled";
     private readonly int[] _valuesWithRollOfDice = new int[5];
     public static event Action AllDiceRollCompleteOrLoad;
     public static event Action ResetDiceRoll;
     [SerializeField]
-    private TMP_Text _info;
+    private DiceRollInfo _diceRollInfo;
     [SerializeField]
     private Button _diceRollButton;
     [SerializeField]
@@ -25,19 +23,17 @@ namespace Core.Mono.Scenes.CreateCharacter {
     [SerializeField]
     private Button _load;
     [SerializeField]
-    private List<TMP_Text> _diceRollValuesText;
-    [SerializeField]
     private bool _usedGameSave;
     [Inject]
     private CharacterCreation _characterCreation;
-    private int _numberOfDiceRoll;
     private IDiceRoll _diceRollData;
+    private int _numberOfDiceRoll;
     private bool _isNumberOfDiceRollOverlay;
 
     private void Start() {
-      // if (_usedGameSave) {
-      _diceRollData = ScribeDealer.Peek<DiceRollScribe>();
-      // }
+      if (_usedGameSave) {
+        _diceRollData = ScribeDealer.Peek<DiceRollScribe>();
+      }
     }
 
     private void OnEnable() {
@@ -54,16 +50,16 @@ namespace Core.Mono.Scenes.CreateCharacter {
     }
 
     private void AddListener() {
-      _load.onClick.AddListener(LoadAndSetDiceRollData);
       _diceRollButton.onClick.AddListener(SetDiceRollValuesAndIncreaseCount);
+      _load.onClick.AddListener(LoadAndSetDiceRollData);
       _reset.onClick.AddListener(ResetValuesOfDiceRoll);
       _save.onClick.AddListener(Save);
       ValuesSelectionForQualities.AllValuesSelected += OnAllValuesSelected;
     }
 
     private void RemoveListener() {
-      _load.onClick.RemoveListener(LoadAndSetDiceRollData);
       _diceRollButton.onClick.RemoveListener(SetDiceRollValuesAndIncreaseCount);
+      _load.onClick.RemoveListener(LoadAndSetDiceRollData);
       _reset.onClick.RemoveListener(ResetValuesOfDiceRoll);
       _save.onClick.RemoveListener(Save);
       ValuesSelectionForQualities.AllValuesSelected -= OnAllValuesSelected;
@@ -76,16 +72,20 @@ namespace Core.Mono.Scenes.CreateCharacter {
         Invoke(nameof(SetTextsInListWithSave), 0.3f);
       }
 
-      _info.text = "Info: values load.";
-      _numberOfDiceRoll = _diceRollValuesText.Count - 1;
+      _diceRollInfo.LoadAndSetDiceRollData();
+      _numberOfDiceRoll = (int)StatRolls.Fifth;
       _isNumberOfDiceRollOverlay = true;
       AllDiceRollCompleteOrLoad?.Invoke();
     }
 
     private void SetTextsInListWithSave() {
-      for (var i = 0; i < _diceRollValuesText.Count; i++) {
-        _diceRollValuesText[i].text = _diceRollData.GetStatsRoll((StatRolls)i).ToString();
+      var diceRollValues = new List<string>();
+      for (var i = 0; i < (int)StatRolls.Fifth + 1; i++) {
+        Debug.LogWarning(_diceRollData.GetStatsRoll((StatRolls)i));
+        diceRollValues.Add(_diceRollData.GetStatsRoll((StatRolls)i).ToString());
       }
+
+      _diceRollInfo.SetTextsInListWithSave(diceRollValues);
     }
 
     private void SetDiceRollValuesAndIncreaseCount() {
@@ -94,7 +94,7 @@ namespace Core.Mono.Scenes.CreateCharacter {
       }
 
       if (AllDiceRollsCompleted()) {
-        _info.text += AllDiceAreRolled;
+        _diceRollInfo.AddToInfo();
         _isNumberOfDiceRollOverlay = true;
         Save();
         return;
@@ -105,10 +105,9 @@ namespace Core.Mono.Scenes.CreateCharacter {
     }
 
     private void ResetValuesOfDiceRoll() {
-      _info.text = "Info: reset.";
-      for (var i = 0; i < _diceRollValuesText.Count; i++) {
-        _diceRollValuesText[i].text = "0";
-        _diceRollData.SetStarsRoll((StatRolls)i, 0);
+      _diceRollInfo.ResetValuesOfDiceRoll();
+      for (var i = 0; i < (int)StatRolls.Fifth + 1; i++) {
+        _diceRollData.SetStatsRoll((StatRolls)i, 0);
       }
 
       _numberOfDiceRoll = 0;
@@ -117,24 +116,21 @@ namespace Core.Mono.Scenes.CreateCharacter {
     }
 
     private void Save() {
-      if (_usedGameSave) {
-        // GSSSingleton.Instance.SaveInGame();
-      }
-
       AllDiceRollCompleteOrLoad?.Invoke();
-      _info.text = "Info: save.";
+      _diceRollInfo.SetSaveForInfo();
     }
 
     private bool AllDiceRollsCompleted() {
-      return _numberOfDiceRoll == _diceRollValuesText.Count;
+      return _numberOfDiceRoll == (int)StatRolls.Fifth + 1;
     }
 
     private void SetRollValues() {
-      _info.text = "Info: dice roll.";
+      _diceRollInfo.SetDiceRollForInfo();
       _valuesWithRollOfDice[_numberOfDiceRoll] = _characterCreation.GetSumDiceRollForQuality();
-      Debug.Log($"Number dice roll: {(StatRolls)_numberOfDiceRoll}; {_diceRollData.GetDiceRollValues().Length}");
-      _diceRollData.SetStarsRoll((StatRolls)_numberOfDiceRoll, _valuesWithRollOfDice[_numberOfDiceRoll]);
-      _diceRollValuesText[_numberOfDiceRoll].text = _valuesWithRollOfDice[_numberOfDiceRoll].ToString();
+      Debug.LogWarning($"{(StatRolls)_numberOfDiceRoll} = {_valuesWithRollOfDice[_numberOfDiceRoll]}");
+
+      _diceRollData.SetStatsRoll((StatRolls)_numberOfDiceRoll, _valuesWithRollOfDice[_numberOfDiceRoll]);
+      _diceRollInfo.SetRollValues(_numberOfDiceRoll, _valuesWithRollOfDice[_numberOfDiceRoll]);
     }
 
     private void OnAllValuesSelected() {
@@ -151,9 +147,5 @@ namespace Core.Mono.Scenes.CreateCharacter {
     private void DisableButtonInteractable(Button button) {
       button.interactable = false;
     }
-  }
-
-  public class DiceRollVisual : MonoBehaviour {
-    
   }
 }

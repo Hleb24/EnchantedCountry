@@ -21,6 +21,12 @@ namespace Core.Mono.MainManagers {
     public bool StartNewGame();
 
     /// <summary>
+    ///   Использовать сохранения.
+    /// </summary>
+    /// <returns>Истина - использовать сохраненияч, ложь - не использовать.</returns>
+    public bool UseGameSave();
+
+    /// <summary>
     ///   Данные загруженый для игры.
     /// </summary>
     /// <returns>Истина - данные загружены, ложь - даные ещё загружаються</returns>
@@ -74,6 +80,10 @@ namespace Core.Mono.MainManagers {
       Save();
     }
 
+    public bool UseGameSave() {
+      return _gameSettings.UseGameSave();
+    }
+
     bool IStartGame.IsNewGame() {
       return IsNewGame;
     }
@@ -115,14 +125,12 @@ namespace Core.Mono.MainManagers {
     private void StartGame() {
       StartNewGame = _gameSettings.StartNewGame();
       if (StartNewGame) {
-        _memento.InitWithoutLoad(out bool isNewGame);
-        IsNewGame = isNewGame;
-        StillInitializing = false;
-      } else {
-        _memento.InitWithLoad(out bool isNewGame);
-        IsNewGame = isNewGame;
-        StillInitializing = false;
+        _memento.DeleteSave();
       }
+
+      _memento.Init(out bool isNewGame);
+      IsNewGame = isNewGame;
+      StillInitializing = false;
 
       DataLoaded = true;
       Screen.sleepTimeout = SleepTimeout.NeverSleep;

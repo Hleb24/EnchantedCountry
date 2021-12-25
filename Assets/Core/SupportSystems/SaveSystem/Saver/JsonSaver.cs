@@ -46,5 +46,10 @@ namespace Core.SupportSystems.SaveSystem.Saver {
         Directory.CreateDirectory(_pathToFolder);
       }
     }
+
+    public void DeleteSave() {
+      File.Delete(_pathToFile);
+      ClearPrefs();
+    }
   }
 }

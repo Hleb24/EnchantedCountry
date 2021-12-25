@@ -8,11 +8,11 @@ using UnityEngine;
 
 namespace Core.SupportSystems.Attributes {
   /// <summary>
-  /// Класс для проверки работы атрибутов требующих точку входа.
+  ///   Класс для проверки работы атрибутов требующих точку входа.
   /// </summary>
   public class Auditor {
     /// <summary>
-    /// Проверка работу атрибутов.
+    ///   Проверка работу атрибутов.
     /// </summary>
     public static void AttributeValidation() {
       ValidatePrefsKeysCheck();
@@ -61,6 +61,10 @@ namespace Core.SupportSystems.Attributes {
         string json = PlayerPrefs.GetString(NewGame);
         isNewGame = false;
         return JsonUtility.FromJson<Scrolls>(json);
+      }
+
+      public void DeleteSave() {
+        PlayerPrefs.DeleteAll();
       }
 
       private bool IsNewGame() {
