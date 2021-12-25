@@ -1,5 +1,5 @@
-using Core.EnchantedCountry.CoreEnchantedCountry.Character;
-using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.NPC;
+using Core.Rule.Character;
+using Core.Rule.GameRule.NPC;
 using NUnit.Framework;
 using Zenject;
 

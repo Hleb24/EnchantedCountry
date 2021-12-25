@@ -1,4 +1,4 @@
-using Core.EnchantedCountry.CoreEnchantedCountry.Character.Spell;
+using Core.Rule.Character.Spell;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.CharacterTests.SpellsTest {

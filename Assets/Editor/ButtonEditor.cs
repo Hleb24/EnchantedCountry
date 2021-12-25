@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Core.EnchantedCountry.SupportSystems;
-using Core.EnchantedCountry.SupportSystems.Attributes;
+using Core.SupportSystems.Attributes;
 using UnityEditor;
 using UnityEngine;
 

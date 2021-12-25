@@ -1,4 +1,4 @@
-using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Attack;
+using Core.Rule.GameRule.Attack;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.GameRuleTests.AttackTest {

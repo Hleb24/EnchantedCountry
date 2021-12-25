@@ -1,5 +1,5 @@
-using Core.EnchantedCountry.ScriptableObject.ProductObject;
-using Core.EnchantedCountry.ScriptableObject.WeaponObjects;
+using Core.ScriptableObject.Products;
+using Core.ScriptableObject.Weapon;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -18,8 +18,8 @@ namespace Editor.NTest.EditorTests.ProductObjectTest {
     #endregion
 
     #region Preparation_for_Tests
-    private ProductSO _productObject;
-    private readonly ProductSO.ProductType _productType = ProductSO.ProductType.Weapon;
+    private ProductObject _productObject;
+    private readonly ProductObject.ProductType _productType = ProductObject.ProductType.Weapon;
     private readonly int _price = 20;
     private readonly string weaponName = "Normal Long Sword";
     private readonly string weaponNameWithinEffectName = "Long Sword";
@@ -27,7 +27,7 @@ namespace Editor.NTest.EditorTests.ProductObjectTest {
 
     [SetUp]
     public void InitFields() {
-      _productObject = ScriptableObject.CreateInstance<ProductSO>();
+      _productObject = ScriptableObject.CreateInstance<ProductObject>();
     }
 
     [TearDown]

@@ -1,4 +1,4 @@
-using Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateCharacter;
+using Core.Mono.Scenes.CreateCharacter;
 using NUnit.Framework;
 using UnityEngine;
 

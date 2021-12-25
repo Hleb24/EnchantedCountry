@@ -1,4 +1,4 @@
-using Core.EnchantedCountry.CoreEnchantedCountry.Character.Levels;
+using Core.Rule.Character.Levels;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.CharacterTests.LevelsTest {

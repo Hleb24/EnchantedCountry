@@ -1,5 +1,5 @@
-using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Weapon;
-using Core.EnchantedCountry.ScriptableObject.WeaponObjects;
+using Core.Rule.GameRule.Weapon;
+using Core.ScriptableObject.Weapon;
 using NUnit.Framework;
 using UnityEngine;
 

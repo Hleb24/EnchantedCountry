@@ -1,4 +1,4 @@
-using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.ArmorClass;
+using Core.Rule.GameRule.ArmorClass;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.GameRuleTests.ArmorClassTest {

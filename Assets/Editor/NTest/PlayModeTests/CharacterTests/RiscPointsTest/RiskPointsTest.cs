@@ -1,5 +1,5 @@
-using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.RiskPoints;
-using Core.EnchantedCountry.SupportSystems.Data;
+using Core.Rule.GameRule.RiskPoints;
+using Core.SupportSystems.Data;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.CharacterTests.RiscPointsTest {

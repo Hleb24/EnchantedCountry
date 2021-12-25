@@ -1,4 +1,4 @@
-using Core.EnchantedCountry.CoreEnchantedCountry.Character.GamePoints;
+using Core.Rule.Character.GamePoints;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.CharacterTests.GamePointsTest {

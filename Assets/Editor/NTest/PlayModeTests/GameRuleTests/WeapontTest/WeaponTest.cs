@@ -1,4 +1,4 @@
-using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Weapon;
+using Core.Rule.GameRule.Weapon;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.GameRuleTests.WeapontTest {

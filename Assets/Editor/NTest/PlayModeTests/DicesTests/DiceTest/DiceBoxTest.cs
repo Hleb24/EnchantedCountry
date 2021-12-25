@@ -1,4 +1,4 @@
-﻿using Core.EnchantedCountry.CoreEnchantedCountry.Dice;
+﻿using Core.Rule.Dice;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.DicesTests.DiceTest {

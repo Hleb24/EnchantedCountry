@@ -1,5 +1,5 @@
-using Core.EnchantedCountry.CoreEnchantedCountry.GameRule.Armor;
-using Core.EnchantedCountry.ScriptableObject.ArmorObject;
+using Core.Rule.GameRule.Armor;
+using Core.ScriptableObject.Armor;
 using NUnit.Framework;
 using UnityEngine;
 

@@ -1,9 +1,9 @@
-using Core.EnchantedCountry.CoreEnchantedCountry.Character.CharacterCreation;
-using Core.EnchantedCountry.CoreEnchantedCountry.Character.GamePoints;
-using Core.EnchantedCountry.MonoBehaviourScripts.MainManagers;
-using Core.EnchantedCountry.MonoBehaviourScripts.ScriptsForScenes.CreateCharacter;
-using Core.EnchantedCountry.SupportSystems.Data;
-using Core.EnchantedCountry.SupportSystems.SaveSystem.SaveManagers;
+using Core.Mono.MainManagers;
+using Core.Mono.Scenes.CreateCharacter;
+using Core.Rule.Character.CharacterCreation;
+using Core.Rule.Character.GamePoints;
+using Core.SupportSystems.Data;
+using Core.SupportSystems.SaveSystem.SaveManagers;
 using Zenject;
 
 namespace Aberrance {
