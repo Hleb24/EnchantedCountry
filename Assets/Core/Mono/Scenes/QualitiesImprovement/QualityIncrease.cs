@@ -1,4 +1,5 @@
 using Core.Rule.Dice;
+using Core.SupportSystems.Data;
 
 namespace Core.Mono.Scenes.QualitiesImprovement {
   public class QualityIncrease {
@@ -6,52 +7,54 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
     private int[] _diceRollValueForQualitiesIncrease;
     private int _pointer;
 
-    public void Initialization() {
-      SetLengthForArray(5);
+    public QualityIncrease() {
+      SetLengthForArray(QualityTypeHandler.NUMBER_OF_QUALITY);
       SetDiceBox();
     }
-
-    public void DiceRollQualityIncreaseForWizard() {
-      if (LengthOfArrayIsEqualToPointer(_diceRollValueForQualitiesIncrease)) {
-        return;
-      }
-
-      int diceRoll = DiceRoll();
-      int valueForWizard = GetValueForWizardQualitiesImprovement(diceRoll);
-      SetValueByPointer(valueForWizard);
-      MovePoihterForward();
-      if (LengthOfArrayIsEqualToPointer(_diceRollValueForQualitiesIncrease)) {
-        return;
-      }
-
-      DiceRollQualityIncreaseForWizard();
+    
+    private void SetDiceBox() {
+      _dice = new SixSidedDice(DiceType.SixEdges);
     }
 
-    public void DiceRollQualityIncreaseForKron() {
-      if (LengthOfArrayIsEqualToPointer(_diceRollValueForQualitiesIncrease)) {
+    public void IncreaseQualitiesForWizard() {
+      if (LengthIsEqualToPointer(_diceRollValueForQualitiesIncrease)) {
         return;
       }
 
-      int diceRoll = DiceRoll();
-      int valueForWizard = GetValueForKronQualitiesImprovement(diceRoll);
+      int diceRoll = GetDiceRollValue();
+      int valueForWizard = GetValueForWizard(diceRoll);
       SetValueByPointer(valueForWizard);
-      MovePoihterForward();
-      if (LengthOfArrayIsEqualToPointer(_diceRollValueForQualitiesIncrease)) {
+      MovePointerForward();
+      if (LengthIsEqualToPointer(_diceRollValueForQualitiesIncrease)) {
         return;
       }
 
-      DiceRollQualityIncreaseForKron();
+      IncreaseQualitiesForWizard();
+    }
+
+    public void IncreaseQualitiesForKron() {
+      if (LengthIsEqualToPointer(_diceRollValueForQualitiesIncrease)) {
+        return;
+      }
+
+      int diceRoll = GetDiceRollValue();
+      int valueForWizard = GetValueForKron(diceRoll);
+      SetValueByPointer(valueForWizard);
+      MovePointerForward();
+      if (LengthIsEqualToPointer(_diceRollValueForQualitiesIncrease)) {
+        return;
+      }
+
+      IncreaseQualitiesForKron();
     }
 
     private void SetLengthForArray(int length) {
       _diceRollValueForQualitiesIncrease = new int[length];
     }
 
-    private void SetDiceBox() {
-      _dice = new SixSidedDice(DiceType.SixEdges);
-    }
+    
 
-    private int GetValueForWizardQualitiesImprovement(int diceRollValue) {
+    private int GetValueForWizard(int diceRollValue) {
       switch (diceRollValue) {
         case 1:
         case 2:
@@ -68,7 +71,7 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
       return -1;
     }
 
-    private int GetValueForKronQualitiesImprovement(int diceRollValue) {
+    private int GetValueForKron(int diceRollValue) {
       switch (diceRollValue) {
         case 1:
         case 2:
@@ -83,7 +86,7 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
       return -1;
     }
 
-    private bool LengthOfArrayIsEqualToPointer(int[] array) {
+    private bool LengthIsEqualToPointer(int[] array) {
       return _pointer == array.Length;
     }
 
@@ -91,11 +94,11 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
       _diceRollValueForQualitiesIncrease[_pointer] = value;
     }
 
-    private int DiceRoll() {
+    private int GetDiceRollValue() {
       return _dice.RollOfDice();
     }
 
-    private void MovePoihterForward() {
+    private void MovePointerForward() {
       _pointer++;
     }
 

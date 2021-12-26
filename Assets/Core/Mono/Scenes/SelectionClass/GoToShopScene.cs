@@ -2,19 +2,19 @@ using Core.Mono.BaseClass;
 using UnityEngine;
 
 namespace Core.Mono.Scenes.SelectionClass {
-  public class GoToKronScene : GoToScene {
+  public class GoToShopScene : GoToScene {
     [SerializeField]
     private CharacterClassSelector _selector;
-    
+
     private void Start() {
-      _selector.KronSelected += OnKronSelected;
+      _selector.ElseCharacterTypeSelected += OnElseCharacterTypeSelected;
     }
 
     private void OnDestroy() {
-      _selector.KronSelected -= OnKronSelected;
+      _selector.ElseCharacterTypeSelected -= OnElseCharacterTypeSelected;
     }
 
-    private void OnKronSelected() {
+    private void OnElseCharacterTypeSelected() {
       RemoveAllListener();
       AddListener();
       EnableInteractableForButton();

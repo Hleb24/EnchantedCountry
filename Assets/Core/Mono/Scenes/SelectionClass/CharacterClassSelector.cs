@@ -1,20 +1,23 @@
 using System;
 using Core.Rule.Character;
-using Core.Rule.Character.Qualities;
+using Core.ScriptableObject.Mock;
 using Core.SupportSystems.Data;
 using Core.SupportSystems.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.SelectionClass {
+  /// <summary>
+  ///   Класс отвечает за выбор класса персонажа.
+  /// </summary>
   public class CharacterClassSelector : MonoBehaviour {
     private readonly int _lowerLimitQualityValueForClass = 9;
-    public static event Action WizardSelected;
-    public static event Action KronSelected;
-    public static event Action ElseCharacterTypeSelected;
+    public event Action WizardSelected;
+    public event Action KronSelected;
+    public event Action ElseCharacterTypeSelected;
     // ReSharper disable once Unity.RedundantSerializeFieldAttribute
     [SerializeField]
-    private Qualities _qualities;
+    private IQualityPoints _mockQualitiesPoints;
     [SerializeField]
     private Button _warriorButton;
     [SerializeField]
@@ -27,8 +30,6 @@ namespace Core.Mono.Scenes.SelectionClass {
     private Button _gnomButton;
     [SerializeField]
     private bool _useGameSave;
-    // [Inject]
-    [SerializeField]
     private IQualityPoints _qualityPoints;
     private IClassType _type;
     private ClassType _classType;
@@ -38,11 +39,13 @@ namespace Core.Mono.Scenes.SelectionClass {
     private bool _isCanBeKron;
     private bool _isCanBeGnom;
 
+    private void Awake() {
+      _mockQualitiesPoints = Resources.Load<MockQualitiesPoints>(MockQualitiesPoints.PATH);
+    }
+
     private void Start() {
-      _qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
-      _qualities = new Qualities(_qualityPoints);
-      _type = ScribeDealer.Peek<ClassTypeScribe>();
-      Invoke(nameof(SetAllowedClassesAndEnableInteractableForButtonsIfAllowedByCondition), 0.03f);
+      Init();
+      CheckAllowedClasses();
     }
 
     private void OnEnable() {
@@ -51,6 +54,11 @@ namespace Core.Mono.Scenes.SelectionClass {
 
     private void OnDisable() {
       RemoveListener();
+    }
+
+    private void Init() {
+      _qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
+      _type = ScribeDealer.Peek<ClassTypeScribe>();
     }
 
     private void AddListener() {
@@ -69,7 +77,7 @@ namespace Core.Mono.Scenes.SelectionClass {
       _gnomButton.onClick.RemoveListener(SelectGnom);
     }
 
-    private void SetAllowedClassesAndEnableInteractableForButtonsIfAllowedByCondition() {
+    private void CheckAllowedClasses() {
       SetAllowedClasses();
       EnableInteractableForButtonsIfAllowedByCondition();
     }
@@ -83,31 +91,22 @@ namespace Core.Mono.Scenes.SelectionClass {
     }
 
     private void EnableInteractableForButtonsIfAllowedByCondition() {
-      EnableInteractableForButtonAtCondition(_warriorButton, _isCanBeWarrior);
-      EnableInteractableForButtonAtCondition(_elfButton, _isCanBeElf);
-      EnableInteractableForButtonAtCondition(_wizardButton, _isCanBeWizard);
-      EnableInteractableForButtonAtCondition(_kronButton, _isCanBeKron);
-      EnableInteractableForButtonAtCondition(_gnomButton, _isCanBeGnom);
+      EnableUIAtCondition(_warriorButton, _isCanBeWarrior);
+      EnableUIAtCondition(_elfButton, _isCanBeElf);
+      EnableUIAtCondition(_wizardButton, _isCanBeWizard);
+      EnableUIAtCondition(_kronButton, _isCanBeKron);
+      EnableUIAtCondition(_gnomButton, _isCanBeGnom);
     }
 
-    // ReSharper disable once UnusedMember.Local
-    private void EnableInteractableForButton(Button button) {
-      button.interactable = true;
-    }
-
-    private void EnableInteractableForButtonAtCondition(Button button, bool allowed) {
+    private void EnableUIAtCondition(Button button, bool allowed) {
       button.interactable = allowed;
-    }
-
-    private void DisableInteractableForButton(Button button) {
-      button.interactable = false;
     }
 
     private void IsCanBeWarrior() {
       if (_useGameSave) {
         _isCanBeWarrior = _qualityPoints.GetQualityPoints(QualityType.Strength) >= _lowerLimitQualityValueForClass;
       } else {
-        _isCanBeWarrior = _qualities[QualityType.Strength].GetQualityValue() >= _lowerLimitQualityValueForClass;
+        _isCanBeWarrior = _mockQualitiesPoints.GetQualityPoints(QualityType.Strength) >= _lowerLimitQualityValueForClass;
       }
     }
 
@@ -116,8 +115,8 @@ namespace Core.Mono.Scenes.SelectionClass {
         _isCanBeElf = _qualityPoints.GetQualityPoints(QualityType.Strength) >= _lowerLimitQualityValueForClass &&
                       _qualityPoints.GetQualityPoints(QualityType.Courage) >= _lowerLimitQualityValueForClass;
       } else {
-        _isCanBeElf = _qualities[QualityType.Strength].GetQualityValue() >= _lowerLimitQualityValueForClass &&
-                      _qualities[QualityType.Courage].GetQualityValue() >= _lowerLimitQualityValueForClass;
+        _isCanBeElf = _mockQualitiesPoints.GetQualityPoints(QualityType.Strength) >= _lowerLimitQualityValueForClass &&
+                      _mockQualitiesPoints.GetQualityPoints(QualityType.Courage) >= _lowerLimitQualityValueForClass;
       }
     }
 
@@ -125,7 +124,7 @@ namespace Core.Mono.Scenes.SelectionClass {
       if (_useGameSave) {
         _isCanBeWizard = _qualityPoints.GetQualityPoints(QualityType.Wisdom) >= _lowerLimitQualityValueForClass;
       } else {
-        _isCanBeWizard = _qualities[QualityType.Wisdom].GetQualityValue() >= _lowerLimitQualityValueForClass;
+        _isCanBeWizard = _mockQualitiesPoints.GetQualityPoints(QualityType.Wisdom) >= _lowerLimitQualityValueForClass;
       }
     }
 
@@ -134,8 +133,8 @@ namespace Core.Mono.Scenes.SelectionClass {
         _isCanBeKron = _qualityPoints.GetQualityPoints(QualityType.Agility) >= _lowerLimitQualityValueForClass &&
                        _qualityPoints.GetQualityPoints(QualityType.Wisdom) >= _lowerLimitQualityValueForClass;
       } else {
-        _isCanBeKron = _qualities[QualityType.Agility].GetQualityValue() >= _lowerLimitQualityValueForClass &&
-                       _qualities[QualityType.Wisdom].GetQualityValue() >= _lowerLimitQualityValueForClass;
+        _isCanBeKron = _mockQualitiesPoints.GetQualityPoints(QualityType.Agility) >= _lowerLimitQualityValueForClass &&
+                       _mockQualitiesPoints.GetQualityPoints(QualityType.Wisdom) >= _lowerLimitQualityValueForClass;
       }
     }
 
@@ -144,8 +143,8 @@ namespace Core.Mono.Scenes.SelectionClass {
         _isCanBeGnom = _qualityPoints.GetQualityPoints(QualityType.Agility) >= _lowerLimitQualityValueForClass &&
                        _qualityPoints.GetQualityPoints(QualityType.Constitution) >= _lowerLimitQualityValueForClass;
       } else {
-        _isCanBeGnom = _qualities[QualityType.Agility].GetQualityValue() >= _lowerLimitQualityValueForClass &&
-                       _qualities[QualityType.Constitution].GetQualityValue() >= _lowerLimitQualityValueForClass;
+        _isCanBeGnom = _mockQualitiesPoints.GetQualityPoints(QualityType.Agility) >= _lowerLimitQualityValueForClass &&
+                       _mockQualitiesPoints.GetQualityPoints(QualityType.Constitution) >= _lowerLimitQualityValueForClass;
       }
     }
 
@@ -176,39 +175,24 @@ namespace Core.Mono.Scenes.SelectionClass {
 
     private void SaveClassOfCharacter() {
       _type.SetClassType(_classType);
-      if (_useGameSave) {
-        // GSSSingleton.Instance.SaveInGame();
-      }
-
       InvokeCharacterTypeEvent();
     }
 
     private void InvokeCharacterTypeEvent() {
       switch (_classType) {
+        case ClassType.Human:
         case ClassType.Warrior:
         case ClassType.Gnom:
         case ClassType.Elf:
-          InvokeElseCharacterTypeSelectedEvent();
+          ElseCharacterTypeSelected?.Invoke();
           break;
         case ClassType.Wizard:
-          InvokeWizardSelectedEvent();
+          WizardSelected?.Invoke();
           break;
         case ClassType.Kron:
-          InvokeKronSelcetedEvent();
+          KronSelected?.Invoke();
           break;
       }
-    }
-
-    private void InvokeWizardSelectedEvent() {
-      WizardSelected?.Invoke();
-    }
-
-    private void InvokeKronSelcetedEvent() {
-      KronSelected?.Invoke();
-    }
-
-    private void InvokeElseCharacterTypeSelectedEvent() {
-      ElseCharacterTypeSelected?.Invoke();
     }
   }
 }

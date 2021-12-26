@@ -1,30 +1,21 @@
 using Core.Mono.BaseClass;
-using Core.Mono.Scenes.SelectionClass;
+using UnityEngine;
 
 namespace Core.Mono.Scenes.QualitiesImprovement {
-	public class GoToShopScene : GoToScene {
-		#region MONBEHAVIOUR_METHODS
-		private void Start() {
-			Wizard.SetSummarizeValuesForQualitiesTexts += OnSetSummarizeValuesForQualitiesTexts;
-			CharacterClassSelector.ElseCharacterTypeSelected += OnElseCharacterTypeSelected;
-		}
-		private void OnDestroy() {
-			Wizard.SetSummarizeValuesForQualitiesTexts -= OnSetSummarizeValuesForQualitiesTexts;
-			CharacterClassSelector.ElseCharacterTypeSelected -= OnElseCharacterTypeSelected;
+  public class GoToShopScene : GoToScene {
+    [SerializeField]
+    private Improvement _improvement;
 
-		}
+    private void Start() {
+      _improvement.SummarizeCompleted += OnSummarizeCompleted;
+    }
 
-		#endregion
-		#region HANDLERS
-		private void OnElseCharacterTypeSelected() {
-			RemoveAllListener();
-			AddListener();
-			EnableInteractableForButton();
-		}
+    private void OnDestroy() {
+      _improvement.SummarizeCompleted -= OnSummarizeCompleted;
+    }
 
-		private void OnSetSummarizeValuesForQualitiesTexts() {
-			EnableInteractableForButton();
-		}
-		#endregion
-	}
+    private void OnSummarizeCompleted() {
+      EnableInteractableForButton();
+    }
+  }
 }

@@ -1,55 +1,35 @@
 using System;
 using System.Collections.Generic;
-using Core.Rule.Character.Qualities;
+using Core.ScriptableObject.Mock;
 using Core.SupportSystems.Data;
 using Core.SupportSystems.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.QualitiesImprovement {
   public class Improvement : MonoBehaviour {
-    private void GetSum() {
-      if (_useGameSave) {
-        _qualityPoints.ChangeQualityPoints(QualityType.Strength, QualityIncrease[0]);
-        _qualityPoints.ChangeQualityPoints(QualityType.Agility, QualityIncrease[1]);
-        _qualityPoints.ChangeQualityPoints(QualityType.Constitution, QualityIncrease[2]);
-        _qualityPoints.ChangeQualityPoints(QualityType.Wisdom, QualityIncrease[3]);
-        _qualityPoints.ChangeQualityPoints(QualityType.Courage, QualityIncrease[4]);
-      } else {
-        _qualities[QualityType.Strength].SetQualityValue( _qualities[QualityType.Strength].GetQualityValue() +  QualityIncrease[0]);
-        _qualities[QualityType.Agility].SetQualityValue( _qualities[QualityType.Agility].GetQualityValue() +  QualityIncrease[1]);
-        _qualities[QualityType.Constitution].SetQualityValue( _qualities[QualityType.Constitution].GetQualityValue() +  QualityIncrease[2]);
-        _qualities[QualityType.Wisdom].SetQualityValue( _qualities[QualityType.Wisdom].GetQualityValue() +  QualityIncrease[3]);
-        _qualities[QualityType.Courage].SetQualityValue( _qualities[QualityType.Courage].GetQualityValue() +  QualityIncrease[4]);
-      }
-    }
+    public event Action SummarizeCompleted;
 
-    // ReSharper disable once Unity.RedundantSerializeFieldAttribute
     [SerializeField]
-    private Qualities _qualities;
-    [FormerlySerializedAs("listOfDiceRollValues"), SerializeField]
     private List<TMP_Text> _listOfDiceRollValues;
-    [FormerlySerializedAs("diceRoll"), SerializeField]
+    [SerializeField]
     protected Button _diceRoll;
-    [FormerlySerializedAs("setQualitiesTexts"), SerializeField]
-    protected SetQualitiesTexts _setQualitiesTexts;
+    [SerializeField]
+    protected QualitiesTexts _finallyQualitiesTexts;
     [SerializeField]
     protected bool _useGameSave;
-    private IQualityPoints _qualityPoints;
     protected QualityIncrease QualityIncrease;
-    public static event Action SetSummarizeValuesForQualitiesTexts;
+    private IQualityPoints _qualityPoints;
+    private IQualityPoints _mockQualitiesPoints;
+
+    private void Awake() {
+      _mockQualitiesPoints = Resources.Load<MockQualitiesPoints>(MockQualitiesPoints.PATH);
+    }
 
     private void Start() {
-      if (_useGameSave) {
-        _qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
-        _qualities = new Qualities(_qualityPoints);
-      }
-
-      _qualities = new Qualities(_qualityPoints, new[] { 0, 0, 0, 0, 0 });
+      _qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
       QualityIncrease = new QualityIncrease();
-      QualityIncrease.Initialization();
     }
 
     private void OnEnable() {
@@ -58,6 +38,24 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
 
     private void OnDisable() {
       RemoveListeners();
+    }
+
+    protected virtual void DiceRollsQualityIncrease() { }
+
+    private void GetSum() {
+      if (_useGameSave) {
+        _qualityPoints.ChangeQualityPoints(QualityType.Strength, QualityIncrease[0]);
+        _qualityPoints.ChangeQualityPoints(QualityType.Agility, QualityIncrease[1]);
+        _qualityPoints.ChangeQualityPoints(QualityType.Constitution, QualityIncrease[2]);
+        _qualityPoints.ChangeQualityPoints(QualityType.Wisdom, QualityIncrease[3]);
+        _qualityPoints.ChangeQualityPoints(QualityType.Courage, QualityIncrease[4]);
+      } else {
+        _mockQualitiesPoints.ChangeQualityPoints(QualityType.Strength, QualityIncrease[0]);
+        _mockQualitiesPoints.ChangeQualityPoints(QualityType.Agility, QualityIncrease[1]);
+        _mockQualitiesPoints.ChangeQualityPoints(QualityType.Constitution, QualityIncrease[2]);
+        _mockQualitiesPoints.ChangeQualityPoints(QualityType.Wisdom, QualityIncrease[3]);
+        _mockQualitiesPoints.ChangeQualityPoints(QualityType.Courage, QualityIncrease[4]);
+      }
     }
 
     private void AddListeners() {
@@ -75,10 +73,8 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
       }
 
       GetSum();
-      _setQualitiesTexts.SetValueOfQualitiesForText();
-      SetSummarizeValuesForQualitiesTexts?.Invoke();
+      _finallyQualitiesTexts.SetQualitiesText();
+      SummarizeCompleted?.Invoke();
     }
-
-    protected virtual void DiceRollsQualityIncrease() { }
   }
 }

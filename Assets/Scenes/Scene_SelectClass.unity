@@ -1355,9 +1355,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1585015013}
-  - component: {fileID: 1585015016}
   - component: {fileID: 1585015015}
   - component: {fileID: 1585015014}
+  - component: {fileID: 1585015016}
   m_Layer: 0
   m_Name: GoToNextScene
   m_TagString: Untagged
@@ -1391,8 +1391,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e5a81a9a858dde4aa2d28ec1393619f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameOfScene: 0
+  _nameOfScene: 3
   _goToScene: {fileID: 776279713}
+  _selector: {fileID: 1882573924}
 --- !u!114 &1585015015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1405,8 +1406,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a040f529fbc9fa429bd0d8ea988994b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameOfScene: 0
+  _nameOfScene: 4
   _goToScene: {fileID: 776279713}
+  _selector: {fileID: 1882573924}
 --- !u!114 &1585015016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1416,11 +1418,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1585015012}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7456f64cdba913644b83b747782eab89, type: 3}
+  m_Script: {fileID: 11500000, guid: db1235e5c12debd4fb1bb9047695a498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameOfScene: 0
+  _nameOfScene: 5
   _goToScene: {fileID: 776279713}
+  _selector: {fileID: 1882573924}
 --- !u!1 &1867108691
 GameObject:
   m_ObjectHideFlags: 0
@@ -1468,7 +1471,7 @@ GameObject:
   - component: {fileID: 1882573923}
   - component: {fileID: 1882573924}
   m_Layer: 0
-  m_Name: Selection
+  m_Name: CharacterClassSelector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1505,7 +1508,7 @@ MonoBehaviour:
   _wizardButton: {fileID: 144812443}
   _kronButton: {fileID: 1177642927}
   _gnomButton: {fileID: 876180142}
-  _useGameSave: 1
+  _useGameSave: 0
 --- !u!224 &2007056166 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2611403032609962507, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
