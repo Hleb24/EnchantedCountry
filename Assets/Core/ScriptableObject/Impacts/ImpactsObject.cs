@@ -1,5 +1,5 @@
 using Core.Rule.GameRule.Impact;
-using Core.Rule.GameRule.Impact.Impacts;
+using Core.Rule.GameRule.Impact.Variants;
 using UnityEngine;
 
 namespace Core.ScriptableObject.Impacts {

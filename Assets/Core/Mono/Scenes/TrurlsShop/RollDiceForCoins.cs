@@ -1,4 +1,4 @@
-using Core.Rule.Character.CharacterCreation;
+using Core.Rule.Dice;
 using Core.SupportSystems.Data;
 using Core.SupportSystems.SaveSystem.SaveManagers;
 using TMPro;
@@ -15,7 +15,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
     [SerializeField]
     private bool _useGameSave;
     [Inject]
-    private CharacterCreation _characterCreation;
+    private DiceRollCalculator _diceRollCalculator;
     private IWallet _wallet;
     private int _numberOfCoins;
 
@@ -50,7 +50,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
     }
 
     private int GetNumberOfCoins() {
-      return _characterCreation.GetSumDiceRollForCoins();
+      return _diceRollCalculator.GetSumDiceRollForCoins();
     }
 
     // ReSharper disable once UnusedMethodReturnValue.Local

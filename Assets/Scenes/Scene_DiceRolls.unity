@@ -838,6 +838,55 @@ Transform:
   m_Father: {fileID: 283075336}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &730352945
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 730352947}
+  - component: {fileID: 730352946}
+  m_Layer: 0
+  m_Name: QualitiesVisualContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &730352946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730352945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d520c8c57975403898ec09d476766c61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _qualityVisuals:
+  - {fileID: 6246789792775207926}
+  - {fileID: 1678235625}
+  - {fileID: 1255768949}
+  - {fileID: 312891763}
+  - {fileID: 1867103073}
+--- !u!4 &730352947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730352945}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &772090506
 GameObject:
   m_ObjectHideFlags: 0
@@ -848,9 +897,8 @@ GameObject:
   m_Component:
   - component: {fileID: 772090507}
   - component: {fileID: 772090508}
-  - component: {fileID: 772090509}
   m_Layer: 0
-  m_Name: QualitiesSelection
+  m_Name: QualitiesSelector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -868,7 +916,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &772090508
 MonoBehaviour:
@@ -882,25 +930,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b8042814f2a73247ade8440ed759fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _qualityVisuals:
-  - {fileID: 6246789792775207926}
-  - {fileID: 1678235625}
-  - {fileID: 1255768949}
-  - {fileID: 312891763}
-  - {fileID: 1867103073}
+  _visualContainer: {fileID: 730352946}
   _buttonDistribute: {fileID: 1049075892}
---- !u!114 &772090509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 772090506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 272f75fc210bcb6429aa0a615ed000ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &791457177 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6246789792219682412, guid: e481c27220e09284e89d58b59a06ccdc, type: 3}
@@ -1521,6 +1552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4117878f2617f744890dead50aa59316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _qualitiesSelector: {fileID: 772090508}
   _diceRollInfo: {fileID: 1929473072}
   _diceRollButton: {fileID: 1566237350}
   _reset: {fileID: 1127990991}
@@ -1539,7 +1571,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1342320936
 GameObject:
@@ -2785,7 +2817,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1976908243
 GameObject:
@@ -2798,7 +2830,7 @@ GameObject:
   - component: {fileID: 1976908244}
   - component: {fileID: 1976908245}
   m_Layer: 0
-  m_Name: GoToSelectCharacterClass
+  m_Name: GoToSelectClass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2816,7 +2848,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1976908245
 MonoBehaviour:
@@ -2832,6 +2864,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nameOfScene: 2
   _goToScene: {fileID: 1405192389}
+  _qualitiesSelector: {fileID: 772090508}
 --- !u!1001 &2695486893340487152
 PrefabInstance:
   m_ObjectHideFlags: 0

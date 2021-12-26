@@ -107,7 +107,7 @@ namespace Core.Mono.Scenes.SelectionClass {
       if (_useGameSave) {
         _isCanBeWarrior = _qualityPoints.GetQualityPoints(QualityType.Strength) >= _lowerLimitQualityValueForClass;
       } else {
-        _isCanBeWarrior = _qualities[QualityType.Strength].ValueOfQuality >= _lowerLimitQualityValueForClass;
+        _isCanBeWarrior = _qualities[QualityType.Strength].GetQualityValue() >= _lowerLimitQualityValueForClass;
       }
     }
 
@@ -116,8 +116,8 @@ namespace Core.Mono.Scenes.SelectionClass {
         _isCanBeElf = _qualityPoints.GetQualityPoints(QualityType.Strength) >= _lowerLimitQualityValueForClass &&
                       _qualityPoints.GetQualityPoints(QualityType.Courage) >= _lowerLimitQualityValueForClass;
       } else {
-        _isCanBeElf = _qualities[QualityType.Strength].ValueOfQuality >= _lowerLimitQualityValueForClass &&
-                      _qualities[QualityType.Courage].ValueOfQuality >= _lowerLimitQualityValueForClass;
+        _isCanBeElf = _qualities[QualityType.Strength].GetQualityValue() >= _lowerLimitQualityValueForClass &&
+                      _qualities[QualityType.Courage].GetQualityValue() >= _lowerLimitQualityValueForClass;
       }
     }
 
@@ -125,7 +125,7 @@ namespace Core.Mono.Scenes.SelectionClass {
       if (_useGameSave) {
         _isCanBeWizard = _qualityPoints.GetQualityPoints(QualityType.Wisdom) >= _lowerLimitQualityValueForClass;
       } else {
-        _isCanBeWizard = _qualities[QualityType.Wisdom].ValueOfQuality >= _lowerLimitQualityValueForClass;
+        _isCanBeWizard = _qualities[QualityType.Wisdom].GetQualityValue() >= _lowerLimitQualityValueForClass;
       }
     }
 
@@ -134,8 +134,8 @@ namespace Core.Mono.Scenes.SelectionClass {
         _isCanBeKron = _qualityPoints.GetQualityPoints(QualityType.Agility) >= _lowerLimitQualityValueForClass &&
                        _qualityPoints.GetQualityPoints(QualityType.Wisdom) >= _lowerLimitQualityValueForClass;
       } else {
-        _isCanBeKron = _qualities[QualityType.Agility].ValueOfQuality >= _lowerLimitQualityValueForClass &&
-                       _qualities[QualityType.Wisdom].ValueOfQuality >= _lowerLimitQualityValueForClass;
+        _isCanBeKron = _qualities[QualityType.Agility].GetQualityValue() >= _lowerLimitQualityValueForClass &&
+                       _qualities[QualityType.Wisdom].GetQualityValue() >= _lowerLimitQualityValueForClass;
       }
     }
 
@@ -144,8 +144,8 @@ namespace Core.Mono.Scenes.SelectionClass {
         _isCanBeGnom = _qualityPoints.GetQualityPoints(QualityType.Agility) >= _lowerLimitQualityValueForClass &&
                        _qualityPoints.GetQualityPoints(QualityType.Constitution) >= _lowerLimitQualityValueForClass;
       } else {
-        _isCanBeGnom = _qualities[QualityType.Agility].ValueOfQuality >= _lowerLimitQualityValueForClass &&
-                       _qualities[QualityType.Constitution].ValueOfQuality >= _lowerLimitQualityValueForClass;
+        _isCanBeGnom = _qualities[QualityType.Agility].GetQualityValue() >= _lowerLimitQualityValueForClass &&
+                       _qualities[QualityType.Constitution].GetQualityValue() >= _lowerLimitQualityValueForClass;
       }
     }
 
@@ -178,8 +178,6 @@ namespace Core.Mono.Scenes.SelectionClass {
       _type.SetClassType(_classType);
       if (_useGameSave) {
         // GSSSingleton.Instance.SaveInGame();
-      } else {
-        // SaveSystem.Save(_type, SaveSystem.Constants.ClassOfCharacter);
       }
 
       InvokeCharacterTypeEvent();

@@ -39,11 +39,11 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
         _listOfValues[3].text = _qualityPoints.GetQualityPoints(QualityType.Wisdom).ToString();
         _listOfValues[4].text = _qualityPoints.GetQualityPoints(QualityType.Courage).ToString();
       } else {
-        _listOfValues[0].text = _qualities[QualityType.Strength].ValueOfQuality.ToString();
-        _listOfValues[1].text = _qualities[QualityType.Agility].ValueOfQuality.ToString();
-        _listOfValues[2].text = _qualities[QualityType.Constitution].ValueOfQuality.ToString();
-        _listOfValues[3].text = _qualities[QualityType.Wisdom].ValueOfQuality.ToString();
-        _listOfValues[4].text = _qualities[QualityType.Courage].ValueOfQuality.ToString();
+        _listOfValues[0].text = _qualities[QualityType.Strength].GetQualityValue().ToString();
+        _listOfValues[1].text = _qualities[QualityType.Agility].GetQualityValue().ToString();
+        _listOfValues[2].text = _qualities[QualityType.Constitution].GetQualityValue().ToString();
+        _listOfValues[3].text = _qualities[QualityType.Wisdom].GetQualityValue().ToString();
+        _listOfValues[4].text = _qualities[QualityType.Courage].GetQualityValue().ToString();
       }
     }
     #endregion

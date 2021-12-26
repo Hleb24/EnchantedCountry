@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Core.Rule.GameRule.NPC.NpcClasses {
+namespace Core.Rule.GameRule.NPC.Variants {
   public class Frankenstein : Npc {
     private const int NUMBER_OF_ATTACK = 3;
 

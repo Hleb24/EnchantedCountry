@@ -1,22 +1,28 @@
 using Core.Mono.BaseClass;
+using UnityEngine;
 
 namespace Core.Mono.Scenes.CreateCharacter {
-	public class GoToSelectClassScene : GoToScene {
-		private void Start() {
-			QualitiesSelector.AllValuesSelected += OnAllValuesSelected;
-			QualitiesSelector.DistributeValues += OnDistributeValues;
-		}
+  public class GoToSelectClassScene : GoToScene {
+    [SerializeField]
+    private QualitiesSelector _qualitiesSelector;
 
-		private void OnDestroy() {
-			QualitiesSelector.AllValuesSelected -= OnAllValuesSelected;
-			QualitiesSelector.DistributeValues -= OnDistributeValues;
-		}
-		private void OnAllValuesSelected() {
-			EnableInteractableForButton();
-		}
+    private void Start() {
+      DisableInteractableForButton();
+      _qualitiesSelector.AllValuesSelected += OnAllValuesSelected;
+      _qualitiesSelector.DistributeValues += OnDistributeValues;
+    }
 
-		private void OnDistributeValues() {
-			DisableInteractableForButton();
-		}
-	}
+    private void OnDestroy() {
+      _qualitiesSelector.AllValuesSelected -= OnAllValuesSelected;
+      _qualitiesSelector.DistributeValues -= OnDistributeValues;
+    }
+
+    private void OnAllValuesSelected() {
+      EnableInteractableForButton();
+    }
+
+    private void OnDistributeValues() {
+      DisableInteractableForButton();
+    }
+  }
 }

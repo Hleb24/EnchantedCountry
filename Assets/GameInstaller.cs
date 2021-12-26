@@ -1,7 +1,7 @@
 using Core.Mono.MainManagers;
 using Core.Mono.Scenes.CreateCharacter;
-using Core.Rule.Character.CharacterCreation;
 using Core.Rule.Character.GamePoints;
+using Core.Rule.Dice;
 using Core.SupportSystems.Data;
 using Core.SupportSystems.SaveSystem.SaveManagers;
 using Zenject;
@@ -15,7 +15,7 @@ namespace Aberrance {
       Container.Bind<EquipmentUsedDataScroll>().AsSingle();
       Container.Bind<GamePointsScribe>().AsSingle();
       Container.Bind<DiceRollScribe>().AsSingle();
-      Container.Bind<CharacterCreation>().AsSingle();
+      Container.Bind<DiceRollCalculator>().AsSingle();
       Container.Bind<GamePoints>().AsSingle();
       Container.Bind<IDataInit>().FromInstance(new Memento());
       Container.Bind<IStartGame>().FromInstance(Leviathan.Instance);

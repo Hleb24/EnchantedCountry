@@ -1,6 +1,6 @@
 using System;
 
-namespace Core.Rule.GameRule.NPC.NpcClasses {
+namespace Core.Rule.GameRule.NPC.Variants {
   public class Hydra : Npc {
     public override bool IsHit(int hit) {
       bool isHit = _armorClass.IsHit(hit);

@@ -90,7 +90,7 @@ namespace Core.Mono.Scenes.CharacterList {
       }
 
       _meleeAttack = GetAttack(storageObject, id) + _qualities[QualityType.Strength].Modifier;
-      Debug.Log($"Strength = {_qualities[QualityType.Strength].ValueOfQuality}, modifier={_qualities[QualityType.Strength].Modifier}");
+      Debug.Log($"Strength = {_qualities[QualityType.Strength].GetQualityValue()}, modifier={_qualities[QualityType.Strength].Modifier}");
     }
 
     private void GetAttackForRangeWeapon(StorageObject storageObject, int rangeId) {

@@ -1,4 +1,4 @@
-﻿namespace Core.Rule.GameRule.Impact.Impacts {
+﻿namespace Core.Rule.GameRule.Impact.Variants {
     public sealed class Petrification : Impact<ImpactOnRiskPoints> {
         #region Constructors
         public Petrification ( ImpactType impactType = ImpactType.Negative,

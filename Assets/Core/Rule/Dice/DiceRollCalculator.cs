@@ -1,33 +1,17 @@
 using System.Collections.Generic;
-using Core.Rule.Dice;
-using Core.SupportSystems.Data;
 
-namespace Core.Rule.Character.CharacterCreation {
-  public class CharacterCreation {
-    #region Constructors
-    public CharacterCreation() {
-      PlayerCharacter = new PlayerCharacter();
-      PlayerCharacter.CharacterQualities = PlayerCharacter.CharacterQualities;
-    }
-    #endregion
-
-    #region Properties
-    public PlayerCharacter PlayerCharacter { get; set; }
-    #endregion
-
-    #region Fields
-    private const int MULTIPLIER = 10;
-    public QualityType qualityTypeForChoice;
+namespace Core.Rule.Dice {
+  /// <summary>
+  ///   Класс для получение конечного результата бросков кубика.
+  /// </summary>
+  public class DiceRollCalculator {
+    private const int Multiplier = 10;
     private List<int> _valuesWhiteDiceRoll;
-    // ReSharper disable once NotAccessedField.Local
-    private int _smallerValue;
-    #endregion
 
-    #region Methods
-    public void SetQualityValue(QualityType qualityType, int qualityValue) {
-      PlayerCharacter.CharacterQualities[qualityType].ValueOfQuality = qualityValue;
-    }
-
+    /// <summary>
+    ///   Получить конечное значение броска кубиков для качества.
+    /// </summary>
+    /// <returns>Значение бросков кубика.</returns>
     public int GetSumDiceRollForQuality() {
       _valuesWhiteDiceRoll = new List<int>();
       DiceBox diceBox = KitOfDice.diceKit[KitOfDice.SetWithFourSixSidedDice];
@@ -38,6 +22,10 @@ namespace Core.Rule.Character.CharacterCreation {
       return SortRemoveAndSumValuesWhiteDiceRoll(_valuesWhiteDiceRoll);
     }
 
+    /// <summary>
+    ///   Получить конечное значение броска кубиков для стартового количества монет .
+    /// </summary>
+    /// <returns>Стартовое количество монет.</returns>
     public int GetSumDiceRollForCoins() {
       _valuesWhiteDiceRoll = new List<int>();
       DiceBox diceBox = KitOfDice.diceKit[KitOfDice.SetWithFourSixSidedDice];
@@ -51,8 +39,6 @@ namespace Core.Rule.Character.CharacterCreation {
     private int SortRemoveAndSumValuesWhiteDiceRoll(List<int> valuesDiceRoll) {
       var sum = 0;
       valuesDiceRoll.Sort();
-      int smaller = valuesDiceRoll[0];
-      SmallerValueInWhiteDiceRoll(smaller);
       var tempValues = new List<int>();
       tempValues.AddRange(valuesDiceRoll);
       tempValues.RemoveAt(0);
@@ -66,8 +52,6 @@ namespace Core.Rule.Character.CharacterCreation {
     private int SortRemoveAndSumValuesWhiteDiceRollForNumberOfCoins(List<int> valuesDiceRoll) {
       var sum = 0;
       valuesDiceRoll.Sort();
-      int smaller = valuesDiceRoll[0];
-      SmallerValueInWhiteDiceRoll(smaller);
       var tempValues = new List<int>();
       tempValues.AddRange(valuesDiceRoll);
       tempValues.RemoveAt(0);
@@ -75,13 +59,8 @@ namespace Core.Rule.Character.CharacterCreation {
         sum += tempValues[i];
       }
 
-      sum *= MULTIPLIER;
+      sum *= Multiplier;
       return sum;
     }
-
-    private void SmallerValueInWhiteDiceRoll(int smaller) {
-      _smallerValue = smaller;
-    }
-    #endregion
   }
 }

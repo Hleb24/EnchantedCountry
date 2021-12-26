@@ -1,4 +1,4 @@
-﻿namespace Core.Rule.GameRule.Impact.Impacts {
+﻿namespace Core.Rule.GameRule.Impact.Variants {
     public sealed class MagesStaff : Impact<ImpactOnRiskPoints> {
         #region Constructors
         public MagesStaff(ImpactType impactType = ImpactType.Negative,

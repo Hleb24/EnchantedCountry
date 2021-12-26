@@ -1,17 +1,18 @@
-using System;
 using System.Collections.Generic;
-using Core.Rule.Character.CharacterCreation;
+using Core.Rule.Dice;
 using Core.SupportSystems.Data;
 using Core.SupportSystems.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace Core.Mono.Scenes.CreateCharacter {
-  public class DiceRoll : MonoBehaviour {
-    private readonly int[] _valuesWithRollOfDice = new int[5];
-    public static event Action AllDiceRollCompleteOrLoad;
-    public static event Action ResetDiceRoll;
+  /// <summary>
+  /// Класс отвечает за броски костей для качества.
+  /// </summary>
+  public class QualityDiceRoll : MonoBehaviour {
+    private readonly int[] _valuesWithRollOfDice = new int[QualityTypeHandler.NUMBER_OF_QUALITY];
+    [SerializeField]
+    private QualitiesSelector _qualitiesSelector;
     [SerializeField]
     private DiceRollInfo _diceRollInfo;
     [SerializeField]
@@ -24,11 +25,14 @@ namespace Core.Mono.Scenes.CreateCharacter {
     private Button _load;
     [SerializeField]
     private bool _usedGameSave;
-    [Inject]
-    private CharacterCreation _characterCreation;
+    private DiceRollCalculator _diceRollCalculator;
     private IDiceRoll _diceRollData;
     private int _numberOfDiceRoll;
     private bool _isNumberOfDiceRollOverlay;
+
+    private void Awake() {
+      _diceRollCalculator = new DiceRollCalculator();
+    }
 
     private void Start() {
       if (_usedGameSave) {
@@ -37,7 +41,6 @@ namespace Core.Mono.Scenes.CreateCharacter {
     }
 
     private void OnEnable() {
-      InitValuesArray();
       AddListener();
     }
 
@@ -45,16 +48,13 @@ namespace Core.Mono.Scenes.CreateCharacter {
       RemoveListener();
     }
 
-    private void InitValuesArray() {
-      if (_usedGameSave) { }
-    }
-
     private void AddListener() {
       _diceRollButton.onClick.AddListener(SetDiceRollValuesAndIncreaseCount);
       _load.onClick.AddListener(LoadAndSetDiceRollData);
       _reset.onClick.AddListener(ResetValuesOfDiceRoll);
       _save.onClick.AddListener(Save);
-      QualitiesSelector.AllValuesSelected += OnAllValuesSelected;
+      _qualitiesSelector.AllValuesSelected += OnAllValuesSelected;
+      _qualitiesSelector.DistributeValues += OnDistributeValues;
     }
 
     private void RemoveListener() {
@@ -62,7 +62,8 @@ namespace Core.Mono.Scenes.CreateCharacter {
       _load.onClick.RemoveListener(LoadAndSetDiceRollData);
       _reset.onClick.RemoveListener(ResetValuesOfDiceRoll);
       _save.onClick.RemoveListener(Save);
-      QualitiesSelector.AllValuesSelected -= OnAllValuesSelected;
+      _qualitiesSelector.AllValuesSelected -= OnAllValuesSelected;
+      _qualitiesSelector.DistributeValues -= OnDistributeValues;
     }
 
     private void LoadAndSetDiceRollData() {
@@ -72,20 +73,20 @@ namespace Core.Mono.Scenes.CreateCharacter {
         Invoke(nameof(SetTextsInListWithSave), 0.3f);
       }
 
-      _diceRollInfo.LoadAndSetDiceRollData();
+      _diceRollInfo.SetValueLoadForInfo();
       _numberOfDiceRoll = (int)StatRolls.Fifth;
       _isNumberOfDiceRollOverlay = true;
-      AllDiceRollCompleteOrLoad?.Invoke();
+      _qualitiesSelector.EnableDistribute();
     }
 
     private void SetTextsInListWithSave() {
       var diceRollValues = new List<string>();
-      for (var i = 0; i < (int)StatRolls.Fifth + 1; i++) {
+      for (var i = 0; i < QualityTypeHandler.NUMBER_OF_QUALITY; i++) {
         Debug.LogWarning(_diceRollData.GetStatsRoll((StatRolls)i));
         diceRollValues.Add(_diceRollData.GetStatsRoll((StatRolls)i).ToString());
       }
 
-      _diceRollInfo.SetTextsInListWithSave(diceRollValues);
+      _diceRollInfo.SetDiceRollValuesText(diceRollValues);
     }
 
     private void SetDiceRollValuesAndIncreaseCount() {
@@ -94,7 +95,7 @@ namespace Core.Mono.Scenes.CreateCharacter {
       }
 
       if (AllDiceRollsCompleted()) {
-        _diceRollInfo.AddToInfo();
+        _diceRollInfo.SetAllDiceRolledForInfo();
         _isNumberOfDiceRollOverlay = true;
         Save();
         return;
@@ -105,30 +106,34 @@ namespace Core.Mono.Scenes.CreateCharacter {
     }
 
     private void ResetValuesOfDiceRoll() {
-      _diceRollInfo.ResetValuesOfDiceRoll();
-      for (var i = 0; i < (int)StatRolls.Fifth + 1; i++) {
+      _diceRollInfo.ResetTexts();
+      for (var i = 0; i < QualityTypeHandler.NUMBER_OF_QUALITY; i++) {
         _diceRollData.SetStatsRoll((StatRolls)i, 0);
       }
 
       _numberOfDiceRoll = 0;
       _isNumberOfDiceRollOverlay = false;
-      ResetDiceRoll?.Invoke();
+      _qualitiesSelector.DisableUI();
     }
 
     private void Save() {
-      AllDiceRollCompleteOrLoad?.Invoke();
+      _qualitiesSelector.EnableDistribute();
       _diceRollInfo.SetSaveForInfo();
     }
 
     private bool AllDiceRollsCompleted() {
-      return _numberOfDiceRoll == (int)StatRolls.Fifth + 1;
+      return _numberOfDiceRoll == QualityTypeHandler.NUMBER_OF_QUALITY;
     }
 
     private void SetRollValues() {
       _diceRollInfo.SetDiceRollForInfo();
-      _valuesWithRollOfDice[_numberOfDiceRoll] = _characterCreation.GetSumDiceRollForQuality();
+      _valuesWithRollOfDice[_numberOfDiceRoll] = _diceRollCalculator.GetSumDiceRollForQuality();
       _diceRollData.SetStatsRoll((StatRolls)_numberOfDiceRoll, _valuesWithRollOfDice[_numberOfDiceRoll]);
-      _diceRollInfo.SetRollValues(_numberOfDiceRoll, _valuesWithRollOfDice[_numberOfDiceRoll]);
+      _diceRollInfo.SetDiceRollTextValues(_numberOfDiceRoll, _valuesWithRollOfDice[_numberOfDiceRoll]);
+    }
+
+    private void OnDistributeValues() {
+      DisableAllButtons();
     }
 
     private void OnAllValuesSelected() {

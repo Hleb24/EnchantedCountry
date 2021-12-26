@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace Core.Mono.Scenes.CreateCharacter {
+  /// <summary>
+  ///   Класс для отображения инфомации о бросках кубиков для качеств персонажа.
+  /// </summary>
   public class DiceRollInfo : MonoBehaviour {
     private const string AllDiceAreRolled = "all dice are rolled";
     private const string ValuesLoad = "Info: values load.";
@@ -16,26 +18,21 @@ namespace Core.Mono.Scenes.CreateCharacter {
     [SerializeField]
     private List<TMP_Text> _diceRollValuesText;
 
-    public int GetDiceRollCount() {
-      Assert.IsNotNull(_diceRollValuesText);
-      return _diceRollValuesText.Count - 1;
-    }
-
-    public void LoadAndSetDiceRollData() {
+    public void SetValueLoadForInfo() {
       _info.text = ValuesLoad;
     }
 
-    public void SetTextsInListWithSave(List<string> diceRollValues) {
+    public void SetDiceRollValuesText(List<string> diceRollValues) {
       for (var i = 0; i < _diceRollValuesText.Count; i++) {
         _diceRollValuesText[i].text = diceRollValues[i];
       }
     }
 
-    public void AddToInfo() {
+    public void SetAllDiceRolledForInfo() {
       _info.text += AllDiceAreRolled;
     }
 
-    public void ResetValuesOfDiceRoll() {
+    public void ResetTexts() {
       _info.text = Reset;
       for (var i = 0; i < _diceRollValuesText.Count; i++) {
         _diceRollValuesText[i].text = StartDiceRollValue;
@@ -50,7 +47,7 @@ namespace Core.Mono.Scenes.CreateCharacter {
       _info.text = DiceRoll;
     }
 
-    public void SetRollValues(int index, int diceRollValue) {
+    public void SetDiceRollTextValues(int index, int diceRollValue) {
       _diceRollValuesText[index].text = diceRollValue.ToString();
     }
   }

@@ -170,6 +170,11 @@ namespace Core.Rule.Character {
       }
     }
 
+
+    public void SetQualityValue(QualityType qualityType, int value) {
+      _characterQualities[qualityType].SetQualityValue(value);
+    }
+
     public PlayerCharacter() { }
 
     public CharacterQualities CharacterQualities {

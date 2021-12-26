@@ -1,6 +1,6 @@
 using Core.Rule.GameRule.Impact;
 
-namespace Core.Rule.GameRule.NPC.NpcClasses {
+namespace Core.Rule.GameRule.NPC.Variants {
   public class WhiteDragon : Npc {
     private const int MaxNumberOfDragonBreath = 3;
     private int _numberOfDragonBreath;

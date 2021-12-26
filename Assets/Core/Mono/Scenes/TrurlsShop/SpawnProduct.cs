@@ -9,7 +9,6 @@ using static Core.Rule.GameRule.Weapon.Weapon;
 namespace Core.Mono.Scenes.TrurlsShop {
 
 	public class SpawnProduct : MonoBehaviour {
-		#region FIELDS
 		private const int TEST_NUMBER_OF_PRODUCT = 5;
 		private const int NUMBER_OF_PROJECTILIES = 20;
 		[SerializeField]
@@ -39,8 +38,6 @@ namespace Core.Mono.Scenes.TrurlsShop {
 		[SerializeField]
 		private Transform _contentItem;
 		public static event Action SpawnCompleted;
-		#endregion
-		#region GET_PRODUCT_LIST
 		public List<ProductObject> GetArmorList() {
 			return _armorListSo;
 		}
@@ -55,8 +52,6 @@ namespace Core.Mono.Scenes.TrurlsShop {
 		public List<ProductObject> GetItemList() {
 			return _itemsListSo;
 		}
-		#endregion
-		#region MONOBEHAVIOUR_METHODS
 		private void Awake() {
 			_characterInTrurlsShop.GetCharacterType += Spawn;
 		}
@@ -64,8 +59,6 @@ namespace Core.Mono.Scenes.TrurlsShop {
 		private void OnDestroy() {
 			_characterInTrurlsShop.GetCharacterType -= Spawn;
 		}
-		#endregion
-		#region SPAWN_PRODUCT
 		private void Spawn() {
 			SpawnWeapon();
 			SpawnArmor();
@@ -123,8 +116,6 @@ namespace Core.Mono.Scenes.TrurlsShop {
 				InitializeProductFields(_productViewListForItems[index], _itemsListSo[index], TEST_NUMBER_OF_PRODUCT);
 			}
 		}
-		#endregion
-		#region INITIALIZE_PRODUCT_FIELDS 
 		private void InitializeProductFields(ProductView productView, ProductObject productObject, int amount) {
 			SetProductIcon(productView, productObject);
 			SetProductName(productView, productObject);
@@ -172,11 +163,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
 					break;
 			}
 		}
-		#endregion
-		#region ADD_TO_PRODUCT_VIEW_LIST
 
-		#endregion
-		#region PROPERTIES
 		public List<ProductView> ProductViewListForArmor {
 			get {
 				return _productViewListForArmor;
@@ -212,6 +199,5 @@ namespace Core.Mono.Scenes.TrurlsShop {
 				_productViewListForItems = value;
 			}
 		}
-		#endregion
 	}
 }

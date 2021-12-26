@@ -3,6 +3,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Core.Mono.BaseClass {
+  /// <summary>
+  ///   Класс для перехода на следующую сцену.
+  /// </summary>
   public class GoToScene : MonoBehaviour {
     [SerializeField]
     protected Scene _nameOfScene;
@@ -38,24 +41,38 @@ namespace Core.Mono.BaseClass {
     }
   }
 
-  public class SceneNamesConstants {
-    public const string SCENE_DICE_ROLLS = "Scene_DiceRolls";
-    public const string SCENE_SELECT_CLASS = "Scene_SelectClass";
-    public const string SCENE_WIZARD_IMPROVEMENT = "Scene_WizardImprovement";
-    public const string SCENE_KRON_IMPROVEMENT = "Scene_KronImprovement";
-    public const string SCENE_TRURLS_SHOP = "Scene_TrurlsShop";
-    public const string SCENE_CHARACTER_LIST = "Scene_CharacterList";
-    public const string SCENE_FIGHT = "Scene_Fight";
-  }
-
   public enum Scene {
+    /// <summary>
+    ///   Начальная сцена для загрузки данных игровой сессии.
+    /// </summary>
     Intro,
+    /// <summary>
+    ///   Сцена бросков кубиков для качеств.
+    /// </summary>
     DiceRolls,
+    /// <summary>
+    ///   Сцена выбора класса персонажа.
+    /// </summary>
     SelectClass,
+    /// <summary>
+    ///   Сцена повышение качеств для класса - Волшебник.
+    /// </summary>
     WizardImprovement,
+    /// <summary>
+    ///   Сцена повышение качеств для класса - Крон.
+    /// </summary>
     KronImprovement,
+    /// <summary>
+    ///   Сцена стартового магазина Трурля.
+    /// </summary>
     TrurlsShop,
+    /// <summary>
+    ///   Сцена листа персонажа.
+    /// </summary>
     CharacterList,
+    /// <summary>
+    ///   Сцена битвы.
+    /// </summary>
     Fight
   }
 }

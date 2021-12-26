@@ -1,4 +1,4 @@
-namespace Core.Rule.GameRule.NPC.NpcClasses {
+namespace Core.Rule.GameRule.NPC.Variants {
   public class Vulin : Npc {
     private const int KillStake = 8;
     public override bool GetDamaged(int diceRoll, float damage, int weaponId, Weapon.Weapon.WeaponType type = Weapon.Weapon.WeaponType.None, bool isSpell = false) {

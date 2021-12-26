@@ -1,4 +1,4 @@
-namespace Core.Rule.GameRule.NPC.NpcClasses {
+namespace Core.Rule.GameRule.NPC.Variants {
   public class Danav : Npc {
     private int _numberOfHands = 6;
 

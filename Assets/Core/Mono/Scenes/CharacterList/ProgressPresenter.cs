@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class ProgressPresenter : MonoBehaviour {
-    #region FIELDS
     [Header("Set in Inspector"),SerializeField]
     private GameObject _progressPrefab;
     [SerializeField]
@@ -25,9 +24,7 @@ namespace Core.Mono.Scenes.CharacterList {
     [Header("Set dynamically"),SerializeField]
     private List<ProgressView> _progressViewList;
     private bool _isSpawnProgress;
-    #endregion
 
-    #region MONOBEHAVIOUR_METHODS
     private void Start() {
       AddListeners();
     }
@@ -35,9 +32,7 @@ namespace Core.Mono.Scenes.CharacterList {
     private void OnDestroy() {
       RemoveListeners();
     }
-    #endregion
 
-    #region HANDLERS
     private void AddListeners() {
       _progressButton.onClick.AddListener(OnOpenButtonClicked);
       _closeButton.onClick.AddListener(OnCloseButtonClicked);
@@ -58,9 +53,7 @@ namespace Core.Mono.Scenes.CharacterList {
       _canvasCharacterList.SetActive(true);
       _canvasProgress.SetActive(false);
     }
-    #endregion
     
-    #region SPAWN_PROGRESS
     private void SpawnProgress() {
       if(_isSpawnProgress)
         return;
@@ -91,6 +84,5 @@ namespace Core.Mono.Scenes.CharacterList {
         }
       }
     }
-    #endregion
   }
 }

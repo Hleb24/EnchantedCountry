@@ -1,4 +1,4 @@
-﻿namespace Core.Rule.GameRule.Impact.Impacts {
+﻿namespace Core.Rule.GameRule.Impact.Variants {
   public sealed class Lightning : Impact<ImpactOnRiskPoints> {
     #region Constructors
     public Lightning(ImpactType impactType = ImpactType.Negative,

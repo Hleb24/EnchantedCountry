@@ -5,13 +5,10 @@ using UnityEngine.Serialization;
 
 namespace Core.Mono.Scenes.TrurlsShop {
 	public class ProductsCheck : MonoBehaviour {
-		#region FIELDS
 		[SerializeField]
 		private CashBox _cashBox;
 		[FormerlySerializedAs("_spawnProductInTrulsShop"),SerializeField]
 		private SpawnProduct _spawnProduct;
-		#endregion
-		#region MONOBEHAVIOUR_METHODS
 		private void Start() {
 			SpawnProduct.SpawnCompleted += OnSpawnCompleted;
 		}
@@ -19,13 +16,9 @@ namespace Core.Mono.Scenes.TrurlsShop {
 		private void OnDestroy() {
 			SpawnProduct.SpawnCompleted -= OnSpawnCompleted;
 		}
-		#region HANDLERS
 		private void OnSpawnCompleted() {
 			IfCharacterHasEquipmentSetCharacterHasTrueAndGreenBackground();
 		}
-		#endregion
-		#endregion
-		#region IF_CHARACTER_HAS_EQUIPMENT
 		private void IfCharacterHasEquipmentSetCharacterHasTrueAndGreenBackground() {
 			IfCharacterHasArmorSetChatacterHasTrueAndGreenBackground(_spawnProduct.ProductViewListForArmor
 																															, _cashBox.Equipments.GetEquipmentCards());
@@ -86,6 +79,5 @@ namespace Core.Mono.Scenes.TrurlsShop {
 				}
 			}
 		}
-		#endregion
 	}
 }

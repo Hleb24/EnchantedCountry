@@ -1,7 +1,7 @@
 ﻿using System;
 using Core.Rule.Dice;
 
-namespace Core.Rule.GameRule.Impact.Impacts {
+namespace Core.Rule.GameRule.Impact.Variants {
     [Serializable]
     public sealed class Paralysis : Impact<ImpactOnRiskPoints> {
         #region Constructors

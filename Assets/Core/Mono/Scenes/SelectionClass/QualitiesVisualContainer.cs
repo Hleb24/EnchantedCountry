@@ -1,15 +1,19 @@
 using System.Collections.Generic;
 using Core.SupportSystems.Data;
+using UnityEngine;
 
 namespace Core.Mono.Scenes.SelectionClass {
-  public class QualitiesVisualContainer {
-    private readonly Dictionary<QualityType, QualityVisual> _qualities;
+  /// <summary>
+  /// Класс для работы с коллекцией <see cref="QualityVisual"/>.
+  /// </summary>
+  public class QualitiesVisualContainer : MonoBehaviour {
+    [SerializeField]
+    private List<QualityVisual> _qualityVisuals;
 
-    public QualitiesVisualContainer(List<QualityVisual> qualitiesList) {
-      _qualities = new Dictionary<QualityType, QualityVisual>(qualitiesList.Capacity);
-      for (var i = 0; i < qualitiesList.Count; i++) {
-        _qualities[qualitiesList[i].GetQualityType()] = qualitiesList[i];
-      }
+    private Dictionary<QualityType, QualityVisual> _qualities;
+
+    private void Awake() {
+      InitVisual(_qualityVisuals);
     }
 
     public void EnableButtons() {
@@ -27,6 +31,13 @@ namespace Core.Mono.Scenes.SelectionClass {
     public void RemoveListeners() {
       foreach (QualityVisual qualityVisual in _qualities.Values) {
         qualityVisual.RemoveListeners();
+      }
+    }
+
+    private void InitVisual(List<QualityVisual> qualitiesList) {
+      _qualities = new Dictionary<QualityType, QualityVisual>(qualitiesList.Capacity);
+      for (var i = 0; i < qualitiesList.Count; i++) {
+        _qualities[qualitiesList[i].GetQualityType()] = qualitiesList[i];
       }
     }
 

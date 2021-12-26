@@ -1,4 +1,4 @@
-namespace Core.Rule.GameRule.NPC.NpcClasses {
+namespace Core.Rule.GameRule.NPC.Variants {
   public class Strig : Npc {
     protected override float WeaponsDamage(int weapon = 0) {
       float damage = 0;

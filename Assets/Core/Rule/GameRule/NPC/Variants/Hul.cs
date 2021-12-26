@@ -1,4 +1,4 @@
-namespace Core.Rule.GameRule.NPC.NpcClasses {
+namespace Core.Rule.GameRule.NPC.Variants {
   public class Hul : Npc {
     public override bool GetDamaged(int diceRoll, float damage, int weaponId, Weapon.Weapon.WeaponType type = Weapon.Weapon.WeaponType.None, bool isSpell = false) {
       if ((type & Weapon.Weapon.WeaponType.LongSword) == Weapon.Weapon.WeaponType.LongSword || (type & Weapon.Weapon.WeaponType.ShortSword) == Weapon.Weapon.WeaponType.ShortSword ||

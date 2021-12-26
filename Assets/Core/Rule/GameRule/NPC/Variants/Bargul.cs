@@ -1,6 +1,6 @@
 using Core.Rule.GameRule.Impact;
 
-namespace Core.Rule.GameRule.NPC.NpcClasses {
+namespace Core.Rule.GameRule.NPC.Variants {
   public class Bargul : Npc {
     public override void ToDamagedOfImpact(int diceRoll, ImpactOnRiskPoints character, int indexOfImpact) {
       if (diceRoll >= _impacts[indexOfImpact].DiceRollValueForInvokeImpact) {

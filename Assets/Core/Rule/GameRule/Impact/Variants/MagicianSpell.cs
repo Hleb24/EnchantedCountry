@@ -1,4 +1,4 @@
-﻿namespace Core.Rule.GameRule.Impact.Impacts {
+﻿namespace Core.Rule.GameRule.Impact.Variants {
     public sealed class MagicianSpell : Impact<ImpactOnRiskPoints> {
         #region Constructors
         public MagicianSpell(ImpactType impactType = ImpactType.Negative,

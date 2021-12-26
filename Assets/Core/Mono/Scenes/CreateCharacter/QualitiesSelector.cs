@@ -1,52 +1,43 @@
 using System;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Mono.Scenes.SelectionClass;
 using Core.SupportSystems.Data;
 using Core.SupportSystems.SaveSystem.SaveManagers;
-using TMPro;
+using ModestTree;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.CreateCharacter {
+  /// <summary>
+  ///   Класс отвечает за распределине значений бросков костей для качеств персонажа.
+  /// </summary>
   public class QualitiesSelector : MonoBehaviour {
-    private static int SetIndexOfQualityAtIndexFromButtonLockArray(int index) {
-      return index;
+    private static bool IsLastRemainingValue(int numberOfSelectedValues) {
+      return numberOfSelectedValues == QualityTypeHandler.NUMBER_OF_QUALITY - 1;
     }
 
-    private static void AssignDiceRollValueToStringForQualityText(TMP_Text quality, int diceRollValue) {
-      quality.text = diceRollValue.ToString();
-    }
-
-    public static event Action AllValuesSelected;
-    public static event Action SaveQualities;
-    public static event Action DistributeValues;
+    private const int StartValueForQuality = 0;
+    public event Action AllValuesSelected;
+    public event Action DistributeValues;
     [SerializeField]
-    private List<QualityVisual> _qualityVisuals;
+    private QualitiesVisualContainer _visualContainer;
     [SerializeField]
     private Button _buttonDistribute;
+
     private IDiceRoll _diceRollData;
     private IQualityPoints _qualityPoints;
-    private QualitiesVisualContainer _visualContainer;
 
     private int[] _qualities;
-    private bool[] _isValueNotSelected;
+    private bool[] _isValueSelected;
     private int[] _valuesFromDiceRollData;
     private int[] _indexOfCurrentValueInQualityText;
     private int _indexOfCurrentValue = -1;
-    private int _indexOfQuality;
     private bool? _isNext;
     private int _indexOfQualityText = -1;
-
-    private void Awake() {
-      _visualContainer = new QualitiesVisualContainer(_qualityVisuals);
-    }
+    private bool _progress;
 
     private void Start() {
-      _qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
-      _diceRollData = ScribeDealer.Peek<DiceRollScribe>();
-      _isValueNotSelected = new bool[_diceRollData.GetDiceRollValues().Length];
-      _qualities = new int[_diceRollData.GetDiceRollValues().Length];
-      _indexOfCurrentValueInQualityText = new int[_diceRollData.GetDiceRollValues().Length];
+      Init();
       DisableButtons();
     }
 
@@ -58,35 +49,42 @@ namespace Core.Mono.Scenes.CreateCharacter {
       RemoveListeners();
     }
 
-    private void SetIndexOfQualityText(int index) {
-      _indexOfQualityText = index;
+    public void EnableDistribute() {
+      EnableButtonDistribute();
+    }
+
+    public void DisableUI() {
+      DisableButtons();
+    }
+
+    private void Init() {
+      _qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
+      _diceRollData = ScribeDealer.Peek<DiceRollScribe>();
+      _isValueSelected = new bool[QualityTypeHandler.NUMBER_OF_QUALITY];
+      _qualities = new int[QualityTypeHandler.NUMBER_OF_QUALITY];
+      _indexOfCurrentValueInQualityText = new int[QualityTypeHandler.NUMBER_OF_QUALITY];
     }
 
     private void AddListener() {
-      AddListenersForNextPreviousButtons();
-      AddListenerForButtonAccept();
+      AddListenersForVisualContainer();
       AddListenerForButtonDistribute();
-      DiceRoll.AllDiceRollCompleteOrLoad += OnAllDiceRollCompleteOrLoad;
-      DiceRoll.ResetDiceRoll += OnResetDiceRoll;
     }
 
-    private void AddListenersForNextPreviousButtons() {
+    private void AddListenersForVisualContainer() {
       for (var i = 0; i < QualityTypeHandler.NUMBER_OF_QUALITY; i++) {
         int index = i;
         _visualContainer[(QualityType)index].AddNextPreviousListener(() => NextAction(index), () => PreviousAction(index));
       }
-    }
 
-    private void AddListenerForButtonAccept() {
       for (var i = 0; i < QualityTypeHandler.NUMBER_OF_QUALITY; i++) {
         int index = i;
 
         _visualContainer[(QualityType)i].AddAcceptListener(() => {
-                                                             SetBooleanForIsValueSelectedArray(_visualContainer[(QualityType)index].GetAcceptButton());
-                                                             FindIndexForQuality(_visualContainer[(QualityType)index].GetAcceptButton());
-                                                             SaveSelectionValue(_visualContainer[(QualityType)index].GetAcceptButton());
-                                                             DisableButtonInteractable(_visualContainer[(QualityType)index].GetAcceptButton());
+                                                             ValuesNotSelected(index);
+                                                             SaveSelectionValue(index);
+                                                             DisableAcceptButton(index);
                                                              SetValueForAllText();
+                                                             LastQualityValue();
                                                            });
       }
     }
@@ -94,9 +92,10 @@ namespace Core.Mono.Scenes.CreateCharacter {
     private void AddListenerForButtonDistribute() {
       _buttonDistribute.onClick.AddListener(() => {
                                               _visualContainer.EnableButtons();
-                                              InitLengthAndCopyValuesForValuesFromDiceRollDataArray();
-                                              SetFalseForAllIsValueNotSelectedArray();
-                                              SetFirstTimeDiceRollValuesForQualityText();
+                                              InitValuesFromDiceRollData();
+                                              ValuesSelected();
+                                              InitQualityTexts();
+                                              ResetAfterDistribute();
                                               DistributeValues?.Invoke();
                                             });
     }
@@ -104,8 +103,6 @@ namespace Core.Mono.Scenes.CreateCharacter {
     private void RemoveListeners() {
       RemoveListenersForVisualContainer();
       RemoveAllListenerForButtonDistribute();
-      DiceRoll.AllDiceRollCompleteOrLoad -= OnAllDiceRollCompleteOrLoad;
-      DiceRoll.ResetDiceRoll -= OnResetDiceRoll;
     }
 
     private void RemoveListenersForVisualContainer() {
@@ -116,40 +113,50 @@ namespace Core.Mono.Scenes.CreateCharacter {
       _buttonDistribute.onClick.RemoveAllListeners();
     }
 
-    private void SetBooleanForIsValueSelectedArray(Button buttonLock) {
-      int indexOfCurrentValue = -1;
-      for (var i = 0; i < QualityTypeHandler.NUMBER_OF_QUALITY; i++) {
-        if (IsTargetButtonLock(buttonLock, i)) {
-          indexOfCurrentValue = GetIndexOfCurrentValueInQualityText(i);
-          break;
+    private void ResetAfterDistribute() {
+      _indexOfCurrentValue = 0;
+      _indexOfQualityText = -1;
+      _qualities = new int[QualityTypeHandler.NUMBER_OF_QUALITY];
+    }
+
+    private void LastQualityValue() {
+      var numberOfSelectedValues = 0;
+      for (var i = 0; i < _isValueSelected.Length; i++) {
+        if (_isValueSelected[i]) {
+          numberOfSelectedValues++;
         }
       }
 
-      SetTrueForIsValueNotSelectedArrayAtIndexOfCurrentValueInQualityText(indexOfCurrentValue);
+      if (AllValuesIsSelect()) {
+        return;
+      }
+
+      if (IsLastRemainingValue(numberOfSelectedValues)) {
+        SetLastQuality();
+      }
     }
 
-    private bool IsTargetButtonLock(Button targetButtonLock, int index) {
-      return _visualContainer[(QualityType)index].GetAcceptButton() == targetButtonLock;
+    private async void SetLastQuality() {
+      while (_progress) {
+        await Task.Yield();
+      }
+
+      int index = _qualities.IndexOf(StartValueForQuality);
+      ValuesNotSelected(index);
+      SaveSelectionValue(index);
+      DisableAcceptButton(index);
+      DisableNextPrevious(index);
+      SetValueForAllText();
     }
 
-    private int GetIndexOfCurrentValueInQualityText(int index) {
-      return _indexOfCurrentValueInQualityText[index];
+    private void ValuesNotSelected(int index) {
+      _progress = true;
+      int indexInQualityText = _indexOfCurrentValueInQualityText[index];
+      _isValueSelected[indexInQualityText] = true;
     }
 
-    private void SetTrueForIsValueNotSelectedArrayAtIndexOfCurrentValueInQualityText(int indexOfCurrentValue) {
-      _isValueNotSelected[indexOfCurrentValue] = true;
-    }
-
-    private void OnAllDiceRollCompleteOrLoad() {
-      EnableInteractableForButtonDistribute();
-    }
-
-    private void EnableInteractableForButtonDistribute() {
+    private void EnableButtonDistribute() {
       _buttonDistribute.interactable = true;
-    }
-
-    private void OnResetDiceRoll() {
-      DisableButtons();
     }
 
     private void DisableButtons() {
@@ -157,62 +164,44 @@ namespace Core.Mono.Scenes.CreateCharacter {
       _visualContainer.DisableButtons();
     }
 
-    private void SetFalseForAllIsValueNotSelectedArray() {
-      for (var i = 0; i < _isValueNotSelected.Length; i++) {
-        _isValueNotSelected[i] = false;
+    private void ValuesSelected() {
+      for (var i = 0; i < _isValueSelected.Length; i++) {
+        _isValueSelected[i] = false;
       }
     }
 
-    private void InitLengthAndCopyValuesForValuesFromDiceRollDataArray() {
-      if (!IsArrayNull()) {
-        return;
-      }
-
-      _valuesFromDiceRollData = new int[_diceRollData.GetDiceRollValues().Length];
+    private void InitValuesFromDiceRollData() {
+      _valuesFromDiceRollData = new int[QualityTypeHandler.NUMBER_OF_QUALITY];
       _diceRollData.GetDiceRollValues().CopyTo(_valuesFromDiceRollData, 0);
     }
 
-    private void SetFirstTimeDiceRollValuesForQualityText() {
+    private void InitQualityTexts() {
       for (var i = 0; i < _valuesFromDiceRollData.Length; i++) {
-        SetFirstTimeTextForQuality(_visualContainer[(QualityType)i].GetQualityValueText(), _valuesFromDiceRollData[i]);
+        InitTextForQuality(i, _valuesFromDiceRollData[i]);
       }
     }
 
-    private void SetFirstTimeTextForQuality(TMP_Text quality, int diceRollValue) {
-      for (var i = 0; i < QualityTypeHandler.NUMBER_OF_QUALITY; i++) {
-        if (IsTargetQualityText(quality, i)) {
-          SetFirstTimeIndexOfCurrentValueAtIndexOfCurrentValueInQualityTextArrayForIndex(i);
-          break;
-        }
-      }
+    private void InitTextForQuality(int index, int diceRollValue) {
+      InitIndexOfCurrentValueAt(index);
 
-      AssignDiceRollValueToStringForQualityText(quality, diceRollValue);
+      SetQualityText(index, diceRollValue);
     }
 
-    private void SetFirstTimeIndexOfCurrentValueAtIndexOfCurrentValueInQualityTextArrayForIndex(int index) {
+    private void SetQualityText(int index, int diceRollValue) {
+      _visualContainer[(QualityType)index].SetQualityText(diceRollValue);
+    }
+
+    private void InitIndexOfCurrentValueAt(int index) {
       _indexOfCurrentValueInQualityText[index] = index;
-      AssignFirstTimeZeroForIndexOfCurrentValue();
-    }
-
-    private void AssignFirstTimeZeroForIndexOfCurrentValue() {
       _indexOfCurrentValue = 0;
     }
 
     private void NextAction(int index) {
-      NextValue(_visualContainer[(QualityType)index].GetQualityValueText());
+      NextValue(index);
     }
 
     private void PreviousAction(int index) {
-      PreviousValue(_visualContainer[(QualityType)index].GetQualityValueText());
-    }
-
-    private void FindIndexForQuality(Button button) {
-      for (var i = 0; i < QualityTypeHandler.NUMBER_OF_QUALITY; i++) {
-        if (IsTargetButtonLock(button, i)) {
-          _indexOfQuality = SetIndexOfQualityAtIndexFromButtonLockArray(i);
-          return;
-        }
-      }
+      PreviousValue(index);
     }
 
     private void SetValueForAllText() {
@@ -220,82 +209,83 @@ namespace Core.Mono.Scenes.CreateCharacter {
         return;
       }
 
-      MovePointerForwardAndCheckIndexAndCanGetValueFromArray(out int value);
+      MovePointerForward(out int value);
       for (var i = 0; i < QualityTypeHandler.NUMBER_OF_QUALITY; i++) {
         if (IsButtonNotInteractable(i)) {
           continue;
         }
 
-        SetTextForQuality(_visualContainer[(QualityType)i].GetQualityValueText(), value);
+        SetTextForQuality(i, value);
       }
+
+      _progress = false;
     }
 
     private bool IsButtonNotInteractable(int index) {
       return _visualContainer[(QualityType)index].IsAcceptEnable() == false;
     }
 
-    private void MovePointerForwardAndCheckIndexAndCanGetValueFromArray(out int diceRollValue) {
+    private void MovePointerForward(out int diceRollValue) {
       if (CanUseCurrentValueAtIndexOfCurrentValue()) {
-        diceRollValue = GetValueForQualityForIndexOfCurrentValue();
+        diceRollValue = GetValueForQuality();
       } else {
         MovePointerForward();
-        MovePointerForwardAndCheckIndexAndCanGetValueFromArray(out diceRollValue);
+        MovePointerForward(out diceRollValue);
       }
     }
 
-    private void NextValue(TMP_Text qualityValue) {
-      if (ThisIsDifferentDirectionOfPointerMovementAndDifferentQualityText(true, qualityValue)) {
-        _indexOfCurrentValue = GetIndexOfCurrentValueInQualityTextAtText(qualityValue);
+    private void NextValue(int index) {
+      if (IsAnotherDirection(true, index)) {
+        _indexOfCurrentValue = GetIndexOfCurrentValueInQualityText(index);
       }
 
       MovePointerForward();
       if (IsNextNull()) {
-        SetIsNextTrue();
+        IsNext();
       }
 
       if (CanUseCurrentValueAtIndexOfCurrentValue()) {
-        int diceRollValue = GetValueForQualityForIndexOfCurrentValue();
-        SetTextForQuality(qualityValue, diceRollValue);
-        SetIsNextTrue();
-        SetIndexOfQualityText(GetIndexOfQualityText(qualityValue));
+        int diceRollValue = GetValueForQuality();
+        SetTextForQuality(index, diceRollValue);
+        IsNext();
+        SetIndexOfQualityText(index);
       } else {
-        SetIsNextTrue();
-        NextValue(qualityValue);
+        IsNext();
+        NextValue(index);
       }
     }
 
-    private void PreviousValue(TMP_Text qualityValue) {
-      if (ThisIsDifferentDirectionOfPointerMovementAndDifferentQualityText(false, qualityValue)) {
-        _indexOfCurrentValue = GetIndexOfCurrentValueInQualityTextAtText(qualityValue);
+    private void PreviousValue(int index) {
+      if (IsAnotherDirection(false, index)) {
+        _indexOfCurrentValue = GetIndexOfCurrentValueInQualityText(index);
       }
 
       MovePointerToBack();
       if (IsNextNull()) {
-        SetIsNextFalse();
+        IsPrevious();
       }
 
       if (CanUseCurrentValueAtIndexOfCurrentValue()) {
-        int diceRollValue = GetValueForQualityForIndexOfCurrentValue();
-        SetTextForQuality(qualityValue, diceRollValue);
-        SetIsNextFalse();
-        SetIndexOfQualityText(GetIndexOfQualityText(qualityValue));
+        int diceRollValue = GetValueForQuality();
+        SetTextForQuality(index, diceRollValue);
+        IsPrevious();
+        SetIndexOfQualityText(index);
       } else {
-        SetIsNextFalse();
-        PreviousValue(qualityValue);
+        IsPrevious();
+        PreviousValue(index);
       }
     }
 
-    private bool ThisIsDifferentDirectionOfPointerMovementAndDifferentQualityText(bool aIsNext, TMP_Text quality) {
-      int index = GetIndexOfQualityText(quality);
-      if (_isNext != aIsNext && index != _indexOfQualityText) {
-        return true;
-      }
-
-      return false;
+    private int GetIndexOfCurrentValueInQualityText(int index) {
+      return _indexOfCurrentValueInQualityText[index];
     }
 
-    private int GetIndexOfCurrentValueInQualityTextAtText(TMP_Text quality) {
-      return GetIndexOfCurrentValueInQualityText(GetIndexOfQualityText(quality));
+    private void SetIndexOfQualityText(int index) {
+      _indexOfQualityText = index;
+    }
+
+    private bool IsAnotherDirection(bool aIsNext, int index) {
+      return _isNext != aIsNext && index != _indexOfQualityText;
     }
 
     private bool IsNextNull() {
@@ -303,21 +293,17 @@ namespace Core.Mono.Scenes.CreateCharacter {
       return isNull;
     }
 
-    private void SetIsNextTrue() {
+    private void IsNext() {
       _isNext = true;
     }
 
-    private void SetIsNextFalse() {
+    private void IsPrevious() {
       _isNext = false;
-    }
-
-    private bool IsArrayNull() {
-      return _valuesFromDiceRollData == null;
     }
 
     private void MovePointerForward() {
       _indexOfCurrentValue++;
-      if (GreaterThanLastIndexOfArray(_indexOfCurrentValue, _qualities)) {
+      if (GreaterThanLastIndexOfArray(_indexOfCurrentValue, QualityTypeHandler.NUMBER_OF_QUALITY)) {
         SetZeroForIndexOfCurrentValue();
       }
     }
@@ -325,47 +311,37 @@ namespace Core.Mono.Scenes.CreateCharacter {
     private void MovePointerToBack() {
       _indexOfCurrentValue--;
       if (LessThanFistIndexOfArray(_indexOfCurrentValue)) {
-        SetLengthMinusOneForIndexOfCurrentValue(_valuesFromDiceRollData);
+        SetNewIndexOfCurrentValue(QualityTypeHandler.NUMBER_OF_QUALITY);
       }
     }
 
-    private int GetValueForQualityForIndexOfCurrentValue() {
+    private int GetValueForQuality() {
       return _valuesFromDiceRollData[_indexOfCurrentValue];
     }
 
-    private void SetTextForQuality(TMP_Text quality, int diceRollValue) {
-      for (var i = 0; i < QualityTypeHandler.NUMBER_OF_QUALITY; i++) {
-        if (IsTargetQualityText(quality, i)) {
-          SetIndexOfCurrentValueAtIndexOfCurrentValueInQualityTextArrayForIndex(i);
-          break;
-        }
-      }
-
-      AssignDiceRollValueToStringForQualityText(quality, diceRollValue);
+    private void SetTextForQuality(int index, int diceRollValue) {
+      SetIndexForQualitiesTexts(index);
+      SetQualityText(index, diceRollValue);
     }
 
-    private bool IsTargetQualityText(TMP_Text quality, int index) {
-      return _visualContainer[(QualityType)index].GetQualityValueText() == quality;
-    }
-
-    private void SetIndexOfCurrentValueAtIndexOfCurrentValueInQualityTextArrayForIndex(int index) {
+    private void SetIndexForQualitiesTexts(int index) {
       _indexOfCurrentValueInQualityText[index] = _indexOfCurrentValue;
     }
 
     private bool CanUseCurrentValueAtIndexOfCurrentValue() {
-      return !_isValueNotSelected[_indexOfCurrentValue];
+      return !_isValueSelected[_indexOfCurrentValue];
     }
 
     private void SetZeroForIndexOfCurrentValue() {
       _indexOfCurrentValue = 0;
     }
 
-    private void SetLengthMinusOneForIndexOfCurrentValue(int[] array) {
-      _indexOfCurrentValue = array.Length - 1;
+    private void SetNewIndexOfCurrentValue(int numberOfQuality) {
+      _indexOfCurrentValue = numberOfQuality - 1;
     }
 
-    private bool GreaterThanLastIndexOfArray(int index, int[] array) {
-      bool greater = index >= array.Length;
+    private bool GreaterThanLastIndexOfArray(int index, int maxIndex) {
+      bool greater = index >= maxIndex;
       return greater;
     }
 
@@ -373,63 +349,42 @@ namespace Core.Mono.Scenes.CreateCharacter {
       return index < 0;
     }
 
-    private bool IsValueNotSelectedArrayAtIndexEqualFalse(int index) {
-      return _isValueNotSelected[index] == false;
+    private bool IsValueNotSelected(int index) {
+      return _isValueSelected[index] == false;
     }
 
     private bool AllValuesIsSelect() {
-      for (var i = 0; i < _isValueNotSelected.Length; i++) {
-        if (IsValueNotSelectedArrayAtIndexEqualFalse(i)) {
+      for (var i = 0; i < _isValueSelected.Length; i++) {
+        if (IsValueNotSelected(i)) {
           return false;
         }
       }
 
-      AllSelectedLog();
       AllValuesSelected?.Invoke();
-      SetAndSaveQualitiesAfterDistributing();
+      SaveQualities();
       return true;
     }
 
-    private void AllSelectedLog() {
-      Debug.Log("All selected");
-      Debug.Log($"{_qualities[0]} \t" + $"{_qualities[1]} \t" + $"{_qualities[2]} \t" + $"{_qualities[3]} \t" + $"{_qualities[4]} \t");
+    private void SaveSelectionValue(int index) {
+      int indexOfCurrentValue = _indexOfCurrentValueInQualityText[index];
+      _qualities[index] = _valuesFromDiceRollData[indexOfCurrentValue];
     }
 
-    private void SaveSelectionValue(Button acceptButton) {
-      int indexOfCurrentValue = -1;
-      for (var i = 0; i < QualityTypeHandler.NUMBER_OF_QUALITY; i++) {
-        if (_visualContainer[(QualityType)i].GetAcceptButton() == acceptButton) {
-          indexOfCurrentValue = _indexOfCurrentValueInQualityText[i];
-          break;
-        }
-      }
-
-      _qualities[_indexOfQuality] = _valuesFromDiceRollData[indexOfCurrentValue];
-    }
-
-    private void SetAndSaveQualitiesAfterDistributing() {
+    private void SaveQualities() {
       var index = 0;
       _qualityPoints.SetQualityPoints(QualityType.Strength, _qualities[index++]);
       _qualityPoints.SetQualityPoints(QualityType.Agility, _qualities[index++]);
       _qualityPoints.SetQualityPoints(QualityType.Constitution, _qualities[index++]);
       _qualityPoints.SetQualityPoints(QualityType.Wisdom, _qualities[index++]);
       _qualityPoints.SetQualityPoints(QualityType.Courage, _qualities[index]);
-
-      SaveQualities?.Invoke();
     }
 
-    private void DisableButtonInteractable(Button button) {
-      button.interactable = false;
+    private void DisableAcceptButton(int index) {
+      _visualContainer[(QualityType)index].DisableAcceptButton();
     }
 
-    private int GetIndexOfQualityText(TMP_Text quality) {
-      for (var i = 0; i < QualityTypeHandler.NUMBER_OF_QUALITY; i++) {
-        if (IsTargetQualityText(quality, i)) {
-          return i;
-        }
-      }
-
-      return -1;
+    private void DisableNextPrevious(int index) {
+      _visualContainer[(QualityType)index].DisableButtons();
     }
   }
 }

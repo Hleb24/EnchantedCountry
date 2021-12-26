@@ -18,11 +18,11 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
         _qualityPoints.ChangeQualityPoints(QualityType.Wisdom, QualityIncrease[3]);
         _qualityPoints.ChangeQualityPoints(QualityType.Courage, QualityIncrease[4]);
       } else {
-        _qualities[QualityType.Strength].ValueOfQuality += QualityIncrease[0];
-        _qualities[QualityType.Agility].ValueOfQuality += QualityIncrease[1];
-        _qualities[QualityType.Constitution].ValueOfQuality += QualityIncrease[2];
-        _qualities[QualityType.Wisdom].ValueOfQuality += QualityIncrease[3];
-        _qualities[QualityType.Courage].ValueOfQuality += QualityIncrease[4];
+        _qualities[QualityType.Strength].SetQualityValue( _qualities[QualityType.Strength].GetQualityValue() +  QualityIncrease[0]);
+        _qualities[QualityType.Agility].SetQualityValue( _qualities[QualityType.Agility].GetQualityValue() +  QualityIncrease[1]);
+        _qualities[QualityType.Constitution].SetQualityValue( _qualities[QualityType.Constitution].GetQualityValue() +  QualityIncrease[2]);
+        _qualities[QualityType.Wisdom].SetQualityValue( _qualities[QualityType.Wisdom].GetQualityValue() +  QualityIncrease[3]);
+        _qualities[QualityType.Courage].SetQualityValue( _qualities[QualityType.Courage].GetQualityValue() +  QualityIncrease[4]);
       }
     }
 

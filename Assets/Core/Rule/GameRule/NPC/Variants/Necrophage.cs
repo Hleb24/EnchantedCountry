@@ -1,4 +1,4 @@
-namespace Core.Rule.GameRule.NPC.NpcClasses {
+namespace Core.Rule.GameRule.NPC.Variants {
   public class Necrophage : Npc {
     private const int KillStake = 5;
 

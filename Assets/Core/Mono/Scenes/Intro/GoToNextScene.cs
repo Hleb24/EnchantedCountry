@@ -4,12 +4,16 @@ using Core.Mono.MainManagers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
+using Scene = Core.Mono.BaseClass.Scene;
 
 namespace Core.Mono.Scenes.Intro {
+  /// <summary>
+  /// Класс для перехода на слудующую сцену со сцены <see cref="Scene.Intro"/>
+  /// </summary>
   public class GoToNextScene : MonoBehaviour {
     [Inject]
     private IStartGame _startGame;
-    private string _nameOfScene;
+    private Scene _nameOfScene;
 
     private void Start() {
       NextScene();
@@ -25,12 +29,12 @@ namespace Core.Mono.Scenes.Intro {
     }
 
     private void SetNameOfNextScene() {
-      _nameOfScene = SceneNamesConstants.SCENE_DICE_ROLLS;
-      _nameOfScene = _startGame.IsNewGame()? SceneNamesConstants.SCENE_DICE_ROLLS : SceneNamesConstants.SCENE_CHARACTER_LIST;
+      _nameOfScene = Scene.DiceRolls;
+      _nameOfScene = _startGame.IsNewGame()? Scene.DiceRolls : Scene.CharacterList;
     }
 
     private void LoadNextSceneAsync() {
-      SceneManager.LoadSceneAsync(_nameOfScene);
+      SceneManager.LoadSceneAsync((int)_nameOfScene);
     }
   }
 }

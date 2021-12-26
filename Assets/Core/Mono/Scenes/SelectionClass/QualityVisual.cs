@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Core.SupportSystems.Data;
 using TMPro;
 using UnityEngine;
@@ -6,6 +7,9 @@ using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.SelectionClass {
+  /// <summary>
+  /// Класс отвечает за отображение качества персонажа.
+  /// </summary>
   public class QualityVisual : MonoBehaviour {
     [SerializeField]
     private QualityType _qualityType;
@@ -17,6 +21,10 @@ namespace Core.Mono.Scenes.SelectionClass {
     private Button _previousValue;
     [SerializeField]
     private Button _accept;
+
+    public void SetQualityText(int value) {
+      _qualityValue.text = value.ToString();
+    }
 
     public QualityType GetQualityType() {
       return _qualityType;
@@ -66,6 +74,14 @@ namespace Core.Mono.Scenes.SelectionClass {
       return _accept;
     }
 
+    public void InvokeAcceptButton() {
+      _accept.onClick.Invoke();
+    }
+
+    public void DisableAcceptButton() {
+      _accept.interactable = false;
+    }
+
     private void DisableNextPreviousButtons() {
       _nextValue.interactable = false;
       _previousValue.interactable = false;
@@ -74,11 +90,19 @@ namespace Core.Mono.Scenes.SelectionClass {
     private void AddNextListener(Action action) {
       Assert.IsNotNull(action);
       _nextValue.onClick.AddListener(() => action());
+      _nextValue.onClick.AddListener(DisableText);
+    }
+
+    private async void DisableText() {
+      _qualityValue.enabled = false;
+      await Task.Delay(75);
+      _qualityValue.enabled = true;
     }
 
     private void AddPreviousListener(Action action) {
       Assert.IsNotNull(action);
       _previousValue.onClick.AddListener(() => action());
+      _previousValue.onClick.AddListener(DisableText);
     }
   }
 }
