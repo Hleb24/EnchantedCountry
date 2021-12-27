@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.TrurlsShop {
+  /// <summary>
+  /// Класс отвечает за бросок костей для стартовых монет.
+  /// </summary>
   public class CoinsDiceRoll : MonoBehaviour {
     [SerializeField]
     private Button _diceRollButton;

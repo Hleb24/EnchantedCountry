@@ -1,4 +1,4 @@
-using Core.Rule.GameRule.Attack;
+using Core.Rule.GameRule;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.GameRuleTests.AttackTest {

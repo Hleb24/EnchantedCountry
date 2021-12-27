@@ -9,11 +9,11 @@ namespace Editor.NTest.EditorTests.ProductObjectTest {
     #region Tests
     [Test, Description("Test Resources Load And Get Name With Item"), Repeat(1)]
     public void TestResourcesLoadAndGetNameWithItem() {
-      _productObject.price = _price;
-      _productObject.productType = _productType;
-      _productObject.item = Object.Instantiate(Resources.Load<WeaponObject>(pathByLongSword));
+      _productObject.SetPrice(_price);
+      _productObject.SetProductType(_productType);
+      _productObject.SetItem(Object.Instantiate(Resources.Load<WeaponObject>(pathByLongSword)));
       _productObject.OnEnable();
-      Assert.That(_productObject.productName, Is.EqualTo(weaponName).Or.EqualTo(weaponNameWithinEffectName));
+      Assert.That(_productObject.GetProductName(), Is.EqualTo(weaponName).Or.EqualTo(weaponNameWithinEffectName));
     }
     #endregion
 

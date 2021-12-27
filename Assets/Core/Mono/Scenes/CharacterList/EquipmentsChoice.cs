@@ -9,8 +9,8 @@ using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static Core.Rule.GameRule.Armor.Armor;
-using static Core.Rule.GameRule.Weapon.Weapon;
+using static Core.Rule.GameRule.Armor;
+using static Core.Rule.GameRule.Weapon;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class EquipmentsChoice : MonoBehaviour {
@@ -107,14 +107,14 @@ namespace Core.Mono.Scenes.CharacterList {
       }
 
       ProductObject productObject = _storage.GetProductFromList(_id) ?? throw new ArgumentNullException("_storage.GetProductFromList(_id)");
-      ProductObject.ProductType productType = productObject.productType;
+      ProductObject.ProductType productType = productObject.GetProductType();
       switch (productType) {
         case ProductObject.ProductType.Weapon:
-          if (productObject.item is WeaponObject weapon) {
+          if (productObject.GetItem() is WeaponObject weapon) {
             if ((weapon.weaponType & _oneHandedTuple.Item1) != WeaponType.None) {
               TakeOffUsedEquipment(_oneHandedTuple.Item2);
               SetIdForOneHandedTuple();
-              SetTextForOneHandedTuple(productObject.productName);
+              SetTextForOneHandedTuple(productObject.GetProductName());
               SetUsedEquipmentDataForOneHandedWeapon();
               TakeOffUsedEquipment(_twoHandedTuple.Item2);
               SetIdForTwoHandedTuple(0);
@@ -125,7 +125,7 @@ namespace Core.Mono.Scenes.CharacterList {
             if ((weapon.weaponType & _twoHandedTuple.Item1) != WeaponType.None) {
               TakeOffUsedEquipment(_twoHandedTuple.Item2);
               SetIdForTwoHandedTuple();
-              SetTextForTwoHandedTuple(productObject.productName);
+              SetTextForTwoHandedTuple(productObject.GetProductName());
               SetUsedEquipmentDataForTwoHandedWeapon();
               TakeOffUsedEquipment(_shieldTuple.Item2);
               TakeOffUsedEquipment(_oneHandedTuple.Item2);
@@ -141,7 +141,7 @@ namespace Core.Mono.Scenes.CharacterList {
               ChechRangeSetForRangeWeapon(weapon);
               TakeOffUsedEquipment(_rangeTuple.Item2);
               SetIdForRangeTuple();
-              SetTextForRangeTuple(productObject.productName);
+              SetTextForRangeTuple(productObject.GetProductName());
               SetUsedEquipmentDataForRangeWeapon();
             }
 
@@ -149,25 +149,25 @@ namespace Core.Mono.Scenes.CharacterList {
               CheckRangeSetForProjectiles(weapon);
               TakeOffUsedEquipment(_projectiliesTuple.Item2);
               SetIdForProjectiliesTuple();
-              SetTextForProjectiliesTuple(productObject.productName);
+              SetTextForProjectiliesTuple(productObject.GetProductName());
               SetUsedEquipmentDataForProjectiles();
             }
           }
 
           break;
         case ProductObject.ProductType.Armor:
-          if (productObject.item is ArmorObject armor) {
+          if (productObject.GetItem() is ArmorObject armor) {
             if ((armor.armorType & _armorTuple.Item1) != ArmorType.None) {
               TakeOffUsedEquipment(_armorTuple.Item2);
               SetIdForArmorTuple();
-              SetTextForArmorTuple(productObject.productName);
+              SetTextForArmorTuple(productObject.GetProductName());
               SetUsedEquipmentDataForArmor();
             }
 
             if ((armor.armorType & _shieldTuple.Item1) != ArmorType.None) {
               TakeOffUsedEquipment(_shieldTuple.Item2);
               SetIdForShieldTuple();
-              SetTextForShieldTuple(productObject.productName);
+              SetTextForShieldTuple(productObject.GetProductName());
               SetUsedEquipmentDataForShield();
               TakeOffUsedEquipment(_twoHandedTuple.Item2);
               SetIdForTwoHandedTuple(0);
@@ -181,21 +181,21 @@ namespace Core.Mono.Scenes.CharacterList {
           if (EquipmentIdConstants.Bags.Contains(_id)) {
             TakeOffUsedEquipment(_bagId);
             SetIdForBag(_id);
-            SetTextForBag(productObject.productName);
+            SetTextForBag(productObject.GetProductName());
             SetUsedEquipmentDataForBag();
           }
 
           if (EquipmentIdConstants.Animals.Contains(_id)) {
             TakeOffUsedEquipment(_animalId);
             SetIdForAnimal(_id);
-            SetTextForAnimal(productObject.productName);
+            SetTextForAnimal(productObject.GetProductName());
             SetUsedEquipmentDataForAnimal();
           }
 
           if (EquipmentIdConstants.Carriages.Contains(_id)) {
             TakeOffUsedEquipment(_carriageId);
             SetIdForCarriage(_id);
-            SetTextForCarriage(productObject.productName);
+            SetTextForCarriage(productObject.GetProductName());
             SetUsedEquipmentDataForCarriage();
           }
 
@@ -288,49 +288,49 @@ namespace Core.Mono.Scenes.CharacterList {
       }
 
       ProductObject productObject = _storage.GetProductFromList(id);
-      ProductObject.ProductType productType = productObject.productType;
+      ProductObject.ProductType productType = productObject.GetProductType();
       switch (productType) {
         case ProductObject.ProductType.Weapon:
-          var weapon = productObject.item as WeaponObject;
+          var weapon = productObject.GetItem() as WeaponObject;
           if ((weapon.weaponType & _oneHandedTuple.Item1) != WeaponType.None) {
-            SetTextForOneHandedTuple(productObject.productName);
+            SetTextForOneHandedTuple(productObject.GetProductName());
           }
 
           if ((weapon.weaponType & _twoHandedTuple.Item1) != WeaponType.None) {
-            SetTextForTwoHandedTuple(productObject.productName);
+            SetTextForTwoHandedTuple(productObject.GetProductName());
           }
 
           if ((weapon.weaponType & _rangeTuple.Item1) != WeaponType.None) {
-            SetTextForRangeTuple(productObject.productName);
+            SetTextForRangeTuple(productObject.GetProductName());
           }
 
           if ((weapon.weaponType & _projectiliesTuple.Item1) != WeaponType.None) {
-            SetTextForProjectiliesTuple(productObject.productName);
+            SetTextForProjectiliesTuple(productObject.GetProductName());
           }
 
           break;
         case ProductObject.ProductType.Armor:
-          var armor = productObject.item as ArmorObject;
+          var armor = productObject.GetItem() as ArmorObject;
           if ((armor.armorType & _armorTuple.Item1) != ArmorType.None) {
-            SetTextForArmorTuple(productObject.productName);
+            SetTextForArmorTuple(productObject.GetProductName());
           }
 
           if ((armor.armorType & _shieldTuple.Item1) != ArmorType.None) {
-            SetTextForShieldTuple(productObject.productName);
+            SetTextForShieldTuple(productObject.GetProductName());
           }
 
           break;
         case ProductObject.ProductType.Item:
           if (EquipmentIdConstants.Bags.Contains(id)) {
-            SetTextForBag(productObject.productName);
+            SetTextForBag(productObject.GetProductName());
           }
 
           if (EquipmentIdConstants.Animals.Contains(id)) {
-            SetTextForAnimal(productObject.productName);
+            SetTextForAnimal(productObject.GetProductName());
           }
 
           if (EquipmentIdConstants.Carriages.Contains(id)) {
-            SetTextForCarriage(productObject.productName);
+            SetTextForCarriage(productObject.GetProductName());
           }
 
           break;

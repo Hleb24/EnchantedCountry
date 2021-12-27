@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Rule.GameRule.ArmorClass {
+namespace Core.Rule.GameRule {
   public class ArmorClass {
     #region Fields
     private const int TOP_BORDER = 16;

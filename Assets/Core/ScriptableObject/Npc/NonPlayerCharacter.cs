@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Core.Rule.Dice;
-using Core.Rule.GameRule.ArmorClass;
+using Core.Rule.GameRule;
 using Core.Rule.GameRule.Impact;
 using Core.Rule.GameRule.NPC;
 using Core.Rule.GameRule.RiskPoints;
@@ -55,11 +55,11 @@ namespace Core.ScriptableObject.Npc {
       return diceBox.SumRollsOfDice();
     }
 
-    private List<Rule.GameRule.Weapon.Weapon> GetListOfWeapon() {
+    private List<Rule.GameRule.Weapon> GetListOfWeapon() {
       if (_weaponObjects == null) {
         return null;
       }
-      List<Rule.GameRule.Weapon.Weapon> weapons = new List<Rule.GameRule.Weapon.Weapon>();
+      List<Rule.GameRule.Weapon> weapons = new List<Rule.GameRule.Weapon>();
       foreach (WeaponObject weaponObject in _weaponObjects) {
         weapons.Add(weaponObject.weapon);
       }

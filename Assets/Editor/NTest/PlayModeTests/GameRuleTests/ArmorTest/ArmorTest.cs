@@ -1,4 +1,4 @@
-using Core.Rule.GameRule.Armor;
+using Core.Rule.GameRule;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.GameRuleTests.ArmorTest {

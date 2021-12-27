@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Core.Rule.Dice;
 
-namespace Core.Rule.GameRule.Attack {
+namespace Core.Rule.GameRule {
   public class Attack {
     #region Fields
     private const int BOTTOM_BORDER = 0;

@@ -1,4 +1,4 @@
-using Core.Rule.GameRule.Armor;
+using Core.Rule.GameRule;
 using Core.ScriptableObject.Armor;
 using NUnit.Framework;
 using UnityEngine;

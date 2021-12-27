@@ -9,8 +9,8 @@ using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.Serialization;
-using static Core.Rule.GameRule.Armor.Armor;
-using static Core.Rule.GameRule.Weapon.Weapon;
+using static Core.Rule.GameRule.Armor;
+using static Core.Rule.GameRule.Weapon;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class SpawnProducts : MonoBehaviour {
@@ -103,7 +103,7 @@ namespace Core.Mono.Scenes.CharacterList {
         }
 
         for (var j = 0; j < armorList.Count; j++) {
-          if (equipmentCards[i].ID == armorList[j].id) {
+          if (equipmentCards[i].ID == armorList[j].GetId()) {
             _armorListSo.Add(armorList[j]);
           }
         }
@@ -114,7 +114,7 @@ namespace Core.Mono.Scenes.CharacterList {
       _weaponListSo = new List<ProductObject>();
       for (var i = 0; i < equipmentCards.Count; i++) {
         for (var j = 0; j < weaponList.Count; j++) {
-          if (equipmentCards[i].ID == weaponList[j].id) {
+          if (equipmentCards[i].ID == weaponList[j].GetId()) {
             _weaponListSo.Add(weaponList[j]);
           }
         }
@@ -125,7 +125,7 @@ namespace Core.Mono.Scenes.CharacterList {
       _projectilesListSo = new List<ProductObject>();
       for (var i = 0; i < equipmentCards.Count; i++) {
         for (var j = 0; j < projectiliesList.Count; j++) {
-          if (equipmentCards[i].ID == projectiliesList[j].id) {
+          if (equipmentCards[i].ID == projectiliesList[j].GetId()) {
             _projectilesListSo.Add(projectiliesList[j]);
           }
         }
@@ -136,7 +136,7 @@ namespace Core.Mono.Scenes.CharacterList {
       _itemsListSo = new List<ProductObject>();
       for (var i = 0; i < equipmentCards.Count; i++) {
         for (var j = 0; j < itemList.Count; j++) {
-          if (equipmentCards[i].ID == itemList[j].id) {
+          if (equipmentCards[i].ID == itemList[j].GetId()) {
             _itemsListSo.Add(itemList[j]);
           }
         }
@@ -209,7 +209,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SetCanNotUsedForItem(ProductsView productView, ProductObject productObject) {
-      if (!_itemWhatCanUsed.Contains(productObject.id)) {
+      if (!_itemWhatCanUsed.Contains(productObject.GetId())) {
         productView.ProductWhatCanNotUsed();
       }
     }
@@ -222,7 +222,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SetProductName(ProductsView productView, ProductObject productObject) {
-      productView.Name.text = productObject.productName;
+      productView.Name.text = productObject.GetProductName();
     }
 
     private void SetProductNumberOfProduct(ProductsView productView, int numberOfProduct) {
@@ -230,11 +230,11 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SetProductId(ProductsView productView, ProductObject productObject) {
-      productView.Id = productObject.id;
+      productView.Id = productObject.GetId();
     }
 
     private void KitForCharacterType(ProductsView productView, ProductObject productObject) {
-      switch (productObject.productType) {
+      switch (productObject.GetProductType()) {
         case ProductObject.ProductType.None:
           break;
         case ProductObject.ProductType.Weapon:

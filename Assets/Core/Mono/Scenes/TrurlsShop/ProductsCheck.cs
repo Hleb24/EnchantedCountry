@@ -36,7 +36,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
 				return;
 			for (int i = 0; i < productsViewList.Count; i++) {
 				for (int j = 0; j < equipmentsCardList.Count; j++) {
-					if (productsViewList[i].Id == equipmentsCardList[j].ID) {
+					if (productsViewList[i].GetId() == equipmentsCardList[j].ID) {
 						productsViewList[i].SetCharacterHasTrueAndBackgroundGreen();
 					}
 				}
@@ -48,7 +48,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
 				return;
 			for (int i = 0; i < productsViewList.Count; i++) {
 				for (int j = 0; j < equipmentsCardList.Count; j++) {
-					if (productsViewList[i].Id == equipmentsCardList[j].ID) {
+					if (productsViewList[i].GetId() == equipmentsCardList[j].ID) {
 						productsViewList[i].SetCharacterHasTrueAndBackgroundGreen();
 					}
 				}
@@ -61,7 +61,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
 				return;
 			for (int i = 0; i < productsViewList.Count; i++) {
 				for (int j = 0; j < equipmentsCardList.Count; j++) {
-					if (productsViewList[i].Id == equipmentsCardList[j].ID) {
+					if (productsViewList[i].GetId() == equipmentsCardList[j].ID) {
 						productsViewList[i].SetCharacterHasTrueAndBackgroundGreen();
 					}
 				}
@@ -73,7 +73,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
 				return;
 			for (int i = 0; i < productsViewList.Count; i++) {
 				for (int j = 0; j < equipmentsCardList.Count; j++) {
-					if (productsViewList[i].Id == equipmentsCardList[j].ID) {
+					if (productsViewList[i].GetId() == equipmentsCardList[j].ID) {
 						productsViewList[i].SetCharacterHasTrueAndBackgroundGreen();
 					}
 				}

@@ -1,4 +1,4 @@
-using Core.Rule.GameRule.Weapon;
+using Core.Rule.GameRule;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.GameRuleTests.WeapontTest {

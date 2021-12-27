@@ -7,14 +7,14 @@ namespace Core.ScriptableObject.Weapon {
 	[CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon", order = 52)]
 	public class WeaponObject : UnityEngine.ScriptableObject {
 		#region Fields
-		public Rule.GameRule.Weapon.Weapon.WeaponType weaponType = Rule.GameRule.Weapon.Weapon.WeaponType.None;
+		public Rule.GameRule.Weapon.WeaponType weaponType = Rule.GameRule.Weapon.WeaponType.None;
 		public string weaponName = "";
 		public float minDamage;
 		public float maxDamage;
 		public List<float> damageList;
 		public int accurancy;
 		public string effectName = "";
-		public Rule.GameRule.Weapon.Weapon weapon;
+		public Rule.GameRule.Weapon weapon;
 		public int id;
 		#endregion
 		#region Methods
@@ -32,9 +32,9 @@ namespace Core.ScriptableObject.Weapon {
 			weaponName = name;
 		}
 
-		public Rule.GameRule.Weapon.Weapon InitWeapon() {
+		public Rule.GameRule.Weapon InitWeapon() {
 			if (weapon == null) {
-				weapon = new Rule.GameRule.Weapon.Weapon(maxDamage, weaponType, weaponName, minDamage, accurancy, effectName, id);
+				weapon = new Rule.GameRule.Weapon(maxDamage, weaponType, weaponName, minDamage, accurancy, effectName, id);
 			} else {
 				weapon.Init(maxDamage, weaponType, weaponName, minDamage, accurancy, effectName, id);
 			}
@@ -42,9 +42,9 @@ namespace Core.ScriptableObject.Weapon {
 			return weapon;
 		}
 		
-		public Rule.GameRule.Weapon.Weapon InitWeaponWithDamageList() {
+		public Rule.GameRule.Weapon InitWeaponWithDamageList() {
 			if (weapon == null) {
-				weapon = new Rule.GameRule.Weapon.Weapon(maxDamage,weaponType, weaponName , minDamage, accurancy, effectName, id);
+				weapon = new Rule.GameRule.Weapon(maxDamage,weaponType, weaponName , minDamage, accurancy, effectName, id);
 			} else {
 				weapon.Init(damageList, weaponType, weaponName,accurancy, effectName, id);
 			}

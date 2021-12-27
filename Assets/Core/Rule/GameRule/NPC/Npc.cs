@@ -33,13 +33,13 @@ namespace Core.Rule.GameRule.NPC {
     protected Alignment _alignment;
     protected NpcType _npcType;
     protected RiskPoints.RiskPoints _riskPoints;
-    protected ArmorClass.ArmorClass _armorClass;
+    protected ArmorClass _armorClass;
     protected int _morality;
-    protected List<Weapon.Weapon> _weapons;
+    protected List<Weapon> _weapons;
     protected List<Impact<ImpactOnRiskPoints>> _impacts;
-    protected Weapon.Weapon _meleeWeapon;
-    protected Weapon.Weapon _rangeWeapon;
-    protected Weapon.Weapon _projectilies;
+    protected Weapon _meleeWeapon;
+    protected Weapon _rangeWeapon;
+    protected Weapon _projectilies;
     protected bool _immoral;
     protected bool _immortal;
     protected bool _deadlyAttack;
@@ -54,8 +54,8 @@ namespace Core.Rule.GameRule.NPC {
     protected int _numberOfAttack;
     protected int _numberOfWeapon;
 
-    public Npc(string name, Alignment alignment, NpcType npcType, RiskPoints.RiskPoints riskPoints, ArmorClass.ArmorClass armorClass, int morality, bool immoral, bool immortal, bool deadlyAttack,
-      bool attacksEveryoneAtOnce, int experience, List<int> escapePosibility, string description, string property, int id, List<Weapon.Weapon> weapons = null,
+    public Npc(string name, Alignment alignment, NpcType npcType, RiskPoints.RiskPoints riskPoints, ArmorClass armorClass, int morality, bool immoral, bool immortal, bool deadlyAttack,
+      bool attacksEveryoneAtOnce, int experience, List<int> escapePosibility, string description, string property, int id, List<Weapon> weapons = null,
       List<Impact<ImpactOnRiskPoints>> impacts = null) {
       _name = name;
       _alignment = alignment;
@@ -80,7 +80,7 @@ namespace Core.Rule.GameRule.NPC {
       _property = property;
       _id = id;
 
-      _weapons = new List<Weapon.Weapon>();
+      _weapons = new List<Weapon>();
       if (weapons != null && weapons.Count != 0) {
         _weapons.AddRange(weapons);
         _hasWeapon = true;
@@ -179,7 +179,7 @@ namespace Core.Rule.GameRule.NPC {
       return index;
     }
 
-    public virtual bool GetDamaged(int diceRoll, float damage, int weaponId = 100, Weapon.Weapon.WeaponType type = Weapon.Weapon.WeaponType.None, bool isSpell = false) {
+    public virtual bool GetDamaged(int diceRoll, float damage, int weaponId = 100, Weapon.WeaponType type = Weapon.WeaponType.None, bool isSpell = false) {
       if (СanKillIfIsKillOnlySpell(isSpell)) {
         return false;
       }
@@ -225,7 +225,7 @@ namespace Core.Rule.GameRule.NPC {
       }
     }
 
-    public ArmorClass.ArmorClass ArmorClass {
+    public ArmorClass ArmorClass {
       get {
         return _armorClass;
       }
@@ -234,7 +234,7 @@ namespace Core.Rule.GameRule.NPC {
       }
     }
 
-    public Weapon.Weapon MeleeWeapon {
+    public Weapon MeleeWeapon {
       get {
         return _meleeWeapon;
       }
@@ -243,7 +243,7 @@ namespace Core.Rule.GameRule.NPC {
       }
     }
 
-    public Weapon.Weapon RangeWeapon {
+    public Weapon RangeWeapon {
       get {
         return _rangeWeapon;
       }
@@ -270,7 +270,7 @@ namespace Core.Rule.GameRule.NPC {
       }
     }
 
-    public Weapon.Weapon Projectilies {
+    public Weapon Projectilies {
       get {
         return _projectilies;
       }

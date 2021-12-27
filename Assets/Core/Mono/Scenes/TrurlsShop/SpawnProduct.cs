@@ -3,201 +3,201 @@ using System.Collections.Generic;
 using Core.ScriptableObject.Products;
 using UnityEngine;
 using UnityEngine.Serialization;
-using static Core.Rule.GameRule.Armor.Armor;
-using static Core.Rule.GameRule.Weapon.Weapon;
+using static Core.Rule.GameRule.Armor;
+using static Core.Rule.GameRule.Weapon;
 
 namespace Core.Mono.Scenes.TrurlsShop {
-
+	/// <summary>
+	///   Класс для создание товаров в стартовой лавке Трурля.
+	/// </summary>
 	public class SpawnProduct : MonoBehaviour {
-		private const int TEST_NUMBER_OF_PRODUCT = 5;
-		private const int NUMBER_OF_PROJECTILIES = 20;
-		[SerializeField]
-		private CharacterInTrurlsShop _characterInTrurlsShop;
-		[SerializeField]
-		private GameObject _productPrefab;
-		[SerializeField]
-		private List<ProductView> _productViewListForArmor;
-		[SerializeField]
-		private List<ProductView> _productViewListForWeapon;
-		[FormerlySerializedAs("_productViewListForProjectilies"),SerializeField]
-		private List<ProductView> _productViewListForProjectiles;
-		[SerializeField]
-		private List<ProductView> _productViewListForItems;
-		[FormerlySerializedAs("_armorListSO"),SerializeField]
-		private List<ProductObject> _armorListSo;
-		[FormerlySerializedAs("_weaponListSO"),SerializeField]
-		private List<ProductObject> _weaponListSo;
-		[FormerlySerializedAs("_projectiliesListSO"),SerializeField]
-		private List<ProductObject> _projectilesListSo;
-		[FormerlySerializedAs("_itemsListSO"),SerializeField]
-		private List<ProductObject> _itemsListSo;
-		[SerializeField]
-		private Transform _contentArmor;
-		[SerializeField]
-		private Transform _contentWeapon;
-		[SerializeField]
-		private Transform _contentItem;
-		public static event Action SpawnCompleted;
-		public List<ProductObject> GetArmorList() {
-			return _armorListSo;
-		}
+    private const int TestNumberOfProduct = 5;
+    private const int NumberOfProjectiles = 20;
+    public static event Action SpawnCompleted;
+    [SerializeField]
+    private CharacterInTrurlsShop _characterInTrurlsShop;
+    [SerializeField]
+    private GameObject _productPrefab;
+    [SerializeField]
+    private List<ProductView> _productViewListForArmor;
+    [SerializeField]
+    private List<ProductView> _productViewListForWeapon;
+    [FormerlySerializedAs("_productViewListForProjectilies"), SerializeField]
+    private List<ProductView> _productViewListForProjectiles;
+    [SerializeField]
+    private List<ProductView> _productViewListForItems;
+    [FormerlySerializedAs("_armorListSO"), SerializeField]
+    private List<ProductObject> _armorListSo;
+    [FormerlySerializedAs("_weaponListSO"), SerializeField]
+    private List<ProductObject> _weaponListSo;
+    [FormerlySerializedAs("_projectiliesListSO"), SerializeField]
+    private List<ProductObject> _projectilesListSo;
+    [FormerlySerializedAs("_itemsListSO"), SerializeField]
+    private List<ProductObject> _itemsListSo;
+    [SerializeField]
+    private Transform _contentArmor;
+    [SerializeField]
+    private Transform _contentWeapon;
+    [SerializeField]
+    private Transform _contentItem;
 
-		public List<ProductObject> GetWeaponList() {
-			return _weaponListSo;
-		}
-		public List<ProductObject> GetProjectilesList() {
-			return _projectilesListSo;
-		}
+    private void Awake() {
+      _characterInTrurlsShop.GetCharacterType += Spawn;
+    }
 
-		public List<ProductObject> GetItemList() {
-			return _itemsListSo;
-		}
-		private void Awake() {
-			_characterInTrurlsShop.GetCharacterType += Spawn;
-		}
+    private void OnDestroy() {
+      _characterInTrurlsShop.GetCharacterType -= Spawn;
+    }
 
-		private void OnDestroy() {
-			_characterInTrurlsShop.GetCharacterType -= Spawn;
-		}
-		private void Spawn() {
-			SpawnWeapon();
-			SpawnArmor();
-			SpawnProjectiles();
-			SpawnItems();
-			SpawnCompleted?.Invoke();
-		}
-		private void SpawnArmor() {
-			_productViewListForArmor = new List<ProductView>();
-			for (int i = 0; i < _armorListSo.Count; i++) {
-				GameObject product = Instantiate(_productPrefab, _contentArmor);
-				ProductView productView = product.GetComponent<ProductView>();
-				_productViewListForArmor.Add(productView);
-			}
-			for (int i = 0; i < _armorListSo.Count; i++) {
-				int index = i;
-				InitializeProductFields(_productViewListForArmor[index], _armorListSo[index], TEST_NUMBER_OF_PRODUCT);
-			}
-		}
+    private void Spawn() {
+      SpawnWeapon();
+      SpawnArmor();
+      SpawnProjectiles();
+      SpawnItems();
+      SpawnCompleted?.Invoke();
+    }
 
-		private void SpawnWeapon() {
-			_productViewListForWeapon = new List<ProductView>();
-			for (int i = 0; i < _weaponListSo.Count; i++) {
-				GameObject product = Instantiate(_productPrefab, _contentWeapon);
-				ProductView productView = product.GetComponent<ProductView>();
-				_productViewListForWeapon.Add(productView);
-			}
-			for (int i = 0; i < _weaponListSo.Count; i++) {
-				int index = i;
-				InitializeProductFields(_productViewListForWeapon[index], _weaponListSo[index], TEST_NUMBER_OF_PRODUCT);
-			}
-		}
+    private void SpawnArmor() {
+      _productViewListForArmor = new List<ProductView>();
+      for (var i = 0; i < _armorListSo.Count; i++) {
+        GameObject product = Instantiate(_productPrefab, _contentArmor);
+        var productView = product.GetComponent<ProductView>();
+        _productViewListForArmor.Add(productView);
+      }
 
-		private void SpawnProjectiles() {
-			_productViewListForProjectiles = new List<ProductView>();
-			for (int i = 0; i < _projectilesListSo.Count; i++) {
-				GameObject product = Instantiate(_productPrefab, _contentWeapon);
-				ProductView productView = product.GetComponent<ProductView>();
-				_productViewListForProjectiles.Add(productView);
-			}
-			for (int i = 0; i < _projectilesListSo.Count; i++) {
-				int index = i;
-				InitializeProductFields(_productViewListForProjectiles[index], _projectilesListSo[index], NUMBER_OF_PROJECTILIES);
-			}
-		}
-		private void SpawnItems() {
-			_productViewListForItems = new List<ProductView>();
-			for (int i = 0; i < _itemsListSo.Count; i++) {
-				GameObject product = Instantiate(_productPrefab, _contentItem);
-				ProductView productView = product.GetComponent<ProductView>();
-				_productViewListForItems.Add(productView);
-			}
-			for (int i = 0; i < _itemsListSo.Count; i++) {
-				int index = i;
-				InitializeProductFields(_productViewListForItems[index], _itemsListSo[index], TEST_NUMBER_OF_PRODUCT);
-			}
-		}
-		private void InitializeProductFields(ProductView productView, ProductObject productObject, int amount) {
-			SetProductIcon(productView, productObject);
-			SetProductName(productView, productObject);
-			SetProductNumberOfProduct(productView, amount);
-			SetProductProperty(productView, productObject);
-			SetProductPrice(productView, productObject);
-			SetProductId(productView, productObject);
-			KitForCharacterType(productView, productObject);
-		}
-		private void SetProductIcon(ProductView productView, ProductObject productObject) {
-			productView.Icon.sprite = productObject.icon;
-		}
-		private void SetProductName(ProductView productView, ProductObject productObject) {
-			productView.Name.text = productObject.productName;
-		}
-		private void SetProductNumberOfProduct(ProductView productView, int numberOfProduct) {
-			productView.NumberOfProduct.text = numberOfProduct.ToString();
-		}
-		private void SetProductProperty(ProductView productView, ProductObject productObject) {
-			productView.Property.text = productObject.Property;
-		}
-		private void SetProductPrice(ProductView productView, ProductObject productObject) {
-			productView.Price.text = productObject.price.ToString();
-		}
+      for (var i = 0; i < _armorListSo.Count; i++) {
+        InitializeProductFields(_productViewListForArmor[i], _armorListSo[i], TestNumberOfProduct);
+      }
+    }
 
-		private void SetProductId(ProductView productView, ProductObject productObject) {
-			productView.Id = productObject.id;
-		}
+    private void SpawnWeapon() {
+      _productViewListForWeapon = new List<ProductView>();
+      for (var i = 0; i < _weaponListSo.Count; i++) {
+        GameObject product = Instantiate(_productPrefab, _contentWeapon);
+        var productView = product.GetComponent<ProductView>();
+        _productViewListForWeapon.Add(productView);
+      }
 
-		private void KitForCharacterType(ProductView productView, ProductObject productObject) {
-			switch (productObject.productType) {
-				case ProductObject.ProductType.None:
-					break;
-				case ProductObject.ProductType.Weapon:
-						if((productObject.GetWeaponType() & _characterInTrurlsShop.GetWeaponKit()) == WeaponType.None) {
-							productView.ProductNotForCharacterType();
-						}
-						break;
-				case ProductObject.ProductType.Armor:
-						if((productObject.GetArmorType() & _characterInTrurlsShop.GetArmorKit()) == ArmorType.None) {
-							productView.ProductNotForCharacterType();
-						}
-						break;
-				case ProductObject.ProductType.Item:
-					break;
-			}
-		}
+      for (var i = 0; i < _weaponListSo.Count; i++) {
+        InitializeProductFields(_productViewListForWeapon[i], _weaponListSo[i], TestNumberOfProduct);
+      }
+    }
 
-		public List<ProductView> ProductViewListForArmor {
-			get {
-				return _productViewListForArmor;
-			}
-			set {
-				_productViewListForArmor = value;
-			}
-		}
+    private void SpawnProjectiles() {
+      _productViewListForProjectiles = new List<ProductView>();
+      for (var i = 0; i < _projectilesListSo.Count; i++) {
+        GameObject product = Instantiate(_productPrefab, _contentWeapon);
+        var productView = product.GetComponent<ProductView>();
+        _productViewListForProjectiles.Add(productView);
+      }
 
-		public List<ProductView> ProductViewListForWeapon {
-			get {
-				return _productViewListForWeapon;
-			}
-			set {
-				_productViewListForWeapon = value;
-			}
-		}
+      for (var i = 0; i < _projectilesListSo.Count; i++) {
+        InitializeProductFields(_productViewListForProjectiles[i], _projectilesListSo[i], NumberOfProjectiles);
+      }
+    }
 
-		public List<ProductView> ProductViewListForProjectiles {
-			get {
-				return _productViewListForProjectiles;
-			}
-			set {
-				_productViewListForProjectiles = value;
-			}
-		}
+    private void SpawnItems() {
+      _productViewListForItems = new List<ProductView>();
+      for (var i = 0; i < _itemsListSo.Count; i++) {
+        GameObject product = Instantiate(_productPrefab, _contentItem);
+        var productView = product.GetComponent<ProductView>();
+        _productViewListForItems.Add(productView);
+      }
 
-		public List<ProductView> ProductViewListForItems {
-			get {
-				return _productViewListForItems;
-			}
-			set {
-				_productViewListForItems = value;
-			}
-		}
-	}
+      for (var i = 0; i < _itemsListSo.Count; i++) {
+        InitializeProductFields(_productViewListForItems[i], _itemsListSo[i], TestNumberOfProduct);
+      }
+    }
+
+    private void InitializeProductFields(ProductView productView, ProductObject productObject, int amount) {
+      SetProductIcon(productView, productObject);
+      SetProductName(productView, productObject);
+      SetProductNumberOfProduct(productView, amount);
+      SetProductProperty(productView, productObject);
+      SetProductPrice(productView, productObject);
+      SetProductId(productView, productObject);
+      KitForCharacterType(productView, productObject);
+    }
+
+    private void SetProductIcon(ProductView productView, ProductObject productObject) {
+      productView.SetIcon(productObject.GetIcon());
+    }
+
+    private void SetProductName(ProductView productView, ProductObject productObject) {
+      productView.SetName(productObject.GetProductName());
+    }
+
+    private void SetProductNumberOfProduct(ProductView productView, int numberOfProduct) {
+      productView.SetNumberOfProduct(numberOfProduct.ToString());
+    }
+
+    private void SetProductProperty(ProductView productView, ProductObject productObject) {
+      productView.SetProperty(productObject.GetProperty());
+    }
+
+    private void SetProductPrice(ProductView productView, ProductObject productObject) {
+      productView.SetPrice(productObject.GetPrice().ToString());
+    }
+
+    private void SetProductId(ProductView productView, ProductObject productObject) {
+      productView.SetId(productObject.GetId());
+    }
+
+    private void KitForCharacterType(ProductView productView, ProductObject productObject) {
+      switch (productObject.GetProductType()) {
+        case ProductObject.ProductType.None:
+          break;
+        case ProductObject.ProductType.Weapon:
+          if ((productObject.GetWeaponType() & _characterInTrurlsShop.GetWeaponKit()) == WeaponType.None) {
+            productView.ProductNotForCharacterType();
+          }
+
+          break;
+        case ProductObject.ProductType.Armor:
+          if ((productObject.GetArmorType() & _characterInTrurlsShop.GetArmorKit()) == ArmorType.None) {
+            productView.ProductNotForCharacterType();
+          }
+
+          break;
+        case ProductObject.ProductType.Item:
+          break;
+      }
+    }
+
+    public List<ProductView> ProductViewListForArmor {
+      get {
+        return _productViewListForArmor;
+      }
+      set {
+        _productViewListForArmor = value;
+      }
+    }
+
+    public List<ProductView> ProductViewListForWeapon {
+      get {
+        return _productViewListForWeapon;
+      }
+      set {
+        _productViewListForWeapon = value;
+      }
+    }
+
+    public List<ProductView> ProductViewListForProjectiles {
+      get {
+        return _productViewListForProjectiles;
+      }
+      set {
+        _productViewListForProjectiles = value;
+      }
+    }
+
+    public List<ProductView> ProductViewListForItems {
+      get {
+        return _productViewListForItems;
+      }
+      set {
+        _productViewListForItems = value;
+      }
+    }
+  }
 }

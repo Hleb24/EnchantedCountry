@@ -1,4 +1,4 @@
-using Core.Rule.GameRule.Weapon;
+using Core.Rule.GameRule;
 using Core.ScriptableObject.Weapon;
 using NUnit.Framework;
 using UnityEngine;

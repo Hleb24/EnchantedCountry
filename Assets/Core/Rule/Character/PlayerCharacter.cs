@@ -2,12 +2,10 @@ using System;
 using Core.Rule.Character.Equipment;
 using Core.Rule.Character.Qualities;
 using Core.Rule.Dice;
-using Core.Rule.GameRule.Armor;
-using Core.Rule.GameRule.ArmorClass;
+using Core.Rule.GameRule;
 using Core.Rule.GameRule.Impact;
 using Core.Rule.GameRule.Initiative;
 using Core.Rule.GameRule.RiskPoints;
-using Core.Rule.GameRule.Weapon;
 using Core.Support.Data;
 using UnityEngine;
 

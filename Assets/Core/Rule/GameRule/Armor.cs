@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Rule.GameRule.Armor {
+namespace Core.Rule.GameRule {
     public class Armor {
         [Flags]
         public enum ArmorType {
@@ -29,7 +29,7 @@ namespace Core.Rule.GameRule.Armor {
 
         public Armor(string armorName = DefaultNameForArmor, int classOfArmor = 8, Armor.ArmorType armorType = Armor.ArmorType.None, string effectName = "") {
             this.ArmorName = armorName;
-            ArmorClass = new ArmorClass.ArmorClass(classOfArmor);
+            ArmorClass = new ArmorClass(classOfArmor);
             this.EffectName = effectName;
             this.armorType = armorType;
         }
@@ -56,7 +56,7 @@ namespace Core.Rule.GameRule.Armor {
             }
         }
 
-        public ArmorClass.ArmorClass ArmorClass { get; private set; }
+        public ArmorClass ArmorClass { get; private set; }
 
         public string EffectName {
             get {
@@ -73,7 +73,7 @@ namespace Core.Rule.GameRule.Armor {
 
         public void Init(string armorName = DefaultNameForArmor, int classOfArmor = 8, Armor.ArmorType armorType = Armor.ArmorType.None, string effectName = "") {
             this.ArmorName = armorName;
-            ArmorClass = new ArmorClass.ArmorClass(classOfArmor);
+            ArmorClass = new ArmorClass(classOfArmor);
             this.EffectName = effectName;
             this.armorType = armorType;
         }

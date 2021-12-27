@@ -104,7 +104,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
 
     private int GetPrice(int id) {
       ProductObject product = _storage.GetProductFromList(id);
-      return product.price;
+      return product.GetPrice();
     }
 
     private bool CanBuyProduct(int coins, int price) {

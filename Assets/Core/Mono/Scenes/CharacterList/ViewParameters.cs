@@ -1,7 +1,6 @@
 using Core.Rule.Character.Qualities;
-using Core.Rule.GameRule.Armor;
+using Core.Rule.GameRule;
 using Core.Rule.GameRule.EquipmentIdConstants;
-using Core.Rule.GameRule.Weapon;
 using Core.ScriptableObject.Products;
 using Core.ScriptableObject.Storage;
 using Core.Support.Data;
@@ -167,7 +166,7 @@ namespace Core.Mono.Scenes.CharacterList {
       if (projectiliesId == 0) {
         return;
       }
-      ProductObject projectiliesProduct = storageObject.GetProjectiliesFromList(projectiliesId);
+      ProductObject projectiliesProduct = storageObject.GetProjectilesFromList(projectiliesId);
       Weapon projectilies = projectiliesProduct;
       _rangeMinDamage += projectilies.Attack.MinDamage;
       _rangeMaxDamage += projectilies.Attack.MaxDamage;
@@ -176,18 +175,18 @@ namespace Core.Mono.Scenes.CharacterList {
       int maxCoins = 0;
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.BagId) != 0) {
         ProductObject productObject = storageObject.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.BagId) );
-        maxCoins += int.Parse(productObject.Property);
+        maxCoins += int.Parse(productObject.GetProperty());
       }
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.AnimalId) != 0) {
         ProductObject productObject = storageObject.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.AnimalId));
-        maxCoins += int.Parse(productObject.Property);
+        maxCoins += int.Parse(productObject.GetProperty());
       }
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.CarriageId) != 0) {
         ProductObject productObject = storageObject.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.CarriageId));
-        maxCoins += int.Parse(productObject.Property);
+        maxCoins += int.Parse(productObject.GetProperty());
       }
 
-      maxCoins += int.Parse(storageObject.GetProductFromList(EquipmentIdConstants.Pockets).Property);
+      maxCoins += int.Parse(storageObject.GetProductFromList(EquipmentIdConstants.Pockets).GetProperty());
       _maxAmountOfCoins = maxCoins;
       _walletIn.Wallet.SetMaxCoins(_maxAmountOfCoins);
     }

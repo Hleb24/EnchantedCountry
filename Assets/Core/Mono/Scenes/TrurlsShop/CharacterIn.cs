@@ -4,8 +4,8 @@ using Core.Rule.Character;
 using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
-using static Core.Rule.GameRule.Armor.Armor;
-using static Core.Rule.GameRule.Weapon.Weapon;
+using static Core.Rule.GameRule.Armor;
+using static Core.Rule.GameRule.Weapon;
 
 namespace Core.Mono.Scenes.TrurlsShop {
   public class CharacterIn : MonoBehaviour {

@@ -1,9 +1,9 @@
 namespace Core.Rule.GameRule.NPC.Variants {
   public class Cyclops : Npc {
     private bool _isBlind;
-    public override bool GetDamaged(int diceRoll, float damage, int weaponId = 100, Weapon.Weapon.WeaponType type = Weapon.Weapon.WeaponType.None, bool isSpell = false) {
-      if (((type & Weapon.Weapon.WeaponType.LongBow) == Weapon.Weapon.WeaponType.LongBow && diceRoll >= 16)
-      ||((type & Weapon.Weapon.WeaponType.ShortBow) == Weapon.Weapon.WeaponType.ShortBow && diceRoll >= 16)
+    public override bool GetDamaged(int diceRoll, float damage, int weaponId = 100, Weapon.WeaponType type = Weapon.WeaponType.None, bool isSpell = false) {
+      if (((type & Weapon.WeaponType.LongBow) == Weapon.WeaponType.LongBow && diceRoll >= 16)
+      ||((type & Weapon.WeaponType.ShortBow) == Weapon.WeaponType.ShortBow && diceRoll >= 16)
       ) {
         _isBlind = true;
       }

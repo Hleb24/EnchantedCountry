@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Core.Rule.Dice;
 
-namespace Core.Rule.GameRule.Weapon {
+namespace Core.Rule.GameRule {
   public class Weapon {
     [Flags]
     public enum WeaponType {
@@ -95,7 +95,7 @@ namespace Core.Rule.GameRule.Weapon {
       NameOfWeapon = name;
       this.EffectName = effectName;
       this.weaponType = weaponType;
-      Attack = new Attack.Attack(maxDamage, minDamage, accurancy);
+      Attack = new Attack(maxDamage, minDamage, accurancy);
       Id = id;
     }
 
@@ -103,11 +103,11 @@ namespace Core.Rule.GameRule.Weapon {
       NameOfWeapon = name;
       this.EffectName = effectName;
       this.weaponType = weaponType;
-      Attack = new Attack.Attack(damageList, accurancy);
+      Attack = new Attack(damageList, accurancy);
       Id = id;
     }
 
-    public Attack.Attack Attack { get; private set; }
+    public Attack Attack { get; private set; }
     public WeaponType weaponType { get; set; }
 
     public string EffectName {
@@ -130,7 +130,7 @@ namespace Core.Rule.GameRule.Weapon {
       NameOfWeapon = name;
       this.EffectName = effectName;
       this.weaponType = weaponType;
-      Attack = new Attack.Attack(maxDamage, minDamage, accurancy);
+      Attack = new Attack(maxDamage, minDamage, accurancy);
       Id = id;
     }
 
@@ -138,7 +138,7 @@ namespace Core.Rule.GameRule.Weapon {
       NameOfWeapon = name;
       this.EffectName = effectName;
       this.weaponType = weaponType;
-      Attack = new Attack.Attack(damageList, accurancy);
+      Attack = new Attack(damageList, accurancy);
       Id = id;
     }
 
