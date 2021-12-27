@@ -1,5 +1,5 @@
-﻿using Core.SupportSystems.Data;
-using Core.SupportSystems.SaveSystem.SaveManagers;
+﻿using Core.Support.Data;
+using Core.Support.SaveSystem.SaveManagers;
 
 namespace Core.Rule.Character.Wallet {
 	public class Wallet {

@@ -4,8 +4,8 @@ using Core.Rule.GameRule.EquipmentIdConstants;
 using Core.Rule.GameRule.Weapon;
 using Core.ScriptableObject.Products;
 using Core.ScriptableObject.Storage;
-using Core.SupportSystems.Data;
-using Core.SupportSystems.SaveSystem.SaveManagers;
+using Core.Support.Data;
+using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 

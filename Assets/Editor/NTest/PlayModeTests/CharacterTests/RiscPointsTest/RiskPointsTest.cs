@@ -1,5 +1,5 @@
 using Core.Rule.GameRule.RiskPoints;
-using Core.SupportSystems.Data;
+using Core.Support.Data;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.CharacterTests.RiscPointsTest {

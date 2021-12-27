@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Core.SupportSystems.Data;
+using Core.Support.Data;
 using UnityEngine;
 
-namespace Core.Mono.Scenes.SelectionClass {
+namespace Core.Mono.Scenes.QualityDiceRoll {
   /// <summary>
   /// Класс для работы с коллекцией <see cref="QualityVisual"/>.
   /// </summary>

@@ -1,5 +1,5 @@
 using Core.Rule.Dice;
-using Core.SupportSystems.Data;
+using Core.Support.Data;
 
 namespace Core.Mono.Scenes.QualitiesImprovement {
   public class QualityIncrease {

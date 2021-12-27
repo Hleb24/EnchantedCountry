@@ -8,7 +8,7 @@ using Core.Rule.GameRule.Impact;
 using Core.Rule.GameRule.Initiative;
 using Core.Rule.GameRule.RiskPoints;
 using Core.Rule.GameRule.Weapon;
-using Core.SupportSystems.Data;
+using Core.Support.Data;
 using UnityEngine;
 
 namespace Core.Rule.Character {

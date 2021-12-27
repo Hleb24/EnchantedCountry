@@ -1,9 +1,8 @@
 using Core.Mono.MainManagers;
-using Core.Mono.Scenes.CreateCharacter;
 using Core.Rule.Character.GamePoints;
 using Core.Rule.Dice;
-using Core.SupportSystems.Data;
-using Core.SupportSystems.SaveSystem.SaveManagers;
+using Core.Support.Data;
+using Core.Support.SaveSystem.SaveManagers;
 using Zenject;
 
 namespace Aberrance {

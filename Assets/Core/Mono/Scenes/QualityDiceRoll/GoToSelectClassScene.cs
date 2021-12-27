@@ -1,7 +1,7 @@
 using Core.Mono.BaseClass;
 using UnityEngine;
 
-namespace Core.Mono.Scenes.CreateCharacter {
+namespace Core.Mono.Scenes.QualityDiceRoll {
   public class GoToSelectClassScene : GoToScene {
     [SerializeField]
     private QualitiesSelector _qualitiesSelector;

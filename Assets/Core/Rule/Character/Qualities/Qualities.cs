@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Core.SupportSystems.Data;
+using Core.Support.Data;
 
 namespace Core.Rule.Character.Qualities {
   [Serializable]

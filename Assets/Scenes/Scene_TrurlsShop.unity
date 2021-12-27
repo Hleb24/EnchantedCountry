@@ -192,8 +192,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: -20}
+  m_AnchoredPosition: {x: 0, y: -8.266724}
+  m_SizeDelta: {x: -20, y: -3.4667}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &88482879
 GameObject:
@@ -263,7 +263,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -464,9 +464,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 685, y: -143.5}
-  m_SizeDelta: {x: 1316, y: 741.1}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -165}
+  m_SizeDelta: {x: 1245, y: 741.1}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &162544642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -712,7 +712,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8621217553013334626, guid: 4a38a22849c174348b47229331da298a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -211.5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8621217553013334626, guid: 4a38a22849c174348b47229331da298a, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -799,9 +799,9 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -37, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &231140498
 MonoBehaviour:
@@ -1048,7 +1048,7 @@ GameObject:
   - component: {fileID: 385319988}
   - component: {fileID: 385319987}
   m_Layer: 0
-  m_Name: CheckProductInShop
+  m_Name: CheckProduct
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1067,7 +1067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cashBox: {fileID: 1821932960}
-  _spawnProductInTrulsShop: {fileID: 2101376834}
+  _spawnProduct: {fileID: 2101376834}
 --- !u!4 &385319988
 Transform:
   m_ObjectHideFlags: 0
@@ -1251,8 +1251,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: -20}
+  m_AnchoredPosition: {x: 0, y: -8.266724}
+  m_SizeDelta: {x: -20, y: -3.4667}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &466242594
 GameObject:
@@ -1419,7 +1419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &556865157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1795,7 +1795,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1890,7 +1890,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &774169508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2075,7 +2075,7 @@ GameObject:
   - component: {fileID: 790738605}
   - component: {fileID: 790738604}
   m_Layer: 0
-  m_Name: WalletInTrurlsShop
+  m_Name: Wallet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2258,7 +2258,7 @@ GameObject:
   - component: {fileID: 802545450}
   - component: {fileID: 802545451}
   m_Layer: 0
-  m_Name: ProductSelectionInTrurlsShop
+  m_Name: ProductSelection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2331,9 +2331,9 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -37, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &804586013
 MonoBehaviour:
@@ -2429,9 +2429,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 685, y: -143.5}
-  m_SizeDelta: {x: 1316, y: 741.1}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -165}
+  m_SizeDelta: {x: 1245, y: 741.1}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &895953427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3250,7 +3250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8621217553013334626, guid: 4a38a22849c174348b47229331da298a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -211.5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8621217553013334626, guid: 4a38a22849c174348b47229331da298a, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3766,7 +3766,7 @@ GameObject:
   - component: {fileID: 1388371987}
   - component: {fileID: 1388371988}
   m_Layer: 0
-  m_Name: RollDiceForCoins
+  m_Name: CoinsDiceRoll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3800,7 +3800,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _diceRollButton: {fileID: 792231545}
   _numberOfCoinsText: {fileID: 986324297}
-  _useGameSave: 0
 --- !u!1001 &1408108204
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4208,9 +4207,9 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -37, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1583669298
 MonoBehaviour:
@@ -4301,9 +4300,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 685, y: -143.5}
-  m_SizeDelta: {x: 1316, y: 741.1}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -165}
+  m_SizeDelta: {x: 1245, y: 741.1}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1679774787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4440,7 +4439,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4663,7 +4662,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8621217553013334626, guid: 4a38a22849c174348b47229331da298a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -211.5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8621217553013334626, guid: 4a38a22849c174348b47229331da298a, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4942,7 +4941,7 @@ GameObject:
   - component: {fileID: 1902813121}
   - component: {fileID: 1902813120}
   m_Layer: 0
-  m_Name: CharacterInTrurlsShop
+  m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5010,8 +5009,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: -20}
+  m_AnchoredPosition: {x: 0, y: -8.266724}
+  m_SizeDelta: {x: -20, y: -3.4667}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1936854661
 GameObject:
@@ -5160,7 +5159,7 @@ GameObject:
   - component: {fileID: 2101376835}
   - component: {fileID: 2101376834}
   m_Layer: 0
-  m_Name: SpawnProductInTrulsShop
+  m_Name: SpawnProduct
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,7 +1,7 @@
 using System.Globalization;
-using Core.SupportSystems.Data;
-using Core.SupportSystems.PrefsTools;
-using Core.SupportSystems.SaveSystem.SaveManagers;
+using Core.Support.Data;
+using Core.Support.PrefsTools;
+using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 

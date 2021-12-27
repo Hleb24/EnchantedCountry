@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using Core.Rule.Character;
 using Core.Rule.Character.Levels;
-using Core.SupportSystems.Data;
+using Core.Support.Data;
 
 namespace Character {
   public class DefiningLevelsForСharacterTypes {

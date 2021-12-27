@@ -1,4 +1,4 @@
-using Core.Mono.Scenes.CreateCharacter;
+using Core.Mono.Scenes.QualityDiceRoll;
 using NUnit.Framework;
 using UnityEngine;
 

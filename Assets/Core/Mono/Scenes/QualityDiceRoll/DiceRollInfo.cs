@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Core.Mono.Scenes.CreateCharacter {
+namespace Core.Mono.Scenes.QualityDiceRoll {
   /// <summary>
   ///   Класс для отображения инфомации о бросках кубиков для качеств персонажа.
   /// </summary>

@@ -7,13 +7,13 @@ using Core.Rule.GameRule.RiskPoints;
 using Core.Rule.GameRule.Weapon;
 using Core.ScriptableObject.Products;
 using Core.ScriptableObject.Storage;
-using Core.SupportSystems.Data;
-using Core.SupportSystems.SaveSystem.SaveManagers;
+using Core.Support.Data;
+using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace Core.Mono.Scenes.CreateCharacter {
+namespace Core.Mono.Scenes.QualityDiceRoll {
   public class PlayerBuilder : MonoBehaviour {
     [FormerlySerializedAs("_storageSo"),FormerlySerializedAs("_storageSO"), SerializeField]
     private StorageObject _storageObject;

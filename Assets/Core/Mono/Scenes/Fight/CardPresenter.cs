@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Core.Mono.Scenes.CreateCharacter;
+using Core.Mono.Scenes.QualityDiceRoll;
 using Core.Rule.Character;
 using Core.Rule.GameRule.NPC;
 using UnityEngine;

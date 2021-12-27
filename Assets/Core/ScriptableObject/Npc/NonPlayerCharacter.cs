@@ -6,8 +6,8 @@ using Core.Rule.GameRule.NPC;
 using Core.Rule.GameRule.RiskPoints;
 using Core.ScriptableObject.Impacts;
 using Core.ScriptableObject.Weapon;
-using Core.SupportSystems.Data;
-using Core.SupportSystems.SaveSystem.SaveManagers;
+using Core.Support.Data;
+using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 
 namespace Core.ScriptableObject.Npc {

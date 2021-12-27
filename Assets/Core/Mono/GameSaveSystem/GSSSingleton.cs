@@ -1,6 +1,6 @@
 using System;
-using Core.SupportSystems.Data;
-using Core.SupportSystems.SaveSystem;
+using Core.Support.Data;
+using Core.Support.SaveSystem;
 using UnityEngine;
 
 namespace Core.Mono.GameSaveSystem {
@@ -14,7 +14,7 @@ namespace Core.Mono.GameSaveSystem {
       }
     }
 
-    private readonly SupportSystems.SaveSystem.GameSaveSystem _gameSaveSystem;
+    private readonly Support.SaveSystem.GameSaveSystem _gameSaveSystem;
     private bool _doNotСheckNewGame;
     private bool _resetSave;
     private bool _dontLoadInAwake;
@@ -33,8 +33,8 @@ namespace Core.Mono.GameSaveSystem {
       Save();
     }
 
-    public SupportSystems.SaveSystem.GameSaveSystem CreateGameSaveSystem() {
-      return new SupportSystems.SaveSystem.GameSaveSystem();
+    public Support.SaveSystem.GameSaveSystem CreateGameSaveSystem() {
+      return new Support.SaveSystem.GameSaveSystem();
     }
 
     public DiceRollScribe GetDiceRollDataWithLoad(int numberOfSave = 0) {

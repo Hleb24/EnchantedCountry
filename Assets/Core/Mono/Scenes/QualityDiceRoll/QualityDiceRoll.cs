@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using Core.Rule.Dice;
-using Core.SupportSystems.Data;
-using Core.SupportSystems.SaveSystem.SaveManagers;
+using Core.Support.Data;
+using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Mono.Scenes.CreateCharacter {
+namespace Core.Mono.Scenes.QualityDiceRoll {
   /// <summary>
   /// Класс отвечает за броски костей для качества.
   /// </summary>

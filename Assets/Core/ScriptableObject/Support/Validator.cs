@@ -1,4 +1,4 @@
-using Core.SupportSystems.Attributes;
+using Core.Support.Attributes;
 using UnityEngine;
 
 namespace Core.ScriptableObject.Support {

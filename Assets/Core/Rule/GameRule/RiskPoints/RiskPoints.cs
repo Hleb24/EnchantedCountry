@@ -1,4 +1,4 @@
-﻿using Core.SupportSystems.Data;
+﻿using Core.Support.Data;
 
 namespace Core.Rule.GameRule.RiskPoints {
   public class RiskPoints {

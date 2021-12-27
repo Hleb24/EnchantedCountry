@@ -1,8 +1,8 @@
 using System;
 using Core.Rule.Character;
 using Core.ScriptableObject.Mock;
-using Core.SupportSystems.Data;
-using Core.SupportSystems.SaveSystem.SaveManagers;
+using Core.Support.Data;
+using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.UI;
 

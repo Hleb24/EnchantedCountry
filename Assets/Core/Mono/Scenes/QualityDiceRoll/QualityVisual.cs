@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using Core.SupportSystems.Data;
+using Core.Support.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace Core.Mono.Scenes.SelectionClass {
+namespace Core.Mono.Scenes.QualityDiceRoll {
   /// <summary>
   /// Класс отвечает за отображение качества персонажа.
   /// </summary>

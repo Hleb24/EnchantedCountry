@@ -1,13 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using Core.Mono.Scenes.SelectionClass;
-using Core.SupportSystems.Data;
-using Core.SupportSystems.SaveSystem.SaveManagers;
+using Core.Support.Data;
+using Core.Support.SaveSystem.SaveManagers;
 using ModestTree;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Mono.Scenes.CreateCharacter {
+namespace Core.Mono.Scenes.QualityDiceRoll {
   /// <summary>
   ///   Класс отвечает за распределине значений бросков костей для качеств персонажа.
   /// </summary>
