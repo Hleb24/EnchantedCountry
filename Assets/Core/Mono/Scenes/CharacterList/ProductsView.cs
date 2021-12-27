@@ -6,183 +6,163 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.CharacterList {
-	public class ProductsView : MonoBehaviour, IPointerClickHandler {
-		[SerializeField]
-		private Image _background;
-		[SerializeField]
-		private TMP_Text _name;
-		[SerializeField]
-		private TMP_Text _numberOfProduct;
-		private int _id;
-		private bool _productWhatCanNotUsed;
-		private bool _thisProductSelected;
-		private bool _thisProductUsed;
-		private static List<int> _thisProductUnusedList = new List<int>();
-		public static event Action<ProductsView> PointerClicked;
-		public static event Action<int> ProductSelected;
-		public void ProductWhatCanNotUsed() {
-			SetGreyColorForBackground();
-			DisableRaycastTargetForBackground();
-			_productWhatCanNotUsed = true;
-		}
-		
-		private void OnEnable() {
-			CheckUnusedList();
-			if (_thisProductUsed) {
-				SetGreenColorForBackground();
-			}
-			ProductsView.PointerClicked += OnPointerClicked;
-			EquipmentsChoice.ApplyButtonClicked += OnApplyButtonClicked;
-			EquipmentsChoice.TakeOffEquipment += OnTakeOffEquipment;
-		}
+  public class ProductsView : MonoBehaviour, IPointerClickHandler {
+    private static readonly List<int> ThisProductUnusedList = new List<int>();
 
-		private void OnDisable() {
-			ProductsView.PointerClicked -= OnPointerClicked;
-			EquipmentsChoice.ApplyButtonClicked -= OnApplyButtonClicked;
-			EquipmentsChoice.TakeOffEquipment -= OnTakeOffEquipment;
-			SetWhiteColorForBackgroundOnDisable();
-			SetFalseForThisProductSelected();
-		}
+    public static event Action<ProductsView> PointerClicked;
+    public static event Action<int> ProductSelected;
+    [SerializeField]
+    private Image _background;
+    [SerializeField]
+    private TMP_Text _name;
+    [SerializeField]
+    private TMP_Text _numberOfProduct;
+    private int _id;
+    private bool _productWhatCanNotUsed;
+    private bool _thisProductUsed;
 
+    private void OnEnable() {
+      CheckUnusedList();
+      if (_thisProductUsed) {
+        SetGreenColorForBackground();
+      }
 
-		private void SetWhiteColorForBackgroundOnDisable() {
-			if (!_productWhatCanNotUsed && !_thisProductUsed) {
-				SetWhiteColorForBackground();
-			}
-		}
-		private void OnPointerClicked(ProductsView productView) {
-			if (productView != this) {
-				_thisProductSelected = false;
-				if (_productWhatCanNotUsed)
-					return;
-				if (_thisProductUsed) {
-					SetGreenColorForBackground();
-					return;
-				}
-				SetWhiteColorForBackground();
-			}
-		}
+      PointerClicked += OnPointerClicked;
+      EquipmentsChoice.ApplyButtonClicked += OnApplyButtonClicked;
+      EquipmentsChoice.TakeOffEquipment += OnTakeOffEquipment;
+    }
 
-		public void OnPointerClick(PointerEventData eventData) {
-			_thisProductSelected = true;
-			SetColorForBackground();
-			PointerClicked?.Invoke(this);
-			if (_productWhatCanNotUsed) {
-				ProductSelected?.Invoke(0);
-				return;
-			}
-			ProductSelected?.Invoke(_id);
-		}
+    private void OnDisable() {
+      PointerClicked -= OnPointerClicked;
+      EquipmentsChoice.ApplyButtonClicked -= OnApplyButtonClicked;
+      EquipmentsChoice.TakeOffEquipment -= OnTakeOffEquipment;
+      SetWhiteColorForBackgroundOnDisable();
+    }
 
-		public void OnApplyButtonClicked(int id) {
-			if (ThisIsThisId(id)) {
-				_thisProductUsed = true;
-				SetGreenColorForBackground();
-			}
-		}
+    public void OnPointerClick(PointerEventData eventData) {
+      SetColorForBackground();
+      PointerClicked?.Invoke(this);
+      if (_productWhatCanNotUsed) {
+        ProductSelected?.Invoke(0);
+        return;
+      }
 
-		private void OnTakeOffEquipment(int id) {
-			if (ThisIsThisId(id)) {
-				_thisProductUsed = false;
-				SetWhiteColorForBackground();
-			} else {
-				_thisProductUnusedList.Add(id);
-			}
-		}
+      ProductSelected?.Invoke(_id);
+    }
 
-		private bool ThisIsThisId(int id) {
-			return _id == id;
-		}
-		private void SetFalseForThisProductSelected() {
-			_thisProductSelected = false;
-		}
-		private void CheckUnusedList() {
-			if(_thisProductUnusedList.Count.Equals(0))
-				return;
-			for (int i = 0; i < _thisProductUnusedList.Count; i++) {
-				if (ThisIsThisId(_thisProductUnusedList[i])) {
-					_thisProductUsed = false;
-					SetWhiteColorForBackground();
-					_thisProductUnusedList.RemoveAt(i);
-				}
-			}
-		}
-		
-		private void DisableRaycastTargetForBackground() {
-			_background.raycastTarget = false;
-		}
-		// ReSharper disable once UnusedMember.Local
-		private void EnableRaycastTargetForBackground() {
-			_background.raycastTarget = true;
-		}
-		private void SetWhiteColorForBackground() {
-			_background.color = Color.white;
-		}
+    public void ProductWhatCanNotUsed() {
+      SetGreyColorForBackground();
+      DisableRaycastTargetForBackground();
+      _productWhatCanNotUsed = true;
+    }
 
-		private void SetGreenColorForBackground() {
-			_background.color = Color.green;
-		}
-		private void SetCyanColorForBackground() {
-			_background.color = Color.cyan;
-		}
+    public void SetProductName(string productName) {
+      _name.text = productName;
+    }
 
-		private void SetGreyColorForBackground() {
-			_background.color = Color.grey;
-		}
+    public void SetNumberOfProduct(string numberOfProduct) {
+      _numberOfProduct.text = numberOfProduct;
+    }
 
-		private void SetColorForBackground() {
-			if (_productWhatCanNotUsed)
-				return;
-			if (_thisProductUsed) {
-				SetCyanColorForBackground();
-				return;
-			}
-			SetOrangeColorForBackground();
-		}
+    public void SetId(int id) {
+      _id = id;
+    }
 
-		private void SetOrangeColorForBackground() {
-			_background.color = new Color(0.9245283f, 0.5744624f, 0.3523674f, 1f);
-		}
+    private void OnApplyButtonClicked(int id) {
+      if (ThisIsThisId(id)) {
+        _thisProductUsed = true;
+        SetGreenColorForBackground();
+      }
+    }
 
-		// ReSharper disable once UnusedMember.Local
-		private static bool IsNotEnoughCoinForBuyProduct(int coinsInWallet, int price) {
-			return coinsInWallet < price;
-		}
-		public TMP_Text Name {
-			get {
-				return _name;
-			}
-			set {
-				_name = value;
-			}
-		}
+    private void SetWhiteColorForBackgroundOnDisable() {
+      if (!_productWhatCanNotUsed && !_thisProductUsed) {
+        SetWhiteColorForBackground();
+      }
+    }
 
-		public TMP_Text NumberOfProduct {
-			get {
-				return _numberOfProduct;
-			}
-			set {
-				_numberOfProduct = value;
-			}
-		}
+    private void OnPointerClicked(ProductsView productView) {
+      if (productView != this) {
+        if (_productWhatCanNotUsed) {
+          return;
+        }
 
-		public int Id {
-			get {
-				return _id;
-			}
-			set {
-				_id = value;
-			}
-		}
+        if (_thisProductUsed) {
+          SetGreenColorForBackground();
+          return;
+        }
 
-		public bool ThisProductSelected {
-			get {
-				return _thisProductSelected;
-			}
-			set {
-				_thisProductSelected = value;
-			}
-		}
-	}
+        SetWhiteColorForBackground();
+      }
+    }
+
+    private void OnTakeOffEquipment(int id) {
+      if (ThisIsThisId(id)) {
+        _thisProductUsed = false;
+        SetWhiteColorForBackground();
+      } else {
+        ThisProductUnusedList.Add(id);
+      }
+    }
+
+    private bool ThisIsThisId(int id) {
+      return _id == id;
+    }
+
+    private void CheckUnusedList() {
+      if (ThisProductUnusedList.Count.Equals(0)) {
+        return;
+      }
+
+      for (var i = 0; i < ThisProductUnusedList.Count; i++) {
+        if (ThisIsThisId(ThisProductUnusedList[i])) {
+          _thisProductUsed = false;
+          SetWhiteColorForBackground();
+          ThisProductUnusedList.RemoveAt(i);
+        }
+      }
+    }
+
+    private void DisableRaycastTargetForBackground() {
+      _background.raycastTarget = false;
+    }
+
+    // ReSharper disable once UnusedMember.Local
+    private void EnableRaycastTargetForBackground() {
+      _background.raycastTarget = true;
+    }
+
+    private void SetWhiteColorForBackground() {
+      _background.color = Color.white;
+    }
+
+    private void SetGreenColorForBackground() {
+      _background.color = Color.green;
+    }
+
+    private void SetCyanColorForBackground() {
+      _background.color = Color.cyan;
+    }
+
+    private void SetGreyColorForBackground() {
+      _background.color = Color.grey;
+    }
+
+    private void SetColorForBackground() {
+      if (_productWhatCanNotUsed) {
+        return;
+      }
+
+      if (_thisProductUsed) {
+        SetCyanColorForBackground();
+        return;
+      }
+
+      SetOrangeColorForBackground();
+    }
+
+    private void SetOrangeColorForBackground() {
+      _background.color = new Color(0.9245283f, 0.5744624f, 0.3523674f, 1f);
+    }
+  }
 }
-

@@ -14,8 +14,10 @@ using static Core.Rule.GameRule.Weapon;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class SpawnProducts : MonoBehaviour {
-    private const int TEST_NUMBER_OF_PRODUCT = 5;
-    private const int NUMBER_OF_PROJECTILIES = 20;
+    private const int TestNumberOfProduct = 5;
+    private const int NumberOfProjectiles = 20;
+
+    public static event Action SpawnCompleted;
     [SerializeField]
     private CharacterInCharacterList _characterInCharacterList;
     [SerializeField]
@@ -51,33 +53,17 @@ namespace Core.Mono.Scenes.CharacterList {
     private List<int> _itemWhatCanUsed;
     private IEquipment _equipments;
 
-    public static event Action SpawnCompleted;
-    public List<ProductObject> GetArmorList() {
-      return _armorListSo;
-    }
-
-    public List<ProductObject> GetWeaponList() {
-      return _weaponListSo;
-    }
-
-    public List<ProductObject> GetProjectiliesList() {
-      return _projectilesListSo;
-    }
-
-    public List<ProductObject> GetItemList() {
-      return _itemsListSo;
-    }
     private void Awake() {
       _characterInCharacterList.GetCharacterType += SetListsSoAndSpawnProducts;
       SetItemWhatCanUsedList();
     }
 
-    private void OnDestroy() {
-      _characterInCharacterList.GetCharacterType -= SetListsSoAndSpawnProducts;
-    }
-
     private void Start() {
       _equipments = ScribeDealer.Peek<EquipmentsScribe>();
+    }
+
+    private void OnDestroy() {
+      _characterInCharacterList.GetCharacterType -= SetListsSoAndSpawnProducts;
     }
 
     private void SetItemWhatCanUsedList() {
@@ -146,7 +132,7 @@ namespace Core.Mono.Scenes.CharacterList {
     private void Spawn() {
       SpawnWeapon();
       SpawnArmor();
-      SpawnProjectilies();
+      SpawnProjectiles();
       SpawnItems();
       SpawnCompleted?.Invoke();
     }
@@ -161,7 +147,7 @@ namespace Core.Mono.Scenes.CharacterList {
 
       for (var i = 0; i < _armorListSo.Count; i++) {
         int index = i;
-        InitializeProductFields(_productViewListForArmor[index], _armorListSo[index], TEST_NUMBER_OF_PRODUCT);
+        InitializeProductFields(_productViewListForArmor[index], _armorListSo[index], TestNumberOfProduct);
       }
     }
 
@@ -175,11 +161,11 @@ namespace Core.Mono.Scenes.CharacterList {
 
       for (var i = 0; i < _weaponListSo.Count; i++) {
         int index = i;
-        InitializeProductFields(_productViewListForWeapon[index], _weaponListSo[index], TEST_NUMBER_OF_PRODUCT);
+        InitializeProductFields(_productViewListForWeapon[index], _weaponListSo[index], TestNumberOfProduct);
       }
     }
 
-    private void SpawnProjectilies() {
+    private void SpawnProjectiles() {
       _productViewListForProjectilies = new List<ProductsView>();
       for (var i = 0; i < _projectilesListSo.Count; i++) {
         GameObject product = Instantiate(_productPrefab, _contentWeapon);
@@ -189,7 +175,7 @@ namespace Core.Mono.Scenes.CharacterList {
 
       for (var i = 0; i < _projectilesListSo.Count; i++) {
         int index = i;
-        InitializeProductFields(_productViewListForProjectilies[index], _projectilesListSo[index], NUMBER_OF_PROJECTILIES);
+        InitializeProductFields(_productViewListForProjectilies[index], _projectilesListSo[index], NumberOfProjectiles);
       }
     }
 
@@ -203,7 +189,7 @@ namespace Core.Mono.Scenes.CharacterList {
 
       for (var i = 0; i < _itemsListSo.Count; i++) {
         int index = i;
-        InitializeProductFields(_productViewListForItems[index], _itemsListSo[index], TEST_NUMBER_OF_PRODUCT);
+        InitializeProductFields(_productViewListForItems[index], _itemsListSo[index], TestNumberOfProduct);
         SetCanNotUsedForItem(_productViewListForItems[index], _itemsListSo[index]);
       }
     }
@@ -222,15 +208,15 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SetProductName(ProductsView productView, ProductObject productObject) {
-      productView.Name.text = productObject.GetProductName();
+      productView.SetProductName(productObject.GetProductName());
     }
 
     private void SetProductNumberOfProduct(ProductsView productView, int numberOfProduct) {
-      productView.NumberOfProduct.text = numberOfProduct.ToString();
+      productView.SetNumberOfProduct(numberOfProduct.ToString());
     }
 
     private void SetProductId(ProductsView productView, ProductObject productObject) {
-      productView.Id = productObject.GetId();
+      productView.SetId(productObject.GetId());
     }
 
     private void KitForCharacterType(ProductsView productView, ProductObject productObject) {
@@ -251,42 +237,6 @@ namespace Core.Mono.Scenes.CharacterList {
           break;
         case ProductObject.ProductType.Item:
           break;
-      }
-    }
-
-    public List<ProductsView> ProductViewListForArmor {
-      get {
-        return _productViewListForArmor;
-      }
-      set {
-        _productViewListForArmor = value;
-      }
-    }
-
-    public List<ProductsView> ProductViewListForWeapon {
-      get {
-        return _productViewListForWeapon;
-      }
-      set {
-        _productViewListForWeapon = value;
-      }
-    }
-
-    public List<ProductsView> ProductViewListForProjectilies {
-      get {
-        return _productViewListForProjectilies;
-      }
-      set {
-        _productViewListForProjectilies = value;
-      }
-    }
-
-    public List<ProductsView> ProductViewListForItems {
-      get {
-        return _productViewListForItems;
-      }
-      set {
-        _productViewListForItems = value;
       }
     }
 

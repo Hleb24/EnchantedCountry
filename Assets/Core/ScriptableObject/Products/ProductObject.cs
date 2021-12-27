@@ -2,7 +2,6 @@ using Core.ScriptableObject.Armor;
 using Core.ScriptableObject.Weapon;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Debug = System.Diagnostics.Debug;
 
 namespace Core.ScriptableObject.Products {
   [CreateAssetMenu(fileName = "New Products", menuName = "Product", order = 54)]
@@ -29,6 +28,7 @@ namespace Core.ScriptableObject.Products {
     [FormerlySerializedAs("productName"), SerializeField]
     private string _productName = "";
     [FormerlySerializedAs("description"), SerializeField]
+    // ReSharper disable once NotAccessedField.Local
     private string _description = "";
     [FormerlySerializedAs("Property"), SerializeField]
     private string _property;
@@ -59,10 +59,6 @@ namespace Core.ScriptableObject.Products {
       return _property;
     }
 
-    public string GetDescription() {
-      return _description;
-    }
-
     public string GetProductName() {
       return _productName;
     }
@@ -73,10 +69,6 @@ namespace Core.ScriptableObject.Products {
 
     public UnityEngine.ScriptableObject GetItem() {
       return _item;
-    }
-
-    public void SetId(int id) {
-      _id = id;
     }
 
     public void OnValidate() {
@@ -120,8 +112,6 @@ namespace Core.ScriptableObject.Products {
     public void SetItem(UnityEngine.ScriptableObject item) {
       _item = item;
     }
-
-    
 
     private void GetNameWithItem() {
       IsWeaponObject();

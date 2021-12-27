@@ -24,7 +24,7 @@ namespace Editor.NTest.PlayModeTests.GameRuleTests.ArmorTest {
     [Test, Description("Test armor constructor"), Repeat(1)]
     public void TestArmorConstructor() {
       Assert.That(_armor.ArmorClass.ClassOfArmor, Is.EqualTo(8));
-      Assert.That(_armor.ArmorName, Is.EqualTo(Armor.DefaultNameForArmor));
+      Assert.That(_armor.ArmorName, Is.EqualTo(Armor.DEFAULT_NAME_FOR_ARMOR));
     }
 
     [Test, Description("Test effect on armor"), Repeat(1)]
