@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Normal_Spear
   m_EditorClassIdentifier: 
   productType: 1
-  productName: 
-  price: 7
   item: {fileID: 11400000, guid: cc548c22375299240a9ef3fb4b3732ee, type: 2}
+  productName: Spear
+  description: 
+  Property: 2 - 4
+  price: 7
+  id: 220
+  icon: {fileID: 21300000, guid: 02ff976d39577774bb44b83610e61dec, type: 3}

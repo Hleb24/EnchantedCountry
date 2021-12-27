@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Normal_ThrowingAxe
   m_EditorClassIdentifier: 
   productType: 1
-  productName: Normal Throwing Axe
-  price: 5
   item: {fileID: 11400000, guid: a601605bc5cbb11408561a978bb206c1, type: 2}
+  productName: ThrowingAxe
+  description: 
+  Property: 2 - 4
+  price: 5
+  id: 420
+  icon: {fileID: 21300000, guid: 1fb46228a3bcb5042a763829cc07f9e5, type: 3}

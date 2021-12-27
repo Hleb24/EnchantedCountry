@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Normal_ShortBow
   m_EditorClassIdentifier: 
   productType: 1
-  productName: Normal Short Bow
-  price: 25
   item: {fileID: 11400000, guid: 65bc392f398213f4fab840230aab944e, type: 2}
+  productName: ShortBow
+  description: 
+  Property: 0 - 0
+  price: 25
+  id: 440
+  icon: {fileID: 21300000, guid: bbf8638a8a75d9c42b93639213c92c9b, type: 3}

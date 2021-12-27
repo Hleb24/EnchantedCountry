@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Normal_TwoHandedHalberd
   m_EditorClassIdentifier: 
   productType: 1
-  productName: ' Two Handed Halberd'
-  price: 25
   item: {fileID: 11400000, guid: 0af59c3d1dede2b4aacee5d8408d7017, type: 2}
+  productName: TwoHandedHalberd
+  description: 
+  Property: 3 - 8
+  price: 25
+  id: 300
+  icon: {fileID: 21300000, guid: 68e1f3d1470827b49b3b3347af0e4f6d, type: 3}

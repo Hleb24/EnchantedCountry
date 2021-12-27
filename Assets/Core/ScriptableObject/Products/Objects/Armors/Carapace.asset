@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Carapace
   m_EditorClassIdentifier: 
   productType: 2
-  productName: Carapace
-  price: 80
   item: {fileID: 11400000, guid: 70f06a7d7c1b1434d8c4689bc0ae8928, type: 2}
+  productName: Carapace
+  description: 
+  Property: 3
+  price: 80
+  id: 150
+  icon: {fileID: 21300000, guid: 567fdd2e557fefc478f8aaa7ae56fb11, type: 3}

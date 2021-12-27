@@ -140,6 +140,34 @@ PrefabInstance:
 
 '
       objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.731
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.807
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4290432767
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403032609962501, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403032609962501, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 67ab9fcbf33ddc342b4d9b7431c00c32, type: 3}
     - target: {fileID: 2611403032609962504, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
       propertyPath: m_Name
       value: Button_Elf
@@ -390,6 +418,34 @@ PrefabInstance:
 
 '
       objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.731
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.807
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4290432767
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403032609962501, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403032609962501, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e7e8bc596198be744a9e3641b7b0b8ca, type: 3}
     - target: {fileID: 2611403032609962504, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
       propertyPath: m_Name
       value: Button_Wizard
@@ -682,6 +738,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8281815031065791309, guid: 14ed9ff0e0dcd9545b3c861187c298f6, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8281815031065791309, guid: 14ed9ff0e0dcd9545b3c861187c298f6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 65495e518b9746d4db8b0f77adda06a3, type: 3}
     - target: {fileID: 8281815031791489017, guid: 14ed9ff0e0dcd9545b3c861187c298f6, type: 3}
       propertyPath: m_text
       value: Next
@@ -756,6 +820,34 @@ PrefabInstance:
 
 '
       objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.731
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.807
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4290432767
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403032609962501, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403032609962501, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a3cc7f43ee8204447b96f17d77e2b800, type: 3}
     - target: {fileID: 2611403032609962504, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
       propertyPath: m_Name
       value: Button_Gnom
@@ -1035,6 +1127,34 @@ PrefabInstance:
 
 '
       objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.731
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.807
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4290432767
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403032609962501, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403032609962501, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b465d090f5b328140b75c8ebd93b9c81, type: 3}
     - target: {fileID: 2611403032609962504, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
       propertyPath: m_Name
       value: Button_Kron
@@ -1536,6 +1656,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Text_Warrior
       objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.731
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.807
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403031865162427, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4290432767
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403032609962501, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611403032609962501, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 54e8b441ee428c34ebe9529398526e17, type: 3}
     - target: {fileID: 2611403032609962504, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
       propertyPath: m_Name
       value: Button_Warrior

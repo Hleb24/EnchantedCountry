@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: SilverChainMail
   m_EditorClassIdentifier: 
   productType: 2
-  productName: Silver Chain Mail
-  price: 50
   item: {fileID: 11400000, guid: 340ef9e05dd6a3a47ab58d7ffb68dce2, type: 2}
+  productName: Silver Chain Mail
+  description: 
+  Property: 4
+  price: 50
+  id: 140
+  icon: {fileID: 21300000, guid: 567fdd2e557fefc478f8aaa7ae56fb11, type: 3}

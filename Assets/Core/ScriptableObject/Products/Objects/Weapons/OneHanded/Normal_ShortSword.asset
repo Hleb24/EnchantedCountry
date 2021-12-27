@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Normal_ShortSword
   m_EditorClassIdentifier: 
   productType: 1
-  productName: 
-  price: 15
   item: {fileID: 11400000, guid: 137f64b4502d4d44dabce40ac2902648, type: 2}
+  productName: ShortSword
+  description: 
+  Property: 1 - 6
+  price: 15
+  id: 260
+  icon: {fileID: 21300000, guid: 8f28955d92038974a9b04aafaeea79b0, type: 3}

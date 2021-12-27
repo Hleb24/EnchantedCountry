@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: LeatherSilverArmor
   m_EditorClassIdentifier: 
   productType: 2
-  productName: Leather Silver Armor
-  price: 30
   item: {fileID: 11400000, guid: e467b9c5d77af4d408e1d9df2203d24e, type: 2}
+  productName: Leather Silver Armor
+  description: 
+  Property: 6
+  price: 30
+  id: 120
+  icon: {fileID: 21300000, guid: e37ee0b1cbe20c5458102626b95a6b7c, type: 3}

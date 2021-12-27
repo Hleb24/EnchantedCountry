@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Normal_ShortbowArrows
   m_EditorClassIdentifier: 
   productType: 1
-  productName: Normal Short Bow Arrows
-  price: 1
   item: {fileID: 11400000, guid: 020878443fbed494f9e56610e811d87b, type: 2}
+  productName: ShortBowArrows
+  description: 
+  Property: 1 - 6
+  price: 1
+  id: 530
+  icon: {fileID: 21300000, guid: 59c8cd2a91ad7f846b9efd79b945c356, type: 3}

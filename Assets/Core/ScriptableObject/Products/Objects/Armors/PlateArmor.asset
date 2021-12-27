@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: PlateArmor
   m_EditorClassIdentifier: 
   productType: 2
-  productName: Plate Armor
-  price: 150
   item: {fileID: 11400000, guid: 5fb52ad624bd03049a884f137fdd59b6, type: 2}
+  productName: Plate Armor
+  description: 
+  Property: 2
+  price: 150
+  id: 160
+  icon: {fileID: 21300000, guid: 567fdd2e557fefc478f8aaa7ae56fb11, type: 3}

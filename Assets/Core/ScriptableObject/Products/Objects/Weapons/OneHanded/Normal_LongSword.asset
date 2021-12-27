@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   productType: 1
   item: {fileID: 11400000, guid: 933eb74b41c91b6458c4e5429d7a3f14, type: 2}
-  productName: Long Sword
+  productName: LongSword
   description: 
   Property: 2 - 7
   price: 20
   id: 270
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 95052c6b62fb3de4695beaa99f842ac2, type: 3}

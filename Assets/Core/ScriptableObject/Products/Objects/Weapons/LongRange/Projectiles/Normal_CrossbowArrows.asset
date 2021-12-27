@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Normal_CrossbowArrows
   m_EditorClassIdentifier: 
   productType: 1
-  productName: Normal Crossbow Arrows
-  price: 1
   item: {fileID: 11400000, guid: 486b2409dd6dd6d48a50c7077f60d601, type: 2}
+  productName: CrossbowArrows
+  description: 
+  Property: 1 - 6
+  price: 1
+  id: 520
+  icon: {fileID: 21300000, guid: 59c8cd2a91ad7f846b9efd79b945c356, type: 3}

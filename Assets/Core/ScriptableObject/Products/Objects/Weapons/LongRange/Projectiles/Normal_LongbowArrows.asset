@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Normal_LongbowArrows
   m_EditorClassIdentifier: 
   productType: 1
-  productName: Normal Longbow Arrows
-  price: 1
   item: {fileID: 11400000, guid: e186e7f0c08eb0e488277ca838017a13, type: 2}
+  productName: LongbowArrows
+  description: 
+  Property: 2 - 7
+  price: 1
+  id: 540
+  icon: {fileID: 21300000, guid: 59c8cd2a91ad7f846b9efd79b945c356, type: 3}

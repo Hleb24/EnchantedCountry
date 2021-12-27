@@ -19,4 +19,4 @@ MonoBehaviour:
   Property: 400
   price: 2
   id: 610
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 93dbc8f96dc6c00418ba8f1a8e8992e4, type: 3}
