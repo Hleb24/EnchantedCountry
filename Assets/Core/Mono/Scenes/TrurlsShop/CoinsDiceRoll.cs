@@ -4,6 +4,7 @@ using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Core.Mono.Scenes.TrurlsShop {
   /// <summary>
@@ -16,7 +17,13 @@ namespace Core.Mono.Scenes.TrurlsShop {
     private TMP_Text _numberOfCoinsText;
     private DiceRollCalculator _diceRollCalculator;
     private IWallet _wallet;
+    private IDealer _dealer;
     private int _numberOfCoins;
+
+    [Inject]
+    private void InjectDealer(IDealer dealer) {
+      _dealer = dealer;
+    }
 
     private void Start() {
       Init();
@@ -31,7 +38,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
     }
 
     private void Init() {
-      _wallet = ScribeDealer.Peek<WalletScribe>();
+      _wallet = _dealer.Peek<IWallet>();
       _diceRollCalculator = new DiceRollCalculator();
     }
 

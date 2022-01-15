@@ -19,11 +19,7 @@ namespace Core.Mono.Scenes.Intro {
       NextScene();
     }
 
-    private async void NextScene() {
-      if (_startGame.StillInitializing()) {
-        await Task.Yield();
-      }
-
+    private void NextScene() {
       SetNameOfNextScene();
       LoadNextSceneAsync();
     }
@@ -33,7 +29,7 @@ namespace Core.Mono.Scenes.Intro {
       _nameOfScene = _startGame.IsNewGame()? Scene.DiceRolls : Scene.CharacterList;
     }
 
-    private void LoadNextSceneAsync() {
+    private  void LoadNextSceneAsync() {
       SceneManager.LoadSceneAsync((int)_nameOfScene);
     }
   }

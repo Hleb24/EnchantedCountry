@@ -5,6 +5,7 @@ using Core.Support.SaveSystem.SaveManagers;
 using ModestTree;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Core.Mono.Scenes.QualityDiceRoll {
   /// <summary>
@@ -22,7 +23,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     private QualitiesVisualContainer _visualContainer;
     [SerializeField]
     private Button _buttonDistribute;
-
+    private IDealer _dealer;
     private IDiceRoll _diceRollData;
     private IQualityPoints _qualityPoints;
 
@@ -34,6 +35,11 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     private bool? _isNext;
     private int _indexOfQualityText = -1;
     private bool _progress;
+
+    [Inject]
+    private void InjectDealer(IDealer dealer) {
+      _dealer = dealer;
+    }
 
     private void Start() {
       Init();
@@ -57,8 +63,8 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     }
 
     private void Init() {
-      _qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
-      _diceRollData = ScribeDealer.Peek<DiceRollScribe>();
+      _qualityPoints = _dealer.Peek<IQualityPoints>();
+      _diceRollData = _dealer.Peek<IDiceRoll>();
       _isValueSelected = new bool[QualityTypeHandler.NUMBER_OF_QUALITY];
       _qualities = new int[QualityTypeHandler.NUMBER_OF_QUALITY];
       _indexOfCurrentValueInQualityText = new int[QualityTypeHandler.NUMBER_OF_QUALITY];

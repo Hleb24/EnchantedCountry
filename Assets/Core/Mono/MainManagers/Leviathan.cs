@@ -2,6 +2,7 @@ using Core.ScriptableObject.GameSettings;
 using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.Assertions;
+using Zenject;
 
 namespace Core.Mono.MainManagers {
   /// <summary>
@@ -64,15 +65,11 @@ namespace Core.Mono.MainManagers {
     private const string GameSettings = "GameSettings";
     [SerializeField]
     private GameSettings _gameSettings;
-
-    private Memento _memento;
+    private readonly Memento _memento = new Memento();
 
     private void Awake() {
       InitGameObject();
       InitMembers();
-    }
-
-    private void Start() {
       StartGame();
     }
 
@@ -117,7 +114,6 @@ namespace Core.Mono.MainManagers {
     }
 
     private void InitMembers() {
-      _memento = new Memento();
       _gameSettings = Resources.Load<GameSettings>(GameSettings);
       Assert.IsNotNull(_gameSettings);
     }
@@ -130,6 +126,7 @@ namespace Core.Mono.MainManagers {
 
       _memento.Init(out bool isNewGame);
       IsNewGame = isNewGame;
+
       StillInitializing = false;
 
       DataLoaded = true;
@@ -151,6 +148,7 @@ namespace Core.Mono.MainManagers {
     }
 
     private void OnApplicationQuit() {
+
       _memento.Save();
     }
 

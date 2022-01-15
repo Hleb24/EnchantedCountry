@@ -3,6 +3,7 @@ using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class CharacterGamePoints : MonoBehaviour {
@@ -14,9 +15,15 @@ namespace Core.Mono.Scenes.CharacterList {
     private bool _useTestPoints;
     [SerializeField]
     private bool _useGameSave;
-    
+    private IDealer _dealer;
     private IGamePoints _gamePoints;
     public event Action<int> LoadGamePoints;
+
+    [Inject]
+    private void InjectDealer(IDealer dealer) {
+      _dealer = dealer;
+    }
+    
     private void Start() {
       if (_useTestPoints) {
         SetTestPoints();
@@ -39,7 +46,7 @@ namespace Core.Mono.Scenes.CharacterList {
 
     private void LoadGamePointsDataWithInvoke() {
       if (_useGameSave) {
-        _gamePoints = ScribeDealer.Peek<GamePointsScribe>();
+        _gamePoints = _dealer.Peek<IGamePoints>();
         Invoke(nameof(SetGamePointsAndGamePointsTextAfterLoad), 0.3f);
       } else {
         // SaveSystem.LoadWithInvoke(_gamePointsScribe, SaveSystem.Constants.GamePoints
@@ -47,7 +54,7 @@ namespace Core.Mono.Scenes.CharacterList {
       }
     }
     private void SetTestPoints() {
-      _gamePoints = ScribeDealer.Peek<GamePointsScribe>();
+      _gamePoints = _dealer.Peek<IGamePoints>();
       _gamePoints.SetPoints(_testPoints);
       LoadGamePoints?.Invoke(_gamePoints.GetPoints());
     }

@@ -17,7 +17,8 @@ namespace Aberrance {
       Container.Bind<DiceRollCalculator>().AsSingle();
       Container.Bind<GamePoints>().AsSingle();
       Container.Bind<IDataInit>().FromInstance(new Memento());
-      Container.Bind<IStartGame>().FromInstance(Leviathan.Instance);
+      // Container.Bind<IStartGame>().FromInstance(Leviathan.Instance);
+      Container.Bind<IDiceRoll>().FromInstance(new DiceRollScribe());
     }
   }
 }

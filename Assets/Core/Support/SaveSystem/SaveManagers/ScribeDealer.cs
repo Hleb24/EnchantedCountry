@@ -4,10 +4,14 @@ using Core.Support.SaveSystem.Scribe;
 using UnityEngine;
 
 namespace Core.Support.SaveSystem.SaveManagers {
+  public interface IDealer {
+    public T Peek<T>();
+  }
+
   /// <summary>
   ///   Класс доступа к данным сохранений игры.
   /// </summary>
-  public static class ScribeDealer {
+  public class ScribeDealer: IDealer {
     private static Dictionary<Type, IScribe> _scribes;
 
     /// <summary>
@@ -32,6 +36,10 @@ namespace Core.Support.SaveSystem.SaveManagers {
 
       Debug.LogWarning("Тип данных не найден!");
       return default;
+    }
+
+    T IDealer.Peek<T>() {
+      return Peek<T>();
     }
   }
 }

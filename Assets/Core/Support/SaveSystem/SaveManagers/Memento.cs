@@ -17,7 +17,16 @@ namespace Core.Support.SaveSystem.SaveManagers {
   /// </summary>
   public class Memento : IDataInit {
     private static bool StillInitializing { get; set; } = true;
-    private Dictionary<Type, IScribe> _scribesMemento;
+    private readonly Dictionary<Type, IScribe> _scribesMemento = new Dictionary<Type, IScribe> {
+      { typeof(IDiceRoll), new DiceRollScribe() },
+      { typeof(IEquipment), new EquipmentScribe() },
+      { typeof(IEquipmentUsed), new EquipmentUsedScribe() },
+      { typeof(IWallet), new WalletScribe() },
+      { typeof(IGamePoints), new GamePointsScribe() },
+      { typeof(IQualityPoints), new QualityPointsScribe() },
+      { typeof(IRiskPoints), new RiskPointsScribe() },
+      { typeof(IClassType), new ClassTypeScribe() }
+    };
     private ISaver _saver;
 
     bool IDataInit.StillInitializing() {
@@ -29,17 +38,6 @@ namespace Core.Support.SaveSystem.SaveManagers {
     /// </summary>
     public void Init(out bool isNewGame) {
       InitializeSaver();
-
-      _scribesMemento = new Dictionary<Type, IScribe> {
-        { typeof(DiceRollScribe), new DiceRollScribe() },
-        { typeof(EquipmentsScribe), new EquipmentsScribe() },
-        { typeof(EquipmentUsedScribe), new EquipmentUsedScribe() },
-        { typeof(WalletScribe), new WalletScribe() },
-        { typeof(GamePointsScribe), new GamePointsScribe() },
-        { typeof(QualityPointsScribe), new QualityPointsScribe() },
-        { typeof(RiskPointsScribe), new RiskPointsScribe() },
-        { typeof(ClassTypeScribe), new ClassTypeScribe() }
-      };
 
       foreach (IScribe scribe in _scribesMemento.Values) {
         scribe.Init();
@@ -59,7 +57,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
     }
 
     /// <summary>
-    /// Удалить сохранения.
+    ///   Удалить сохранения.
     /// </summary>
     public void DeleteSave() {
       InitializeSaver();

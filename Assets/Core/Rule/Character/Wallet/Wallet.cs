@@ -9,7 +9,7 @@ namespace Core.Rule.Character.Wallet {
 		private IWallet _wallet;
 		public Wallet() { }
 		public Wallet(int startCoins) {
-			_wallet = ScribeDealer.Peek<WalletScribe>();
+			_wallet = ScribeDealer.Peek<IWallet>();
 			coins = startCoins;
 		}
 

@@ -7,6 +7,7 @@ using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class ViewParameters : MonoBehaviour {
@@ -26,6 +27,7 @@ namespace Core.Mono.Scenes.CharacterList {
     private TMP_Text _rangeDamageText;
     [SerializeField]
     private TMP_Text _maxAmountOfCoinsText;
+    private IDealer _dealer;
     private IEquipmentUsed _equipmentUsed;
     private Qualities _qualities;
     private int _classOfArmor;
@@ -36,8 +38,13 @@ namespace Core.Mono.Scenes.CharacterList {
     private float _rangeMinDamage;
     private float _rangeMaxDamage;
     private int _maxAmountOfCoins;
+
+    [Inject]
+    private void InjectIDealer(IDealer dealer) {
+      _dealer = dealer;
+    }
     private void Start() {
-      _equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
+      _equipmentUsed = _dealer.Peek<IEquipmentUsed>();
       Invoke(nameof(SetQualities), 0.1f);
     }
 
@@ -50,7 +57,7 @@ namespace Core.Mono.Scenes.CharacterList {
       EquipmentsChoice.EquipmentChanged -= OnEquipmentChanged;
     }
     private void SetQualities() {
-      _qualities = new Qualities(ScribeDealer.Peek<QualityPointsScribe>());
+      _qualities = new Qualities(_dealer.Peek<IQualityPoints>());
     }
     private void OnEquipmentChanged() {
       ArmorClassParameters();

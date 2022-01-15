@@ -32,11 +32,16 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     private bool _buildOnStart;
     [Inject]
     private IStartGame _startGame;
+    private IDealer _dealer;
     private IEquipmentUsed _equipmentUsed;
     private IGamePoints _gamePoints;
     private IRiskPoints _riskPoints;
     private IClassType _type;
 
+    [Inject]
+    private void InjectDealer(IDealer dealer) {
+      _dealer = dealer;
+    }
     private void Start() {
       WaitLoad();
     }
@@ -50,8 +55,8 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     }
 
     public void BuildPlayer() {
-      _equipments = ScribeDealer.Peek<EquipmentsScribe>();
-      _equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
+      _equipments = _dealer.Peek<IEquipment>();
+      _equipmentUsed = _dealer.Peek<IEquipmentUsed>();
       _playerCharacter = new PlayerCharacter(GetCharacterQualities(), GetCharacterType(), GetLevels(), GetGamePoints(), GetRiskPoints(), GetWallet(), GetEquipmentsOfCharacter(),
         GetEquipmentsUsed(), GetArmor(), GetShield(), GetRangeWeapon(), GetMeleeWeapon(), GetProjectiles());
     }
@@ -61,9 +66,9 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
         await Task.Yield();
       }
 
-      _gamePoints = ScribeDealer.Peek<GamePointsScribe>();
-      _riskPoints = ScribeDealer.Peek<RiskPointsScribe>();
-      _type = ScribeDealer.Peek<ClassTypeScribe>();
+      _gamePoints = _dealer.Peek<IGamePoints>();
+      _riskPoints = _dealer.Peek<IRiskPoints>();
+      _type = _dealer.Peek<IClassType>();
       if (_buildOnStart) {
         Invoke(nameof(BuildPlayer), 0.5f);
       }
@@ -83,7 +88,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     }
 
     private IWallet GetWallet() {
-      return ScribeDealer.Peek<WalletScribe>();
+      return _dealer.Peek<IWallet>();
     }
 
     private EquipmentsOfCharacter GetEquipmentsOfCharacter() {
@@ -166,7 +171,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     }
 
     private CharacterQualities GetCharacterQualities() {
-      IQualityPoints qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
+      IQualityPoints qualityPoints = _dealer.Peek<IQualityPoints>();
       var characterQualities = new CharacterQualities(QualityType.Strength, qualityPoints.GetQualityPoints(QualityType.Strength), QualityType.Agility,
         qualityPoints.GetQualityPoints(QualityType.Agility), QualityType.Constitution, qualityPoints.GetQualityPoints(QualityType.Constitution), QualityType.Wisdom,
         qualityPoints.GetQualityPoints(QualityType.Wisdom), QualityType.Courage, qualityPoints.GetQualityPoints(QualityType.Courage));
@@ -178,125 +183,5 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
         return _playerCharacter;
       }
     }
-  }
-
-  public class Builder {
-    private const string StoragePath = "ForBuilder/Storage";
-    private readonly StorageObject _storageObject;
-    private readonly IGamePoints _gamePoints;
-    private readonly IEquipmentUsed _equipmentUsed;
-    private readonly IRiskPoints _riskPoints;
-    private readonly IClassType _type;
-
-    public Builder() {
-      _storageObject = Resources.Load<StorageObject>(StoragePath);
-      _gamePoints = ScribeDealer.Peek<GamePointsScribe>();
-      _equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
-      _riskPoints = ScribeDealer.Peek<RiskPointsScribe>();
-      _type = ScribeDealer.Peek<ClassTypeScribe>();
-    }
-
-    public PlayerCharacter BuildPlayer() {
-      return new PlayerCharacter(GetCharacterQualities(), GetCharacterType(), GetLevels(), GetGamePoints(), GetRiskPoints(), GetWallet(), GetEquipmentsOfCharacter(),
-        GetEquipmentsUsed(), GetArmor(), GetShield(), GetRangeWeapon(), GetMeleeWeapon(), GetProjectiles());
-    }
-
-    private IGamePoints GetGamePoints() {
-      return _gamePoints;
-    }
-
-    private Levels GetLevels() {
-      var levels = new Levels(_gamePoints.GetPoints());
-      return levels;
-    }
-
-    private RiskPoints GetRiskPoints() {
-      return new RiskPoints(_riskPoints);
-    }
-
-    private IWallet GetWallet() {
-      return ScribeDealer.Peek<WalletScribe>();
-    }
-
-    private EquipmentsOfCharacter GetEquipmentsOfCharacter() {
-      IEquipment equipments = ScribeDealer.Peek<EquipmentsScribe>();
-      var equipmentsOfCharacter = new EquipmentsOfCharacter(equipments.GetEquipmentCards());
-      return equipmentsOfCharacter;
-    }
-
-    private IEquipmentUsed GetEquipmentsUsed() {
-      return _equipmentUsed;
-    }
-
-    private Armor GetArmor() {
-      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId) != 0) {
-        ProductObject armorObject = _storageObject.GetArmorFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId));
-        Armor armor = armorObject.GetArmor();
-        return armor;
-      }
-
-      return null;
-    }
-
-    private Armor GetShield() {
-      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId) != 0) {
-        ProductObject shieldObject = _storageObject.GetArmorFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId));
-        Armor shield = shieldObject.GetArmor();
-        return shield;
-      }
-
-      return null;
-    }
-
-    private Weapon GetMeleeWeapon() {
-      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId) != 0) {
-        ProductObject weaponObject = _storageObject.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId));
-        Weapon weapon = weaponObject.GetWeapon();
-        return weapon;
-      }
-
-      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId) != 0) {
-        ProductObject weaponObject = _storageObject.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId));
-        Weapon weapon = weaponObject.GetWeapon();
-        return weapon;
-      }
-
-      return null;
-    }
-
-    private Weapon GetRangeWeapon() {
-      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId) != 0) {
-        ProductObject weaponObject = _storageObject.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId));
-        Weapon weapon = weaponObject.GetWeapon();
-        return weapon;
-      }
-
-      return null;
-    }
-
-    private Weapon GetProjectiles() {
-      IEquipmentUsed equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
-      if (_equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId) != 0) {
-        ProductObject weaponObject = _storageObject.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId));
-        Weapon weapon = weaponObject.GetWeapon();
-        return weapon;
-      }
-
-      return null;
-    }
-
-    private ClassType GetCharacterType() {
-      return _type.GetClassType();
-    }
-
-    private CharacterQualities GetCharacterQualities() {
-      IQualityPoints qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
-      var characterQualities = new CharacterQualities(QualityType.Strength, qualityPoints.GetQualityPoints(QualityType.Strength), QualityType.Agility,
-        qualityPoints.GetQualityPoints(QualityType.Agility), QualityType.Constitution, qualityPoints.GetQualityPoints(QualityType.Constitution), QualityType.Wisdom,
-        qualityPoints.GetQualityPoints(QualityType.Wisdom), QualityType.Courage, qualityPoints.GetQualityPoints(QualityType.Courage));
-      return characterQualities;
-    }
-
-    public PlayerCharacter PlayerCharacter { get; }
   }
 }

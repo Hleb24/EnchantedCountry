@@ -8,6 +8,7 @@ using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class DiceRollForRiskPoints : MonoBehaviour {
@@ -22,12 +23,17 @@ namespace Core.Mono.Scenes.CharacterList {
     private bool _useCharacterTypeForTest;
     [SerializeField]
     private bool _useGameSave;
-
+    private IDealer _dealer;
     private IClassType _type;
     private IRiskPoints _riskPoints;
     private Dices _dice;
     private Qualities _qualities;
     private int _numberOfRiskPoints;
+
+    [Inject]
+    private void InjectDealer(IDealer dealer) {
+      _dealer = dealer;
+    }
 
     private void Start() {
       LoadData();
@@ -89,9 +95,9 @@ namespace Core.Mono.Scenes.CharacterList {
 
     private void LoadData() {
       if (_useGameSave) {
-        _type = ScribeDealer.Peek<ClassTypeScribe>();
-        _riskPoints = ScribeDealer.Peek<RiskPointsScribe>();
-        _qualities = new Qualities(ScribeDealer.Peek<QualityPointsScribe>());
+        _type = _dealer.Peek<IClassType>();
+        _riskPoints = _dealer.Peek<IRiskPoints>();
+        _qualities = new Qualities(_dealer.Peek<IQualityPoints>());
         Invoke(nameof(SetCharacterType), 0.3f);
       } else {
         // SaveSystem.LoadWithInvoke(_type, SaveSystem.Constants.ClassOfCharacter, (nameInvoke, time) => Invoke(nameInvoke, time), nameof(SetCharacterType), 0.3f);

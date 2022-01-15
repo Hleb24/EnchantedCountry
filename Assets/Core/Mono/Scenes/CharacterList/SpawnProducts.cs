@@ -9,6 +9,7 @@ using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Zenject;
 using static Core.Rule.GameRule.Armor;
 using static Core.Rule.GameRule.Weapon;
 
@@ -52,6 +53,12 @@ namespace Core.Mono.Scenes.CharacterList {
     [SerializeField]
     private List<int> _itemWhatCanUsed;
     private IEquipment _equipments;
+    private IDealer _dealer;
+
+    [Inject]
+    private void InjectDealer(IDealer dealer) {
+      _dealer = dealer;
+    }
 
     private void Awake() {
       _characterInCharacterList.GetCharacterType += SetListsSoAndSpawnProducts;
@@ -59,7 +66,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void Start() {
-      _equipments = ScribeDealer.Peek<EquipmentsScribe>();
+      _equipments = _dealer.Peek<IEquipment>();
     }
 
     private void OnDestroy() {

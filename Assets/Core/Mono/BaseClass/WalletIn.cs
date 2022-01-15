@@ -3,6 +3,7 @@ using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace Core.Mono.BaseClass {
   public class WalletIn : MonoBehaviour {
@@ -14,6 +15,12 @@ namespace Core.Mono.BaseClass {
     protected IWallet _wallet;
     [SerializeField]
     protected bool _useGameSave;
+    private IDealer _dealer;
+
+    [Inject]
+    private void InjectDealer(IDealer dealer) {
+      _dealer = dealer;
+    }
 
     private void Start() {
       Invoke(nameof(InitializeWallet), 0.1f);
@@ -26,7 +33,7 @@ namespace Core.Mono.BaseClass {
     protected virtual void OnDisable() { }
 
     protected void InitializeWallet() {
-      _wallet = ScribeDealer.Peek<WalletScribe>();
+      _wallet = _dealer.Peek<IWallet>();
     }
 
     protected void SetWalletText() {

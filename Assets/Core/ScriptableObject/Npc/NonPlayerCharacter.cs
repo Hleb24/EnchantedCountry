@@ -9,6 +9,7 @@ using Core.ScriptableObject.Weapon;
 using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
+using Zenject;
 
 namespace Core.ScriptableObject.Npc {
   [CreateAssetMenu(menuName = "NPC", fileName = "NPC", order = 58)]
@@ -32,13 +33,15 @@ namespace Core.ScriptableObject.Npc {
     public bool AttackEveryAtOnce;
     public int Id;
     private Rule.GameRule.NPC.Npc _npc;
+    [Inject]
+    private IDealer _dealer;
 
     public void OnValidate() {
       Name = name;
     }
 
     public Rule.GameRule.NPC.Npc GetNpc () {
-      _npc = new Rule.GameRule.NPC.Npc(Name, Alignment, NpcType, new RiskPoints(ScribeDealer.Peek<RiskPointsScribe>(), GetRiskPoints()), new ArmorClass(ClassOfArmor), Morality,  Immoral, Immortal,
+      _npc = new Rule.GameRule.NPC.Npc(Name, Alignment, NpcType, new RiskPoints(_dealer.Peek<IRiskPoints>(), GetRiskPoints()), new ArmorClass(ClassOfArmor), Morality,  Immoral, Immortal,
         DeadlyAttack, AttackEveryAtOnce,Experience, EscapePossibility, Description, Property, Id, GetListOfWeapon(), GetListOfImpacts());
       return _npc;
     }

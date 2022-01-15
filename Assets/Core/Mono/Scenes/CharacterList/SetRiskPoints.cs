@@ -4,6 +4,7 @@ using Core.Support.PrefsTools;
 using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class SetRiskPoints : MonoBehaviour {
@@ -23,6 +24,12 @@ namespace Core.Mono.Scenes.CharacterList {
     [SerializeField]
     private bool _useGameSave;
     private IRiskPoints _riskPoints;
+    private IDealer _dealer;
+
+    [Inject]
+    private void InjectDealer(IDealer dealer) {
+      _dealer = dealer;
+    }
 
     private void Start() {
       Invoke(nameof(LoadRiskPointsData), 0.1f);
@@ -51,7 +58,7 @@ namespace Core.Mono.Scenes.CharacterList {
 
     private void LoadData() {
       if (_useGameSave) {
-        _riskPoints = ScribeDealer.Peek<RiskPointsScribe>();
+        _riskPoints = _dealer.Peek<IRiskPoints>();
         Invoke(nameof(SetNumberOfRiskPointsText), 0.2f);
       }
     }

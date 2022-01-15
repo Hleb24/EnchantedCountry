@@ -20,7 +20,7 @@ namespace Core.Support.Data {
   /// Класс для хранения данных об снаряжении.
   /// </summary>
   [Serializable]
-  public class EquipmentsScribe : IScribe, IEquipment {
+  public class EquipmentScribe : IScribe, IEquipment {
     private readonly List<int> _startEquipments = new List<int> {
       EquipmentIdConstants.POCKETS,
       EquipmentIdConstants.NO_ARMOR_ID

@@ -5,6 +5,7 @@ using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Core.Mono.Scenes.SelectionClass {
   /// <summary>
@@ -38,7 +39,12 @@ namespace Core.Mono.Scenes.SelectionClass {
     private bool _isCanBeWizard;
     private bool _isCanBeKron;
     private bool _isCanBeGnom;
+    private IDealer _dealer;
 
+    [Inject]
+    private void InjectDealer(IDealer dealer) {
+      _dealer = dealer;
+    }
     private void Awake() {
       _mockQualitiesPoints = Resources.Load<MockQualitiesPoints>(MockQualitiesPoints.PATH);
     }
@@ -57,8 +63,8 @@ namespace Core.Mono.Scenes.SelectionClass {
     }
 
     private void Init() {
-      _qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
-      _type = ScribeDealer.Peek<ClassTypeScribe>();
+      _qualityPoints = _dealer.Peek<IQualityPoints>();
+      _type = _dealer.Peek<IClassType>();
     }
 
     private void AddListener() {

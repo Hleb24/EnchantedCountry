@@ -6,6 +6,7 @@ using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Core.Mono.Scenes.QualitiesImprovement {
   public class Improvement : MonoBehaviour {
@@ -19,16 +20,22 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
     protected QualitiesTexts _finallyQualitiesTexts;
     [SerializeField]
     protected bool _useGameSave;
+    private IDealer _dealer;
     protected QualityIncrease QualityIncrease;
     private IQualityPoints _qualityPoints;
     private IQualityPoints _mockQualitiesPoints;
+
+    [Inject]
+    private void InjectDealer(IDealer dealer) {
+      _dealer = dealer;
+    }
 
     private void Awake() {
       _mockQualitiesPoints = Resources.Load<MockQualitiesPoints>(MockQualitiesPoints.PATH);
     }
 
     private void Start() {
-      _qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
+      _qualityPoints = _dealer.Peek<IQualityPoints>();
       QualityIncrease = new QualityIncrease();
     }
 

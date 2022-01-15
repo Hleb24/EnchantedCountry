@@ -4,6 +4,7 @@ using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Core.Mono.Scenes.QualityDiceRoll {
   /// <summary>
@@ -27,6 +28,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     private bool _usedGameSave;
     private DiceRollCalculator _diceRollCalculator;
     private IDiceRoll _diceRollData;
+    private IDealer _dealer;
     private int _numberOfDiceRoll;
     private bool _isNumberOfDiceRollOverlay;
 
@@ -36,12 +38,23 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
 
     private void Start() {
       if (_usedGameSave) {
-        _diceRollData = ScribeDealer.Peek<DiceRollScribe>();
+        _diceRollData = _dealer.Peek<IDiceRoll>();
+        Debug.LogWarning(_diceRollData == null);
       }
+    }
+
+    [Inject]
+    private void InjectDealer(IDealer dealer) {
+      _dealer = dealer;
     }
 
     private void OnEnable() {
       AddListener();
+    }
+
+    
+    private void SetDiceRollData(IDiceRoll diceRoll) {
+      _diceRollData = diceRoll;
     }
 
     private void OnDisable() {
@@ -68,7 +81,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
 
     private void LoadAndSetDiceRollData() {
       if (_usedGameSave) {
-        _diceRollData = ScribeDealer.Peek<DiceRollScribe>();
+        _diceRollData = _dealer.Peek<IDiceRoll>();
         SetTextsInListWithSave();
         Invoke(nameof(SetTextsInListWithSave), 0.3f);
       }

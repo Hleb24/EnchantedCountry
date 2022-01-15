@@ -9,6 +9,7 @@ using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 using static Core.Rule.GameRule.Armor;
 using static Core.Rule.GameRule.Weapon;
 
@@ -46,6 +47,7 @@ namespace Core.Mono.Scenes.CharacterList {
     [SerializeField]
     private bool _useGameSave;
     private IEquipmentUsed _equipmentUsed;
+    private IDealer _dealer;
     private (ArmorType, TMP_Text) _armorTupleForText;
     private (ArmorType, TMP_Text) _shieldTupleForText;
     private (WeaponType, TMP_Text) _oneHandedTupleForText;
@@ -63,6 +65,10 @@ namespace Core.Mono.Scenes.CharacterList {
     private int _carriageId;
     private int _id;
 
+    [Inject]
+    private void InjectDelear(IDealer dealer) {
+      _dealer = dealer;
+    }
     private void Start() {
       SetTuples();
       LoadUsedEquipmentDataWithInvoke();
@@ -596,7 +602,7 @@ namespace Core.Mono.Scenes.CharacterList {
       }
 
       if (_useGameSave) {
-        _equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
+        _equipmentUsed = _dealer.Peek<IEquipmentUsed>();
         Invoke(nameof(SetTuplesAfterLoadUsedEquipmentData), 0.3f);
       }
     }

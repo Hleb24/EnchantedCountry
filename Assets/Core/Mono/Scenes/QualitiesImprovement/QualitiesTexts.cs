@@ -16,8 +16,14 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
     private bool _useGameSave;
     [Inject]
     private IStartGame _startGame;
+    private IDealer _dealer;
     private IQualityPoints _qualityPoints;
     private IQualityPoints _mockQualitiesPoints;
+
+    [Inject]
+    private void InjectDealer(IDealer dealer) {
+      _dealer = dealer;
+    }
 
     private void Awake() {
       _mockQualitiesPoints = Resources.Load<MockQualitiesPoints>(MockQualitiesPoints.PATH);
@@ -48,7 +54,7 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
         await Task.Yield();
       }
 
-      _qualityPoints = ScribeDealer.Peek<QualityPointsScribe>();
+      _qualityPoints = _dealer.Peek<IQualityPoints>();
       SetQualitiesText();
     }
   }

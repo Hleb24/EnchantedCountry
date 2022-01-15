@@ -27,16 +27,21 @@ namespace Core.Mono.Scenes.TrurlsShop {
     private IWallet _wallet;
     [Inject]
     private IStartGame _startGame;
+    private IDealer _dealer;
     private int _selectedId;
 
+    [Inject]
+    private void InjectDealer(IDealer dealer) {
+      _dealer = dealer;
+    }
     private void Awake() {
       RemoveAllEquipmentCardsForFirstTrurlsShopOpening();
       DisableInteractableForBuyProductButton();
     }
 
     private void Start() {
-      _wallet = ScribeDealer.Peek<WalletScribe>();
-      Equipments = ScribeDealer.Peek<EquipmentsScribe>();
+      _wallet = _dealer.Peek<IWallet>();
+      Equipments = _dealer.Peek<IEquipment>();
     }
 
     private void OnEnable() {
@@ -93,7 +98,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
     }
 
     private void OnOpenTrurlsShopCanvas() {
-      _wallet = ScribeDealer.Peek<WalletScribe>();
+      _wallet = _dealer.Peek<IWallet>();
     }
 
     private void RemoveAllEquipmentCardsForFirstTrurlsShopOpening() {

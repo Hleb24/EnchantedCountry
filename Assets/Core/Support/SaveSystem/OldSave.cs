@@ -10,7 +10,7 @@ namespace Core.Support.SaveSystem {
     public WalletDataScroll WalletDataScroll;
     public RiskPointsScribe RiskPointsScribe;
     public EquipmentUsedDataScroll EquipmentUsedDataScroll;
-    public EquipmentsScribe EquipmentsScribe;
+    public EquipmentScribe EquipmentsScribe;
     public GamePointsScribe GamePointsScribe;
     public QualityPointsDataScroll QualityPointsDataScroll;
     private List<ResetSave> _resetSaves;
@@ -22,7 +22,7 @@ namespace Core.Support.SaveSystem {
       EquipmentUsedDataScroll = new EquipmentUsedDataScroll();
       GamePointsScribe = new GamePointsScribe();
       QualityPointsDataScroll = new QualityPointsDataScroll();
-      EquipmentsScribe = new EquipmentsScribe();
+      EquipmentsScribe = new EquipmentScribe();
       _resetSaves = new List<ResetSave>() {
       };
     }

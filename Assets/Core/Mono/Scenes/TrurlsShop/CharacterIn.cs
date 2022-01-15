@@ -4,6 +4,7 @@ using Core.Rule.Character;
 using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
+using Zenject;
 using static Core.Rule.GameRule.Armor;
 using static Core.Rule.GameRule.Weapon;
 
@@ -23,6 +24,12 @@ namespace Core.Mono.Scenes.TrurlsShop {
     protected bool _testCharacterType;
     [SerializeField]
     protected bool _useGameSave;
+    private IDealer _dealer;
+
+    [Inject]
+    private void InjectDealer(IDealer dealer) {
+      _dealer = dealer;
+    }
 
     private List<(ClassType, WeaponType)> _weaponKits = new List<(ClassType, WeaponType)> {
       (ClassType.Warrior, WeaponType.WarriorWeaponKit),
@@ -65,7 +72,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
       }
 
       if (_useGameSave) {
-        _type = ScribeDealer.Peek<ClassTypeScribe>();
+        _type = _dealer.Peek<IClassType>();
         Invoke(nameof(TrySetCharacterType), 0.3f);
       } else {
         // SaveSystem.LoadWithInvoke(_type, SaveSystem.Constants.ClassOfCharacter, (nameInvoke, time) => Invoke(nameInvoke, time), nameof(TrySetCharacterType), 0.3f);

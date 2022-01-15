@@ -4,6 +4,8 @@ using Core.Support.Data;
 using Core.Support.SaveSystem.Scribe;
 
 namespace Core.Support.SaveSystem.SaveManagers {
+
+  
   /// <summary>
   ///   Класс игровых сохранений.
   /// </summary>
@@ -17,29 +19,27 @@ namespace Core.Support.SaveSystem.SaveManagers {
     public QualityPointsDataScroll QualityPointsDataScroll;
     public RiskPointDataScroll RiskPointsDataScroll;
     public ClassTypeDataScroll ClassTypeDataScroll;
+    public readonly Dictionary<Type, IScribe> _scribes = new Dictionary<Type, IScribe> {
+      { typeof(IDiceRoll), new DiceRollScribe() },
+      { typeof(IEquipment), new EquipmentScribe() },
+      { typeof(IEquipmentUsed), new EquipmentUsedScribe() },
+      { typeof(IWallet), new WalletScribe() },
+      { typeof(IGamePoints), new GamePointsScribe() },
+      { typeof(IQualityPoints), new QualityPointsScribe() },
+      { typeof(IRiskPoints), new RiskPointsScribe() },
+      { typeof(IClassType), new ClassTypeScribe() }
+    };
 
     /// <summary>
     ///   Создаёт новые сохранённые данные.
     /// </summary>
     /// <returns></returns>
     public Scrolls NewScrollGame() {
-      var save = new Scrolls();
-
-      var scribes = new Dictionary<Type, IScribe> {
-        { typeof(DiceRollScribe), new DiceRollScribe() },
-        { typeof(EquipmentsScribe), new EquipmentsScribe() },
-        { typeof(EquipmentUsedScribe), new EquipmentUsedScribe() },
-        { typeof(WalletScribe), new WalletScribe() },
-        { typeof(GamePointsScribe), new GamePointsScribe() },
-        { typeof(QualityPointsScribe), new QualityPointsScribe() },
-        { typeof(RiskPointsScribe), new RiskPointsScribe() },
-        { typeof(ClassTypeScribe), new ClassTypeScribe() }
-      };
-      foreach (IScribe scribe in scribes.Values) {
-        scribe.Init(save);
+      foreach (IScribe scribe in _scribes.Values) {
+        scribe.Init(this);
       }
 
-      return save;
+      return this;
     }
   }
 }
