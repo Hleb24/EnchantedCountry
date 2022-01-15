@@ -123,8 +123,8 @@ namespace Core.Rule.Character.Equipment {
 		
     public void RemoveAllEquipmentCards() {
       for (int i = EquipmentCards.Count - 1; i >= 0; i--) {
-        if (EquipmentCards[i].ID == EquipmentIdConstants.Pockets ||
-            EquipmentCards[i].ID == EquipmentIdConstants.NoArmorId)
+        if (EquipmentCards[i].ID == EquipmentIdConstants.POCKETS ||
+            EquipmentCards[i].ID == EquipmentIdConstants.NO_ARMOR_ID)
           continue;
         EquipmentCards.RemoveAt(i);
       }

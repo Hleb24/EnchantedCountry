@@ -84,7 +84,7 @@ namespace Core.Mono.Scenes.CharacterList {
     private void SetArmorListSo(List<EquipmentCard> equipmentCards, List<ProductObject> armorList) {
       _armorListSo = new List<ProductObject>();
       for (var i = 0; i < equipmentCards.Count; i++) {
-        if (equipmentCards[i].ID == EquipmentIdConstants.NoArmorId) {
+        if (equipmentCards[i].ID == EquipmentIdConstants.NO_ARMOR_ID) {
           continue;
         }
 

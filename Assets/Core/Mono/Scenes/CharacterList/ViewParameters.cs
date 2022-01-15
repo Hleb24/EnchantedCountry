@@ -186,7 +186,7 @@ namespace Core.Mono.Scenes.CharacterList {
         maxCoins += int.Parse(productObject.GetProperty());
       }
 
-      maxCoins += int.Parse(storageObject.GetProductFromList(EquipmentIdConstants.Pockets).GetProperty());
+      maxCoins += int.Parse(storageObject.GetProductFromList(EquipmentIdConstants.POCKETS).GetProperty());
       _maxAmountOfCoins = maxCoins;
       _walletIn.Wallet.SetMaxCoins(_maxAmountOfCoins);
     }

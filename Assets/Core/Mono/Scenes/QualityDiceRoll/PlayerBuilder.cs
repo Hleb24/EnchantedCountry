@@ -1,8 +1,11 @@
+using System.Threading.Tasks;
+using Core.Mono.MainManagers;
 using Core.Rule.Character;
 using Core.Rule.Character.Equipment;
 using Core.Rule.Character.Levels;
 using Core.Rule.Character.Qualities;
 using Core.Rule.GameRule;
+using Core.Rule.GameRule.EquipmentIdConstants;
 using Core.Rule.GameRule.RiskPoints;
 using Core.ScriptableObject.Products;
 using Core.ScriptableObject.Storage;
@@ -11,10 +14,11 @@ using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Core.Mono.Scenes.QualityDiceRoll {
   public class PlayerBuilder : MonoBehaviour {
-    [FormerlySerializedAs("_storageSo"),FormerlySerializedAs("_storageSO"), SerializeField]
+    [FormerlySerializedAs("_storageSo"), FormerlySerializedAs("_storageSO"), SerializeField]
     private StorageObject _storageObject;
     [SerializeField]
     private PlayerCharacter _playerCharacter;
@@ -26,21 +30,15 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     private IEquipment _equipments;
     [SerializeField]
     private bool _buildOnStart;
+    [Inject]
+    private IStartGame _startGame;
     private IEquipmentUsed _equipmentUsed;
     private IGamePoints _gamePoints;
     private IRiskPoints _riskPoints;
     private IClassType _type;
 
-    private void Awake() {
-      _gamePoints = ScribeDealer.Peek<GamePointsScribe>();
-      _riskPoints = ScribeDealer.Peek<RiskPointsScribe>();
-      _type = ScribeDealer.Peek<ClassTypeScribe>();
-    }
-
     private void Start() {
-      if (_buildOnStart) {
-        Invoke(nameof(BuildPlayer), 0.5f);
-      }
+      WaitLoad();
     }
 
     private void OnEnable() {
@@ -56,6 +54,19 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
       _equipmentUsed = ScribeDealer.Peek<EquipmentUsedScribe>();
       _playerCharacter = new PlayerCharacter(GetCharacterQualities(), GetCharacterType(), GetLevels(), GetGamePoints(), GetRiskPoints(), GetWallet(), GetEquipmentsOfCharacter(),
         GetEquipmentsUsed(), GetArmor(), GetShield(), GetRangeWeapon(), GetMeleeWeapon(), GetProjectiles());
+    }
+
+    private async void WaitLoad() {
+      while (_startGame.StillInitializing()) {
+        await Task.Yield();
+      }
+
+      _gamePoints = ScribeDealer.Peek<GamePointsScribe>();
+      _riskPoints = ScribeDealer.Peek<RiskPointsScribe>();
+      _type = ScribeDealer.Peek<ClassTypeScribe>();
+      if (_buildOnStart) {
+        Invoke(nameof(BuildPlayer), 0.5f);
+      }
     }
 
     private IGamePoints GetGamePoints() {
@@ -91,7 +102,9 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
         return armor;
       }
 
-      return null;
+      ProductObject noArmorProduct = _storageObject.GetArmorFromList(EquipmentIdConstants.NO_ARMOR_ID);
+      Armor noArmor = noArmorProduct.GetArmor();
+      return noArmor;
     }
 
     private Armor GetShield() {
@@ -132,7 +145,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
 
     private Weapon GetProjectiles() {
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId) != 0) {
-        ProductObject weaponObject = _storageObject.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId));
+        ProductObject weaponObject = _storageObject.GetProjectilesFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId));
         Weapon weapon = weaponObject.GetWeapon();
         return weapon;
       }

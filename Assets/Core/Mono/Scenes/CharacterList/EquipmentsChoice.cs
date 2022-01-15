@@ -93,7 +93,7 @@ namespace Core.Mono.Scenes.CharacterList {
       _twoHandedTupleForText = (WeaponType.TwoHanded, _twoHandedText);
       _rangeTupleForText = (WeaponType.Range, _rangeText);
       _projectiliesTupleForText = (WeaponType.Projectilies, _projectilesText);
-      _armorTuple = (ArmorType.OnlyArmor, EquipmentIdConstants.NoArmorId);
+      _armorTuple = (ArmorType.OnlyArmor, EquipmentIdConstants.NO_ARMOR_ID);
       _shieldTuple = (ArmorType.Shield, 0);
       _oneHandedTuple = (WeaponType.OneHanded, 0);
       _twoHandedTuple = (WeaponType.TwoHanded, 0);
@@ -353,7 +353,7 @@ namespace Core.Mono.Scenes.CharacterList {
       }
 
       if (_id == _armorTuple.Item2) {
-        SetIdForArmorTuple(EquipmentIdConstants.NoArmorId);
+        SetIdForArmorTuple(EquipmentIdConstants.NO_ARMOR_ID);
         SetTextForArmorTuple("No");
         TakeOffEquipment?.Invoke(_id);
         SetUsedEquipmentDataForArmor();

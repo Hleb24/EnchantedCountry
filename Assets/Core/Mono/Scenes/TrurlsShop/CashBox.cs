@@ -54,7 +54,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
     }
 
     private void OnProductSelected(int id) {
-      if (id == EquipmentIdConstants.NoArmorId) {
+      if (id == EquipmentIdConstants.NO_ARMOR_ID) {
         DisableInteractableForBuyProductButton();
         return;
       }
@@ -75,7 +75,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
     }
 
     private void BuyButtonClicked() {
-      if (_selectedId == EquipmentIdConstants.NoArmorId) {
+      if (_selectedId == EquipmentIdConstants.NO_ARMOR_ID) {
         return;
       }
 

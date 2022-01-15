@@ -8,8 +8,8 @@ namespace Core.ScriptableObject.Equipment {
 	public class EquipmentObject : UnityEngine.ScriptableObject {
 		#region FIELDS
 		public List<EquipmentCard> equipmentCards = new List<EquipmentCard>() {
-			new EquipmentCard(EquipmentIdConstants.Pockets, 1),
-		new EquipmentCard(EquipmentIdConstants.NoArmorId, 1)
+			new EquipmentCard(EquipmentIdConstants.POCKETS, 1),
+		new EquipmentCard(EquipmentIdConstants.NO_ARMOR_ID, 1)
 		};
 		#endregion
 		#region GET_EQUIPMENT_CARD
@@ -118,7 +118,7 @@ namespace Core.ScriptableObject.Equipment {
 		[ContextMenu("Remove all equipment cards")]
 		public void RemoveAllEquipmentCards() {
 			for (int i = equipmentCards.Count - 1; i >= 0; i--) {
-				if (equipmentCards[i].ID == EquipmentIdConstants.NoArmorId)
+				if (equipmentCards[i].ID == EquipmentIdConstants.NO_ARMOR_ID)
 					continue;
 				equipmentCards.RemoveAt(i);
 			}

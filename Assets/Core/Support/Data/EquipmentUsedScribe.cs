@@ -33,7 +33,7 @@ namespace Core.Support.Data {
     public void SetEquipment(EquipmentsUsedId type, int newId);
 
     /// <summary>
-    ///   Получить значение индефикатора эикипрированого снаяржения.
+    ///   Получить значение индефикатора экипрированого снаяржения.
     /// </summary>
     /// <param name="type">Тип экиприованого снаряжения.</param>
     /// <returns>Индефикатора эикипрированого снаяржения.</returns>
@@ -100,7 +100,7 @@ namespace Core.Support.Data {
     }
 
     void IScribe.Init(Scrolls scrolls) {
-      _equipmentUsed = new EquipmentUsedDataScroll(EquipmentIdConstants.NoArmorId);
+      _equipmentUsed = new EquipmentUsedDataScroll(EquipmentIdConstants.NO_ARMOR_ID);
       if (scrolls is null) {
         return;
       }

@@ -22,8 +22,8 @@ namespace Core.Support.Data {
   [Serializable]
   public class EquipmentsScribe : IScribe, IEquipment {
     private readonly List<int> _startEquipments = new List<int> {
-      EquipmentIdConstants.Pockets,
-      EquipmentIdConstants.NoArmorId
+      EquipmentIdConstants.POCKETS,
+      EquipmentIdConstants.NO_ARMOR_ID
     };
 
     private EquipmentsDataScroll _equipments;
