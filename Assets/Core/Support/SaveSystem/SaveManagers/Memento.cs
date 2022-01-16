@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.Support.Attributes;
 using Core.Support.Data;
 using Core.Support.SaveSystem.Saver;
 using Core.Support.SaveSystem.Scribe;
@@ -73,7 +74,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
 #if UNITY_EDITOR
       _saver ??= new JsonSaver();
 #elif UNITY_ANDROID
-      _saver ??= new PrefsSaver();
+      _saver ??= new Auditor.PrefsSaver();
 #endif
     }
 
