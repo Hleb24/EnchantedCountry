@@ -73,4 +73,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8257322f74bdb174abeabe467d8c9b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _leviathan: {fileID: 4679631469059615292, guid: 67c682e45e186e24c8df493065cfb830, type: 3}
+  _gameSettings: {fileID: 11400000, guid: d6c460a63637efe428ddda0c8791fb38, type: 2}
+  _leviathanPrefab: {fileID: 4679631469059615293, guid: 67c682e45e186e24c8df493065cfb830, type: 3}

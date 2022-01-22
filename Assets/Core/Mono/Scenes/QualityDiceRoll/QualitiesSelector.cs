@@ -23,7 +23,6 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     private QualitiesVisualContainer _visualContainer;
     [SerializeField]
     private Button _buttonDistribute;
-    private IDealer _dealer;
     private IDiceRoll _diceRollData;
     private IQualityPoints _qualityPoints;
 
@@ -36,9 +35,11 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     private int _indexOfQualityText = -1;
     private bool _progress;
 
+    
     [Inject]
-    private void InjectDealer(IDealer dealer) {
-      _dealer = dealer;
+    public void Constructor(IDiceRoll diceRollData, IQualityPoints qualityPoints) {
+      _diceRollData = diceRollData;
+      _qualityPoints = qualityPoints;
     }
 
     private void Start() {
@@ -63,8 +64,6 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     }
 
     private void Init() {
-      _qualityPoints = _dealer.Peek<IQualityPoints>();
-      _diceRollData = _dealer.Peek<IDiceRoll>();
       _isValueSelected = new bool[QualityTypeHandler.NUMBER_OF_QUALITY];
       _qualities = new int[QualityTypeHandler.NUMBER_OF_QUALITY];
       _indexOfCurrentValueInQualityText = new int[QualityTypeHandler.NUMBER_OF_QUALITY];

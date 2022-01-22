@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using Core.Rule.Dice;
 using Core.Support.Data;
-using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
 namespace Core.Mono.Scenes.QualityDiceRoll {
   /// <summary>
-  /// Класс отвечает за броски костей для качества.
+  ///   Класс отвечает за броски костей для качества.
   /// </summary>
   public class QualityDiceRoll : MonoBehaviour {
     private readonly int[] _valuesWithRollOfDice = new int[QualityTypeHandler.NUMBER_OF_QUALITY];
@@ -28,37 +27,25 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     private bool _usedGameSave;
     private DiceRollCalculator _diceRollCalculator;
     private IDiceRoll _diceRollData;
-    private IDealer _dealer;
     private int _numberOfDiceRoll;
     private bool _isNumberOfDiceRollOverlay;
-
-    private void Awake() {
-      _diceRollCalculator = new DiceRollCalculator();
-    }
-
-    private void Start() {
-      if (_usedGameSave) {
-        _diceRollData = _dealer.Peek<IDiceRoll>();
-        Debug.LogWarning(_diceRollData == null);
-      }
-    }
-
-    [Inject]
-    private void InjectDealer(IDealer dealer) {
-      _dealer = dealer;
-    }
 
     private void OnEnable() {
       AddListener();
     }
 
-    
-    private void SetDiceRollData(IDiceRoll diceRoll) {
-      _diceRollData = diceRoll;
-    }
-
     private void OnDisable() {
       RemoveListener();
+    }
+
+    [Inject]
+    public void Constructor(IDiceRoll diceRoll, DiceRollCalculator diceRollCalculator) {
+      _diceRollData = diceRoll;
+      _diceRollCalculator = diceRollCalculator;
+    }
+
+    private void SetDiceRollData(IDiceRoll diceRoll) {
+      _diceRollData = diceRoll;
     }
 
     private void AddListener() {
@@ -81,9 +68,8 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
 
     private void LoadAndSetDiceRollData() {
       if (_usedGameSave) {
-        _diceRollData = _dealer.Peek<IDiceRoll>();
         SetTextsInListWithSave();
-        Invoke(nameof(SetTextsInListWithSave), 0.3f);
+        SetTextsInListWithSave();
       }
 
       _diceRollInfo.SetValueLoadForInfo();

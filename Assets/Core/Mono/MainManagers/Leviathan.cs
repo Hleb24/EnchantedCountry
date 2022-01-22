@@ -1,7 +1,6 @@
 using Core.ScriptableObject.GameSettings;
 using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
-using UnityEngine.Assertions;
 using Zenject;
 
 namespace Core.Mono.MainManagers {
@@ -44,32 +43,14 @@ namespace Core.Mono.MainManagers {
   ///   Класс отвечает за начальный запуск приложения.
   /// </summary>
   public class Leviathan : MonoBehaviour, IStartGame {
-    private static Leviathan _instance;
-
-    /// <summary>
-    ///   Получить экземпляр класса.
-    /// </summary>
-    public static Leviathan Instance {
-      get {
-        if (_instance != null) {
-          return _instance;
-        }
-
-        _instance = FindObjectOfType<Leviathan>();
-        _instance ??= new GameObject(nameof(Leviathan)).AddComponent<Leviathan>();
-
-        return _instance;
-      }
+    private static void SetDeviceSettings() {
+      Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
-    private const string GameSettings = "GameSettings";
-    [SerializeField]
-    private GameSettings _gameSettings;
-    private readonly Memento _memento = new Memento();
+    private IGameSettings _gameSettings;
+    private Memento _memento;
 
     private void Awake() {
-      InitGameObject();
-      InitMembers();
       StartGame();
     }
 
@@ -77,7 +58,7 @@ namespace Core.Mono.MainManagers {
       Save();
     }
 
-    public bool UseGameSave() {
+    bool IStartGame.UseGameSave() {
       return _gameSettings.UseGameSave();
     }
 
@@ -97,40 +78,26 @@ namespace Core.Mono.MainManagers {
       return StillInitializing;
     }
 
-    public void Call() {
-      Debug.Log("Вызвать Левиафана.");
+    [Inject]
+    public void Constructor(Memento memento, IGameSettings gameSettings) {
+      _memento = memento;
+      _gameSettings = gameSettings;
+    }
+
+    private void StartGame() {
+      SetStartGameProperties();
+      SetDeviceSettings();
+    }
+
+    private void SetStartGameProperties() {
+      StartNewGame = _gameSettings.StartNewGame();
+      IsNewGame = _memento.IsNewGame;
+      StillInitializing = false;
+      DataLoaded = true;
     }
 
     private void Save() {
       _memento.Save();
-    }
-
-    private void InitGameObject() {
-      if (_instance != null) {
-        Destroy(this);
-      }
-
-      DontDestroyOnLoad(this);
-    }
-
-    private void InitMembers() {
-      _gameSettings = Resources.Load<GameSettings>(GameSettings);
-      Assert.IsNotNull(_gameSettings);
-    }
-
-    private void StartGame() {
-      StartNewGame = _gameSettings.StartNewGame();
-      if (StartNewGame) {
-        _memento.DeleteSave();
-      }
-
-      _memento.Init(out bool isNewGame);
-      IsNewGame = isNewGame;
-
-      StillInitializing = false;
-
-      DataLoaded = true;
-      Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
     private void OnApplicationPause(bool pauseStatus) {
@@ -148,7 +115,6 @@ namespace Core.Mono.MainManagers {
     }
 
     private void OnApplicationQuit() {
-
       _memento.Save();
     }
 

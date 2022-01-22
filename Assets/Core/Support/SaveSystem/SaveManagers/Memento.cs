@@ -4,6 +4,7 @@ using Core.Support.Attributes;
 using Core.Support.Data;
 using Core.Support.SaveSystem.Saver;
 using Core.Support.SaveSystem.Scribe;
+using UnityEngine;
 
 namespace Core.Support.SaveSystem.SaveManagers {
   /// <summary>
@@ -48,7 +49,13 @@ namespace Core.Support.SaveSystem.SaveManagers {
       Load(out bool newGame);
       StillInitializing = false;
       isNewGame = newGame;
+      IsNewGame = isNewGame;
     }
+    
+    /// <summary>
+    /// Это новая игра. Истинна - новая игра, ложь - продолжение с сохранений.
+    /// </summary>
+    public bool IsNewGame { get; private set; }
 
     /// <summary>
     ///   Сохранить всё.
