@@ -1,6 +1,6 @@
+using Core.Mono.MainManagers;
 using Core.Rule.Character.Wallet;
 using Core.Support.Data;
-using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -11,33 +11,23 @@ namespace Core.Mono.BaseClass {
     protected TMP_Text _coins;
     [SerializeField]
     protected WalletSO _walletSo;
-    [SerializeField]
     protected IWallet _wallet;
-    [SerializeField]
-    protected bool _useGameSave;
-    private IDealer _dealer;
-
-    [Inject]
-    private void InjectDealer(IDealer dealer) {
-      _dealer = dealer;
-    }
-
-    private void Start() {
-      Invoke(nameof(InitializeWallet), 0.1f);
-    }
+    protected IStartGame _startGame;
 
     protected virtual void OnEnable() {
-      Invoke(nameof(SetWalletText), 0.2f);
+      SetWalletText();
     }
 
     protected virtual void OnDisable() { }
 
-    protected void InitializeWallet() {
-      _wallet = _dealer.Peek<IWallet>();
+    [Inject]
+    public void Constructor(IStartGame startGame, IWallet wallet) {
+      _startGame = startGame;
+      _wallet = wallet;
     }
 
     protected void SetWalletText() {
-      if (_useGameSave) {
+      if (_startGame.UseGameSave()) {
         _coins.text = _wallet.GetCoins().ToString();
       } else {
         _coins.text = _walletSo.numberOfCoins.ToString();

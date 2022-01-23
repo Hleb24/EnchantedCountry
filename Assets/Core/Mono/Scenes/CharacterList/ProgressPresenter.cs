@@ -67,19 +67,19 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SetFieldsForProgressViewPrefab() {
-      int currentLevel = _levelInCharacterList.Level;
+      int currentLevel = _levelInCharacterList.GetCurrentLevel();
       for (int i = 0; i < _progressViewList.Count; i++) {
         int level = i;
         bool isCurrentLevel = currentLevel == level;
-        if (!LevelDictionaries.DefiningSpellLevelsForСharacterTypes[_characterInCharacterList.ClassType]
+        if (!LevelDictionaries.DefiningSpellLevelsForСharacterTypes[_characterInCharacterList.ClassTypeEnum]
           .ContainsKey(level)) {
           _progressViewList[level].SetTextFields(level
-            ,LevelDictionaries.DefiningLevelsForСharacterTypes[_characterInCharacterList.ClassType][level]
+            ,LevelDictionaries.DefiningLevelsForСharacterTypes[_characterInCharacterList.ClassTypeEnum][level]
             , isCurrentLevel);
         } else {
           _progressViewList[level].SetTextFields(level
-            ,LevelDictionaries.DefiningLevelsForСharacterTypes[_characterInCharacterList.ClassType][level]
-            ,LevelDictionaries.DefiningSpellLevelsForСharacterTypes[_characterInCharacterList.ClassType][level]
+            ,LevelDictionaries.DefiningLevelsForСharacterTypes[_characterInCharacterList.ClassTypeEnum][level]
+            ,LevelDictionaries.DefiningSpellLevelsForСharacterTypes[_characterInCharacterList.ClassTypeEnum][level]
             , isCurrentLevel);
         }
       }

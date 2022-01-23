@@ -1,10 +1,10 @@
 using System;
+using Core.Mono.MainManagers;
 using Core.Rule.Character;
 using Core.Rule.Character.Qualities;
 using Core.Rule.Dice;
 using Core.Support.Data;
 using Core.Support.PrefsTools;
-using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,22 +18,17 @@ namespace Core.Mono.Scenes.CharacterList {
     [SerializeField]
     private Button _diceRollForRiskPointsButton;
     [SerializeField]
-    private ClassType _classType;
+    private ClassType _classTypeEnum;
     [SerializeField]
     private bool _useCharacterTypeForTest;
     [SerializeField]
     private bool _useGameSave;
-    private IDealer _dealer;
-    private IClassType _type;
+    private IStartGame _startGame;
+    private IClassType _classType;
     private IRiskPoints _riskPoints;
     private Dices _dice;
     private Qualities _qualities;
     private int _numberOfRiskPoints;
-
-    [Inject]
-    private void InjectDealer(IDealer dealer) {
-      _dealer = dealer;
-    }
 
     private void Start() {
       LoadData();
@@ -47,18 +42,26 @@ namespace Core.Mono.Scenes.CharacterList {
       _diceRollForRiskPointsButton.onClick.RemoveListener(OnDiceRollForRiskPointsButtonClicked);
     }
 
+    [Inject]
+    public void Constructor(IStartGame startGame, IClassType classType, IRiskPoints riskPoints, Qualities qualities) {
+      _startGame = startGame;
+      _classType = classType;
+      _riskPoints = riskPoints;
+      _qualities = qualities;
+    }
+
     private void SetCharacterType() {
       if (_useCharacterTypeForTest) {
         return;
       }
 
-      _classType = _type.GetClassType();
+      _classTypeEnum = _classType.GetClassType();
     }
 
     private int GetDiceRollValueForCharacterType() {
       _dice = new SixSidedDice(DiceType.SixEdges);
       var riskPoints = 0;
-      switch (_classType) {
+      switch (_classTypeEnum) {
         case ClassType.Warrior:
           riskPoints = _dice.RollOfDice(2) + 6;
           break;
@@ -94,17 +97,10 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void LoadData() {
-      if (_useGameSave) {
-        _type = _dealer.Peek<IClassType>();
-        _riskPoints = _dealer.Peek<IRiskPoints>();
-        _qualities = new Qualities(_dealer.Peek<IQualityPoints>());
-        Invoke(nameof(SetCharacterType), 0.3f);
-      } else {
-        // SaveSystem.LoadWithInvoke(_type, SaveSystem.Constants.ClassOfCharacter, (nameInvoke, time) => Invoke(nameInvoke, time), nameof(SetCharacterType), 0.3f);
+      if (_startGame.UseGameSave()) {
+        SetCharacterType();
       }
     }
-
-   
 
     private void SetRiskPointsData(int riskPoints) {
       _riskPoints.SetRiskPoints(riskPoints);

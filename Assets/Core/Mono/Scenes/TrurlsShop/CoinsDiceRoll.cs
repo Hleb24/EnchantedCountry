@@ -1,6 +1,5 @@
 using Core.Rule.Dice;
 using Core.Support.Data;
-using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,26 +7,16 @@ using Zenject;
 
 namespace Core.Mono.Scenes.TrurlsShop {
   /// <summary>
-  /// Класс отвечает за бросок костей для стартовых монет.
+  ///   Класс отвечает за бросок костей для стартовых монет.
   /// </summary>
   public class CoinsDiceRoll : MonoBehaviour {
     [SerializeField]
     private Button _diceRollButton;
     [SerializeField]
     private TMP_Text _numberOfCoinsText;
-    private DiceRollCalculator _diceRollCalculator;
     private IWallet _wallet;
-    private IDealer _dealer;
+    private DiceRollCalculator _diceRollCalculator;
     private int _numberOfCoins;
-
-    [Inject]
-    private void InjectDealer(IDealer dealer) {
-      _dealer = dealer;
-    }
-
-    private void Start() {
-      Init();
-    }
 
     private void OnEnable() {
       AddListener();
@@ -37,9 +26,10 @@ namespace Core.Mono.Scenes.TrurlsShop {
       RemoveListener();
     }
 
-    private void Init() {
-      _wallet = _dealer.Peek<IWallet>();
-      _diceRollCalculator = new DiceRollCalculator();
+    [Inject]
+    public void Constructor(IWallet wallet, DiceRollCalculator diceRollCalculator) {
+      _wallet = wallet;
+      _diceRollCalculator = diceRollCalculator;
     }
 
     private void AddListener() {

@@ -33,15 +33,15 @@ namespace Core.ScriptableObject.Npc {
     public bool AttackEveryAtOnce;
     public int Id;
     private Rule.GameRule.NPC.Npc _npc;
-    [Inject]
-    private IDealer _dealer;
+    private IRiskPoints _npcRiskPoints;
 
     public void OnValidate() {
       Name = name;
     }
 
     public Rule.GameRule.NPC.Npc GetNpc () {
-      _npc = new Rule.GameRule.NPC.Npc(Name, Alignment, NpcType, new RiskPoints(_dealer.Peek<IRiskPoints>(), GetRiskPoints()), new ArmorClass(ClassOfArmor), Morality,  Immoral, Immortal,
+      _npcRiskPoints = new NpcRiskPoints();
+      _npc = new Rule.GameRule.NPC.Npc(Name, Alignment, NpcType, new RiskPoints(_npcRiskPoints, GetRiskPoints()), new ArmorClass(ClassOfArmor), Morality,  Immoral, Immortal,
         DeadlyAttack, AttackEveryAtOnce,Experience, EscapePossibility, Description, Property, Id, GetListOfWeapon(), GetListOfImpacts());
       return _npc;
     }
@@ -80,6 +80,25 @@ namespace Core.ScriptableObject.Npc {
       }
 
       return impacts;
+    }
+  }
+
+  public class NpcRiskPoints : IRiskPoints {
+    private float _riskPoints;
+    public float GetRiskPoints() {
+      return _riskPoints;
+    }
+
+    public void SetRiskPoints(float riskPoints) {
+      _riskPoints = riskPoints;
+    }
+
+    public void ChangeRiskPoints(float riskPoints) {
+      _riskPoints += riskPoints;
+    }
+
+    public bool EnoughRiskPoints(float riskPoints) {
+      return _riskPoints > riskPoints;
     }
   }
 }

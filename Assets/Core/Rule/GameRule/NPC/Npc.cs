@@ -188,7 +188,7 @@ namespace Core.Rule.GameRule.NPC {
         return false;
       }
 
-      _riskPoints.ChangeRiskPoints(-damage);;
+      _riskPoints.ChangeRiskPoints(-damage);
       if (_riskPoints.IsDead()) {
         IsDead?.Invoke(_name);
       }

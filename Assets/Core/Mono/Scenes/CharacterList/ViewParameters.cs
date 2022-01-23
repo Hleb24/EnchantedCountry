@@ -4,7 +4,6 @@ using Core.Rule.GameRule.EquipmentIdConstants;
 using Core.ScriptableObject.Products;
 using Core.ScriptableObject.Storage;
 using Core.Support.Data;
-using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -27,7 +26,6 @@ namespace Core.Mono.Scenes.CharacterList {
     private TMP_Text _rangeDamageText;
     [SerializeField]
     private TMP_Text _maxAmountOfCoinsText;
-    private IDealer _dealer;
     private IEquipmentUsed _equipmentUsed;
     private Qualities _qualities;
     private int _classOfArmor;
@@ -39,16 +37,6 @@ namespace Core.Mono.Scenes.CharacterList {
     private float _rangeMaxDamage;
     private int _maxAmountOfCoins;
 
-    [Inject]
-    private void InjectIDealer(IDealer dealer) {
-      _dealer = dealer;
-    }
-    private void Start() {
-      _equipmentUsed = _dealer.Peek<IEquipmentUsed>();
-      Invoke(nameof(SetQualities), 0.1f);
-    }
-
-    
     private void OnEnable() {
       EquipmentsChoice.EquipmentChanged += OnEquipmentChanged;
     }
@@ -56,15 +44,20 @@ namespace Core.Mono.Scenes.CharacterList {
     private void OnDisable() {
       EquipmentsChoice.EquipmentChanged -= OnEquipmentChanged;
     }
-    private void SetQualities() {
-      _qualities = new Qualities(_dealer.Peek<IQualityPoints>());
+
+    [Inject]
+    public void Constructor(IEquipmentUsed equipmentUsed, Qualities qualities) {
+      _equipmentUsed = equipmentUsed;
+      _qualities = qualities;
     }
+
     private void OnEquipmentChanged() {
       ArmorClassParameters();
       MeleeParameters();
       RangeParameters();
       MaxAmountOfCoinsParameters();
     }
+
     private void GetArmorClass(StorageObject storageObject, int id) {
       if (id.Equals(0)) {
         return;
@@ -75,6 +68,7 @@ namespace Core.Mono.Scenes.CharacterList {
       _classOfArmor = armor.ArmorClass.ClassOfArmor + _qualities[QualityType.Agility].Modifier;
       SetTextForParameters(_armorClassText, _classOfArmor);
     }
+
     private void GetAttackForMeleeWeapon(StorageObject storageObject, int oneHandedId, int twoHandedId) {
       if (IsTwoWeapons(oneHandedId, twoHandedId)) {
         Debug.Log("Two weapon");
@@ -86,7 +80,7 @@ namespace Core.Mono.Scenes.CharacterList {
         return;
       }
 
-      int id = 0;
+      var id = 0;
       if (!oneHandedId.Equals(0)) {
         id = oneHandedId;
       }
@@ -114,6 +108,7 @@ namespace Core.Mono.Scenes.CharacterList {
       int attack = weapon.Attack.Accuracy;
       return attack;
     }
+
     private void GetDamageForMeleeWeapon(StorageObject storageObject, int oneHandedId, int twoHandedId) {
       if (IsTwoWeapons(oneHandedId, twoHandedId)) {
         Debug.Log("Two weapon");
@@ -127,7 +122,7 @@ namespace Core.Mono.Scenes.CharacterList {
         return;
       }
 
-      int id = 0;
+      var id = 0;
       if (!oneHandedId.Equals(0)) {
         id = oneHandedId;
       }
@@ -173,21 +168,25 @@ namespace Core.Mono.Scenes.CharacterList {
       if (projectiliesId == 0) {
         return;
       }
+
       ProductObject projectiliesProduct = storageObject.GetProjectilesFromList(projectiliesId);
       Weapon projectilies = projectiliesProduct;
       _rangeMinDamage += projectilies.Attack.MinDamage;
       _rangeMaxDamage += projectilies.Attack.MaxDamage;
     }
+
     private void MaxAmountOfCoins(StorageObject storageObject) {
-      int maxCoins = 0;
+      var maxCoins = 0;
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.BagId) != 0) {
-        ProductObject productObject = storageObject.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.BagId) );
+        ProductObject productObject = storageObject.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.BagId));
         maxCoins += int.Parse(productObject.GetProperty());
       }
+
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.AnimalId) != 0) {
         ProductObject productObject = storageObject.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.AnimalId));
         maxCoins += int.Parse(productObject.GetProperty());
       }
+
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.CarriageId) != 0) {
         ProductObject productObject = storageObject.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.CarriageId));
         maxCoins += int.Parse(productObject.GetProperty());
@@ -197,6 +196,7 @@ namespace Core.Mono.Scenes.CharacterList {
       _maxAmountOfCoins = maxCoins;
       _walletIn.Wallet.SetMaxCoins(_maxAmountOfCoins);
     }
+
     private void ArmorClassParameters() {
       GetArmorClass(_spawnProducts.StorageObject, _equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId));
     }
@@ -209,7 +209,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void RangeParameters() {
-      GetAttackForRangeWeapon(_spawnProducts.StorageObject,_equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId));
+      GetAttackForRangeWeapon(_spawnProducts.StorageObject, _equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId));
       SetTextForParameters(_rangeAttackText, _rangeAttack);
       GetDamageForRangeWeapon(_spawnProducts.StorageObject, _equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId), _equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId));
       SetTextForParameters(_rangeDamageText, _rangeMinDamage, _rangeMaxDamage);
@@ -219,6 +219,7 @@ namespace Core.Mono.Scenes.CharacterList {
       MaxAmountOfCoins(_spawnProducts.StorageObject);
       SetTextForParameters(_maxAmountOfCoinsText, _maxAmountOfCoins);
     }
+
     private void SetTextForParameters(TMP_Text text, int parameter) {
       text.text = parameter.ToString();
     }

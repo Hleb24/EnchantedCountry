@@ -6,7 +6,6 @@ using Core.ScriptableObject.Equipment;
 using Core.ScriptableObject.Products;
 using Core.ScriptableObject.Storage;
 using Core.Support.Data;
-using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
@@ -53,24 +52,19 @@ namespace Core.Mono.Scenes.CharacterList {
     [SerializeField]
     private List<int> _itemWhatCanUsed;
     private IEquipment _equipments;
-    private IDealer _dealer;
-
-    [Inject]
-    private void InjectDealer(IDealer dealer) {
-      _dealer = dealer;
-    }
 
     private void Awake() {
       _characterInCharacterList.GetCharacterType += SetListsSoAndSpawnProducts;
       SetItemWhatCanUsedList();
     }
 
-    private void Start() {
-      _equipments = _dealer.Peek<IEquipment>();
-    }
-
     private void OnDestroy() {
       _characterInCharacterList.GetCharacterType -= SetListsSoAndSpawnProducts;
+    }
+
+    [Inject]
+    public void Constructor(IEquipment equipment) {
+      _equipments = equipment;
     }
 
     private void SetItemWhatCanUsedList() {

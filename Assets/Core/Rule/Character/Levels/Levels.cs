@@ -2,13 +2,17 @@
 
 namespace Core.Rule.Character.Levels {
   public class Levels {
-    private const int BOTTOM_BORDER = 0;
-    private const int TOP_BORDER = 40;
+    private const int BottomBorder = 0;
+    private const int TopBorder = 40;
     private int _level;
     public Levels() { }
 
     public Levels(int startLevel) {
       Level = startLevel;
+    }
+
+    public int GetLevel() {
+      return _level;
     }
     public int Level {
       get {
@@ -23,7 +27,7 @@ namespace Core.Rule.Character.Levels {
       }
     }
     private static bool WithinInBorders(int value) {
-      return value >= BOTTOM_BORDER && value <= TOP_BORDER;
+      return value >= BottomBorder && value <= TopBorder;
     }
   }
 }

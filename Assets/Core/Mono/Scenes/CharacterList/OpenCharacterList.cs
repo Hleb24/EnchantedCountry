@@ -11,7 +11,6 @@ namespace Core.Mono.Scenes.CharacterList {
     private GameObject _diceRollForRiskPointsCanvas;
     [SerializeField]
     private GameObject _characterListCanvas;
-    [Inject]
     private IStartGame _startGame;
 
     private void Start() {
@@ -24,6 +23,11 @@ namespace Core.Mono.Scenes.CharacterList {
 
     private void OnDisable() {
       RemoveListener();
+    }
+
+    [Inject]
+    public void Constructor(IStartGame startGame) {
+      _startGame = startGame;
     }
 
     private void AddListeners() {
@@ -45,7 +49,6 @@ namespace Core.Mono.Scenes.CharacterList {
     private void OpenDiceRollForRiskPointsCanvas() {
       ToggleForCanvas(_diceRollForRiskPointsCanvas, true);
       ToggleForCanvas(_characterListCanvas, false);
-      // GSSSingleton.Instance.SetIsNewGameFalse();
     }
 
     private void OpenCharacterListCanvas() {
@@ -53,8 +56,8 @@ namespace Core.Mono.Scenes.CharacterList {
       ToggleForCanvas(_diceRollForRiskPointsCanvas, false);
     }
 
-    private void ToggleForCanvas(GameObject gObject, bool isActive) {
-      gObject.SetActive(isActive);
+    private void ToggleForCanvas(GameObject canvas, bool isActive) {
+      canvas.SetActive(isActive);
     }
   }
 }

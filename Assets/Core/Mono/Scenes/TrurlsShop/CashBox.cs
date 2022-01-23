@@ -6,7 +6,6 @@ using Core.ScriptableObject.Equipment;
 using Core.ScriptableObject.Products;
 using Core.ScriptableObject.Storage;
 using Core.Support.Data;
-using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -23,39 +22,33 @@ namespace Core.Mono.Scenes.TrurlsShop {
     private StorageObject _storage;
     [SerializeField]
     private Button _buyProduct;
+    private IStartGame _startGame;
     // ReSharper disable once NotAccessedField.Local
     private IWallet _wallet;
-    [Inject]
-    private IStartGame _startGame;
-    private IDealer _dealer;
     private int _selectedId;
 
-    [Inject]
-    private void InjectDealer(IDealer dealer) {
-      _dealer = dealer;
-    }
     private void Awake() {
       RemoveAllEquipmentCardsForFirstTrurlsShopOpening();
       DisableInteractableForBuyProductButton();
     }
 
-    private void Start() {
-      _wallet = _dealer.Peek<IWallet>();
-      Equipments = _dealer.Peek<IEquipment>();
-    }
-
     private void OnEnable() {
       ProductView.ProductSelected += OnProductSelected;
       ProductSelection.OpenNewListOfProducts += OnOpenNewListOfProducts;
-      OpenTrurlsShop.OpenTrurlsShopCanvas += OnOpenTrurlsShopCanvas;
       _buyProduct.onClick.AddListener(BuyButtonClicked);
     }
 
     private void OnDisable() {
       ProductView.ProductSelected -= OnProductSelected;
       ProductSelection.OpenNewListOfProducts -= OnOpenNewListOfProducts;
-      OpenTrurlsShop.OpenTrurlsShopCanvas -= OnOpenTrurlsShopCanvas;
       _buyProduct.onClick.RemoveListener(BuyButtonClicked);
+    }
+
+    [Inject]
+    public void Constructor(IEquipment equipment, IStartGame startGame, IWallet wallet) {
+      Equipments = equipment;
+      _startGame = startGame;
+      _wallet = wallet;
     }
 
     private void OnProductSelected(int id) {
@@ -95,10 +88,6 @@ namespace Core.Mono.Scenes.TrurlsShop {
       if (!CanBuyProduct(_walletIn.Wallet.GetCoins(), GetPrice(_selectedId))) {
         DisableInteractableForBuyProductButton();
       }
-    }
-
-    private void OnOpenTrurlsShopCanvas() {
-      _wallet = _dealer.Peek<IWallet>();
     }
 
     private void RemoveAllEquipmentCardsForFirstTrurlsShopOpening() {

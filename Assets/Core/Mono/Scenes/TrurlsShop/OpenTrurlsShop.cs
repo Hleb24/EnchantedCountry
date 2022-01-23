@@ -1,58 +1,59 @@
 using System;
+using Core.Mono.MainManagers;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Core.Mono.Scenes.TrurlsShop {
-	public class OpenTrurlsShop : MonoBehaviour {
-		#region FIELDS
-		[SerializeField]
-		private GameObject _trurlsShopCanvas;
-		[SerializeField]
-		private GameObject _diceRollForCoinsCanvas;
-		[SerializeField]
-		private Button _openTrurlsShop;
+  public class OpenTrurlsShop : MonoBehaviour {
+    public static event Action OpenTrurlsShopCanvas;
+    [SerializeField]
+    private GameObject _trurlsShopCanvas;
+    [SerializeField]
+    private GameObject _diceRollForCoinsCanvas;
+    [SerializeField]
+    private Button _openTrurlsShop;
+    private IStartGame _startGame;
 
-		public static event Action OpenTrurlsShopCanvas;
-		#endregion
-		#region MONOBEHAVIOUR_METHODS
-		private void Start() {
-			FirstTimeOpenTrurlsShop();
-		}
-		
-		private void OnEnable() {
-			_openTrurlsShop.onClick.AddListener(OnDiceRollButtonClicked);
-		}
+    private void Start() {
+      FirstTimeOpenTrurlsShop();
+    }
 
-		private void OnDisable() {
-			_openTrurlsShop.onClick.RemoveListener(OnDiceRollButtonClicked);
-		}
-		#endregion
-		#region HANDLERS
-		private void OnDiceRollButtonClicked() {
-			OpenShopOfTrurl();
-			OpenTrurlsShopCanvas?.Invoke();
-		}
-		#endregion
-		#region FIRST_TIME_TRURLS_SHOP_OPENING
-		private void FirstTimeOpenTrurlsShop() {
-			// if (GSSSingleton.Instance.IsNewGame) {
-			// 	OpenDiceRollForCoinsCanvas();
-			// }else {
-			// 	OpenShopOfTrurl();
-			// }
-			OpenDiceRollForCoinsCanvas();
-		}
-		#endregion
-		#region OPEN_CANVAS
-		private void OpenShopOfTrurl() {
-			_trurlsShopCanvas.SetActive(true);
-			_diceRollForCoinsCanvas.SetActive(false);
-		}
+    private void OnEnable() {
+      _openTrurlsShop.onClick.AddListener(OnDiceRollButtonClicked);
+    }
 
-		private void OpenDiceRollForCoinsCanvas() {
-			_diceRollForCoinsCanvas.SetActive(true);
-			_trurlsShopCanvas.SetActive(false);
-		}
-		#endregion
-	}
+    private void OnDisable() {
+      _openTrurlsShop.onClick.RemoveListener(OnDiceRollButtonClicked);
+    }
+
+    [Inject]
+    public void Constructor(IStartGame startGame) {
+      _startGame = startGame;
+    }
+
+    private void OnDiceRollButtonClicked() {
+      OpenShopOfTrurl();
+      OpenTrurlsShopCanvas?.Invoke();
+    }
+
+    private void FirstTimeOpenTrurlsShop() {
+      if (_startGame.IsNewGame()) {
+        OpenDiceRollForCoinsCanvas();
+        return;
+      }
+
+      OpenShopOfTrurl();
+    }
+
+    private void OpenShopOfTrurl() {
+      _trurlsShopCanvas.SetActive(true);
+      _diceRollForCoinsCanvas.SetActive(false);
+    }
+
+    private void OpenDiceRollForCoinsCanvas() {
+      _diceRollForCoinsCanvas.SetActive(true);
+      _trurlsShopCanvas.SetActive(false);
+    }
+  }
 }

@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Core.Mono.MainManagers;
 using Core.ScriptableObject.Mock;
 using Core.Support.Data;
-using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -12,29 +10,26 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
   public class QualitiesTexts : MonoBehaviour {
     [SerializeField]
     private List<TMP_Text> _listOfValues;
-    [SerializeField]
-    private bool _useGameSave;
-    [Inject]
     private IStartGame _startGame;
-    private IDealer _dealer;
     private IQualityPoints _qualityPoints;
     private IQualityPoints _mockQualitiesPoints;
-
-    [Inject]
-    private void InjectDealer(IDealer dealer) {
-      _dealer = dealer;
-    }
 
     private void Awake() {
       _mockQualitiesPoints = Resources.Load<MockQualitiesPoints>(MockQualitiesPoints.PATH);
     }
 
     private void Start() {
-      WaitLoad();
+      SetQualitiesText();
+    }
+
+    [Inject]
+    public void Constructor(IStartGame startGame, IQualityPoints qualityPoints) {
+      _startGame = startGame;
+      _qualityPoints = qualityPoints;
     }
 
     public void SetQualitiesText() {
-      if (_useGameSave) {
+      if (_startGame.UseGameSave()) {
         _listOfValues[0].text = _qualityPoints.GetQualityPoints(QualityType.Strength).ToString();
         _listOfValues[1].text = _qualityPoints.GetQualityPoints(QualityType.Agility).ToString();
         _listOfValues[2].text = _qualityPoints.GetQualityPoints(QualityType.Constitution).ToString();
@@ -47,15 +42,6 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
         _listOfValues[3].text = _mockQualitiesPoints.GetQualityPoints(QualityType.Wisdom).ToString();
         _listOfValues[4].text = _mockQualitiesPoints.GetQualityPoints(QualityType.Courage).ToString();
       }
-    }
-
-    private async void WaitLoad() {
-      while (_startGame.StillInitializing()) {
-        await Task.Yield();
-      }
-
-      _qualityPoints = _dealer.Peek<IQualityPoints>();
-      SetQualitiesText();
     }
   }
 }

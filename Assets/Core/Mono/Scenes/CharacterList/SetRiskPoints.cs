@@ -1,4 +1,5 @@
 using System.Globalization;
+using Core.Mono.MainManagers;
 using Core.Support.Data;
 using Core.Support.PrefsTools;
 using Core.Support.SaveSystem.SaveManagers;
@@ -23,16 +24,18 @@ namespace Core.Mono.Scenes.CharacterList {
     private bool _useRiskPointsDataForTest;
     [SerializeField]
     private bool _useGameSave;
+    private IStartGame _startGame;
     private IRiskPoints _riskPoints;
-    private IDealer _dealer;
 
     [Inject]
-    private void InjectDealer(IDealer dealer) {
-      _dealer = dealer;
+    public void Constructor(IStartGame  startGame, IRiskPoints riskPoints) {
+      _startGame = startGame;
+      _riskPoints = riskPoints;
     }
+   
 
     private void Start() {
-      Invoke(nameof(LoadRiskPointsData), 0.1f);
+      LoadRiskPointsData();
     }
 
     private void OnEnable() {
@@ -57,9 +60,8 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void LoadData() {
-      if (_useGameSave) {
-        _riskPoints = _dealer.Peek<IRiskPoints>();
-        Invoke(nameof(SetNumberOfRiskPointsText), 0.2f);
+      if (_startGame.UseGameSave()) {
+        SetNumberOfRiskPointsText();
       }
     }
 

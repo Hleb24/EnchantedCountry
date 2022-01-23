@@ -1,6 +1,5 @@
-using Character;
+using Core.Rule.Character.Levels;
 using Core.Support.Data;
-using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -8,23 +7,16 @@ using Zenject;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class LevelInCharacterList : MonoBehaviour {
-   
     [SerializeField]
     private TMP_Text _levelText;
     [SerializeField]
     private CharacterInCharacterList _characterInCharacterList;
-    [FormerlySerializedAs("_gamePointsInCharacterList"),SerializeField]
+    [FormerlySerializedAs("_gamePointsInCharacterList"), SerializeField]
     private CharacterGamePoints _characterGamePoints;
-    private DefiningLevelsForСharacterTypes _definingLevels;
-    private IDealer _dealer;
-    private int _level;
+    private DefiningLevels _definingLevels;
     private bool _getGamePoints;
     private bool _getCharacterType;
-    
-    [Inject]
-    private void InjectDealer(IDealer dealer) {
-      _dealer = dealer;
-    }
+
     private void Awake() {
       AddListeners();
     }
@@ -32,6 +24,12 @@ namespace Core.Mono.Scenes.CharacterList {
     private void OnDestroy() {
       RemoveListeners();
     }
+
+    [Inject]
+    public void Constructor(DefiningLevels definingLevels) {
+      _definingLevels = definingLevels;
+    }
+
     private void AddListeners() {
       _characterInCharacterList.GetCharacterType += OnGetCharacterType;
       _characterGamePoints.LoadGamePoints += OnLoadCharacterGamePoints;
@@ -55,16 +53,14 @@ namespace Core.Mono.Scenes.CharacterList {
         SetLevelText();
       }
     }
+
     private void SetLevelText() {
-        _definingLevels = new DefiningLevelsForСharacterTypes(_characterInCharacterList.ClassType
-          , _dealer.Peek<IGamePoints>());
-      _level = _definingLevels.Levels.Level;
-      _levelText.text = _level.ToString();
+      _levelText.text = GetCurrentLevel().ToString();
     }
-    public int Level {
-      get {
-        return _level;
-      }
+
+    public int GetCurrentLevel() {
+    return  _definingLevels.GetCurrentLevel();
     }
+
   }
 }

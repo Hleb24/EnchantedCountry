@@ -10,7 +10,6 @@ using Core.Rule.GameRule.RiskPoints;
 using Core.ScriptableObject.Products;
 using Core.ScriptableObject.Storage;
 using Core.Support.Data;
-using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -24,24 +23,17 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     private PlayerCharacter _playerCharacter;
     [SerializeField]
     private Button _createPlayer;
-    // ReSharper disable once Unity.RedundantSerializeFieldAttribute
-    [SerializeField]
-    // ReSharper disable once NotAccessedField.Local
-    private IEquipment _equipments;
     [SerializeField]
     private bool _buildOnStart;
-    [Inject]
     private IStartGame _startGame;
-    private IDealer _dealer;
+    private IEquipment _equipments;
     private IEquipmentUsed _equipmentUsed;
     private IGamePoints _gamePoints;
     private IRiskPoints _riskPoints;
-    private IClassType _type;
+    private IQualityPoints _qualityPoints;
+    private IClassType _classType;
+    private IWallet _wallet;
 
-    [Inject]
-    private void InjectDealer(IDealer dealer) {
-      _dealer = dealer;
-    }
     private void Start() {
       WaitLoad();
     }
@@ -54,11 +46,23 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
       RemoveListeners();
     }
 
+    [Inject]
+    public void Constructor(IStartGame startGame, IEquipment equipment, IEquipmentUsed equipmentUsed, IGamePoints gamePoints, IRiskPoints riskPoints, IQualityPoints qualityPoints,
+      IClassType classType, IWallet wallet) {
+      _startGame = startGame;
+      _equipments = equipment;
+      _equipmentUsed = equipmentUsed;
+      _gamePoints = gamePoints;
+      _riskPoints = riskPoints;
+      _qualityPoints = qualityPoints;
+      _classType = classType;
+      _wallet = wallet;
+    }
+
     public void BuildPlayer() {
-      _equipments = _dealer.Peek<IEquipment>();
-      _equipmentUsed = _dealer.Peek<IEquipmentUsed>();
       _playerCharacter = new PlayerCharacter(GetCharacterQualities(), GetCharacterType(), GetLevels(), GetGamePoints(), GetRiskPoints(), GetWallet(), GetEquipmentsOfCharacter(),
         GetEquipmentsUsed(), GetArmor(), GetShield(), GetRangeWeapon(), GetMeleeWeapon(), GetProjectiles());
+      Debug.LogWarning("Player create " + (_playerCharacter != null));
     }
 
     private async void WaitLoad() {
@@ -66,11 +70,8 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
         await Task.Yield();
       }
 
-      _gamePoints = _dealer.Peek<IGamePoints>();
-      _riskPoints = _dealer.Peek<IRiskPoints>();
-      _type = _dealer.Peek<IClassType>();
       if (_buildOnStart) {
-        Invoke(nameof(BuildPlayer), 0.5f);
+       BuildPlayer();
       }
     }
 
@@ -88,7 +89,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     }
 
     private IWallet GetWallet() {
-      return _dealer.Peek<IWallet>();
+      return _wallet;
     }
 
     private EquipmentsOfCharacter GetEquipmentsOfCharacter() {
@@ -167,14 +168,13 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     }
 
     private ClassType GetCharacterType() {
-      return _type.GetClassType();
+      return _classType.GetClassType();
     }
 
     private CharacterQualities GetCharacterQualities() {
-      IQualityPoints qualityPoints = _dealer.Peek<IQualityPoints>();
-      var characterQualities = new CharacterQualities(QualityType.Strength, qualityPoints.GetQualityPoints(QualityType.Strength), QualityType.Agility,
-        qualityPoints.GetQualityPoints(QualityType.Agility), QualityType.Constitution, qualityPoints.GetQualityPoints(QualityType.Constitution), QualityType.Wisdom,
-        qualityPoints.GetQualityPoints(QualityType.Wisdom), QualityType.Courage, qualityPoints.GetQualityPoints(QualityType.Courage));
+      var characterQualities = new CharacterQualities(QualityType.Strength, _qualityPoints.GetQualityPoints(QualityType.Strength), QualityType.Agility,
+        _qualityPoints.GetQualityPoints(QualityType.Agility), QualityType.Constitution, _qualityPoints.GetQualityPoints(QualityType.Constitution), QualityType.Wisdom,
+        _qualityPoints.GetQualityPoints(QualityType.Wisdom), QualityType.Courage, _qualityPoints.GetQualityPoints(QualityType.Courage));
       return characterQualities;
     }
 

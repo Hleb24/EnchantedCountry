@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Core.Mono.MainManagers;
 using Core.ScriptableObject.Mock;
 using Core.Support.Data;
-using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,25 +18,13 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
     protected Button _diceRoll;
     [SerializeField]
     protected QualitiesTexts _finallyQualitiesTexts;
-    [SerializeField]
-    protected bool _useGameSave;
-    private IDealer _dealer;
     protected QualityIncrease QualityIncrease;
+    private IStartGame _startGame;
     private IQualityPoints _qualityPoints;
     private IQualityPoints _mockQualitiesPoints;
 
-    [Inject]
-    private void InjectDealer(IDealer dealer) {
-      _dealer = dealer;
-    }
-
     private void Awake() {
       _mockQualitiesPoints = Resources.Load<MockQualitiesPoints>(MockQualitiesPoints.PATH);
-    }
-
-    private void Start() {
-      _qualityPoints = _dealer.Peek<IQualityPoints>();
-      QualityIncrease = new QualityIncrease();
     }
 
     private void OnEnable() {
@@ -47,10 +35,17 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
       RemoveListeners();
     }
 
+    [Inject]
+    public void Constructor(IStartGame startGame, IQualityPoints qualityPoints, QualityIncrease qualityIncrease) {
+      _startGame = startGame;
+      _qualityPoints = qualityPoints;
+      QualityIncrease = qualityIncrease;
+    }
+
     protected virtual void DiceRollsQualityIncrease() { }
 
     private void GetSum() {
-      if (_useGameSave) {
+      if (_startGame.UseGameSave()) {
         _qualityPoints.ChangeQualityPoints(QualityType.Strength, QualityIncrease[0]);
         _qualityPoints.ChangeQualityPoints(QualityType.Agility, QualityIncrease[1]);
         _qualityPoints.ChangeQualityPoints(QualityType.Constitution, QualityIncrease[2]);

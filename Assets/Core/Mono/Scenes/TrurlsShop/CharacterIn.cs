@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Core.Mono.MainManagers;
 using Core.Rule.Character;
 using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
@@ -19,17 +20,11 @@ namespace Core.Mono.Scenes.TrurlsShop {
     };
     public event Action GetCharacterType;
     [SerializeField]
-    protected ClassType _classType;
+    protected ClassType _classTypeEnum;
     [SerializeField]
     protected bool _testCharacterType;
-    [SerializeField]
-    protected bool _useGameSave;
-    private IDealer _dealer;
-
-    [Inject]
-    private void InjectDealer(IDealer dealer) {
-      _dealer = dealer;
-    }
+    protected IStartGame _startGame;
+    private IClassType _classType;
 
     private List<(ClassType, WeaponType)> _weaponKits = new List<(ClassType, WeaponType)> {
       (ClassType.Warrior, WeaponType.WarriorWeaponKit),
@@ -38,8 +33,13 @@ namespace Core.Mono.Scenes.TrurlsShop {
       (ClassType.Kron, WeaponType.KronWeaponKit),
       (ClassType.Gnom, WeaponType.GnomWeaponKit)
     };
+    
+    [Inject]
+    public void Constructor(IStartGame startGame, IClassType classType) {
+      _startGame = startGame;
+      _classType = classType;
+    }
 
-    private IClassType _type;
 
     protected virtual void Start() {
       TestCharacterType();
@@ -48,7 +48,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
 
     public ArmorType GetArmorKit() {
       for (var i = 0; i < _armorKits.Count; i++) {
-        if (_armorKits[i].Item1 == _classType) {
+        if (_armorKits[i].Item1 == _classTypeEnum) {
           return _armorKits[i].Item2;
         }
       }
@@ -58,7 +58,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
 
     public WeaponType GetWeaponKit() {
       for (var i = 0; i < _weaponKits.Count; i++) {
-        if (_weaponKits[i].Item1 == _classType) {
+        if (_weaponKits[i].Item1 == _classTypeEnum) {
           return _weaponKits[i].Item2;
         }
       }
@@ -71,9 +71,8 @@ namespace Core.Mono.Scenes.TrurlsShop {
         return;
       }
 
-      if (_useGameSave) {
-        _type = _dealer.Peek<IClassType>();
-        Invoke(nameof(TrySetCharacterType), 0.3f);
+      if (_startGame.UseGameSave()) {
+        SetClassTypeEnum();
       } else {
         // SaveSystem.LoadWithInvoke(_type, SaveSystem.Constants.ClassOfCharacter, (nameInvoke, time) => Invoke(nameInvoke, time), nameof(TrySetCharacterType), 0.3f);
       }
@@ -85,14 +84,14 @@ namespace Core.Mono.Scenes.TrurlsShop {
       }
     }
 
-    private void TrySetCharacterType() {
-      _classType = _type.GetClassType();
+    private void SetClassTypeEnum() {
+      _classTypeEnum = _classType.GetClassType();
       GetCharacterType?.Invoke();
     }
 
-    public ClassType ClassType {
+    public ClassType ClassTypeEnum {
       get {
-        return _classType;
+        return _classTypeEnum;
       }
     }
   }

@@ -1,11 +1,11 @@
 using System;
+using Core.Mono.MainManagers;
 using Core.Rule.GameRule.EquipmentIdConstants;
 using Core.ScriptableObject.Armor;
 using Core.ScriptableObject.Products;
 using Core.ScriptableObject.Storage;
 using Core.ScriptableObject.Weapon;
 using Core.Support.Data;
-using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,29 +46,25 @@ namespace Core.Mono.Scenes.CharacterList {
     private bool _testUsedEquipment;
     [SerializeField]
     private bool _useGameSave;
+    private IStartGame _startGame;
     private IEquipmentUsed _equipmentUsed;
-    private IDealer _dealer;
     private (ArmorType, TMP_Text) _armorTupleForText;
     private (ArmorType, TMP_Text) _shieldTupleForText;
     private (WeaponType, TMP_Text) _oneHandedTupleForText;
     private (WeaponType, TMP_Text) _twoHandedTupleForText;
     private (WeaponType, TMP_Text) _rangeTupleForText;
-    private (WeaponType, TMP_Text) _projectiliesTupleForText;
+    private (WeaponType, TMP_Text) _projectilesTupleForText;
     private (ArmorType, int) _armorTuple;
     private (ArmorType, int) _shieldTuple;
     private (WeaponType, int) _oneHandedTuple;
     private (WeaponType, int) _twoHandedTuple;
     private (WeaponType, int) _rangeTuple;
-    private (WeaponType, int) _projectiliesTuple;
+    private (WeaponType, int) _projectilesTuple;
     private int _bagId;
     private int _animalId;
     private int _carriageId;
     private int _id;
 
-    [Inject]
-    private void InjectDelear(IDealer dealer) {
-      _dealer = dealer;
-    }
     private void Start() {
       SetTuples();
       LoadUsedEquipmentDataWithInvoke();
@@ -92,19 +88,25 @@ namespace Core.Mono.Scenes.CharacterList {
       _takeOffButton.onClick.RemoveListener(OnTakeOffButtonClicked);
     }
 
+    [Inject]
+    public void Constructor(IStartGame startGame, IEquipmentUsed equipmentUsed) {
+      _startGame = startGame;
+      _equipmentUsed = equipmentUsed;
+    }
+
     private void SetTuples() {
       _armorTupleForText = (ArmorType.OnlyArmor, _armorText);
       _shieldTupleForText = (ArmorType.Shield, _shieldText);
       _oneHandedTupleForText = (WeaponType.OneHanded, _oneHandedText);
       _twoHandedTupleForText = (WeaponType.TwoHanded, _twoHandedText);
       _rangeTupleForText = (WeaponType.Range, _rangeText);
-      _projectiliesTupleForText = (WeaponType.Projectilies, _projectilesText);
+      _projectilesTupleForText = (WeaponType.Projectilies, _projectilesText);
       _armorTuple = (ArmorType.OnlyArmor, EquipmentIdConstants.NO_ARMOR_ID);
       _shieldTuple = (ArmorType.Shield, 0);
       _oneHandedTuple = (WeaponType.OneHanded, 0);
       _twoHandedTuple = (WeaponType.TwoHanded, 0);
       _rangeTuple = (WeaponType.Range, 0);
-      _projectiliesTuple = (WeaponType.Projectilies, 0);
+      _projectilesTuple = (WeaponType.Projectilies, 0);
     }
 
     private void SetTupleByIdOnApplyButtonClicked() {
@@ -151,9 +153,9 @@ namespace Core.Mono.Scenes.CharacterList {
               SetUsedEquipmentDataForRangeWeapon();
             }
 
-            if ((weapon.weaponType & _projectiliesTuple.Item1) != WeaponType.None) {
+            if ((weapon.weaponType & _projectilesTuple.Item1) != WeaponType.None) {
               CheckRangeSetForProjectiles(weapon);
-              TakeOffUsedEquipment(_projectiliesTuple.Item2);
+              TakeOffUsedEquipment(_projectilesTuple.Item2);
               SetIdForProjectiliesTuple();
               SetTextForProjectiliesTuple(productObject.GetProductName());
               SetUsedEquipmentDataForProjectiles();
@@ -248,8 +250,8 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void ChechRangeSetForRangeWeapon(WeaponObject weapon) {
-      if (_projectiliesTuple.Item2 != 0) {
-        WeaponType projetiliesType = _storage.GetProductFromList(_projectiliesTuple.Item2).GetWeaponType();
+      if (_projectilesTuple.Item2 != 0) {
+        WeaponType projetiliesType = _storage.GetProductFromList(_projectilesTuple.Item2).GetWeaponType();
 
         WeaponType rangeSet = default;
         if ((weapon.weaponType & WeaponType.SlingSet) != WeaponType.None) {
@@ -273,7 +275,7 @@ namespace Core.Mono.Scenes.CharacterList {
         }
 
         if ((rangeSet & projetiliesType) == WeaponType.None) {
-          TakeOffEquipment?.Invoke(_projectiliesTuple.Item2);
+          TakeOffEquipment?.Invoke(_projectilesTuple.Item2);
           SetIdForProjectiliesTuple(0);
           SetTextForProjectiliesTuple(string.Empty);
           SetUsedEquipmentDataForProjectiles();
@@ -310,7 +312,7 @@ namespace Core.Mono.Scenes.CharacterList {
             SetTextForRangeTuple(productObject.GetProductName());
           }
 
-          if ((weapon.weaponType & _projectiliesTuple.Item1) != WeaponType.None) {
+          if ((weapon.weaponType & _projectilesTuple.Item1) != WeaponType.None) {
             SetTextForProjectiliesTuple(productObject.GetProductName());
           }
 
@@ -403,7 +405,7 @@ namespace Core.Mono.Scenes.CharacterList {
         return;
       }
 
-      if (_id == _projectiliesTuple.Item2) {
+      if (_id == _projectilesTuple.Item2) {
         SetIdForProjectiliesTuple(0);
         SetTextForProjectiliesTuple(string.Empty);
         TakeOffEquipment?.Invoke(_id);
@@ -448,7 +450,7 @@ namespace Core.Mono.Scenes.CharacterList {
       ApplyButtonClicked?.Invoke(_oneHandedTuple.Item2);
       ApplyButtonClicked?.Invoke(_twoHandedTuple.Item2);
       ApplyButtonClicked?.Invoke(_rangeTuple.Item2);
-      ApplyButtonClicked?.Invoke(_projectiliesTuple.Item2);
+      ApplyButtonClicked?.Invoke(_projectilesTuple.Item2);
     }
 
     private void OnOpenItemListOfProducts() {
@@ -478,7 +480,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SetIdForProjectiliesTuple() {
-      _projectiliesTuple.Item2 = _id;
+      _projectilesTuple.Item2 = _id;
     }
 
     private void SetIdForArmorTuple(int id) {
@@ -502,7 +504,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SetIdForProjectiliesTuple(int id) {
-      _projectiliesTuple.Item2 = id;
+      _projectilesTuple.Item2 = id;
     }
 
     private void SetIdForBag(int id) {
@@ -538,7 +540,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SetTextForProjectiliesTuple(string productName) {
-      _projectiliesTupleForText.Item2.text = productName;
+      _projectilesTupleForText.Item2.text = productName;
     }
 
     private void SetTextForBag(string productName) {
@@ -574,7 +576,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SetUsedEquipmentDataForProjectiles() {
-      _equipmentUsed.SetEquipment(EquipmentsUsedId.ProjectilesId, _projectiliesTuple.Item2);
+      _equipmentUsed.SetEquipment(EquipmentsUsedId.ProjectilesId, _projectilesTuple.Item2);
     }
 
     private void SetUsedEquipmentDataForBag() {
@@ -590,8 +592,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SaveUsedEquipmentData() {
-      if (_useGameSave) {
-        // GSSSingleton.Instance.SaveInGame();
+      if (_startGame.UseGameSave()) {
         EquipmentChanged?.Invoke();
       }
     }
@@ -601,9 +602,8 @@ namespace Core.Mono.Scenes.CharacterList {
         return;
       }
 
-      if (_useGameSave) {
-        _equipmentUsed = _dealer.Peek<IEquipmentUsed>();
-        Invoke(nameof(SetTuplesAfterLoadUsedEquipmentData), 0.3f);
+      if (_startGame.UseGameSave()) {
+        SetTuplesAfterLoadUsedEquipmentData();
       }
     }
 
@@ -613,7 +613,7 @@ namespace Core.Mono.Scenes.CharacterList {
       _oneHandedTuple.Item2 = _equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId);
       _twoHandedTuple.Item2 = _equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId);
       _rangeTuple.Item2 = _equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId);
-      _projectiliesTuple.Item2 = _equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId);
+      _projectilesTuple.Item2 = _equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId);
       _bagId = _equipmentUsed.GetEquipment(EquipmentsUsedId.BagId);
       _animalId = _equipmentUsed.GetEquipment(EquipmentsUsedId.AnimalId);
       _carriageId = _equipmentUsed.GetEquipment(EquipmentsUsedId.CarriageId);
@@ -622,7 +622,7 @@ namespace Core.Mono.Scenes.CharacterList {
       SetTextTuplesById(_oneHandedTuple.Item2);
       SetTextTuplesById(_twoHandedTuple.Item2);
       SetTextTuplesById(_rangeTuple.Item2);
-      SetTextTuplesById(_projectiliesTuple.Item2);
+      SetTextTuplesById(_projectilesTuple.Item2);
       SetTextTuplesById(_bagId);
       SetTextTuplesById(_animalId);
       SetTextTuplesById(_carriageId);

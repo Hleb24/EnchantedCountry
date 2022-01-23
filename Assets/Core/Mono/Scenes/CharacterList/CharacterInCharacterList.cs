@@ -14,7 +14,7 @@ namespace Core.Mono.Scenes.CharacterList {
 			GetCharacterType -= OnGetCharacterType;
 		}
 		private void OnGetCharacterType() {
-			_characterTypeText.text = _classType.ToString();
+			_characterTypeText.text = _classTypeEnum.ToString();
 		}
 	}
 }

@@ -2,7 +2,6 @@ using System;
 using Core.Rule.Character;
 using Core.ScriptableObject.Mock;
 using Core.Support.Data;
-using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -32,25 +31,19 @@ namespace Core.Mono.Scenes.SelectionClass {
     [SerializeField]
     private bool _useGameSave;
     private IQualityPoints _qualityPoints;
-    private IClassType _type;
-    private ClassType _classType;
+    private IClassType _classType;
+    private ClassType _classTypeEnum;
     private bool _isCanBeWarrior;
     private bool _isCanBeElf;
     private bool _isCanBeWizard;
     private bool _isCanBeKron;
     private bool _isCanBeGnom;
-    private IDealer _dealer;
 
-    [Inject]
-    private void InjectDealer(IDealer dealer) {
-      _dealer = dealer;
-    }
     private void Awake() {
       _mockQualitiesPoints = Resources.Load<MockQualitiesPoints>(MockQualitiesPoints.PATH);
     }
 
     private void Start() {
-      Init();
       CheckAllowedClasses();
     }
 
@@ -62,9 +55,10 @@ namespace Core.Mono.Scenes.SelectionClass {
       RemoveListener();
     }
 
-    private void Init() {
-      _qualityPoints = _dealer.Peek<IQualityPoints>();
-      _type = _dealer.Peek<IClassType>();
+    [Inject]
+    public void Constructor(IQualityPoints qualityPoints, IClassType classType) {
+      _qualityPoints = qualityPoints;
+      _classType = classType;
     }
 
     private void AddListener() {
@@ -155,37 +149,37 @@ namespace Core.Mono.Scenes.SelectionClass {
     }
 
     private void SelectWarrior() {
-      _classType = ClassType.Warrior;
+      _classTypeEnum = ClassType.Warrior;
       SaveClassOfCharacter();
     }
 
     private void SelectElf() {
-      _classType = ClassType.Elf;
+      _classTypeEnum = ClassType.Elf;
       SaveClassOfCharacter();
     }
 
     private void SelectWizard() {
-      _classType = ClassType.Wizard;
+      _classTypeEnum = ClassType.Wizard;
       SaveClassOfCharacter();
     }
 
     private void SelectKron() {
-      _classType = ClassType.Kron;
+      _classTypeEnum = ClassType.Kron;
       SaveClassOfCharacter();
     }
 
     private void SelectGnom() {
-      _classType = ClassType.Gnom;
+      _classTypeEnum = ClassType.Gnom;
       SaveClassOfCharacter();
     }
 
     private void SaveClassOfCharacter() {
-      _type.SetClassType(_classType);
+      _classType.SetClassType(_classTypeEnum);
       InvokeCharacterTypeEvent();
     }
 
     private void InvokeCharacterTypeEvent() {
-      switch (_classType) {
+      switch (_classTypeEnum) {
         case ClassType.Human:
         case ClassType.Warrior:
         case ClassType.Gnom:

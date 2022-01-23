@@ -1,26 +1,21 @@
-// ReSharper disable once CheckNamespace
-
 using System.Collections.Generic;
-using Core.Rule.Character;
-using Core.Rule.Character.Levels;
 using Core.Support.Data;
 
-namespace Character {
-  public class DefiningLevelsForСharacterTypes {
-    private IGamePoints _gamePoints;
-    private Levels _levels;
-    private ClassType _classType;
+namespace Core.Rule.Character.Levels {
+  public class DefiningLevels {
+    private readonly IGamePoints _gamePoints;
+    private readonly ClassType _classType;
+    private readonly Levels _levels;
     private int _levelSpell;
-    public DefiningLevelsForСharacterTypes(ClassType classType, IGamePoints gamePoints) {
-      _levels = new Levels();
-      _classType = classType;
+    public DefiningLevels(IClassType classType, IGamePoints gamePoints, Levels levels) {
+      _levels = levels;
+      _classType = classType.GetClassType();
       _gamePoints = gamePoints;
       SetLevelByGamePoints();
       SetSpellLevelForCharacterType();
     }
   
     private void SetLevelByGamePoints() {
-    
       int lvl = -1;
       List<int> levelsList = new List<int>();
       levelsList.AddRange(LevelDictionaries.DefiningLevelsForСharacterTypes[_classType]);
@@ -39,13 +34,15 @@ namespace Character {
         _levelSpell = -1;
       }
     }
+
+    public int GetCurrentLevel() {
+      return _levels.GetLevel();
+    }
     public Levels Levels {
       get {
         return _levels;
       }
-      set {
-        _levels = value;
-      }
+      
     }
     
     public int LevelSpell {

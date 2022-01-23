@@ -1,12 +1,13 @@
 using System;
+using Core.Mono.MainManagers;
 using Core.Support.Data;
-using Core.Support.SaveSystem.SaveManagers;
 using TMPro;
 using UnityEngine;
 using Zenject;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class CharacterGamePoints : MonoBehaviour {
+    public event Action<int> LoadGamePoints;
     [SerializeField]
     private TMP_Text _gamePointsText;
     [SerializeField]
@@ -15,15 +16,9 @@ namespace Core.Mono.Scenes.CharacterList {
     private bool _useTestPoints;
     [SerializeField]
     private bool _useGameSave;
-    private IDealer _dealer;
+    private IStartGame _startGame;
     private IGamePoints _gamePoints;
-    public event Action<int> LoadGamePoints;
 
-    [Inject]
-    private void InjectDealer(IDealer dealer) {
-      _dealer = dealer;
-    }
-    
     private void Start() {
       if (_useTestPoints) {
         SetTestPoints();
@@ -33,28 +28,19 @@ namespace Core.Mono.Scenes.CharacterList {
       }
     }
 
-    private void OnDestroy() {
-      SaveGamePointsData();
-    }
-    private void SaveGamePointsData() {
-      // if (_useGameSave) {
-      //   GSSSingleton.Instance.SaveInGame();
-      // } else {
-      //   SaveSystem.Save(_gamePointsScribe, SaveSystem.Constants.GamePoints);
-      // }
+    [Inject]
+    public void Constructor(IStartGame startGame, IGamePoints gamePoints) {
+      _startGame = startGame;
+      _gamePoints = gamePoints;
     }
 
     private void LoadGamePointsDataWithInvoke() {
-      if (_useGameSave) {
-        _gamePoints = _dealer.Peek<IGamePoints>();
-        Invoke(nameof(SetGamePointsAndGamePointsTextAfterLoad), 0.3f);
-      } else {
-        // SaveSystem.LoadWithInvoke(_gamePointsScribe, SaveSystem.Constants.GamePoints
-        // , (nameInvoke, time) => Invoke(nameInvoke, time), nameof(SetGamePointsAndGamePointsTextAfterLoad), 0.3f);
+      if (_startGame.UseGameSave()) {
+        SetGamePointsAndGamePointsTextAfterLoad();
       }
     }
+
     private void SetTestPoints() {
-      _gamePoints = _dealer.Peek<IGamePoints>();
       _gamePoints.SetPoints(_testPoints);
       LoadGamePoints?.Invoke(_gamePoints.GetPoints());
     }
@@ -71,11 +57,6 @@ namespace Core.Mono.Scenes.CharacterList {
 
     private void SetGamePointsText() {
       _gamePointsText.text = _gamePoints.GetPoints().ToString();
-    }
-    public IGamePoints GamePoints {
-      get {
-        return _gamePoints;
-      }
     }
   }
 }
