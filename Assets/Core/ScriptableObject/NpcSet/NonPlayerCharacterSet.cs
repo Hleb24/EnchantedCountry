@@ -1,5 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using Core.ScriptableObject.Npc;
+using Core.Support.Attributes;
+using Core.Support.SaveSystem.Saver;
 using UnityEngine;
 
 namespace Core.ScriptableObject.NpcSet {
@@ -17,7 +21,7 @@ namespace Core.ScriptableObject.NpcSet {
       Debug.LogWarning("NpcSO not found!");
       return null;
     }
-    
+
     public Rule.GameRule.NPC.Npc GetNpcFromList(int id) {
       foreach (NonPlayerCharacter npc in _npcSoList) {
         if (npc.Id == id) {
@@ -27,6 +31,17 @@ namespace Core.ScriptableObject.NpcSet {
 
       Debug.LogWarning("NpcSO not found!");
       return null;
+    }
+
+    private void SaveNpcToJson() {
+      var saver = new JsonSaver();
+      string _pathToFolder = Path.Combine(Application.persistentDataPath, "Npc");
+      string _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "Npc"), "Save.json");
+      Type type = typeof(NonPlayerCharacter);
+      for (var i = 0; i < _npcSoList.Count; i++) {
+        _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "Npc"), $"{_npcSoList[i].Name}.json");
+        saver.Save(_npcSoList[i], _pathToFolder, _pathToFile);
+      }
     }
   }
 }
