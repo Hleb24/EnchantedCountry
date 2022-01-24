@@ -1,5 +1,4 @@
-using Core.Rule.Character.Levels;
-using Core.Support.Data;
+using Core.Main.Character.Levels;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;

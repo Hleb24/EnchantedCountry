@@ -1,5 +1,5 @@
 ﻿using System;
-using Core.Rule.GameRule.EquipmentIdConstants;
+using Core.Main.GameRule.EquipmentIdConstants;
 using Core.Support.SaveSystem.SaveManagers;
 using Core.Support.SaveSystem.Scribe;
 using UnityEngine;

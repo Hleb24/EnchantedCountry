@@ -1,8 +1,7 @@
-using Core.Mono.MainManagers;
 using UnityEngine;
 using Zenject;
 
-namespace Aberrance {
+namespace Core.Mono.MainManagers {
   /// <summary>
   /// Класс для вызова через Zenject Левиафана.
   /// </summary>

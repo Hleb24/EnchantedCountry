@@ -1,10 +1,10 @@
 using System;
+using Core.Main.GameRule.EquipmentIdConstants;
 using Core.Mono.BaseClass;
 using Core.Mono.MainManagers;
-using Core.Rule.GameRule.EquipmentIdConstants;
-using Core.ScriptableObject.Equipment;
-using Core.ScriptableObject.Products;
-using Core.ScriptableObject.Storage;
+using Core.SO.Equipment;
+using Core.SO.Product;
+using Core.SO.Storage;
 using Core.Support.Data;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,11 +15,11 @@ namespace Core.Mono.Scenes.TrurlsShop {
     public static event Action BuyProductSuccess;
     public static event Action<int> BuyProductSuccessAndCheckPrice;
     [SerializeField]
-    private EquipmentObject _equipment;
+    private EquipmentSO _equipment;
     [SerializeField]
     private WalletInTrurlsShop _walletIn;
     [SerializeField]
-    private StorageObject _storage;
+    private StorageSO _storage;
     [SerializeField]
     private Button _buyProduct;
     private IStartGame _startGame;
@@ -97,7 +97,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
     }
 
     private int GetPrice(int id) {
-      ProductObject product = _storage.GetProductFromList(id);
+      ProductSO product = _storage.GetProductFromList(id);
       return product.GetPrice();
     }
 
@@ -118,7 +118,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
       _buyProduct.interactable = false;
     }
 
-    public EquipmentObject Equipment {
+    public EquipmentSO Equipment {
       get {
         return _equipment;
       }

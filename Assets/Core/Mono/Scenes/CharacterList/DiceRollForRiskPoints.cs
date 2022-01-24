@@ -1,8 +1,8 @@
 using System;
+using Core.Main.Character;
+using Core.Main.Character.Qualities;
+using Core.Main.Dice;
 using Core.Mono.MainManagers;
-using Core.Rule.Character;
-using Core.Rule.Character.Qualities;
-using Core.Rule.Dice;
 using Core.Support.Data;
 using Core.Support.PrefsTools;
 using TMPro;

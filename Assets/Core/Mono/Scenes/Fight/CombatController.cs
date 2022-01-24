@@ -1,8 +1,8 @@
 using System;
-using Core.Rule.Character;
-using Core.Rule.Dice;
-using Core.Rule.GameRule.Initiative;
-using Core.Rule.GameRule.NPC;
+using Core.Main.Character;
+using Core.Main.Dice;
+using Core.Main.GameRule.Initiative;
+using Core.Main.NonPlayerCharacters;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +14,7 @@ namespace Core.Mono.Scenes.Fight {
     [SerializeField]
     private InitiativeController _initiativeController;
     private PlayerCharacter _playerCharacter;
-    private Npc _npc;
+    private NonPlayerCharacter _nonPlayerCharacter;
     private bool _isGetReference;
 
     private void OnEnable() {
@@ -32,7 +32,7 @@ namespace Core.Mono.Scenes.Fight {
 
     private void OnInitiativeDiceRollComplete() {
       _playerCharacter = _initiativeController.PlayerCharacter;
-      _npc = _initiativeController.Npc;
+      _nonPlayerCharacter = _initiativeController.NonPlayerCharacter;
     }
 
     private void RemoveListeners() {
@@ -49,7 +49,7 @@ namespace Core.Mono.Scenes.Fight {
     }
 
     private bool IsNpc(IInitiative initiative) {
-      return _npc == initiative;
+      return _nonPlayerCharacter == initiative;
     }
 
     private void OnAttackButtonClicked() {
@@ -58,31 +58,31 @@ namespace Core.Mono.Scenes.Fight {
           int diceRollValue = GetDiceRollValue(_playerCharacter.GetMeleeAccuracy());
           float meleeDamage = _playerCharacter.GetMeleeDamage();
           Debug.Log($"<color=green>{_playerCharacter.ClassType}</color>, dice roll value <color=green>{diceRollValue}</color> to melee <color=green>{meleeDamage}</color> damage, weapont type <color=green>{_playerCharacter.MeleeWeapon.weaponType}</color>");
-          _npc.GetDamaged(diceRollValue, meleeDamage,
+          _nonPlayerCharacter.GetDamaged(diceRollValue, meleeDamage,
             _playerCharacter.MeleeWeapon.Id, _playerCharacter.MeleeWeapon.weaponType);
-          AttackButtonClicked?.Invoke(_npc.Name, _npc.RiskPoints.GetPoints());
+          AttackButtonClicked?.Invoke(_nonPlayerCharacter.Name, _nonPlayerCharacter.RiskPoints.GetPoints());
         }
       }
       if (IsNpc(_initiativeController.GetIInitiative())) {
-        if (_npc.NumberOfAttack !=0) {
-          if (_npc.AttackEveryoneAtOnce) {
+        if (_nonPlayerCharacter.NumberOfAttack !=0) {
+          if (_nonPlayerCharacter.AttackEveryoneAtOnce) {
             Debug.Log("Everyone at once <color=red>Npc</color> attack");
-            for (int i = 0; i < _npc.NumberOfAttack; i++) {
+            for (int i = 0; i < _nonPlayerCharacter.NumberOfAttack; i++) {
               int index = i;
-              int diceRollValue = GetDiceRollValue(_npc.Accuracy());
-              float damage = _npc.ToDamage(diceRollValue,_playerCharacter,index);
-              Debug.Log($"<color=red>{_npc.Name}</color>, dice roll value <color=red>{diceRollValue}</color> to index <size=12>{index}</size> - <color=red>{damage}</color> damage");
+              int diceRollValue = GetDiceRollValue(_nonPlayerCharacter.Accuracy());
+              float damage = _nonPlayerCharacter.ToDamage(diceRollValue,_playerCharacter,index);
+              Debug.Log($"<color=red>{_nonPlayerCharacter.Name}</color>, dice roll value <color=red>{diceRollValue}</color> to index <size=12>{index}</size> - <color=red>{damage}</color> damage");
               _playerCharacter.GetDamaged(diceRollValue, damage);
               AttackButtonClicked?.Invoke(_playerCharacter.Name, _playerCharacter.RiskPoints.GetPoints());
             }
           }
 
-          if (!_npc.AttackEveryoneAtOnce) {
+          if (!_nonPlayerCharacter.AttackEveryoneAtOnce) {
             Debug.Log("One <color=red>Npc</color> attack");
-            int weapon = UnityEngine.Random.Range(0, _npc.NumberOfWeapon);
-            int diceRollValue = GetDiceRollValue(_npc.Accuracy());
-            float damage = _npc.ToDamage(diceRollValue,_playerCharacter,weapon);
-            Debug.Log($"<color=red>{_npc.Name}</color>, dice roll value <color=red>{diceRollValue}</color> to weapon <color=red>{damage}</color> damage");
+            int weapon = UnityEngine.Random.Range(0, _nonPlayerCharacter.NumberOfWeapon);
+            int diceRollValue = GetDiceRollValue(_nonPlayerCharacter.Accuracy());
+            float damage = _nonPlayerCharacter.ToDamage(diceRollValue,_playerCharacter,weapon);
+            Debug.Log($"<color=red>{_nonPlayerCharacter.Name}</color>, dice roll value <color=red>{diceRollValue}</color> to weapon <color=red>{damage}</color> damage");
             _playerCharacter.GetDamaged(diceRollValue, damage);
             AttackButtonClicked?.Invoke(_playerCharacter.Name, _playerCharacter.RiskPoints.GetPoints());
           }

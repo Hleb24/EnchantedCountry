@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Core.ScriptableObject.Products;
+using Core.SO.Product;
 using UnityEngine;
 using UnityEngine.Serialization;
-using static Core.Rule.GameRule.Armor;
-using static Core.Rule.GameRule.Weapon;
+using static Core.Main.GameRule.Armor;
+using static Core.Main.GameRule.Weapon;
 
 namespace Core.Mono.Scenes.TrurlsShop {
 	/// <summary>
@@ -27,13 +27,13 @@ namespace Core.Mono.Scenes.TrurlsShop {
     [SerializeField]
     private List<ProductView> _productViewListForItems;
     [FormerlySerializedAs("_armorListSO"), SerializeField]
-    private List<ProductObject> _armorListSo;
+    private List<ProductSO> _armorListSo;
     [FormerlySerializedAs("_weaponListSO"), SerializeField]
-    private List<ProductObject> _weaponListSo;
+    private List<ProductSO> _weaponListSo;
     [FormerlySerializedAs("_projectiliesListSO"), SerializeField]
-    private List<ProductObject> _projectilesListSo;
+    private List<ProductSO> _projectilesListSo;
     [FormerlySerializedAs("_itemsListSO"), SerializeField]
-    private List<ProductObject> _itemsListSo;
+    private List<ProductSO> _itemsListSo;
     [SerializeField]
     private Transform _contentArmor;
     [SerializeField]
@@ -109,57 +109,57 @@ namespace Core.Mono.Scenes.TrurlsShop {
       }
     }
 
-    private void InitializeProductFields(ProductView productView, ProductObject productObject, int amount) {
-      SetProductIcon(productView, productObject);
-      SetProductName(productView, productObject);
+    private void InitializeProductFields(ProductView productView, ProductSO productSO, int amount) {
+      SetProductIcon(productView, productSO);
+      SetProductName(productView, productSO);
       SetProductNumberOfProduct(productView, amount);
-      SetProductProperty(productView, productObject);
-      SetProductPrice(productView, productObject);
-      SetProductId(productView, productObject);
-      KitForCharacterType(productView, productObject);
+      SetProductProperty(productView, productSO);
+      SetProductPrice(productView, productSO);
+      SetProductId(productView, productSO);
+      KitForCharacterType(productView, productSO);
     }
 
-    private void SetProductIcon(ProductView productView, ProductObject productObject) {
-      productView.SetIcon(productObject.GetIcon());
+    private void SetProductIcon(ProductView productView, ProductSO productSO) {
+      productView.SetIcon(productSO.GetIcon());
     }
 
-    private void SetProductName(ProductView productView, ProductObject productObject) {
-      productView.SetName(productObject.GetProductName());
+    private void SetProductName(ProductView productView, ProductSO productSO) {
+      productView.SetName(productSO.GetProductName());
     }
 
     private void SetProductNumberOfProduct(ProductView productView, int numberOfProduct) {
       productView.SetNumberOfProduct(numberOfProduct.ToString());
     }
 
-    private void SetProductProperty(ProductView productView, ProductObject productObject) {
-      productView.SetProperty(productObject.GetProperty());
+    private void SetProductProperty(ProductView productView, ProductSO productSO) {
+      productView.SetProperty(productSO.GetProperty());
     }
 
-    private void SetProductPrice(ProductView productView, ProductObject productObject) {
-      productView.SetPrice(productObject.GetPrice().ToString());
+    private void SetProductPrice(ProductView productView, ProductSO productSO) {
+      productView.SetPrice(productSO.GetPrice().ToString());
     }
 
-    private void SetProductId(ProductView productView, ProductObject productObject) {
-      productView.SetId(productObject.GetId());
+    private void SetProductId(ProductView productView, ProductSO productSO) {
+      productView.SetId(productSO.GetId());
     }
 
-    private void KitForCharacterType(ProductView productView, ProductObject productObject) {
-      switch (productObject.GetProductType()) {
-        case ProductObject.ProductType.None:
+    private void KitForCharacterType(ProductView productView, ProductSO productSO) {
+      switch (productSO.GetProductType()) {
+        case ProductSO.ProductType.None:
           break;
-        case ProductObject.ProductType.Weapon:
-          if ((productObject.GetWeaponType() & _characterInTrurlsShop.GetWeaponKit()) == WeaponType.None) {
+        case ProductSO.ProductType.Weapon:
+          if ((productSO.GetWeaponType() & _characterInTrurlsShop.GetWeaponKit()) == WeaponType.None) {
             productView.ProductNotForCharacterType();
           }
 
           break;
-        case ProductObject.ProductType.Armor:
-          if ((productObject.GetArmorType() & _characterInTrurlsShop.GetArmorKit()) == ArmorType.None) {
+        case ProductSO.ProductType.Armor:
+          if ((productSO.GetArmorType() & _characterInTrurlsShop.GetArmorKit()) == ArmorType.None) {
             productView.ProductNotForCharacterType();
           }
 
           break;
-        case ProductObject.ProductType.Item:
+        case ProductSO.ProductType.Item:
           break;
       }
     }

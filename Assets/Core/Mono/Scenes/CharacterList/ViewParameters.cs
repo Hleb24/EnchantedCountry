@@ -1,8 +1,8 @@
-using Core.Rule.Character.Qualities;
-using Core.Rule.GameRule;
-using Core.Rule.GameRule.EquipmentIdConstants;
-using Core.ScriptableObject.Products;
-using Core.ScriptableObject.Storage;
+using Core.Main.Character.Qualities;
+using Core.Main.GameRule;
+using Core.Main.GameRule.EquipmentIdConstants;
+using Core.SO.Product;
+using Core.SO.Storage;
 using Core.Support.Data;
 using TMPro;
 using UnityEngine;
@@ -58,18 +58,18 @@ namespace Core.Mono.Scenes.CharacterList {
       MaxAmountOfCoinsParameters();
     }
 
-    private void GetArmorClass(StorageObject storageObject, int id) {
+    private void GetArmorClass(StorageSO storageSO, int id) {
       if (id.Equals(0)) {
         return;
       }
 
-      ProductObject product = storageObject.GetArmorFromList(id);
+      ProductSO product = storageSO.GetArmorFromList(id);
       Armor armor = product;
       _classOfArmor = armor.ArmorClass.ClassOfArmor + _qualities[QualityType.Agility].Modifier;
       SetTextForParameters(_armorClassText, _classOfArmor);
     }
 
-    private void GetAttackForMeleeWeapon(StorageObject storageObject, int oneHandedId, int twoHandedId) {
+    private void GetAttackForMeleeWeapon(StorageSO storageSO, int oneHandedId, int twoHandedId) {
       if (IsTwoWeapons(oneHandedId, twoHandedId)) {
         Debug.Log("Two weapon");
         return;
@@ -89,27 +89,27 @@ namespace Core.Mono.Scenes.CharacterList {
         id = twoHandedId;
       }
 
-      _meleeAttack = GetAttack(storageObject, id) + _qualities[QualityType.Strength].Modifier;
+      _meleeAttack = GetAttack(storageSO, id) + _qualities[QualityType.Strength].Modifier;
       Debug.Log($"Strength = {_qualities[QualityType.Strength].GetQualityValue()}, modifier={_qualities[QualityType.Strength].Modifier}");
     }
 
-    private void GetAttackForRangeWeapon(StorageObject storageObject, int rangeId) {
+    private void GetAttackForRangeWeapon(StorageSO storageSO, int rangeId) {
       if (rangeId.Equals(0)) {
         Debug.Log("Don't have range weapon");
         return;
       }
 
-      _rangeAttack = GetAttack(storageObject, rangeId) + _qualities[QualityType.Agility].Modifier;
+      _rangeAttack = GetAttack(storageSO, rangeId) + _qualities[QualityType.Agility].Modifier;
     }
 
-    private int GetAttack(StorageObject storageObject, int id) {
-      ProductObject product = storageObject.GetWeaponFromList(id);
+    private int GetAttack(StorageSO storageSO, int id) {
+      ProductSO product = storageSO.GetWeaponFromList(id);
       Weapon weapon = product;
       int attack = weapon.Attack.Accuracy;
       return attack;
     }
 
-    private void GetDamageForMeleeWeapon(StorageObject storageObject, int oneHandedId, int twoHandedId) {
+    private void GetDamageForMeleeWeapon(StorageSO storageSO, int oneHandedId, int twoHandedId) {
       if (IsTwoWeapons(oneHandedId, twoHandedId)) {
         Debug.Log("Two weapon");
         return;
@@ -131,7 +131,7 @@ namespace Core.Mono.Scenes.CharacterList {
         id = twoHandedId;
       }
 
-      GetMeleeDamage(storageObject, id);
+      GetMeleeDamage(storageSO, id);
     }
 
     private bool IsNoWeapon(int oneHandedId, int twoHandedId) {
@@ -142,14 +142,14 @@ namespace Core.Mono.Scenes.CharacterList {
       return !oneHandedId.Equals(0) && !twoHandedId.Equals(0);
     }
 
-    private void GetMeleeDamage(StorageObject storageObject, int id) {
-      ProductObject product = storageObject.GetWeaponFromList(id);
+    private void GetMeleeDamage(StorageSO storageSO, int id) {
+      ProductSO product = storageSO.GetWeaponFromList(id);
       Weapon weapon = product;
       _meleeMinDamage = weapon.Attack.MinDamage;
       _meleeMaxDamage = weapon.Attack.MaxDamage;
     }
 
-    private void GetDamageForRangeWeapon(StorageObject storageObject, int rangeId, int projectiliesId = 0) {
+    private void GetDamageForRangeWeapon(StorageSO storageSO, int rangeId, int projectiliesId = 0) {
       if (rangeId.Equals(0)) {
         _rangeMinDamage = 0;
         _rangeMaxDamage = 0;
@@ -157,11 +157,11 @@ namespace Core.Mono.Scenes.CharacterList {
         return;
       }
 
-      GetRangeDamage(storageObject, rangeId, projectiliesId);
+      GetRangeDamage(storageSO, rangeId, projectiliesId);
     }
 
-    private void GetRangeDamage(StorageObject storageObject, int rangeId, int projectiliesId = 0) {
-      ProductObject product = storageObject.GetWeaponFromList(rangeId);
+    private void GetRangeDamage(StorageSO storageSO, int rangeId, int projectiliesId = 0) {
+      ProductSO product = storageSO.GetWeaponFromList(rangeId);
       Weapon weapon = product;
       _rangeMinDamage = weapon.Attack.MinDamage;
       _rangeMaxDamage = weapon.Attack.MaxDamage;
@@ -169,54 +169,54 @@ namespace Core.Mono.Scenes.CharacterList {
         return;
       }
 
-      ProductObject projectiliesProduct = storageObject.GetProjectilesFromList(projectiliesId);
+      ProductSO projectiliesProduct = storageSO.GetProjectilesFromList(projectiliesId);
       Weapon projectilies = projectiliesProduct;
       _rangeMinDamage += projectilies.Attack.MinDamage;
       _rangeMaxDamage += projectilies.Attack.MaxDamage;
     }
 
-    private void MaxAmountOfCoins(StorageObject storageObject) {
+    private void MaxAmountOfCoins(StorageSO storageSO) {
       var maxCoins = 0;
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.BagId) != 0) {
-        ProductObject productObject = storageObject.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.BagId));
-        maxCoins += int.Parse(productObject.GetProperty());
+        ProductSO productSO = storageSO.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.BagId));
+        maxCoins += int.Parse(productSO.GetProperty());
       }
 
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.AnimalId) != 0) {
-        ProductObject productObject = storageObject.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.AnimalId));
-        maxCoins += int.Parse(productObject.GetProperty());
+        ProductSO productSO = storageSO.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.AnimalId));
+        maxCoins += int.Parse(productSO.GetProperty());
       }
 
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.CarriageId) != 0) {
-        ProductObject productObject = storageObject.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.CarriageId));
-        maxCoins += int.Parse(productObject.GetProperty());
+        ProductSO productSO = storageSO.GetProductFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.CarriageId));
+        maxCoins += int.Parse(productSO.GetProperty());
       }
 
-      maxCoins += int.Parse(storageObject.GetProductFromList(EquipmentIdConstants.POCKETS).GetProperty());
+      maxCoins += int.Parse(storageSO.GetProductFromList(EquipmentIdConstants.POCKETS).GetProperty());
       _maxAmountOfCoins = maxCoins;
       _walletIn.Wallet.SetMaxCoins(_maxAmountOfCoins);
     }
 
     private void ArmorClassParameters() {
-      GetArmorClass(_spawnProducts.StorageObject, _equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId));
+      GetArmorClass(_spawnProducts.StorageSO, _equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId));
     }
 
     private void MeleeParameters() {
-      GetAttackForMeleeWeapon(_spawnProducts.StorageObject, _equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId), _equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId));
+      GetAttackForMeleeWeapon(_spawnProducts.StorageSO, _equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId), _equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId));
       SetTextForParameters(_meleeAttackText, _meleeAttack);
-      GetDamageForMeleeWeapon(_spawnProducts.StorageObject, _equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId), _equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId));
+      GetDamageForMeleeWeapon(_spawnProducts.StorageSO, _equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId), _equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId));
       SetTextForParameters(_meleeDamageText, _meleeMinDamage, _meleeMaxDamage);
     }
 
     private void RangeParameters() {
-      GetAttackForRangeWeapon(_spawnProducts.StorageObject, _equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId));
+      GetAttackForRangeWeapon(_spawnProducts.StorageSO, _equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId));
       SetTextForParameters(_rangeAttackText, _rangeAttack);
-      GetDamageForRangeWeapon(_spawnProducts.StorageObject, _equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId), _equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId));
+      GetDamageForRangeWeapon(_spawnProducts.StorageSO, _equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId), _equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId));
       SetTextForParameters(_rangeDamageText, _rangeMinDamage, _rangeMaxDamage);
     }
 
     private void MaxAmountOfCoinsParameters() {
-      MaxAmountOfCoins(_spawnProducts.StorageObject);
+      MaxAmountOfCoins(_spawnProducts.StorageSO);
       SetTextForParameters(_maxAmountOfCoinsText, _maxAmountOfCoins);
     }
 

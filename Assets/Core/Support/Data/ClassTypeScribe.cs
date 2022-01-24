@@ -1,5 +1,5 @@
 ﻿using System;
-using Core.Rule.Character;
+using Core.Main.Character;
 using Core.Support.SaveSystem.SaveManagers;
 using Core.Support.SaveSystem.Scribe;
 

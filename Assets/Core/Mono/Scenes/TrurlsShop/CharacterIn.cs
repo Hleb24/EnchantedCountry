@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Core.Main.Character;
 using Core.Mono.MainManagers;
-using Core.Rule.Character;
 using Core.Support.Data;
-using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using Zenject;
-using static Core.Rule.GameRule.Armor;
-using static Core.Rule.GameRule.Weapon;
+using static Core.Main.GameRule.Armor;
+using static Core.Main.GameRule.Weapon;
 
 namespace Core.Mono.Scenes.TrurlsShop {
   public class CharacterIn : MonoBehaviour {

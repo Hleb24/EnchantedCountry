@@ -1,13 +1,13 @@
-using Core.Rule.GameRule.NPC;
-using Core.ScriptableObject.NpcSet;
+using Core.Main.NonPlayerCharacters;
+using Core.SO.NpcSet;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.Fight {
   public class NpcBuilder : MonoBehaviour {
-    [FormerlySerializedAs("_setOfNpcSo"), FormerlySerializedAs("_setOfNpcSO"), SerializeField]
-    private NonPlayerCharacterSet _nonPlayerCharacterSet;
+    [FormerlySerializedAs("_nonPlayerCharacterSet"),FormerlySerializedAs("_setOfNpcSo"), FormerlySerializedAs("_setOfNpcSO"), SerializeField]
+    private NpcSetSO _npcSetSO;
     [SerializeField]
     private Button _createNpc;
     [SerializeField]
@@ -38,13 +38,13 @@ namespace Core.Mono.Scenes.Fight {
     }
 
     private void BuildNpc() {
-      Npc = _nonPlayerCharacterSet.GetNpcFromList(_npcId);
+      NonPlayerCharacter = _npcSetSO.GetNpcFromList(_npcId);
     }
 
     private void BuildNpc(int id) {
-      Npc = _nonPlayerCharacterSet.GetNpcFromList(id);
+      NonPlayerCharacter = _npcSetSO.GetNpcFromList(id);
     }
 
-    public Npc Npc { get; private set; }
+    public NonPlayerCharacter NonPlayerCharacter { get; private set; }
   }
 }

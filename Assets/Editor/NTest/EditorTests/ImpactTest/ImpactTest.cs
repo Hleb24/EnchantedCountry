@@ -1,5 +1,5 @@
-using Core.Rule.Character;
-using Core.Rule.GameRule.NPC;
+using Core.Main.Character;
+using Core.Main.NonPlayerCharacters;
 using NUnit.Framework;
 using Zenject;
 
@@ -8,7 +8,7 @@ namespace Editor.NTest.EditorTests.ImpactTest {
   public class ImpactTest : ZenjectUnitTestFixture {
     #region PREPARE_FOR_TEST
     private PlayerCharacter _player;
-    private Npc _npc;
+    private NonPlayerCharacter _nonPlayerCharacter;
     #endregion
 
     [SetUp]

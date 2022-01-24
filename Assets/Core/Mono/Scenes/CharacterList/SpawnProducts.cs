@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
-using Core.Rule.Character.Equipment;
-using Core.Rule.GameRule.EquipmentIdConstants;
-using Core.ScriptableObject.Equipment;
-using Core.ScriptableObject.Products;
-using Core.ScriptableObject.Storage;
+using Core.Main.Character.Equipment;
+using Core.Main.GameRule.EquipmentIdConstants;
+using Core.SO.Equipment;
+using Core.SO.Product;
+using Core.SO.Storage;
 using Core.Support.Data;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
-using static Core.Rule.GameRule.Armor;
-using static Core.Rule.GameRule.Weapon;
+using static Core.Main.GameRule.Armor;
+using static Core.Main.GameRule.Weapon;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class SpawnProducts : MonoBehaviour {
@@ -24,9 +24,9 @@ namespace Core.Mono.Scenes.CharacterList {
     private GameObject _productPrefab;
     [SerializeField]
     // ReSharper disable once NotAccessedField.Local
-    private EquipmentObject _equipment;
+    private EquipmentSO _equipment;
     [SerializeField]
-    private StorageObject _storage;
+    private StorageSO _storage;
     [SerializeField]
     private List<ProductsView> _productViewListForArmor;
     [SerializeField]
@@ -36,13 +36,13 @@ namespace Core.Mono.Scenes.CharacterList {
     [SerializeField]
     private List<ProductsView> _productViewListForItems;
     [SerializeField]
-    private List<ProductObject> _armorListSo;
+    private List<ProductSO> _armorListSo;
     [SerializeField]
-    private List<ProductObject> _weaponListSo;
+    private List<ProductSO> _weaponListSo;
     [FormerlySerializedAs("_projectiliesListSo"), SerializeField]
-    private List<ProductObject> _projectilesListSo;
+    private List<ProductSO> _projectilesListSo;
     [SerializeField]
-    private List<ProductObject> _itemsListSo;
+    private List<ProductSO> _itemsListSo;
     [SerializeField]
     private Transform _contentArmor;
     [SerializeField]
@@ -82,8 +82,8 @@ namespace Core.Mono.Scenes.CharacterList {
       Spawn();
     }
 
-    private void SetArmorListSo(List<EquipmentCard> equipmentCards, List<ProductObject> armorList) {
-      _armorListSo = new List<ProductObject>();
+    private void SetArmorListSo(List<EquipmentCard> equipmentCards, List<ProductSO> armorList) {
+      _armorListSo = new List<ProductSO>();
       for (var i = 0; i < equipmentCards.Count; i++) {
         if (equipmentCards[i].ID == EquipmentIdConstants.NO_ARMOR_ID) {
           continue;
@@ -97,8 +97,8 @@ namespace Core.Mono.Scenes.CharacterList {
       }
     }
 
-    private void SetWeaponListSo(List<EquipmentCard> equipmentCards, List<ProductObject> weaponList) {
-      _weaponListSo = new List<ProductObject>();
+    private void SetWeaponListSo(List<EquipmentCard> equipmentCards, List<ProductSO> weaponList) {
+      _weaponListSo = new List<ProductSO>();
       for (var i = 0; i < equipmentCards.Count; i++) {
         for (var j = 0; j < weaponList.Count; j++) {
           if (equipmentCards[i].ID == weaponList[j].GetId()) {
@@ -108,8 +108,8 @@ namespace Core.Mono.Scenes.CharacterList {
       }
     }
 
-    private void SetProjectilesListSo(List<EquipmentCard> equipmentCards, List<ProductObject> projectiliesList) {
-      _projectilesListSo = new List<ProductObject>();
+    private void SetProjectilesListSo(List<EquipmentCard> equipmentCards, List<ProductSO> projectiliesList) {
+      _projectilesListSo = new List<ProductSO>();
       for (var i = 0; i < equipmentCards.Count; i++) {
         for (var j = 0; j < projectiliesList.Count; j++) {
           if (equipmentCards[i].ID == projectiliesList[j].GetId()) {
@@ -119,8 +119,8 @@ namespace Core.Mono.Scenes.CharacterList {
       }
     }
 
-    private void SetItemListSo(List<EquipmentCard> equipmentCards, List<ProductObject> itemList) {
-      _itemsListSo = new List<ProductObject>();
+    private void SetItemListSo(List<EquipmentCard> equipmentCards, List<ProductSO> itemList) {
+      _itemsListSo = new List<ProductSO>();
       for (var i = 0; i < equipmentCards.Count; i++) {
         for (var j = 0; j < itemList.Count; j++) {
           if (equipmentCards[i].ID == itemList[j].GetId()) {
@@ -195,53 +195,53 @@ namespace Core.Mono.Scenes.CharacterList {
       }
     }
 
-    private void SetCanNotUsedForItem(ProductsView productView, ProductObject productObject) {
-      if (!_itemWhatCanUsed.Contains(productObject.GetId())) {
+    private void SetCanNotUsedForItem(ProductsView productView, ProductSO productSO) {
+      if (!_itemWhatCanUsed.Contains(productSO.GetId())) {
         productView.ProductWhatCanNotUsed();
       }
     }
 
-    private void InitializeProductFields(ProductsView productView, ProductObject productObject, int amount) {
-      SetProductName(productView, productObject);
+    private void InitializeProductFields(ProductsView productView, ProductSO productSO, int amount) {
+      SetProductName(productView, productSO);
       SetProductNumberOfProduct(productView, amount);
-      SetProductId(productView, productObject);
-      KitForCharacterType(productView, productObject);
+      SetProductId(productView, productSO);
+      KitForCharacterType(productView, productSO);
     }
 
-    private void SetProductName(ProductsView productView, ProductObject productObject) {
-      productView.SetProductName(productObject.GetProductName());
+    private void SetProductName(ProductsView productView, ProductSO productSO) {
+      productView.SetProductName(productSO.GetProductName());
     }
 
     private void SetProductNumberOfProduct(ProductsView productView, int numberOfProduct) {
       productView.SetNumberOfProduct(numberOfProduct.ToString());
     }
 
-    private void SetProductId(ProductsView productView, ProductObject productObject) {
-      productView.SetId(productObject.GetId());
+    private void SetProductId(ProductsView productView, ProductSO productSO) {
+      productView.SetId(productSO.GetId());
     }
 
-    private void KitForCharacterType(ProductsView productView, ProductObject productObject) {
-      switch (productObject.GetProductType()) {
-        case ProductObject.ProductType.None:
+    private void KitForCharacterType(ProductsView productView, ProductSO productSO) {
+      switch (productSO.GetProductType()) {
+        case ProductSO.ProductType.None:
           break;
-        case ProductObject.ProductType.Weapon:
-          if ((productObject.GetWeaponType() & _characterInCharacterList.GetWeaponKit()) == WeaponType.None) {
+        case ProductSO.ProductType.Weapon:
+          if ((productSO.GetWeaponType() & _characterInCharacterList.GetWeaponKit()) == WeaponType.None) {
             productView.ProductWhatCanNotUsed();
           }
 
           break;
-        case ProductObject.ProductType.Armor:
-          if ((productObject.GetArmorType() & _characterInCharacterList.GetArmorKit()) == ArmorType.None) {
+        case ProductSO.ProductType.Armor:
+          if ((productSO.GetArmorType() & _characterInCharacterList.GetArmorKit()) == ArmorType.None) {
             productView.ProductWhatCanNotUsed();
           }
 
           break;
-        case ProductObject.ProductType.Item:
+        case ProductSO.ProductType.Item:
           break;
       }
     }
 
-    public StorageObject StorageObject {
+    public StorageSO StorageSO {
       get {
         return _storage;
       }

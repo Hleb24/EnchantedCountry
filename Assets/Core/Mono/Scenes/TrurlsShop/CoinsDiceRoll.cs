@@ -1,4 +1,4 @@
-using Core.Rule.Dice;
+using Core.Main.Dice;
 using Core.Support.Data;
 using TMPro;
 using UnityEngine;

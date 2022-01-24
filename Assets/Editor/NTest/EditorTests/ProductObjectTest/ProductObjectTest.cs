@@ -1,5 +1,5 @@
-using Core.ScriptableObject.Products;
-using Core.ScriptableObject.Weapon;
+using Core.SO.Product;
+using Core.SO.Weapon;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -9,17 +9,17 @@ namespace Editor.NTest.EditorTests.ProductObjectTest {
     #region Tests
     [Test, Description("Test Resources Load And Get Name With Item"), Repeat(1)]
     public void TestResourcesLoadAndGetNameWithItem() {
-      _productObject.SetPrice(_price);
-      _productObject.SetProductType(_productType);
-      _productObject.SetItem(Object.Instantiate(Resources.Load<WeaponObject>(pathByLongSword)));
-      _productObject.OnEnable();
-      Assert.That(_productObject.GetProductName(), Is.EqualTo(weaponName).Or.EqualTo(weaponNameWithinEffectName));
+      _productSO.SetPrice(_price);
+      _productSO.SetProductType(_productType);
+      _productSO.SetItem(Object.Instantiate(Resources.Load<WeaponSO>(pathByLongSword)));
+      _productSO.OnEnable();
+      Assert.That(_productSO.GetProductName(), Is.EqualTo(weaponName).Or.EqualTo(weaponNameWithinEffectName));
     }
     #endregion
 
     #region Preparation_for_Tests
-    private ProductObject _productObject;
-    private readonly ProductObject.ProductType _productType = ProductObject.ProductType.Weapon;
+    private ProductSO _productSO;
+    private readonly ProductSO.ProductType _productType = ProductSO.ProductType.Weapon;
     private readonly int _price = 20;
     private readonly string weaponName = "Normal Long Sword";
     private readonly string weaponNameWithinEffectName = "Long Sword";
@@ -27,12 +27,12 @@ namespace Editor.NTest.EditorTests.ProductObjectTest {
 
     [SetUp]
     public void InitFields() {
-      _productObject = ScriptableObject.CreateInstance<ProductObject>();
+      _productSO = ScriptableObject.CreateInstance<ProductSO>();
     }
 
     [TearDown]
     public void DeleteFields() {
-      _productObject = null;
+      _productSO = null;
     }
     #endregion
   }

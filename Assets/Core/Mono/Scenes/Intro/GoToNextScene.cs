@@ -1,6 +1,5 @@
 using Core.Mono.MainManagers;
 using UnityEngine.SceneManagement;
-using Zenject;
 using Scene = Core.Mono.BaseClass.Scene;
 
 namespace Core.Mono.Scenes.Intro {

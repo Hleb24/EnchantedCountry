@@ -1,4 +1,4 @@
-using Core.Rule.Character.Spell;
+using Core.Main.Character.Spell;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.CharacterTests.SpellsTest {

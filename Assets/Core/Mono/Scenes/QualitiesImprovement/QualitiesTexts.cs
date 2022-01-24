@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Core.Mono.MainManagers;
-using Core.ScriptableObject.Mock;
+using Core.SO.Mock;
 using Core.Support.Data;
 using TMPro;
 using UnityEngine;

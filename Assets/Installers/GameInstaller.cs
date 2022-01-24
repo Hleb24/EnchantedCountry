@@ -1,6 +1,5 @@
-using Core.Mono.MainManagers;
-using Core.Rule.Character.GamePoints;
-using Core.Rule.Dice;
+using Core.Main.Character.GamePoints;
+using Core.Main.Dice;
 using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
 using Zenject;

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Core.Rule.Dice;
+using Core.Main.Dice;
 using Core.Support.Data;
 using UnityEngine;
 using UnityEngine.UI;

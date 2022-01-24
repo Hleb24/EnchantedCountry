@@ -1,5 +1,5 @@
-using Core.Rule.Character.Levels;
-using Core.Rule.Character.Qualities;
+using Core.Main.Character.Levels;
+using Core.Main.Character.Qualities;
 using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
 using Zenject;

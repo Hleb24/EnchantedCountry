@@ -1,4 +1,4 @@
-using Core.Rule.Character.GamePoints;
+using Core.Main.Character.GamePoints;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.CharacterTests.GamePointsTest {

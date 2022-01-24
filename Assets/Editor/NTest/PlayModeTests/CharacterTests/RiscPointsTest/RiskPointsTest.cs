@@ -1,4 +1,4 @@
-using Core.Rule.GameRule.RiskPoints;
+using Core.Main.GameRule.Points;
 using Core.Support.Data;
 using NUnit.Framework;
 

@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
+using Core.Main.Character;
+using Core.Main.Character.Equipment;
+using Core.Main.Character.Levels;
+using Core.Main.Character.Qualities;
+using Core.Main.GameRule;
+using Core.Main.GameRule.EquipmentIdConstants;
+using Core.Main.GameRule.Points;
 using Core.Mono.MainManagers;
-using Core.Rule.Character;
-using Core.Rule.Character.Equipment;
-using Core.Rule.Character.Levels;
-using Core.Rule.Character.Qualities;
-using Core.Rule.GameRule;
-using Core.Rule.GameRule.EquipmentIdConstants;
-using Core.Rule.GameRule.RiskPoints;
-using Core.ScriptableObject.Products;
-using Core.ScriptableObject.Storage;
+using Core.SO.Product;
+using Core.SO.Storage;
 using Core.Support.Data;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -17,8 +17,8 @@ using Zenject;
 
 namespace Core.Mono.Scenes.QualityDiceRoll {
   public class PlayerBuilder : MonoBehaviour {
-    [FormerlySerializedAs("_storageSo"), FormerlySerializedAs("_storageSO"), SerializeField]
-    private StorageObject _storageObject;
+    [FormerlySerializedAs("_storageObject"),FormerlySerializedAs("_storageSo"), SerializeField]
+    private StorageSO _storageSO;
     [SerializeField]
     private PlayerCharacter _playerCharacter;
     [SerializeField]
@@ -103,20 +103,20 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
 
     private Armor GetArmor() {
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId) != 0) {
-        ProductObject armorObject = _storageObject.GetArmorFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId));
-        Armor armor = armorObject.GetArmor();
+        ProductSO armorSO = _storageSO.GetArmorFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ArmorId));
+        Armor armor = armorSO.GetArmor();
         return armor;
       }
 
-      ProductObject noArmorProduct = _storageObject.GetArmorFromList(EquipmentIdConstants.NO_ARMOR_ID);
+      ProductSO noArmorProduct = _storageSO.GetArmorFromList(EquipmentIdConstants.NO_ARMOR_ID);
       Armor noArmor = noArmorProduct.GetArmor();
       return noArmor;
     }
 
     private Armor GetShield() {
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId) != 0) {
-        ProductObject shieldObject = _storageObject.GetArmorFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId));
-        Armor shield = shieldObject.GetArmor();
+        ProductSO shieldSO = _storageSO.GetArmorFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ShieldId));
+        Armor shield = shieldSO.GetArmor();
         return shield;
       }
 
@@ -125,14 +125,14 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
 
     private Weapon GetMeleeWeapon() {
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId) != 0) {
-        ProductObject weaponObject = _storageObject.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId));
-        Weapon weapon = weaponObject.GetWeapon();
+        ProductSO weaponSO = _storageSO.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.OneHandedId));
+        Weapon weapon = weaponSO.GetWeapon();
         return weapon;
       }
 
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId) != 0) {
-        ProductObject weaponObject = _storageObject.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId));
-        Weapon weapon = weaponObject.GetWeapon();
+        ProductSO weaponSO = _storageSO.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.TwoHandedId));
+        Weapon weapon = weaponSO.GetWeapon();
         return weapon;
       }
 
@@ -141,8 +141,8 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
 
     private Weapon GetRangeWeapon() {
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId) != 0) {
-        ProductObject weaponObject = _storageObject.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId));
-        Weapon weapon = weaponObject.GetWeapon();
+        ProductSO weaponSO = _storageSO.GetWeaponFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.RangeId));
+        Weapon weapon = weaponSO.GetWeapon();
         return weapon;
       }
 
@@ -151,8 +151,8 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
 
     private Weapon GetProjectiles() {
       if (_equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId) != 0) {
-        ProductObject weaponObject = _storageObject.GetProjectilesFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId));
-        Weapon weapon = weaponObject.GetWeapon();
+        ProductSO weaponSO = _storageSO.GetProjectilesFromList(_equipmentUsed.GetEquipment(EquipmentsUsedId.ProjectilesId));
+        Weapon weapon = weaponSO.GetWeapon();
         return weapon;
       }
 

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.Support.Attributes;
 using Core.Support.Data;
 using Core.Support.SaveSystem.Saver;
 using Core.Support.SaveSystem.Scribe;
-using UnityEngine;
 
 namespace Core.Support.SaveSystem.SaveManagers {
   /// <summary>

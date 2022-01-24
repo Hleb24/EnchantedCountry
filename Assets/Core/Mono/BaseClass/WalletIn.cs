@@ -1,5 +1,5 @@
+using Core.Main.Character.Wallet;
 using Core.Mono.MainManagers;
-using Core.Rule.Character.Wallet;
 using Core.Support.Data;
 using TMPro;
 using UnityEngine;

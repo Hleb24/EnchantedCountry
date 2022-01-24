@@ -1,4 +1,4 @@
-using Core.Rule.Dice;
+using Core.Main.Dice;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 

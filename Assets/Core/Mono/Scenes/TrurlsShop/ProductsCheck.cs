@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Core.Rule.Character.Equipment;
+using Core.Main.Character.Equipment;
 using UnityEngine;
 using UnityEngine.Serialization;
 

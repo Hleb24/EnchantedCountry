@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.Rule.Character.Equipment;
-using Core.Rule.GameRule.EquipmentIdConstants;
+using Core.Main.Character.Equipment;
+using Core.Main.GameRule.EquipmentIdConstants;
 using Core.Support.SaveSystem.SaveManagers;
 using Core.Support.SaveSystem.Scribe;
 using UnityEngine;

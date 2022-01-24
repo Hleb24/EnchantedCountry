@@ -1,5 +1,5 @@
 using Core.Mono.Scenes.Intro;
-using Core.ScriptableObject.GameSettings;
+using Core.SO.GameSettings;
 using Zenject;
 
 namespace Aberrance.Installers {

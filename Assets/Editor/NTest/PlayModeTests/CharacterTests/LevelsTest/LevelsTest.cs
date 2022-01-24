@@ -1,4 +1,4 @@
-using Core.Rule.Character.Levels;
+using Core.Main.Character.Levels;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.CharacterTests.LevelsTest {

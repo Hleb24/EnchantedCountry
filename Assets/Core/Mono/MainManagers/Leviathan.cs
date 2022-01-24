@@ -1,4 +1,4 @@
-using Core.ScriptableObject.GameSettings;
+using Core.SO.GameSettings;
 using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using Zenject;

@@ -1,6 +1,6 @@
 using System;
-using Core.Rule.Character;
-using Core.ScriptableObject.Mock;
+using Core.Main.Character;
+using Core.SO.Mock;
 using Core.Support.Data;
 using UnityEngine;
 using UnityEngine.UI;

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Core.Main.Character;
+using Core.Main.Dice;
+using Core.Main.GameRule.Initiative;
+using Core.Main.NonPlayerCharacters;
 using Core.Mono.Scenes.QualityDiceRoll;
-using Core.Rule.Character;
-using Core.Rule.Dice;
-using Core.Rule.GameRule.Initiative;
-using Core.Rule.GameRule.NPC;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,7 +63,7 @@ namespace Core.Mono.Scenes.Fight {
     }
 
     private void GetNpc() {
-      Npc = _npcBuilder.Npc;
+      NonPlayerCharacter = _npcBuilder.NonPlayerCharacter;
     }
 
     private void SetInitiative(IInitiative initiative, int value) {
@@ -74,13 +74,13 @@ namespace Core.Mono.Scenes.Fight {
       GetPlayerCharacter();
       GetNpc();
       SetInitiative(PlayerCharacter, DiceRollForInitiative());
-      SetInitiative(Npc, DiceRollForInitiative());
+      SetInitiative(NonPlayerCharacter, DiceRollForInitiative());
       InitiativeList = new List<IInitiative>();
       InitiativeList.Add(PlayerCharacter);
-      InitiativeList.Add(Npc);
+      InitiativeList.Add(NonPlayerCharacter);
       InitiativeList.Sort();
       Debug.Log("Initiative player " + PlayerCharacter.Initiative);
-      Debug.Log("Initiative npc " + Npc.Initiative);
+      Debug.Log("Initiative npc " + NonPlayerCharacter.Initiative);
       foreach (IInitiative initiative in InitiativeList) {
         Debug.Log($"Initiative {initiative.Initiative}");
       }
@@ -97,7 +97,7 @@ namespace Core.Mono.Scenes.Fight {
 
     public  PlayerCharacter PlayerCharacter { get; private set; }
 
-    public  Npc Npc { get; private set; }
+    public  NonPlayerCharacter NonPlayerCharacter { get; private set; }
     #endregion
   }
 }

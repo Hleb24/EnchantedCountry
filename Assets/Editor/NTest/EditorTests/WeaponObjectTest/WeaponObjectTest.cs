@@ -1,5 +1,5 @@
-using Core.Rule.GameRule;
-using Core.ScriptableObject.Weapon;
+using Core.Main.GameRule;
+using Core.SO.Weapon;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -9,24 +9,24 @@ namespace Editor.NTest.EditorTests.WeaponObjectTest {
     #region Tests
     [Test, Description("Test Weapons Object On Enable"), Repeat(1)]
     public void TestWeaponsObjectOnEnable() {
-      _weaponObject.weaponName = weaponName;
-      _weaponObject.minDamage = _min;
-      _weaponObject.maxDamage = _max;
-      _weaponObject.accurancy = _accuracy;
-      _weaponObject.weaponType = weaponType;
-      _weaponObject.effectName = _effectName;
-      _weaponObject.OnEnable();
-      Assert.That(_weaponObject.weapon.NameOfWeapon, Is.EqualTo(weaponName));
-      Assert.That(_weaponObject.weapon.Attack.MinDamage, Is.EqualTo(_min));
-      Assert.That(_weaponObject.weapon.Attack.MaxDamage, Is.EqualTo(_max));
-      Assert.That(_weaponObject.weapon.Attack.Accuracy, Is.EqualTo(_accuracy));
-      Assert.That(_weaponObject.weapon.weaponType, Is.EqualTo(weaponType));
-      Assert.That(_weaponObject.weapon.EffectName, Is.EqualTo(_effectName));
+      _weaponSO.weaponName = weaponName;
+      _weaponSO.minDamage = _min;
+      _weaponSO.maxDamage = _max;
+      _weaponSO.accurancy = _accuracy;
+      _weaponSO.weaponType = weaponType;
+      _weaponSO.effectName = _effectName;
+      _weaponSO.OnEnable();
+      Assert.That(_weaponSO.weapon.NameOfWeapon, Is.EqualTo(weaponName));
+      Assert.That(_weaponSO.weapon.Attack.MinDamage, Is.EqualTo(_min));
+      Assert.That(_weaponSO.weapon.Attack.MaxDamage, Is.EqualTo(_max));
+      Assert.That(_weaponSO.weapon.Attack.Accuracy, Is.EqualTo(_accuracy));
+      Assert.That(_weaponSO.weapon.weaponType, Is.EqualTo(weaponType));
+      Assert.That(_weaponSO.weapon.EffectName, Is.EqualTo(_effectName));
     }
     #endregion
 
     #region Preparation_for_Tests
-    private WeaponObject _weaponObject;
+    private WeaponSO _weaponSO;
     private readonly string weaponName = "Long Sword";
     private readonly int _min = 2;
     private readonly int _max = 7;
@@ -36,12 +36,12 @@ namespace Editor.NTest.EditorTests.WeaponObjectTest {
 
     [SetUp]
     public void InitFields() {
-      _weaponObject = ScriptableObject.CreateInstance<WeaponObject>();
+      _weaponSO = ScriptableObject.CreateInstance<WeaponSO>();
     }
 
     [TearDown]
     public void DeleteFields() {
-      _weaponObject = null;
+      _weaponSO = null;
     }
     #endregion
   }

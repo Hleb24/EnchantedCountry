@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Core.Rule.Character.Levels;
+using Core.Main.Character.Levels;
 using UnityEngine;
 using UnityEngine.UI;
 
