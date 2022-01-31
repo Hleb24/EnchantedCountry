@@ -5,7 +5,6 @@ using UnityEngine;
 namespace Core.SO.Weapon {
   [Serializable, CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon", order = 52)]
   public class WeaponSO : ScriptableObject {
-    #region Fields
     public Main.GameRule.Weapon.WeaponType weaponType = Main.GameRule.Weapon.WeaponType.None;
     public string weaponName = "";
     public float minDamage;
@@ -15,9 +14,6 @@ namespace Core.SO.Weapon {
     public string effectName = "";
     public Main.GameRule.Weapon weapon;
     public int id;
-    #endregion
-
-    #region Methods
     public void OnEnable() {
       InitWeapon();
     }
@@ -51,6 +47,13 @@ namespace Core.SO.Weapon {
 
       return weapon;
     }
-    #endregion
+
+    public int GetId() {
+      return id;
+    }
+
+    public Main.GameRule.Weapon GetWeapon() {
+      return weapon;
+    }
   }
 }

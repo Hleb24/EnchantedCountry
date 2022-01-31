@@ -1,12 +1,19 @@
 ﻿using System;
+using JetBrains.Annotations;
+using UnityEngine.Assertions;
 
 namespace Core.Main.NonPlayerCharacters {
   public class NpcModel {
-    public NpcModel(NpcMoralityModel moralityModel, NpcMetadataModel npcMetadataModel, NpcCombatAttributesModel npcCombatAttributesModel, NpcEquipmentsModel npcEquipmentsModel) {
-      MoralityModel = moralityModel ?? throw new ArgumentNullException(nameof(moralityModel));
-      MetadataModel = npcMetadataModel ?? throw new ArgumentNullException(nameof(npcMetadataModel));
-      CombatAttributesModel = npcCombatAttributesModel ?? throw new ArgumentNullException(nameof(npcCombatAttributesModel));
-      EquipmentsModel = npcEquipmentsModel ?? throw new ArgumentNullException(nameof(npcEquipmentsModel));
+    public NpcModel([NotNull] NpcMoralityModel moralityModel, [NotNull] NpcMetadataModel npcMetadataModel, [NotNull] NpcCombatAttributesModel npcCombatAttributesModel,
+      [NotNull] NpcEquipmentsModel npcEquipmentsModel) {
+      Assert.IsNotNull(moralityModel, nameof(moralityModel));
+      Assert.IsNotNull(npcMetadataModel, nameof(npcMetadataModel));
+      Assert.IsNotNull(npcCombatAttributesModel, nameof(npcCombatAttributesModel));
+      Assert.IsNotNull(npcEquipmentsModel, nameof(npcEquipmentsModel));
+      MoralityModel = moralityModel;
+      MetadataModel = npcMetadataModel;
+      CombatAttributesModel = npcCombatAttributesModel;
+      EquipmentsModel = npcEquipmentsModel;
     }
 
     public NpcMoralityModel MoralityModel { get; }

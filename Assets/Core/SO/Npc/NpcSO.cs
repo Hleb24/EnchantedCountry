@@ -37,6 +37,10 @@ namespace Core.SO.Npc {
     [SerializeField]
     public List<WeaponSO> _weaponObjects;
     [SerializeField]
+    private List<int> _weaponId;
+    [SerializeField]
+    private List<int> _impactId;
+    [SerializeField]
     public List<ImpactsSO> _impactObjects;
     [SerializeField]
     public int Experience;
@@ -61,6 +65,18 @@ namespace Core.SO.Npc {
 
     public void OnValidate() {
       Name = name;
+      if (_weaponObjects != null && _weaponId.Count == 0) {
+        for (int i = 0; i < _weaponObjects.Count; i++) {
+          _weaponId.Add(_weaponObjects[i].id);
+        }
+      }
+
+      if (_impactObjects != null && _impactId.Count== 0) {
+        for (int i = 0; i < _impactObjects.Count; i++) {
+          _impactId.Add(_impactObjects[i].GetId());
+        }
+        
+      }
     }
 
     public NonPlayerCharacter GetNpc() {

@@ -5,6 +5,7 @@ using Core.Main.GameRule.Impact;
 using Core.Main.GameRule.Initiative;
 using Core.Main.GameRule.Points;
 using JetBrains.Annotations;
+using UnityEngine.Assertions;
 
 namespace Core.Main.NonPlayerCharacters {
   [Serializable]
@@ -17,6 +18,10 @@ namespace Core.Main.NonPlayerCharacters {
 
     public NonPlayerCharacter([NotNull] NpcMetadata npcMetadata, [NotNull] NpcMorality npcMorality, [NotNull] NpcCombatAttributes npcCombatAttributes,
       [NotNull] NpcEquipments npcEquipments) {
+      Assert.IsNotNull(npcMetadata, nameof(npcMetadata));
+      Assert.IsNotNull(npcMorality, nameof(npcMorality));
+      Assert.IsNotNull(npcCombatAttributes, nameof(npcCombatAttributes));
+      Assert.IsNotNull(npcEquipments, nameof(npcEquipments));
       _npcMetadata = npcMetadata;
       _npcMorality = npcMorality;
       _npcCombatAttributes = npcCombatAttributes;
@@ -58,24 +63,23 @@ namespace Core.Main.NonPlayerCharacters {
       return _npcEquipments.GetAccuracy(index);
     }
 
-    public virtual float Attack(int diceRoll, ImpactOnRiskPoints character, int weapon = 0) {
+    public virtual float Attack(int diceRoll, [NotNull] ImpactOnRiskPoints character, int weapon = 0) {
       return ToDamage(diceRoll, character, weapon);
     }
 
-    public virtual float ToDamage(int diceRoll, ImpactOnRiskPoints character, int weapon = 0) {
-      var damage = 0f;
+    public virtual float ToDamage(int diceRoll, [NotNull] ImpactOnRiskPoints character, int weapon = 0) {
       if (IsDeadlyAttack(out float deadlyDamage)) {
         return deadlyDamage;
       }
 
-      damage = WeaponsDamage(weapon);
+      float damage = WeaponsDamage(weapon);
 
       ImpactsDamage(diceRoll, character);
 
       return damage;
     }
 
-    public virtual void ToDamagedOfImpact(int diceRoll, ImpactOnRiskPoints character, int indexOfImpact) {
+    public virtual void ToDamagedOfImpact(int diceRoll, [NotNull] ImpactOnRiskPoints character, int indexOfImpact) {
       if (_npcCombatAttributes.CanUseImpact(diceRoll, indexOfImpact)) {
         _npcCombatAttributes.UseImpact(character, indexOfImpact);
       }

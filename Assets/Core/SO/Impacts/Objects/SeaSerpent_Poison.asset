@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SeaSerpent_Poison
   m_EditorClassIdentifier: 
   typeOfImpact: 1
-  impactName: SeaSerpentPoison
+  impactName: SeaSerpent_Poison
   DiceRollValueForInvokeImpact: 12
   ProtectiveThrow: 9
+  _id: 4009

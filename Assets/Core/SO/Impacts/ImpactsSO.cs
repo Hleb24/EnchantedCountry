@@ -10,6 +10,9 @@ namespace Core.SO.Impacts {
     public int DiceRollValueForInvokeImpact;
     public int ProtectiveThrow;
     public Impact<ImpactOnRiskPoints> Impact;
+    [SerializeField]
+    private int _id;
+    
 
     public Impact<ImpactOnRiskPoints> GetImpact() {
       if ((typeOfImpact & ImpactType.MagesStaff) == ImpactType.MagesStaff) {
@@ -50,5 +53,11 @@ namespace Core.SO.Impacts {
     private void OnValidate() {
       impactName = name;
     }
+
+    public int GetId() {
+      return _id;
+    }
+    
+  
   }
 }
