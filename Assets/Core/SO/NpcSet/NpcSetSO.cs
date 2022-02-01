@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Core.SO.Npc;
+using Core.Support.Attributes;
 using Core.Support.SaveSystem.Saver;
 using UnityEngine;
 
@@ -32,7 +33,8 @@ namespace Core.SO.NpcSet {
       return null;
     }
 
-    private void SaveNpcToJson() {
+    [Button]
+    public void SaveNpcToJson() {
       var saver = new JsonSaver();
       string _pathToFolder = Path.Combine(Application.persistentDataPath, "Npc");
       string _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "Npc"), "Save.json");

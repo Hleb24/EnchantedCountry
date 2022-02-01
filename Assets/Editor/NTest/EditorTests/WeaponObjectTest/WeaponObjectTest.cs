@@ -12,7 +12,7 @@ namespace Editor.NTest.EditorTests.WeaponObjectTest {
       _weaponSO.weaponName = weaponName;
       _weaponSO.minDamage = _min;
       _weaponSO.maxDamage = _max;
-      _weaponSO.accurancy = _accuracy;
+      _weaponSO.accuracy = _accuracy;
       _weaponSO.weaponType = weaponType;
       _weaponSO.effectName = _effectName;
       _weaponSO.OnEnable();

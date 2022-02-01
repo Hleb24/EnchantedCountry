@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 namespace Core.SO.Product {
   [CreateAssetMenu(fileName = "New Products", menuName = "Product", order = 54)]
-  public class ProductSO : UnityEngine.ScriptableObject {
+  public class ProductSO : ScriptableObject {
     public static implicit operator Main.GameRule.Armor(ProductSO productSO) {
       return productSO.GetArmor();
     }
@@ -22,20 +22,20 @@ namespace Core.SO.Product {
     }
 
     [FormerlySerializedAs("productType"), SerializeField]
-    private ProductType _productType;
+    public ProductType _productType;
     [FormerlySerializedAs("item"), SerializeField]
-    private UnityEngine.ScriptableObject _item;
+    public ScriptableObject _item;
     [FormerlySerializedAs("productName"), SerializeField]
-    private string _productName = "";
+    public string _productName = "";
     [FormerlySerializedAs("description"), SerializeField]
     // ReSharper disable once NotAccessedField.Local
-    private string _description = "";
+    public string _description = "";
     [FormerlySerializedAs("Property"), SerializeField]
-    private string _property;
+    public string _property;
     [FormerlySerializedAs("price"), SerializeField]
-    private int _price;
+    public int _price;
     [FormerlySerializedAs("id"), SerializeField]
-    private int _id;
+    public int _id;
     [FormerlySerializedAs("icon"), SerializeField]
     private Sprite _icon;
 
@@ -67,7 +67,7 @@ namespace Core.SO.Product {
       return _productType;
     }
 
-    public UnityEngine.ScriptableObject GetItem() {
+    public ScriptableObject GetItem() {
       return _item;
     }
 
@@ -109,7 +109,7 @@ namespace Core.SO.Product {
       _productType = productType;
     }
 
-    public void SetItem(UnityEngine.ScriptableObject item) {
+    public void SetItem(ScriptableObject item) {
       _item = item;
     }
 

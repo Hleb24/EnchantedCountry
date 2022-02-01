@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core.SO.Weapon {
   [Serializable, CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon", order = 52)]
@@ -10,7 +11,8 @@ namespace Core.SO.Weapon {
     public float minDamage;
     public float maxDamage;
     public List<float> damageList;
-    public int accurancy;
+    [FormerlySerializedAs("accurancy")]
+    public int accuracy;
     public string effectName = "";
     public Main.GameRule.Weapon weapon;
     public int id;
@@ -30,9 +32,9 @@ namespace Core.SO.Weapon {
 
     public Main.GameRule.Weapon InitWeapon() {
       if (weapon == null) {
-        weapon = new Main.GameRule.Weapon(maxDamage, weaponType, weaponName, minDamage, accurancy, effectName, id);
+        weapon = new Main.GameRule.Weapon(maxDamage, weaponType, weaponName, minDamage, accuracy, effectName, id);
       } else {
-        weapon.Init(maxDamage, weaponType, weaponName, minDamage, accurancy, effectName, id);
+        weapon.Init(maxDamage, weaponType, weaponName, minDamage, accuracy, effectName, id);
       }
 
       return weapon;
@@ -40,9 +42,9 @@ namespace Core.SO.Weapon {
 
     public Main.GameRule.Weapon InitWeaponWithDamageList() {
       if (weapon == null) {
-        weapon = new Main.GameRule.Weapon(maxDamage, weaponType, weaponName, minDamage, accurancy, effectName, id);
+        weapon = new Main.GameRule.Weapon(maxDamage, weaponType, weaponName, minDamage, accuracy, effectName, id);
       } else {
-        weapon.Init(damageList, weaponType, weaponName, accurancy, effectName, id);
+        weapon.Init(damageList, weaponType, weaponName, accuracy, effectName, id);
       }
 
       return weapon;

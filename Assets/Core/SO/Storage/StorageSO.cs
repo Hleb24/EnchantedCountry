@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using System.IO;
 using Core.SO.Product;
+using Core.Support.Attributes;
+using Core.Support.SaveSystem.Saver;
 using UnityEngine;
 
 namespace Core.SO.Storage {
@@ -49,6 +52,51 @@ namespace Core.SO.Storage {
 			}
 			Debug.LogError("ProductSO not found!");
 			return null;
+		}
+
+		
+		[Button]
+		public void SaveArmorToJson() {
+			var saver = new JsonSaver();
+			string _pathToFolder = Path.Combine(Application.persistentDataPath, "Storage/Armor");
+			string _pathToFile;
+			for (var i = 0; i < armorList.Count; i++) {
+				_pathToFile = Path.Combine(_pathToFolder, $"{armorList[i]._productName}.json");
+				saver.Save(armorList[i], _pathToFolder, _pathToFile);
+			}
+		}
+		
+		[Button]
+		public void SaveWeaponToJson() {
+			var saver = new JsonSaver();
+			string _pathToFolder = Path.Combine(Application.persistentDataPath, "Storage/Weapon");
+			string _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "NpcWeapon"), "Save.json");
+			for (var i = 0; i < weaponList.Count; i++) {
+				_pathToFile = Path.Combine(_pathToFolder, $"{weaponList[i]._productName}.json");
+				saver.Save(weaponList[i], _pathToFolder, _pathToFile);
+			}
+		}
+		
+		[Button]
+		public void SaveRangeToJson() {
+			var saver = new JsonSaver();
+			string _pathToFolder = Path.Combine(Application.persistentDataPath, "Storage/Projectlies");
+			string _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "NpcWeapon"), "Save.json");
+			for (var i = 0; i < projectiliesList.Count; i++) {
+				_pathToFile = Path.Combine(_pathToFolder, $"{projectiliesList[i]._productName}.json");
+				saver.Save(projectiliesList[i], _pathToFolder, _pathToFile);
+			}
+		}
+		
+		[Button]
+		public void SaveItemToJson() {
+			var saver = new JsonSaver();
+			string _pathToFolder = Path.Combine(Application.persistentDataPath, "Storage/Item");
+			string _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "NpcWeapon"), "Save.json");
+			for (var i = 0; i < itemList.Count; i++) {
+				_pathToFile = Path.Combine(_pathToFolder, $"{itemList[i]._productName}.json");
+				saver.Save(itemList[i], _pathToFolder, _pathToFile);
+			}
 		}
 	}
 }

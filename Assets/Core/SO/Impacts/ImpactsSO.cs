@@ -1,6 +1,11 @@
+using System;
+using System.IO;
 using Core.Main.GameRule.Impact;
 using Core.Main.GameRule.Impact.Variants;
+using Core.SO.Npc;
+using Core.Support.SaveSystem.Saver;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core.SO.Impacts {
   [CreateAssetMenu(menuName = "ImpactSO", fileName = "ImpactSO", order = 60)]
@@ -10,8 +15,8 @@ namespace Core.SO.Impacts {
     public int DiceRollValueForInvokeImpact;
     public int ProtectiveThrow;
     public Impact<ImpactOnRiskPoints> Impact;
-    [SerializeField]
-    private int _id;
+    [FormerlySerializedAs("_id"),SerializeField]
+    public int Id;
     
 
     public Impact<ImpactOnRiskPoints> GetImpact() {
@@ -55,9 +60,9 @@ namespace Core.SO.Impacts {
     }
 
     public int GetId() {
-      return _id;
+      return Id;
     }
     
-  
+    
   }
 }
