@@ -4,7 +4,7 @@ using Core.Mono.MainManagers;
 using Core.SO.Armor;
 using Core.SO.Product;
 using Core.SO.Storage;
-using Core.SO.Weapon;
+using Core.SO.WeaponObjects;
 using Core.Support.Data;
 using TMPro;
 using UnityEngine;

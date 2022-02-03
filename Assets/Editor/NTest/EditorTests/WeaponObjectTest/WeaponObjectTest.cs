@@ -1,5 +1,5 @@
 using Core.Main.GameRule;
-using Core.SO.Weapon;
+using Core.SO.WeaponObjects;
 using NUnit.Framework;
 using UnityEngine;
 

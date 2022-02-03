@@ -1,5 +1,5 @@
 using Core.SO.Product;
-using Core.SO.Weapon;
+using Core.SO.WeaponObjects;
 using NUnit.Framework;
 using UnityEngine;
 

@@ -6,9 +6,10 @@ using Core.Main.GameRule.Points;
 using Core.Main.NonPlayerCharacters;
 using Core.Mono.Scenes.Fight;
 using Core.SO.Impacts;
-using Core.SO.Weapon;
+using Core.SO.WeaponObjects;
 using Core.Support.Data;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core.SO.Npc {
   [CreateAssetMenu(menuName = "NPC", fileName = "NPC", order = 58)]
@@ -21,93 +22,87 @@ namespace Core.SO.Npc {
       return new DiceBox(dices);
     }
 
+    [FormerlySerializedAs("Name"), SerializeField]
+    private string _name;
+    [FormerlySerializedAs("Alignment"), SerializeField]
+    private Alignment _alignment;
+    [FormerlySerializedAs("NpcType"), SerializeField]
+    private NpcType _npcType;
+    [FormerlySerializedAs("ClassOfArmor"), SerializeField]
+    private int _classOfArmor;
+    [FormerlySerializedAs("LifeDice"), SerializeField]
+    private int _lifeDice;
+    [FormerlySerializedAs("RiskPoints"), SerializeField]
+    private int _riskPoints;
+    [FormerlySerializedAs("Morality"), SerializeField]
+    private int _morality;
     [SerializeField]
-    public string Name;
-    [SerializeField]
-    public Alignment Alignment;
-    [SerializeField]
-    public NpcType NpcType;
-    [SerializeField]
-    public int ClassOfArmor;
-    [SerializeField]
-    public int LifeDice;
-    [SerializeField]
-    public int RiskPoints;
-    [SerializeField]
-    public int Morality;
-    [SerializeField]
-    public List<WeaponSO> _weaponObjects;
-    [SerializeField]
-    private List<int> _weaponId;
+    private List<WeaponSO> _weaponObjects;
+    [FormerlySerializedAs("_weaponId"), SerializeField]
+    private List<int> _weaponsIdList;
     [SerializeField]
     private List<int> _impactId;
     [SerializeField]
-    public List<ImpactsSO> _impactObjects;
-    [SerializeField]
-    public int Experience;
-    [SerializeField]
-    public List<int> EscapePossibility;
-    [SerializeField]
-    public string Description;
-    [SerializeField]
-    public string Property;
-    [SerializeField]
-    public bool Immoral;
-    [SerializeField]
-    public bool Immortal;
-    [SerializeField]
-    public bool DeadlyAttack;
-    [SerializeField]
-    public bool AttackEveryAtOnce;
-    [SerializeField]
-    public int Id;
-    private NonPlayerCharacter _nonPlayerCharacter;
+    private List<ImpactsSO> _impactObjects;
+    [FormerlySerializedAs("Experience"), SerializeField]
+    private int _experience;
+    [FormerlySerializedAs("EscapePossibility"), SerializeField]
+    private List<int> _escapePossibility;
+    [FormerlySerializedAs("Description"), SerializeField]
+    private string _description;
+    [FormerlySerializedAs("Property"), SerializeField]
+    private string _property;
+    [FormerlySerializedAs("Immoral"), SerializeField]
+    private bool _immoral;
+    [FormerlySerializedAs("Immortal"), SerializeField]
+    private bool _immortal;
+    [FormerlySerializedAs("DeadlyAttack"), SerializeField]
+    private bool _deadlyAttack;
+    [FormerlySerializedAs("AttackEveryAtOnce"), SerializeField]
+    private bool _attackEveryAtOnce;
+    [FormerlySerializedAs("Id"), SerializeField]
+    private int _id;
     private IRiskPoints _npcRiskPoints;
 
     public NpcEquipmentsModel GetNpcEquipmentModel() {
-      return new NpcEquipmentsModel(GetArmorClass(), GetWeaponSet());
+      return new NpcEquipmentsModel(_weaponsIdList, _classOfArmor);
     }
 
     public NpcCombatAttributesModel GetNpcCombatAttributesModel() {
       RiskPoints riskPoints = GetNpcRiskPoints();
-      return new NpcCombatAttributesModel(GetListOfImpacts(), riskPoints, AttackEveryAtOnce, GetNumberOfAttacks(), DeadlyAttack, Immortal);
+      return new NpcCombatAttributesModel(GetListOfImpacts(), riskPoints, _attackEveryAtOnce, GetNumberOfAttacks(), _deadlyAttack, _immortal);
     }
 
     public NpcMetadataModel GetNpcMetadataModel() {
-      return new NpcMetadataModel(Id, Name, Description, Property, Experience, Alignment, NpcType);
+      return new NpcMetadataModel(_id, _name, _description, _property, _experience, _alignment, _npcType);
     }
 
     public NpcMoralityModel GetNpcMoralityModel() {
-      return new NpcMoralityModel(Morality, Immoral, EscapePossibility);
+      return new NpcMoralityModel(_morality, _immoral, _escapePossibility);
     }
 
     public void OnValidate() {
-      Name = name;
-      if (_weaponObjects != null && _weaponId.Count == 0) {
-        for (var i = 0; i < _weaponObjects.Count; i++) {
-          _weaponId.Add(_weaponObjects[i].id);
-        }
-      }
-
-      if (_impactObjects != null && _impactId.Count == 0) {
-        for (var i = 0; i < _impactObjects.Count; i++) {
-          _impactId.Add(_impactObjects[i].GetId());
-        }
-      }
+      // _name = name;
+      // if (_weaponObjects != null && _weaponId.Count == 0) {
+      //   for (var i = 0; i < _weaponObjects.Count; i++) {
+      //     _weaponId.Add(_weaponObjects[i].id);
+      //   }
+      // }
+      //
+      // if (_impactObjects != null && _impactId.Count == 0) {
+      //   for (var i = 0; i < _impactObjects.Count; i++) {
+      //     _impactId.Add(_impactObjects[i].GetId());
+      //   }
+      // }
     }
 
-    public NonPlayerCharacter GetNpc() {
-      var npcMetadata = new NpcMetadata(GetNpcMetadataModel());
-      var npcMorality = new NpcMorality(GetNpcMoralityModel());
-      var npcCombatAttributes = new NpcCombatAttributes(GetNpcCombatAttributesModel());
-      var npcEquipments = new NpcEquipments(GetNpcEquipmentModel());
-      _nonPlayerCharacter = new NonPlayerCharacter(npcMetadata, npcMorality, npcCombatAttributes, npcEquipments);
-      return _nonPlayerCharacter;
+    public int GetId() {
+      return _id;
     }
 
-    public int GetRiskPointsAfterDiceRoll() {
+    private int GetRiskPointsAfterDiceRoll() {
       if (IsFixedValueOfNumberOfRiskPoints()) {
-        return RiskPoints;
+        return _riskPoints;
       }
 
       Dices[] dices = GetDices();
@@ -116,12 +111,12 @@ namespace Core.SO.Npc {
       return diceBox.SumRollsOfDice();
 
       bool IsFixedValueOfNumberOfRiskPoints() {
-        return RiskPoints != 0;
+        return _riskPoints != 0;
       }
     }
 
     private Dices[] GetDices() {
-      var dices = new Dices[LifeDice];
+      var dices = new Dices[_lifeDice];
       for (var i = 0; i < dices.Length; i++) {
         dices[i] = GetLifeDiceForRoll();
       }
@@ -129,25 +124,17 @@ namespace Core.SO.Npc {
       return dices;
     }
 
-    private ArmorClass GetArmorClass() {
-      return new ArmorClass(ClassOfArmor);
-    }
-
-    private WeaponSet GetWeaponSet() {
-      return new WeaponSet(GetListOfWeapon());
-    }
-
     private RiskPoints GetNpcRiskPoints() {
       _npcRiskPoints = new NpcRiskPoints();
       return new RiskPoints(_npcRiskPoints, GetRiskPointsAfterDiceRoll());
     }
 
-    private List<Main.GameRule.Weapon> GetListOfWeapon() {
+    private List<Weapon> GetListOfWeapon() {
       if (_weaponObjects == null) {
-        return new List<Main.GameRule.Weapon>();
+        return new List<Weapon>();
       }
 
-      var weapons = new List<Main.GameRule.Weapon>();
+      var weapons = new List<Weapon>();
       foreach (WeaponSO weaponObject in _weaponObjects) {
         weapons.Add(weaponObject.weapon);
       }
@@ -169,15 +156,15 @@ namespace Core.SO.Npc {
     }
 
     private int GetNumberOfAttacks() {
-      if (GetListOfWeapon().Count <= 0 || DeadlyAttack) {
+      if (GetListOfWeapon().Count <= 0 || _deadlyAttack) {
         return 1;
       }
 
-      if (GetListOfWeapon().Count > 0 && AttackEveryAtOnce) {
+      if (GetListOfWeapon().Count > 0 && _attackEveryAtOnce) {
         return GetListOfWeapon().Count;
       }
 
-      if (!DeadlyAttack && GetListOfWeapon().Count <= 0 && GetListOfImpacts() != null && GetListOfImpacts().Count != 0) {
+      if (!_deadlyAttack && GetListOfWeapon().Count <= 0 && GetListOfImpacts() != null && GetListOfImpacts().Count != 0) {
         return GetListOfImpacts().Count;
       }
 

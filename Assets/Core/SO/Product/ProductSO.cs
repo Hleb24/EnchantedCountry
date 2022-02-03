@@ -1,5 +1,5 @@
 using Core.SO.Armor;
-using Core.SO.Weapon;
+using Core.SO.WeaponObjects;
 using UnityEngine;
 using UnityEngine.Serialization;
 

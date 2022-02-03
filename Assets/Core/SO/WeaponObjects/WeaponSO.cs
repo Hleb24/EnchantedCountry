@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Core.SO.Weapon {
+namespace Core.SO.WeaponObjects {
   [Serializable, CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon", order = 52)]
   public class WeaponSO : ScriptableObject {
     public Main.GameRule.Weapon.WeaponType weaponType = Main.GameRule.Weapon.WeaponType.None;

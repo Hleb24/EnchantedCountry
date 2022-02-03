@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core.Main.GameRule;
 using JetBrains.Annotations;
+using UnityEngine.Assertions;
 
 namespace Core.Main.NonPlayerCharacters {
   public class NpcEquipments {
     private readonly ArmorClass _armorClass;
     private readonly WeaponSet _weaponSet;
 
-    public NpcEquipments([NotNull] NpcEquipmentsModel model) {
-      _armorClass = model.ArmorClass ?? throw new ArgumentNullException(nameof(model.ArmorClass));
-      _weaponSet = model.WeaponSet ?? throw new ArgumentNullException(nameof(model.WeaponSet));
+    public NpcEquipments([NotNull] WeaponSet weaponSet, [NotNull] ArmorClass armorClass) {
+      Assert.IsNotNull(weaponSet, nameof(weaponSet));
+      Assert.IsNotNull(armorClass, nameof(armorClass));
+      _weaponSet = weaponSet;
+      _armorClass = armorClass;
     }
 
     public bool IsHit(int hit) {
@@ -46,12 +50,12 @@ namespace Core.Main.NonPlayerCharacters {
   }
   
   public class NpcEquipmentsModel {
-    public NpcEquipmentsModel([NotNull] ArmorClass armorClass,[NotNull] WeaponSet weaponSet) {
-      ArmorClass = armorClass ?? throw new ArgumentNullException(nameof(armorClass));
-      WeaponSet = weaponSet ?? throw new ArgumentNullException(nameof(weaponSet));
+    public NpcEquipmentsModel([NotNull] IEnumerable<int> weaponsIdList,int classOfArmor) {
+      ClassOfArmor = classOfArmor;
+      WeaponsIdList = weaponsIdList;
     }
 
-    public ArmorClass ArmorClass { get; }
-    public WeaponSet WeaponSet { get; }
+    public int ClassOfArmor { get; }
+    public IEnumerable<int> WeaponsIdList { get; }
   }
 }

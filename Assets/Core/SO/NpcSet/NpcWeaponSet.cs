@@ -1,19 +1,24 @@
 using System.Collections.Generic;
 using System.IO;
-using Core.SO.Weapon;
+using Core.Main.GameRule;
+using Core.SO.WeaponObjects;
 using Core.Support.Attributes;
 using Core.Support.SaveSystem.Saver;
 using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Core.SO.NpcSet {
+  public interface INpcWeaponSet {
+    public Weapon GetNpcWeapon(int id);
+  }
+
   [CreateAssetMenu(menuName = "NpcWeaponSet", fileName = "NpcWeaponSet")]
-  public class NpcWeaponSet : ScriptableObject {
+  public class NpcWeaponSet : ScriptableObject, INpcWeaponSet {
     [SerializeField]
     private List<WeaponSO> _weaponSet;
 
     [CanBeNull]
-    public Main.GameRule.Weapon GetWeapon(int weaponId) {
+    public Weapon GetNpcWeapon(int weaponId) {
       for (var i = 0; i < _weaponSet.Count; i++) {
         if (_weaponSet[i].GetId() == weaponId) {
           return _weaponSet[i].GetWeapon();

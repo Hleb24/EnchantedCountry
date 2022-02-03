@@ -15,7 +15,7 @@ namespace Core.SO.NpcSet {
 
     public INpcModel GetNpcModel(int id) {
       foreach (NpcSO npcSO in _npcSoList) {
-        if (npcSO.Id == id) {
+        if (npcSO.GetId() == id) {
           return npcSO;
         }
       }
@@ -24,27 +24,8 @@ namespace Core.SO.NpcSet {
       return null;
     }
 
-    public NonPlayerCharacter GetNpcFromList(int id) {
-      foreach (NpcSO npc in _npcSoList) {
-        if (npc.Id == id) {
-          return npc.GetNpc();
-        }
-      }
+   
 
-      Debug.LogWarning("NpcSO not found!");
-      return null;
-    }
-
-    [Button]
-    public void SaveNpcToJson() {
-      var saver = new JsonSaver();
-      string _pathToFolder = Path.Combine(Application.persistentDataPath, "Npc");
-      string _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "Npc"), "Save.json");
-      Type type = typeof(NpcSO);
-      for (var i = 0; i < _npcSoList.Count; i++) {
-        _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "Npc"), $"{_npcSoList[i].Name}.json");
-        saver.Save(_npcSoList[i], _pathToFolder, _pathToFile);
-      }
-    }
+    
   }
 }

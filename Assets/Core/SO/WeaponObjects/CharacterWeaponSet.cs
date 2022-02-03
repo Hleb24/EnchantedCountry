@@ -5,7 +5,7 @@ using Core.Support.SaveSystem.Saver;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Core.SO.Weapon {
+namespace Core.SO.WeaponObjects {
   [CreateAssetMenu(menuName = "Character/WeaponSet", fileName = "CharacterWeaponSet")]
   public class CharacterWeaponSet : ScriptableObject {
     [SerializeField]
