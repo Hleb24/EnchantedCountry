@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Core.Main.NonPlayerCharacters;
+using Core.Mono.Scenes.Fight;
 using Core.SO.Npc;
 using Core.Support.Attributes;
 using Core.Support.SaveSystem.Saver;
@@ -8,21 +10,21 @@ using UnityEngine;
 
 namespace Core.SO.NpcSet {
   [CreateAssetMenu(menuName = "SetOfNpcSO", fileName = "SetOfNpcSO", order = 61)]
-  public class NpcSetSO : UnityEngine.ScriptableObject {
+  public class NpcSetSO : ScriptableObject, INpcModelSet {
     public List<NpcSO> _npcSoList;
 
-    public NpcSO GetNpcSOFromList(int id) {
+    public INpcModel GetNpcModel(int id) {
       foreach (NpcSO npcSO in _npcSoList) {
         if (npcSO.Id == id) {
           return npcSO;
         }
       }
 
-      Debug.LogWarning("NpcSO not found!");
+      Debug.LogWarning("Модель Npc не найдена!");
       return null;
     }
 
-    public Main.NonPlayerCharacters.NonPlayerCharacter GetNpcFromList(int id) {
+    public NonPlayerCharacter GetNpcFromList(int id) {
       foreach (NpcSO npc in _npcSoList) {
         if (npc.Id == id) {
           return npc.GetNpc();

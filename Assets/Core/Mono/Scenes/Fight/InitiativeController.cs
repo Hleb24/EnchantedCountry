@@ -6,6 +6,7 @@ using Core.Main.GameRule.Initiative;
 using Core.Main.NonPlayerCharacters;
 using Core.Mono.Scenes.QualityDiceRoll;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.Fight {
@@ -19,17 +20,14 @@ namespace Core.Mono.Scenes.Fight {
       CurrentIndexOfInitiativeList--;
     }
 
-    #region FIELDS
     public  event Action InitiativeDiceRollComplete;
     [SerializeField]
     private PlayerBuilder _playerBuilder;
-    [SerializeField]
-    private NpcBuilder _npcBuilder;
+    [FormerlySerializedAs("_npcBuilder"),SerializeField]
+    private NpcHolder _npcHolder;
     [SerializeField]
     private Button _diceRollForInitiative;
-    #endregion
 
-    #region MONOBEHAVIOR_METHODS
     private void OnEnable() {
       AddListeners();
     }
@@ -37,9 +35,9 @@ namespace Core.Mono.Scenes.Fight {
     private void OnDisable() {
       RemoveListeners();
     }
-    #endregion
 
-    #region HANDLERS
+
+    
     private void AddListeners() {
       _diceRollForInitiative.onClick.AddListener(CreateListOfInitiative);
     }
@@ -47,9 +45,7 @@ namespace Core.Mono.Scenes.Fight {
     private void RemoveListeners() {
       _diceRollForInitiative.onClick.RemoveListener(CreateListOfInitiative);
     }
-    #endregion
 
-    #region GET_INITIATIVE
     public IInitiative GetIInitiative() {
       return InitiativeList[CurrentIndexOfInitiativeList];
     }
@@ -63,7 +59,7 @@ namespace Core.Mono.Scenes.Fight {
     }
 
     private void GetNpc() {
-      NonPlayerCharacter = _npcBuilder.NonPlayerCharacter;
+      NonPlayerCharacter = _npcHolder.NonPlayerCharacter;
     }
 
     private void SetInitiative(IInitiative initiative, int value) {
@@ -88,9 +84,7 @@ namespace Core.Mono.Scenes.Fight {
       CurrentIndexOfInitiativeList = InitiativeList.Count - 1;
       InitiativeDiceRollComplete?.Invoke();
     }
-    #endregion
 
-    #region PROPERTIES
     public int CurrentIndexOfInitiativeList { get; private set; }
 
     public List<IInitiative> InitiativeList { get; private set; }
@@ -98,6 +92,5 @@ namespace Core.Mono.Scenes.Fight {
     public  PlayerCharacter PlayerCharacter { get; private set; }
 
     public  NonPlayerCharacter NonPlayerCharacter { get; private set; }
-    #endregion
   }
 }

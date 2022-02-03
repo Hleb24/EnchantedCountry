@@ -4,6 +4,7 @@ using Core.Main.GameRule;
 using Core.Main.GameRule.Impact;
 using Core.Main.GameRule.Points;
 using Core.Main.NonPlayerCharacters;
+using Core.Mono.Scenes.Fight;
 using Core.SO.Impacts;
 using Core.SO.Weapon;
 using Core.Support.Data;
@@ -11,7 +12,7 @@ using UnityEngine;
 
 namespace Core.SO.Npc {
   [CreateAssetMenu(menuName = "NPC", fileName = "NPC", order = 58)]
-  public class NpcSO : ScriptableObject {
+  public class NpcSO : ScriptableObject, INpcModel {
     private static SixSidedDice GetLifeDiceForRoll() {
       return new SixSidedDice(DiceType.SixEdges);
     }
@@ -63,19 +64,35 @@ namespace Core.SO.Npc {
     private NonPlayerCharacter _nonPlayerCharacter;
     private IRiskPoints _npcRiskPoints;
 
+    public NpcEquipmentsModel GetNpcEquipmentModel() {
+      return new NpcEquipmentsModel(GetArmorClass(), GetWeaponSet());
+    }
+
+    public NpcCombatAttributesModel GetNpcCombatAttributesModel() {
+      RiskPoints riskPoints = GetNpcRiskPoints();
+      return new NpcCombatAttributesModel(GetListOfImpacts(), riskPoints, AttackEveryAtOnce, GetNumberOfAttacks(), DeadlyAttack, Immortal);
+    }
+
+    public NpcMetadataModel GetNpcMetadataModel() {
+      return new NpcMetadataModel(Id, Name, Description, Property, Experience, Alignment, NpcType);
+    }
+
+    public NpcMoralityModel GetNpcMoralityModel() {
+      return new NpcMoralityModel(Morality, Immoral, EscapePossibility);
+    }
+
     public void OnValidate() {
       Name = name;
       if (_weaponObjects != null && _weaponId.Count == 0) {
-        for (int i = 0; i < _weaponObjects.Count; i++) {
+        for (var i = 0; i < _weaponObjects.Count; i++) {
           _weaponId.Add(_weaponObjects[i].id);
         }
       }
 
-      if (_impactObjects != null && _impactId.Count== 0) {
-        for (int i = 0; i < _impactObjects.Count; i++) {
+      if (_impactObjects != null && _impactId.Count == 0) {
+        for (var i = 0; i < _impactObjects.Count; i++) {
           _impactId.Add(_impactObjects[i].GetId());
         }
-        
       }
     }
 
@@ -112,10 +129,6 @@ namespace Core.SO.Npc {
       return dices;
     }
 
-    private NpcEquipmentsModel GetNpcEquipmentModel() {
-      return new NpcEquipmentsModel(GetArmorClass(), GetWeaponSet());
-    }
-
     private ArmorClass GetArmorClass() {
       return new ArmorClass(ClassOfArmor);
     }
@@ -124,26 +137,9 @@ namespace Core.SO.Npc {
       return new WeaponSet(GetListOfWeapon());
     }
 
-    private NpcCombatAttributesModel GetNpcCombatAttributesModel() {
-      RiskPoints riskPoints = GetNpcRiskPoints();
-      return new NpcCombatAttributesModel(GetListOfImpacts(), riskPoints, AttackEveryAtOnce, GetNumberOfAttacks(), DeadlyAttack);
-    }
-
     private RiskPoints GetNpcRiskPoints() {
       _npcRiskPoints = new NpcRiskPoints();
       return new RiskPoints(_npcRiskPoints, GetRiskPointsAfterDiceRoll());
-    }
-
-    private NpcMetadataModel GetNpcMetadataModel() {
-      return new NpcMetadataModel(Id, Name, Description, Property, Experience, Alignment, NpcType);
-    }
-
-    private NpcMoralityModel GetNpcMoralityModel() {
-      return new NpcMoralityModel(Morality, Immoral, EscapePossibility);
-    }
-
-    private NpcModel GetNpcDTO() {
-      return new NpcModel(GetNpcMoralityModel(), GetNpcMetadataModel(), GetNpcCombatAttributesModel(), GetNpcEquipmentModel());
     }
 
     private List<Main.GameRule.Weapon> GetListOfWeapon() {

@@ -75,10 +75,10 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SetListsSoAndSpawnProducts() {
-      SetArmorListSo(_equipments.GetEquipmentCards(), _storage.armorList);
-      SetWeaponListSo(_equipments.GetEquipmentCards(), _storage.weaponList);
-      SetProjectilesListSo(_equipments.GetEquipmentCards(), _storage.projectiliesList);
-      SetItemListSo(_equipments.GetEquipmentCards(), _storage.itemList);
+      SetArmorListSo(_equipments.GetEquipmentCards(), _storage.GetArmors());
+      SetWeaponListSo(_equipments.GetEquipmentCards(), _storage.GetWeapons());
+      SetProjectilesListSo(_equipments.GetEquipmentCards(), _storage.GetProjectiles());
+      SetItemListSo(_equipments.GetEquipmentCards(), _storage.GetItems());
       Spawn();
     }
 

@@ -3,6 +3,7 @@ using Core.Main.Character;
 using Core.Main.NonPlayerCharacters;
 using Core.Mono.Scenes.QualityDiceRoll;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.Fight {
@@ -15,8 +16,8 @@ namespace Core.Mono.Scenes.Fight {
     private Transform _anchorForNpc;
     [SerializeField]
     private PlayerBuilder _playerBuilder;
-    [SerializeField]
-    private NpcBuilder _npcBuilder;
+    [FormerlySerializedAs("_npcBuilder"),SerializeField]
+    private NpcHolder _npcHolder;
     [SerializeField]
     private Button _createCards;
     [SerializeField]
@@ -47,7 +48,7 @@ namespace Core.Mono.Scenes.Fight {
     
     public void SpawnCards() {
       _playerCharacter = _playerBuilder.PlayerCharacter;
-      _nonPlayerCharacter = _npcBuilder.NonPlayerCharacter;
+      _nonPlayerCharacter = _npcHolder.NonPlayerCharacter;
       _cardViews = new List<CardView>();
       GameObject cardPlayer = Instantiate(_cardPrefab, _anchorForPlayer);
       _cardViews.Add(cardPlayer.GetComponent<CardView>());

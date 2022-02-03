@@ -22,20 +22,20 @@ namespace Core.SO.Product {
     }
 
     [FormerlySerializedAs("productType"), SerializeField]
-    public ProductType _productType;
+    private ProductType _productType;
     [FormerlySerializedAs("item"), SerializeField]
-    public ScriptableObject _item;
+    private ScriptableObject _item;
     [FormerlySerializedAs("productName"), SerializeField]
-    public string _productName = "";
+    private string _productName = "";
     [FormerlySerializedAs("description"), SerializeField]
     // ReSharper disable once NotAccessedField.Local
-    public string _description = "";
+    private string _description = "";
     [FormerlySerializedAs("Property"), SerializeField]
-    public string _property;
+    private string _property;
     [FormerlySerializedAs("price"), SerializeField]
-    public int _price;
+    private int _price;
     [FormerlySerializedAs("id"), SerializeField]
-    public int _id;
+    private int _id;
     [FormerlySerializedAs("icon"), SerializeField]
     private Sprite _icon;
 

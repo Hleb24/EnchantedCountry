@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Core.Main.GameRule.Impact;
 using Core.Main.GameRule.Points;
 using JetBrains.Annotations;
+using UnityEngine.Assertions;
 
 namespace Core.Main.NonPlayerCharacters {
   public class NpcCombatAttributes {
@@ -11,6 +12,7 @@ namespace Core.Main.NonPlayerCharacters {
     private readonly bool _attacksEveryoneAtOnce;
     private int _numberOfAttack;
     private readonly bool _deadlyAttack;
+    private readonly bool _isImmortal;
 
     public NpcCombatAttributes([NotNull] NpcCombatAttributesModel model) {
       _impacts = model.Impacts ?? throw new ArgumentNullException(nameof(model.Impacts));
@@ -18,6 +20,7 @@ namespace Core.Main.NonPlayerCharacters {
       _attacksEveryoneAtOnce = model.AttacksEveryoneAtOnce;
       _numberOfAttack = model.NumberOfAttack;
       _deadlyAttack = model.DeadlyAttack;
+      _isImmortal = model.IsImmortal;
     }
 
     public void GetDamaged(float damage) {
@@ -71,16 +74,24 @@ namespace Core.Main.NonPlayerCharacters {
     public RiskPoints GetRiskPoints() {
       return _riskPoints;
     }
+
+    public bool IsImmortal() {
+      return _isImmortal;
+    }
   }
 
   public class NpcCombatAttributesModel {
     public NpcCombatAttributesModel([NotNull] List<Impact<ImpactOnRiskPoints>> impacts, [NotNull] RiskPoints riskPoints, bool attacksEveryoneAtOnce, int numberOfAttack,
-      bool deadlyAttack) {
-      Impacts = impacts ?? throw new ArgumentNullException(nameof(impacts));
-      RiskPoints = riskPoints ?? throw new ArgumentNullException(nameof(riskPoints));
+      bool deadlyAttack, bool isImmortal) {
+      Assert.IsNotNull(impacts, nameof(impacts));
+      Assert.IsNotNull(riskPoints, nameof(riskPoints));
+      Assert.IsTrue(numberOfAttack >= 0, "Количество атак меньше нуля.");
+      Impacts = impacts;
+      RiskPoints = riskPoints;
       AttacksEveryoneAtOnce = attacksEveryoneAtOnce;
-      NumberOfAttack = numberOfAttack >= 0 ? numberOfAttack : throw new ArgumentException(nameof(numberOfAttack));
+      NumberOfAttack = numberOfAttack;
       DeadlyAttack = deadlyAttack;
+      IsImmortal = isImmortal;
     }
 
     public List<Impact<ImpactOnRiskPoints>> Impacts { get; }
@@ -92,5 +103,7 @@ namespace Core.Main.NonPlayerCharacters {
     public int NumberOfAttack { get; }
 
     public bool DeadlyAttack { get; }
+    
+    public bool IsImmortal { get; }
   }
 }

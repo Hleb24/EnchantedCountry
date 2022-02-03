@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
-using Core.SO.Npc;
 using Core.SO.Weapon;
 using Core.Support.Attributes;
 using Core.Support.SaveSystem.Saver;
@@ -25,16 +23,14 @@ namespace Core.SO.NpcSet {
       Debug.LogWarning("Оружие не найдено в наборе!");
       return null;
     }
-    
+
     [Button]
     public void SaveNpcToJson() {
       var saver = new JsonSaver();
-      string _pathToFolder = Path.Combine(Application.persistentDataPath, "NpcWeapon");
-      string _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "NpcWeapon"), "Save.json");
-      Type type = typeof(NpcSO);
+      string pathToFolder = Path.Combine(Application.persistentDataPath, "NpcWeapon");
       for (var i = 0; i < _weaponSet.Count; i++) {
-        _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "NpcWeapon"), $"{_weaponSet[i].weaponName}.json");
-        saver.Save(_weaponSet[i], _pathToFolder, _pathToFile);
+        string pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "NpcWeapon"), $"{_weaponSet[i].weaponName}.json");
+        saver.Save(_weaponSet[i], pathToFolder, pathToFile);
       }
     }
   }

@@ -1,50 +1,39 @@
-using Core.Main.NonPlayerCharacters;
-using Core.SO.NpcSet;
-using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
+﻿using Core.Main.NonPlayerCharacters;
+using JetBrains.Annotations;
+using UnityEngine.Assertions;
 
 namespace Core.Mono.Scenes.Fight {
-  public class NpcBuilder : MonoBehaviour {
-    [FormerlySerializedAs("_nonPlayerCharacterSet"),FormerlySerializedAs("_setOfNpcSo"), FormerlySerializedAs("_setOfNpcSO"), SerializeField]
-    private NpcSetSO _npcSetSO;
-    [SerializeField]
-    private Button _createNpc;
-    [SerializeField]
-    private int _npcId;
-    [SerializeField]
-    private bool _buildOnStart;
+  public class NpcBuilder {
+    private INpcModelSet _npcModelSet;
 
-    private void Start() {
-      if (_buildOnStart) {
-        BuildNpc();
-      }
+    public NpcBuilder([NotNull] INpcModelSet npcModelSet) {
+      Assert.IsNotNull(npcModelSet, nameof(npcModelSet));
+      _npcModelSet = npcModelSet;
     }
 
-    private void OnEnable() {
-      AddListeners();
+    public void ChangeNpcModelSet([NotNull] INpcModelSet npcModelSet) {
+      Assert.IsNotNull(npcModelSet, nameof(npcModelSet));
+      _npcModelSet = npcModelSet;
     }
 
-    private void OnDisable() {
-      RemoveListeners();
-    }
+    [NotNull]
+    public NonPlayerCharacter Build(int id) {
+      INpcModel model = _npcModelSet.GetNpcModel(id);
+      Assert.IsNotNull(model, nameof(model));
 
-    private void AddListeners() {
-      _createNpc.onClick.AddListener(BuildNpc);
-    }
+      NpcMetadataModel npcMetadataModel = model.GetNpcMetadataModel();
+      NpcMoralityModel npcMoralityModel = model.GetNpcMoralityModel();
+      NpcEquipmentsModel npcEquipmentsModel = model.GetNpcEquipmentModel();
+      NpcCombatAttributesModel npcCombatAttributesModel = model.GetNpcCombatAttributesModel();
 
-    private void RemoveListeners() {
-      _createNpc.onClick.RemoveListener(BuildNpc);
-    }
+      var npcMetadata = new NpcMetadata(npcMetadataModel);
+      var npcMorality = new NpcMorality(npcMoralityModel);
+      var npcCombatAttributes = new NpcCombatAttributes(npcCombatAttributesModel);
+      var npcEquipments = new NpcEquipments(npcEquipmentsModel);
 
-    private void BuildNpc() {
-      NonPlayerCharacter = _npcSetSO.GetNpcFromList(_npcId);
-    }
+      var npc = new NonPlayerCharacter(npcMetadata, npcMorality, npcCombatAttributes, npcEquipments);
 
-    private void BuildNpc(int id) {
-      NonPlayerCharacter = _npcSetSO.GetNpcFromList(id);
+      return npc;
     }
-
-    public NonPlayerCharacter NonPlayerCharacter { get; private set; }
   }
 }

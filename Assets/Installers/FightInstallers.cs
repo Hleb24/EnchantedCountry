@@ -1,9 +1,15 @@
+using Core.Mono.Scenes.Fight;
+using Core.SO.NpcSet;
 using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
+using UnityEngine;
 using Zenject;
 
 namespace Aberrance.Installers {
   public class FightInstallers : MonoInstaller {
+    [SerializeField]
+    private NpcSetSO _npcSetSO;
+    
     public override void InstallBindings() {
       Container.Bind<IClassType>().FromResolveGetter(Dealers.Resolve<IClassType>()).AsSingle();
       Container.Bind<IRiskPoints>().FromResolveGetter(Dealers.Resolve<IRiskPoints>()).AsSingle();
@@ -12,6 +18,8 @@ namespace Aberrance.Installers {
       Container.Bind<IGamePoints>().FromResolveGetter(Dealers.Resolve<IGamePoints>()).AsSingle();
       Container.Bind<IWallet>().FromResolveGetter(Dealers.Resolve<IWallet>()).AsSingle();
       Container.Bind<IQualityPoints>().FromResolveGetter(Dealers.Resolve<IQualityPoints>()).AsSingle();
+      Container.Bind<INpcModelSet>().To<NpcSetSO>().FromScriptableObject(_npcSetSO).AsSingle();
+      Container.Bind<NpcBuilder>().AsSingle();
     }
   }
 }
