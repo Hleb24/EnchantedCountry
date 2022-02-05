@@ -38,37 +38,37 @@ namespace Core.Main.Character {
       switch (impactType) {
         case ImpactType.Poison:
           _riskPoints.ChangeRiskPoints(-points);
-          Debug.Log($"<color=red>Poison</color> {points}, luck roll {playerLuckRoll}, protective throw {protectiveThrow}");
+          Debug.Log($"<color=magenta>Poison</color>: {points} урон(а), спасброскок - {protectiveThrow} и больше, бросок удачи - {playerLuckRoll}.");
           break;
         case ImpactType.Paralysis:
           _riskPoints.ChangeRiskPoints(-points);
 
-          Debug.Log($"<color=red>Paralysis</color> {points}");
+          Debug.Log($"<color=magenta>Paralysis</color> {points}");
           break;
         case ImpactType.Petrification:
           _riskPoints.ChangeRiskPoints(-points);
 
-          Debug.Log($"<color=red>Petrification</color> {points}");
+          Debug.Log($"<color=magenta>Petrification</color> {points}");
           break;
         case ImpactType.Acid:
           _riskPoints.ChangeRiskPoints(-points);
 
-          Debug.Log($"<color=red>Acid</color> {points}");
+          Debug.Log($"<color=magenta>Acid</color> {points}");
           break;
         case ImpactType.Gas:
           _riskPoints.ChangeRiskPoints(-points);
 
-          Debug.Log($"<color=red>Gas</color> {points}");
+          Debug.Log($"<color=magenta>Gas</color> {points}");
           break;
         case ImpactType.Fire:
           _riskPoints.ChangeRiskPoints(-points);
 
-          Debug.Log($"<color=red>Fire</color> {points}");
+          Debug.Log($"<color=magenta>Fire</color> {points}");
           break;
         case ImpactType.DragonBreath:
           _riskPoints.ChangeRiskPoints(-points);
 
-          Debug.Log($"<color=red>DragonBreath</color> {points}");
+          Debug.Log($"<color=magenta>DragonBreath</color> {points}");
           break;
       }
     }

@@ -5,6 +5,7 @@ using Core.Main.GameRule.Initiative;
 using Core.Main.NonPlayerCharacters;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Core.Mono.Scenes.Fight {
   public class CombatController : MonoBehaviour {
@@ -15,7 +16,6 @@ namespace Core.Mono.Scenes.Fight {
     private InitiativeController _initiativeController;
     private PlayerCharacter _playerCharacter;
     private NonPlayerCharacter _nonPlayerCharacter;
-    private bool _isGetReference;
 
     private void OnEnable() {
       AddListeners();
@@ -30,14 +30,14 @@ namespace Core.Mono.Scenes.Fight {
       _attack.onClick.AddListener(OnAttackButtonClicked);
     }
 
-    private void OnInitiativeDiceRollComplete() {
-      _playerCharacter = _initiativeController.PlayerCharacter;
-      _nonPlayerCharacter = _initiativeController.NonPlayerCharacter;
-    }
-
     private void RemoveListeners() {
       _initiativeController.InitiativeDiceRollComplete -= OnInitiativeDiceRollComplete;
       _attack.onClick.RemoveListener(OnAttackButtonClicked);
+    }
+
+    private void OnInitiativeDiceRollComplete() {
+      _playerCharacter = _initiativeController.PlayerCharacter;
+      _nonPlayerCharacter = _initiativeController.NonPlayerCharacter;
     }
 
     private int GetDiceRollValue(int accuracy = 0) {
@@ -53,43 +53,57 @@ namespace Core.Mono.Scenes.Fight {
     }
 
     private void OnAttackButtonClicked() {
-      if (IsPlayerCharacter(_initiativeController.GetIInitiative())) {
-        if (_playerCharacter.MeleeWeapon != null) {
-          int diceRollValue = GetDiceRollValue(_playerCharacter.GetMeleeAccuracy());
-          float meleeDamage = _playerCharacter.GetMeleeDamage();
-          Debug.Log($"<color=green>{_playerCharacter.ClassType}</color>, dice roll value <color=green>{diceRollValue}</color> to melee <color=green>{meleeDamage}</color> damage, weapont type <color=green>{_playerCharacter.MeleeWeapon.weaponType}</color>");
-          _nonPlayerCharacter.GetDamaged(diceRollValue, meleeDamage,
-            _playerCharacter.MeleeWeapon.Id, _playerCharacter.MeleeWeapon.weaponType);
-          AttackButtonClicked?.Invoke(_nonPlayerCharacter.Name, _nonPlayerCharacter.RiskPoints.GetPoints());
+      IInitiative initiative = _initiativeController.GetIInitiative();
+      if (IsPlayerCharacter(initiative)) {
+        PlayerTurn();
+      } else if (IsNpc(initiative)) {
+        NpcTurn();
+      }
+
+      _initiativeController.MoveIndexToBack();
+    }
+
+    private void PlayerTurn() {
+      if (_playerCharacter.MeleeWeapon != null) {
+        int diceRollValue = GetDiceRollValue(_playerCharacter.GetMeleeAccuracy());
+        Debug.Log($"<color=orange>{_playerCharacter.ClassType}</color>: атака ближним оружием.");
+        float meleeDamage = _playerCharacter.GetMeleeDamage();
+        if (_nonPlayerCharacter.GetDamaged(diceRollValue, meleeDamage, _playerCharacter.MeleeWeapon.Id, _playerCharacter.MeleeWeapon.weaponType)) {
+          Debug.Log(
+            $"<color=orange>{_playerCharacter.ClassType}</color>: значения бросков кубика <color=orange>{diceRollValue}</color> - <color=orange>{meleeDamage}</color> урон(а), тип оружия - <color=orange>{_playerCharacter.MeleeWeapon.weaponType}</color>.");
+          AttackButtonClicked?.Invoke(_nonPlayerCharacter.GetName(), _nonPlayerCharacter.GetPointsOfRisk());
         }
       }
-      if (IsNpc(_initiativeController.GetIInitiative())) {
-        if (_nonPlayerCharacter.NumberOfAttack !=0) {
-          if (_nonPlayerCharacter.AttackEveryoneAtOnce) {
-            Debug.Log("Everyone at once <color=red>Npc</color> attack");
-            for (int i = 0; i < _nonPlayerCharacter.NumberOfAttack; i++) {
-              int index = i;
-              int diceRollValue = GetDiceRollValue(_nonPlayerCharacter.Accuracy());
-              float damage = _nonPlayerCharacter.ToDamage(diceRollValue,_playerCharacter,index);
-              Debug.Log($"<color=red>{_nonPlayerCharacter.Name}</color>, dice roll value <color=red>{diceRollValue}</color> to index <size=12>{index}</size> - <color=red>{damage}</color> damage");
-              _playerCharacter.GetDamaged(diceRollValue, damage);
-              AttackButtonClicked?.Invoke(_playerCharacter.Name, _playerCharacter.RiskPoints.GetPoints());
-            }
-          }
+    }
 
-          if (!_nonPlayerCharacter.AttackEveryoneAtOnce) {
-            Debug.Log("One <color=red>Npc</color> attack");
-            int weapon = UnityEngine.Random.Range(0, _nonPlayerCharacter.NumberOfWeapon);
-            int diceRollValue = GetDiceRollValue(_nonPlayerCharacter.Accuracy());
-            float damage = _nonPlayerCharacter.ToDamage(diceRollValue,_playerCharacter,weapon);
-            Debug.Log($"<color=red>{_nonPlayerCharacter.Name}</color>, dice roll value <color=red>{diceRollValue}</color> to weapon <color=red>{damage}</color> damage");
-            _playerCharacter.GetDamaged(diceRollValue, damage);
+    private void NpcTurn() {
+      if (_nonPlayerCharacter.IsHasNoNumberOfAttack()) {
+        return;
+      }
+
+      if (_nonPlayerCharacter.IsAttackWithAllWeapons()) {
+        for (var i = 0; i < _nonPlayerCharacter.GetNumberOfAttack(); i++) {
+          int index = i;
+          int diceRollValue = GetDiceRollValue(_nonPlayerCharacter.Accuracy());
+          float damage = _nonPlayerCharacter.ToDamage(diceRollValue, _playerCharacter, index);
+          Debug.Log($"<color=magenta>{_nonPlayerCharacter.GetName()}</color>: атакует всем одновременно.");
+          if (_playerCharacter.GetDamaged(diceRollValue, damage)) {
+            Debug.Log(
+              $"<color=magenta>{_nonPlayerCharacter.GetName()}</color>: значение броска кубиков <color=magenta>{diceRollValue}</color> - <color=magenta>{damage}</color> урон(а).");
             AttackButtonClicked?.Invoke(_playerCharacter.Name, _playerCharacter.RiskPoints.GetPoints());
           }
         }
+      } else if (_nonPlayerCharacter.IsAttackWithOneWeapon()) {
+        int weapon = Random.Range(0, _nonPlayerCharacter.GetNumberOfWeapon());
+        int diceRollValue = GetDiceRollValue(_nonPlayerCharacter.Accuracy());
+        float damage = _nonPlayerCharacter.ToDamage(diceRollValue, _playerCharacter, weapon);
+        Debug.Log($"<color=magenta>{_nonPlayerCharacter.GetName()}</color>: одна атака.");
+        if (_playerCharacter.GetDamaged(diceRollValue, damage)) {
+          Debug.Log(
+            $"<color=magenta>{_nonPlayerCharacter.GetName()}</color>: значение броска кубиков <color=magenta>{diceRollValue}</color> - <color=magenta>{damage}</color> урон(а).");
+          AttackButtonClicked?.Invoke(_playerCharacter.Name, _playerCharacter.RiskPoints.GetPoints());
+        }
       }
-      _initiativeController.MoveIndexToBack();
-     
     }
   }
 }

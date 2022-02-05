@@ -24,7 +24,7 @@ namespace Core.Main.NonPlayerCharacters {
       return _armorClass.isKillOnlySpell;
     }
       
-    public bool HasWeapon() {
+    public bool IsHasWeapon() {
       return _weaponSet.HasWeapon();
     }
 
@@ -45,8 +45,10 @@ namespace Core.Main.NonPlayerCharacters {
     public ArmorClass GetArmorClass() {
       return _armorClass;
     }
-    
-    
+
+    public int GetClassOfArmor() {
+      return _armorClass.ClassOfArmor;
+    }
   }
   
   public class NpcEquipmentsModel {

@@ -9,13 +9,13 @@ namespace Core.Main.NonPlayerCharacters.Variants {
         _npcCombatAttributes.Heal(1);
       }
 
-      NumberOfAttacks();
+      PrepareNumberOfAttacks();
 
       return isHit;
     }
 
-    protected override void NumberOfAttacks() {
-      int numberOfAttack = (int)Math.Round(RiskPoints.GetPoints(), MidpointRounding.AwayFromZero);
+    internal override void PrepareNumberOfAttacks() {
+      int numberOfAttack = (int)Math.Round(GetPointsOfRisk(), MidpointRounding.AwayFromZero);
       _npcCombatAttributes.SetNumberOfAttack(numberOfAttack);
     }
 

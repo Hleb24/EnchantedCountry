@@ -9,7 +9,7 @@ namespace Core.Main.NonPlayerCharacters.Variants {
       _numberOfSuccessHit++;
       if (_numberOfSuccessHit > 1) {
         _numberOfSuccessHit = 0;
-        if (_npcEquipments.HasWeapon()) {
+        if (_npcEquipments.IsHasWeapon()) {
           damage = _npcEquipments.ToDamage(weapon);
         }
 

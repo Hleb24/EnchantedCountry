@@ -8,19 +8,18 @@ namespace Core.Main.NonPlayerCharacters {
   public class NpcCombatAttributes {
     private readonly List<Impact<ImpactOnRiskPoints>> _impacts;
     private readonly RiskPoints _riskPoints;
-    private readonly bool _attacksEveryoneAtOnce;
+    private readonly bool _attackWithAllWeapons;
     private readonly bool _deadlyAttack;
     private readonly bool _isImmortal;
     private int _numberOfAttack;
 
-    public NpcCombatAttributes([NotNull, ItemNotNull] List<Impact<ImpactOnRiskPoints>> impacts, [NotNull] RiskPoints riskPoints, bool attacksEveryoneAtOnce, bool deadlyAttack,
-      bool isImmortal, int numberOfAttack) {
+    public NpcCombatAttributes([NotNull] List<Impact<ImpactOnRiskPoints>> impacts, [NotNull] RiskPoints riskPoints, bool attackWithAllWeapons, bool deadlyAttack,
+      bool isImmortal) {
       Assert.IsNotNull(impacts, nameof(impacts));
       Assert.IsNotNull(riskPoints, nameof(riskPoints));
       _impacts = impacts;
       _riskPoints = riskPoints;
-      _attacksEveryoneAtOnce = attacksEveryoneAtOnce;
-      _numberOfAttack = numberOfAttack;
+      _attackWithAllWeapons = attackWithAllWeapons;
       _deadlyAttack = deadlyAttack;
       _isImmortal = isImmortal;
     }
@@ -49,15 +48,15 @@ namespace Core.Main.NonPlayerCharacters {
       _numberOfAttack = numberOfAttack;
     }
 
-    public bool IsAttackEveryAtOne() {
-      return _attacksEveryoneAtOnce;
+    public bool IsAttackWithAllWeapons() {
+      return _attackWithAllWeapons;
     }
 
     public bool IsDeadlyAttack() {
       return _deadlyAttack;
     }
 
-    public bool HasImpacts() {
+    public bool IsHasImpact() {
       return _impacts.Count > 0;
     }
 
@@ -73,8 +72,8 @@ namespace Core.Main.NonPlayerCharacters {
       _impacts[impactIndex].ImpactAction(target);
     }
 
-    public RiskPoints GetRiskPoints() {
-      return _riskPoints;
+    public float GetPointsOfRisk() {
+      return _riskPoints.GetPoints();
     }
 
     public bool IsImmortal() {
@@ -83,13 +82,12 @@ namespace Core.Main.NonPlayerCharacters {
   }
 
   public class NpcCombatAttributesModel {
-    public NpcCombatAttributesModel([NotNull] List<int> impacts, int defaultRiskPoints, int lifeDice, bool attacksEveryoneAtOnce, bool deadlyAttack,
-      bool isImmortal) {
+    public NpcCombatAttributesModel([NotNull] List<int> impacts, int defaultRiskPoints, int lifeDice, bool attackWithAllWeapons, bool deadlyAttack, bool isImmortal) {
       Assert.IsNotNull(impacts, nameof(impacts));
       Impacts = impacts;
       DefaultRiskPoints = defaultRiskPoints;
       LifeDice = lifeDice;
-      AttacksEveryoneAtOnce = attacksEveryoneAtOnce;
+      AttackWithAllWeapons = attackWithAllWeapons;
       DeadlyAttack = deadlyAttack;
       IsImmortal = isImmortal;
     }
@@ -99,7 +97,7 @@ namespace Core.Main.NonPlayerCharacters {
     public int DefaultRiskPoints { get; }
     public int LifeDice { get; }
 
-    public bool AttacksEveryoneAtOnce { get; }
+    public bool AttackWithAllWeapons { get; }
 
     public bool DeadlyAttack { get; }
 

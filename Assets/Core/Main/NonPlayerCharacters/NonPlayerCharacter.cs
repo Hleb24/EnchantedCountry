@@ -3,13 +3,13 @@ using Core.Main.Dice;
 using Core.Main.GameRule;
 using Core.Main.GameRule.Impact;
 using Core.Main.GameRule.Initiative;
-using Core.Main.GameRule.Points;
 using JetBrains.Annotations;
 using UnityEngine.Assertions;
 
 namespace Core.Main.NonPlayerCharacters {
   [Serializable]
   public class NonPlayerCharacter : ImpactOnRiskPoints, IInitiative {
+    protected const float DeadlyDamage = 10000;
     public event Action<string> IsDead;
     protected NpcMetadata _npcMetadata;
     protected NpcMorality _npcMorality;
@@ -26,9 +26,7 @@ namespace Core.Main.NonPlayerCharacters {
       _npcMorality = npcMorality;
       _npcCombatAttributes = npcCombatAttributes;
       _npcEquipments = npcEquipments;
-      NumberOfAttacks();
     }
-
 
     public int CompareTo([NotNull] IInitiative other) {
       return Initiative.CompareTo(other.Initiative);
@@ -110,10 +108,6 @@ namespace Core.Main.NonPlayerCharacters {
       return _npcCombatAttributes.IsDead();
     }
 
-    protected bool IsNotHit(int diceRoll) {
-      return !IsHit(diceRoll);
-    }
-
     public virtual bool IsHit(int hit) {
       return _npcEquipments.IsHit(hit);
     }
@@ -131,27 +125,52 @@ namespace Core.Main.NonPlayerCharacters {
       return _npcCombatAttributes.IsDead();
     }
 
-    protected virtual void NumberOfAttacks() {
-      int numberOfAttack;
-      if (_npcEquipments.HasWeapon() || _npcCombatAttributes.IsDeadlyAttack()) {
-        numberOfAttack = 1;
-        _npcCombatAttributes.SetNumberOfAttack(numberOfAttack);
-      }
-
-      if (_npcEquipments.HasWeapon() && _npcCombatAttributes.IsAttackEveryAtOne()) {
-        numberOfAttack = _npcEquipments.GetNumberOfWeapon();
-        _npcCombatAttributes.SetNumberOfAttack(numberOfAttack);
-        return;
-      }
-
-      if (IsNotDeadlyAttack() && HasNotWeapon() && _npcCombatAttributes.HasImpacts()) {
-        numberOfAttack = _npcCombatAttributes.GetNumberOfImpacts();
-        _npcCombatAttributes.SetNumberOfAttack(numberOfAttack);
-      }
+    public float GetPointsOfRisk() {
+      return _npcCombatAttributes.GetPointsOfRisk();
     }
 
-    protected bool HasNotWeapon() {
-      return !_npcEquipments.HasWeapon();
+    public int GetClassOfArmor() {
+      return _npcEquipments.GetClassOfArmor();
+    }
+
+    public int GetNumberOfAttack() {
+      return _npcCombatAttributes.GetNumberOfAttack();
+    }
+
+    public bool IsHasNumberOfAttack() {
+      const int noAttack = 0;
+      return  _npcCombatAttributes.GetNumberOfAttack() != noAttack;
+    }
+    
+    public bool IsHasNoNumberOfAttack() {
+      const int noAttack = 0;
+      return  _npcCombatAttributes.GetNumberOfAttack() == noAttack;
+    }
+
+    public int GetNumberOfWeapon() {
+      return _npcEquipments.GetNumberOfWeapon();
+    }
+
+    public bool IsAttackWithAllWeapons() {
+      return _npcCombatAttributes.IsAttackWithAllWeapons();
+    }
+
+    public bool IsAttackWithOneWeapon() {
+      return !_npcCombatAttributes.IsAttackWithAllWeapons();
+    }
+    
+    
+
+    public string GetName() {
+      return _npcMetadata.GetName();
+    }
+
+    protected bool IsNotHit(int diceRoll) {
+      return !IsHit(diceRoll);
+    }
+
+    protected bool IsHasNotWeapon() {
+      return !_npcEquipments.IsHasWeapon();
     }
 
     protected bool IsNotDeadlyAttack() {
@@ -159,14 +178,14 @@ namespace Core.Main.NonPlayerCharacters {
     }
 
     protected virtual void ImpactsDamage(int diceRoll, [NotNull] ImpactOnRiskPoints character) {
-      if (_npcCombatAttributes.HasImpacts()) {
+      if (_npcCombatAttributes.IsHasImpact()) {
         ToDamagedOfImpact(diceRoll, character, GetIndexForImpact());
       }
     }
 
     protected virtual float WeaponsDamage(int weapon = 0) {
       float damage = 0;
-      if (_npcEquipments.HasWeapon()) {
+      if (_npcEquipments.IsHasWeapon()) {
         damage = _npcEquipments.ToDamage(weapon);
       }
 
@@ -189,42 +208,38 @@ namespace Core.Main.NonPlayerCharacters {
       return _npcEquipments.IsKillOnlySpell() && !isSpell;
     }
 
+    /// <summary>
+    ///   Подготовить количество атак для npc.
+    /// </summary>
+    /// <remarks>Вызывать всегда после создания npc.</remarks>
+    internal virtual void PrepareNumberOfAttacks() {
+      const int oneAttack = 1;
+      int numberOfAttack = 0;
+      if (_npcCombatAttributes.IsDeadlyAttack()) {
+        _npcCombatAttributes.SetNumberOfAttack(oneAttack);
+        return;
+      }
+
+      if (_npcEquipments.IsHasWeapon() && _npcCombatAttributes.IsAttackWithAllWeapons()) {
+        numberOfAttack = _npcEquipments.GetNumberOfWeapon();
+        _npcCombatAttributes.SetNumberOfAttack(numberOfAttack);
+        return;
+      }
+
+      if (IsHasNotWeapon() && _npcCombatAttributes.IsHasImpact()) {
+        numberOfAttack = _npcCombatAttributes.GetNumberOfImpacts();
+        _npcCombatAttributes.SetNumberOfAttack(numberOfAttack);
+        return;
+      }
+
+      if (_npcEquipments.IsHasWeapon()) {
+        _npcCombatAttributes.SetNumberOfAttack(oneAttack);
+        return;
+      }
+
+      _npcCombatAttributes.SetNumberOfAttack(numberOfAttack);
+    }
+
     public int Initiative { get; set; }
-
-    public RiskPoints RiskPoints {
-      get {
-        return _npcCombatAttributes.GetRiskPoints();
-      }
-    }
-
-    public ArmorClass ArmorClass {
-      get {
-        return _npcEquipments.GetArmorClass();
-      }
-    }
-
-    public int NumberOfAttack {
-      get {
-        return _npcCombatAttributes.GetNumberOfAttack();
-      }
-    }
-
-    public int NumberOfWeapon {
-      get {
-        return _npcEquipments.GetNumberOfWeapon();
-      }
-    }
-
-    public bool AttackEveryoneAtOnce {
-      get {
-        return _npcCombatAttributes.IsAttackEveryAtOne();
-      }
-    }
-
-    public string Name {
-      get {
-        return _npcMetadata.GetName();
-      }
-    }
   }
 }

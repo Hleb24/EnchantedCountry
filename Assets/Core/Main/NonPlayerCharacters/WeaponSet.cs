@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Core.Main.GameRule;
 using JetBrains.Annotations;
+using UnityEngine;
 
 namespace Core.Main.NonPlayerCharacters {
   public class WeaponSet {
@@ -13,6 +14,7 @@ namespace Core.Main.NonPlayerCharacters {
 
     public WeaponSet([NotNull, ItemNotNull] List<Weapon> weapons) {
       _weapons = weapons;
+      Debug.LogWarning("Weapons count " + weapons.Count);
       if (_weapons.Count == 0) {
         return;
       }

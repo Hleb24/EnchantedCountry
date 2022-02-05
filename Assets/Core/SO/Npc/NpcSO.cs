@@ -58,8 +58,8 @@ namespace Core.SO.Npc {
     private bool _immortal;
     [FormerlySerializedAs("DeadlyAttack"), SerializeField]
     private bool _deadlyAttack;
-    [FormerlySerializedAs("AttackEveryAtOnce"), SerializeField]
-    private bool _attackEveryAtOnce;
+    [FormerlySerializedAs("_attackEveryAtOnce"),FormerlySerializedAs("AttackEveryAtOnce"), SerializeField]
+    private bool _attackWithAllWeapons;
     [FormerlySerializedAs("Id"), SerializeField]
     private int _id;
     private IRiskPoints _npcRiskPoints;
@@ -70,7 +70,7 @@ namespace Core.SO.Npc {
 
     public NpcCombatAttributesModel GetNpcCombatAttributesModel() {
       RiskPoints riskPoints = GetNpcRiskPoints();
-      return new NpcCombatAttributesModel(_impactId, _defaultRiskPoints, _lifeDice,_attackEveryAtOnce, _deadlyAttack, _immortal);
+      return new NpcCombatAttributesModel(_impactId, _defaultRiskPoints, _lifeDice,_attackWithAllWeapons, _deadlyAttack, _immortal);
     }
 
     public NpcMetadataModel GetNpcMetadataModel() {
@@ -160,7 +160,7 @@ namespace Core.SO.Npc {
         return 1;
       }
 
-      if (GetListOfWeapon().Count > 0 && _attackEveryAtOnce) {
+      if (GetListOfWeapon().Count > 0 && _attackWithAllWeapons) {
         return GetListOfWeapon().Count;
       }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Core.Main.Dice;
 
 namespace Core.Main.GameRule {
@@ -208,6 +209,10 @@ namespace Core.Main.GameRule {
       Attack.MaxDamage = maxDamage;
       Attack.MinDamage = minDamge;
       Attack.Accuracy = accurancy;
+    }
+
+    public static bool Is(WeaponType conditionalWeaponType, WeaponType targetWeaponType) {
+      return (conditionalWeaponType & targetWeaponType) == targetWeaponType;
     }
   }
 }

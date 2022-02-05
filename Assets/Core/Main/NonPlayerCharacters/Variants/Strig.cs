@@ -4,7 +4,7 @@ namespace Core.Main.NonPlayerCharacters.Variants {
   public class Strig : NonPlayerCharacter {
     protected override float WeaponsDamage(int weapon = 0) {
       float damage = 0;
-      if (_npcEquipments.HasWeapon()) {
+      if (_npcEquipments.IsHasWeapon()) {
         damage = _npcEquipments.ToDamage(GetIndexOfWeapon());
       }
 

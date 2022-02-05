@@ -16,7 +16,7 @@ namespace Core.Main.NonPlayerCharacters.Variants {
     
     public override int Accuracy(int index = 0) {
       int accuracy = 0;
-      if (_npcEquipments.HasWeapon()) {
+      if (_npcEquipments.IsHasWeapon()) {
         accuracy = _npcEquipments.GetAccuracy();
         if (_isBlind) {
           accuracy -= 2;

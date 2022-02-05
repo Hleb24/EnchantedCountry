@@ -48,6 +48,7 @@ namespace Core.Mono.Scenes.Fight {
       NpcEquipments npcEquipments = GetNpcEquipments();
 
       var npc = new NonPlayerCharacter(npcMetadata, npcMorality, npcCombatAttributes, npcEquipments);
+      npc.PrepareNumberOfAttacks();
       return npc;
 
       NpcMetadata GetNpcMetadata() {
@@ -61,23 +62,19 @@ namespace Core.Mono.Scenes.Fight {
 
       NpcCombatAttributes GetNpcCombatAttributes() {
         List<Impact<ImpactOnRiskPoints>> listOfImpacts = GetListOfImpacts(npcCombatAttributesModel.Impacts);
+
         int defaultRiskPoints = npcCombatAttributesModel.DefaultRiskPoints;
         int lifeDice = npcCombatAttributesModel.LifeDice;
         RiskPoints npcRiskPoints = NpcRiskPointsBuilder.Build(defaultRiskPoints, lifeDice);
-        bool attackEveryAtOnce = npcCombatAttributesModel.AttacksEveryoneAtOnce;
+
+        bool attackWithAllWeapons = npcCombatAttributesModel.AttackWithAllWeapons;
         bool deadlyAttack = npcCombatAttributesModel.DeadlyAttack;
         bool isImmortal = npcCombatAttributesModel.IsImmortal;
-        List<Weapon> listOfWeapon = GetListOfWeapon(npcEquipmentsModel.WeaponsIdList);
-        int numberOfAttack = GetNumberOfAttacks(listOfWeapon, listOfImpacts, deadlyAttack, attackEveryAtOnce);
-        
         Debug.LogWarning($"Количество очков риска npc {npcRiskPoints.GetPoints()}");
-        Debug.LogWarning($"Количество оружия npc {listOfWeapon.Count}");
         Debug.LogWarning($"Количество воздействий npc {listOfImpacts.Count}");
-        Debug.LogWarning($"Npc aтакует всех {attackEveryAtOnce}");
+        Debug.LogWarning($"Npc aтакует всех {attackWithAllWeapons}");
         Debug.LogWarning($"Смертельная атака у npc {deadlyAttack}");
-        Debug.LogWarning($"Количество атак npc {numberOfAttack}");
-        
-        return new NpcCombatAttributes(listOfImpacts, npcRiskPoints, attackEveryAtOnce, deadlyAttack, isImmortal, numberOfAttack);
+        return new NpcCombatAttributes(listOfImpacts, npcRiskPoints, attackWithAllWeapons, deadlyAttack, isImmortal);
       }
 
       NpcEquipments GetNpcEquipments() {
@@ -122,32 +119,6 @@ namespace Core.Mono.Scenes.Fight {
       }
 
       return impacts;
-    }
-
-    private int GetNumberOfAttacks([NotNull] List<Weapon> listOfWeapons, [NotNull] List<Impact<ImpactOnRiskPoints>> listOfImpacts, bool deadlyAttack, bool attackEveryAtOnce) {
-      const int oneAttack = 1;
-      const int noAttack = 0;
-      if (IsOneAttack()) {
-        return oneAttack;
-      }
-
-      if (IsAttackEveryAtOnce()) {
-        return listOfWeapons.Count;
-      }
-
-      return IsImpactsAttack() ? listOfImpacts.Count : noAttack;
-
-      bool IsOneAttack() {
-        return listOfWeapons.Count == 0 || deadlyAttack;
-      }
-
-      bool IsAttackEveryAtOnce() {
-        return listOfWeapons.Count > 0 && attackEveryAtOnce;
-      }
-
-      bool IsImpactsAttack() {
-        return !deadlyAttack && listOfWeapons.Count == 0 && listOfImpacts.Count > 0;
-      }
     }
 
     private static class NpcRiskPointsBuilder {

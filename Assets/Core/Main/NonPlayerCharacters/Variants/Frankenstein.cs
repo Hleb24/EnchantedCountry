@@ -7,7 +7,7 @@ namespace Core.Main.NonPlayerCharacters.Variants {
 
     protected override float WeaponsDamage(int weapon = 0) {
       float damage = 0;
-      if (_npcEquipments.HasWeapon()) {
+      if (_npcEquipments.IsHasWeapon()) {
         int numberOfAttack = Random.Range(1, NUMBER_OF_ATTACK + 1);
         
         damage = _npcEquipments.ToDamage(GetIndexOfWeapon());

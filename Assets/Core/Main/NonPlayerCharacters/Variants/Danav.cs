@@ -7,13 +7,13 @@ namespace Core.Main.NonPlayerCharacters.Variants {
     public override bool IsHit(int hit) {
       if (hit >= 9 && _numberOfHands != 0) {
         _numberOfHands--;
-        NumberOfAttacks();
+        PrepareNumberOfAttacks();
       }
 
       return base.IsHit(hit);
     }
 
-    protected override void NumberOfAttacks() {
+    internal override void PrepareNumberOfAttacks() {
       _npcCombatAttributes.SetNumberOfAttack(_numberOfHands);
     }
 

@@ -55,7 +55,7 @@ namespace Core.Mono.Scenes.Fight {
       _cardViews[0].SetFieldsInCard(_sprites[0], _playerCharacter.Name, _playerCharacter.RiskPoints.GetPoints(), _playerCharacter.Armor.ArmorClass.ClassOfArmor);
       GameObject cardNpc = Instantiate(_cardPrefab, _anchorForNpc);
       _cardViews.Add(cardNpc.GetComponent<CardView>());
-      _cardViews[1].SetFieldsInCard(_sprites[1], _nonPlayerCharacter.Name, _nonPlayerCharacter.RiskPoints.GetPoints(), _nonPlayerCharacter.ArmorClass.ClassOfArmor);
+      _cardViews[1].SetFieldsInCard(_sprites[1], _nonPlayerCharacter.GetName(), _nonPlayerCharacter.GetPointsOfRisk(), _nonPlayerCharacter.GetClassOfArmor());
     }
   }
 }
