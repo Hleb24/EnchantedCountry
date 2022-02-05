@@ -1,5 +1,6 @@
 using Core.Main.GameRule.Points;
 using Core.Support.Data;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Editor.NTest.PlayModeTests.CharacterTests.RiscPointsTest {
@@ -23,7 +24,8 @@ namespace Editor.NTest.PlayModeTests.CharacterTests.RiscPointsTest {
     [Test, Description("Risk point at least zero"), Repeat(1)]
     public void RiskPointAtLeastZero([Values(0, 1.25f, 2.50f)] float points) {
       _riskPoints.SetRiskPoints(points);
-      Assert.That(_riskPoints.GetPoints, Is.AtLeast(0));
+      // Assert.That(_riskPoints.GetPoints, Is.AtLeast(1));
+      _riskPoints.GetPoints().Should().BeGreaterOrEqualTo(0);
     }
 
     [Test, Description("Is dead"), Repeat(1)]

@@ -5,7 +5,8 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "Zenject",
-        "Core"
+        "Core",
+        "BoundfoxStudios.FluentAssertions"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
