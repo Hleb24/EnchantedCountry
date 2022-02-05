@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Core.Main.GameRule;
+using JetBrains.Annotations;
 
 namespace Core.Main.NonPlayerCharacters {
   public class WeaponSet {
@@ -10,9 +11,9 @@ namespace Core.Main.NonPlayerCharacters {
     private readonly bool _hasWeapon;
     private readonly int _numberOfWeapon;
 
-    public WeaponSet(List<Weapon> weapons) {
+    public WeaponSet([NotNull, ItemNotNull] List<Weapon> weapons) {
       _weapons = weapons;
-      if (_weapons.Count <= 0) {
+      if (_weapons.Count == 0) {
         return;
       }
 

@@ -42,6 +42,7 @@ namespace Core.Mono.Scenes.Fight {
 
     private void BuildNpc() {
       NonPlayerCharacter = _npcBuilder.Build(_npcId);
+      
     }
 
    

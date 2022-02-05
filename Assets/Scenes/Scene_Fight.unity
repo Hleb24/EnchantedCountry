@@ -306,6 +306,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _npcSetSO: {fileID: 11400000, guid: bd99d79722a9cdc4ba0bfc4a4672def7, type: 2}
+  _impactsSet: {fileID: 11400000, guid: 6ef291b26d413d541bc3532268b936b0, type: 2}
+  _npcWeaponSet: {fileID: 11400000, guid: 6def154637b56884784ef3ceb7e29663, type: 2}
 --- !u!114 &452025340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,7 +472,7 @@ MonoBehaviour:
   _anchorForPlayer: {fileID: 206322138}
   _anchorForNpc: {fileID: 1303942723}
   _playerBuilder: {fileID: 1827252750}
-  _npcBuilder: {fileID: 342286473}
+  _npcHolder: {fileID: 342286473}
   _createCards: {fileID: 1824687588}
   _sprites:
   - {fileID: 21300000, guid: ba487cca2c2531343b005a1aea49725c, type: 3}
@@ -733,7 +735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerBuilder: {fileID: 1827252750}
-  _npcBuilder: {fileID: 342286473}
+  _npcHolder: {fileID: 342286473}
   _diceRollForInitiative: {fileID: 1225736301}
 --- !u!1 &1105830237
 GameObject:

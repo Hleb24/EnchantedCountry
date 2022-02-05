@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Core.Main.GameRule.Impact;
 using Core.Main.GameRule.Points;
 using JetBrains.Annotations;
@@ -10,17 +9,20 @@ namespace Core.Main.NonPlayerCharacters {
     private readonly List<Impact<ImpactOnRiskPoints>> _impacts;
     private readonly RiskPoints _riskPoints;
     private readonly bool _attacksEveryoneAtOnce;
-    private int _numberOfAttack;
     private readonly bool _deadlyAttack;
     private readonly bool _isImmortal;
+    private int _numberOfAttack;
 
-    public NpcCombatAttributes([NotNull] NpcCombatAttributesModel model) {
-      _impacts = model.Impacts ?? throw new ArgumentNullException(nameof(model.Impacts));
-      _riskPoints = model.RiskPoints ?? throw new ArgumentNullException(nameof(model.RiskPoints));
-      _attacksEveryoneAtOnce = model.AttacksEveryoneAtOnce;
-      _numberOfAttack = model.NumberOfAttack;
-      _deadlyAttack = model.DeadlyAttack;
-      _isImmortal = model.IsImmortal;
+    public NpcCombatAttributes([NotNull, ItemNotNull] List<Impact<ImpactOnRiskPoints>> impacts, [NotNull] RiskPoints riskPoints, bool attacksEveryoneAtOnce, bool deadlyAttack,
+      bool isImmortal, int numberOfAttack) {
+      Assert.IsNotNull(impacts, nameof(impacts));
+      Assert.IsNotNull(riskPoints, nameof(riskPoints));
+      _impacts = impacts;
+      _riskPoints = riskPoints;
+      _attacksEveryoneAtOnce = attacksEveryoneAtOnce;
+      _numberOfAttack = numberOfAttack;
+      _deadlyAttack = deadlyAttack;
+      _isImmortal = isImmortal;
     }
 
     public void GetDamaged(float damage) {
@@ -81,29 +83,26 @@ namespace Core.Main.NonPlayerCharacters {
   }
 
   public class NpcCombatAttributesModel {
-    public NpcCombatAttributesModel([NotNull] List<Impact<ImpactOnRiskPoints>> impacts, [NotNull] RiskPoints riskPoints, bool attacksEveryoneAtOnce, int numberOfAttack,
-      bool deadlyAttack, bool isImmortal) {
+    public NpcCombatAttributesModel([NotNull] List<int> impacts, int defaultRiskPoints, int lifeDice, bool attacksEveryoneAtOnce, bool deadlyAttack,
+      bool isImmortal) {
       Assert.IsNotNull(impacts, nameof(impacts));
-      Assert.IsNotNull(riskPoints, nameof(riskPoints));
-      Assert.IsTrue(numberOfAttack >= 0, "Количество атак меньше нуля.");
       Impacts = impacts;
-      RiskPoints = riskPoints;
+      DefaultRiskPoints = defaultRiskPoints;
+      LifeDice = lifeDice;
       AttacksEveryoneAtOnce = attacksEveryoneAtOnce;
-      NumberOfAttack = numberOfAttack;
       DeadlyAttack = deadlyAttack;
       IsImmortal = isImmortal;
     }
 
-    public List<Impact<ImpactOnRiskPoints>> Impacts { get; }
+    public List<int> Impacts { get; }
 
-    public RiskPoints RiskPoints { get; }
+    public int DefaultRiskPoints { get; }
+    public int LifeDice { get; }
 
     public bool AttacksEveryoneAtOnce { get; }
 
-    public int NumberOfAttack { get; }
-
     public bool DeadlyAttack { get; }
-    
+
     public bool IsImmortal { get; }
   }
 }

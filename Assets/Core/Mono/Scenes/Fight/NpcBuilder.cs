@@ -9,21 +9,14 @@ using Core.SO.Impacts;
 using Core.SO.Npc;
 using Core.SO.NpcSet;
 using JetBrains.Annotations;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace Core.Mono.Scenes.Fight {
   public class NpcBuilder {
-    private static SixSidedDice GetLifeDiceForRoll() {
-      return new SixSidedDice(DiceType.SixEdges);
-    }
-
-    private static DiceBox GetDiceBox(Dices[] dices) {
-      return new DiceBox(dices);
-    }
-
-    private INpcModelSet _npcModelSet;
     private readonly INpcWeaponSet _npcWeaponSet;
     private readonly IImpactsSet _impactsSet;
+    private INpcModelSet _npcModelSet;
 
     public NpcBuilder([NotNull] INpcModelSet npcModelSet, [NotNull] INpcWeaponSet npcWeaponSet, [NotNull] IImpactsSet impactsSet) {
       Assert.IsNotNull(npcModelSet, nameof(npcModelSet));
@@ -49,16 +42,49 @@ namespace Core.Mono.Scenes.Fight {
       NpcEquipmentsModel npcEquipmentsModel = model.GetNpcEquipmentModel();
       NpcCombatAttributesModel npcCombatAttributesModel = model.GetNpcCombatAttributesModel();
 
-      var npcMetadata = new NpcMetadata(npcMetadataModel);
-      var npcMorality = new NpcMorality(npcMoralityModel);
-      var npcCombatAttributes = new NpcCombatAttributes(npcCombatAttributesModel);
-      WeaponSet weaponSet = GetWeaponSet(npcEquipmentsModel.WeaponsIdList);
-      ArmorClass armorClass = GetArmorClass(npcEquipmentsModel.ClassOfArmor);
-      var npcEquipments = new NpcEquipments(weaponSet, armorClass);
+      NpcMetadata npcMetadata = GetNpcMetadata();
+      NpcMorality npcMorality = GetNpcMorality();
+      NpcCombatAttributes npcCombatAttributes = GetNpcCombatAttributes();
+      NpcEquipments npcEquipments = GetNpcEquipments();
 
       var npc = new NonPlayerCharacter(npcMetadata, npcMorality, npcCombatAttributes, npcEquipments);
-
       return npc;
+
+      NpcMetadata GetNpcMetadata() {
+        Debug.LogWarning($"Имя npc {npcMetadataModel.Name}");
+        return new NpcMetadata(npcMetadataModel);
+      }
+
+      NpcMorality GetNpcMorality() {
+        return new NpcMorality(npcMoralityModel);
+      }
+
+      NpcCombatAttributes GetNpcCombatAttributes() {
+        List<Impact<ImpactOnRiskPoints>> listOfImpacts = GetListOfImpacts(npcCombatAttributesModel.Impacts);
+        int defaultRiskPoints = npcCombatAttributesModel.DefaultRiskPoints;
+        int lifeDice = npcCombatAttributesModel.LifeDice;
+        RiskPoints npcRiskPoints = NpcRiskPointsBuilder.Build(defaultRiskPoints, lifeDice);
+        bool attackEveryAtOnce = npcCombatAttributesModel.AttacksEveryoneAtOnce;
+        bool deadlyAttack = npcCombatAttributesModel.DeadlyAttack;
+        bool isImmortal = npcCombatAttributesModel.IsImmortal;
+        List<Weapon> listOfWeapon = GetListOfWeapon(npcEquipmentsModel.WeaponsIdList);
+        int numberOfAttack = GetNumberOfAttacks(listOfWeapon, listOfImpacts, deadlyAttack, attackEveryAtOnce);
+        
+        Debug.LogWarning($"Количество очков риска npc {npcRiskPoints.GetPoints()}");
+        Debug.LogWarning($"Количество оружия npc {listOfWeapon.Count}");
+        Debug.LogWarning($"Количество воздействий npc {listOfImpacts.Count}");
+        Debug.LogWarning($"Npc aтакует всех {attackEveryAtOnce}");
+        Debug.LogWarning($"Смертельная атака у npc {deadlyAttack}");
+        Debug.LogWarning($"Количество атак npc {numberOfAttack}");
+        
+        return new NpcCombatAttributes(listOfImpacts, npcRiskPoints, attackEveryAtOnce, deadlyAttack, isImmortal, numberOfAttack);
+      }
+
+      NpcEquipments GetNpcEquipments() {
+        WeaponSet weaponSet = GetWeaponSet(npcEquipmentsModel.WeaponsIdList);
+        ArmorClass armorClass = GetArmorClass(npcEquipmentsModel.ClassOfArmor);
+        return new NpcEquipments(weaponSet, armorClass);
+      }
     }
 
     [NotNull]
@@ -68,10 +94,11 @@ namespace Core.Mono.Scenes.Fight {
 
     [NotNull]
     private WeaponSet GetWeaponSet([CanBeNull] IEnumerable<int> weaponIdList) {
-      return new WeaponSet(GetListOfWeapon(weaponIdList));
+      List<Weapon> weaponList = GetListOfWeapon(weaponIdList);
+      return new WeaponSet(weaponList);
     }
 
-    [CanBeNull]
+    [NotNull, ItemNotNull]
     private List<Weapon> GetListOfWeapon([CanBeNull] IEnumerable<int> weaponIdList) {
       if (weaponIdList == null) {
         return new List<Weapon>();
@@ -86,40 +113,8 @@ namespace Core.Mono.Scenes.Fight {
       return npcWeapons;
     }
 
-    private int GetRiskPointsAfterDiceRoll(int _riskPoints, int liveDices) {
-      if (IsFixedValueOfNumberOfRiskPoints()) {
-        return _riskPoints;
-      }
-
-      Dices[] dices = GetDices(liveDices);
-
-      DiceBox diceBox = GetDiceBox(dices);
-      return diceBox.SumRollsOfDice();
-
-      bool IsFixedValueOfNumberOfRiskPoints() {
-        return _riskPoints != 0;
-      }
-    }
-
-    private Dices[] GetDices(int lifeDice) {
-      var dices = new Dices[lifeDice];
-      for (var i = 0; i < dices.Length; i++) {
-        dices[i] = GetLifeDiceForRoll();
-      }
-
-      return dices;
-    }
-
-    private RiskPoints GetNpcRiskPoints(int riskPoints, int lifeDice) {
-      var npcRiskPoints = new NpcRiskPoints();
-      return new RiskPoints(npcRiskPoints, GetRiskPointsAfterDiceRoll(riskPoints, lifeDice));
-    }
-
-    private List<Impact<ImpactOnRiskPoints>> GetListOfImpacts([CanBeNull] IEnumerable<int> impactsId) {
-      if (impactsId == null) {
-        return new List<Impact<ImpactOnRiskPoints>>();
-      }
-
+    [NotNull, ItemNotNull]
+    private List<Impact<ImpactOnRiskPoints>> GetListOfImpacts([NotNull] IEnumerable<int> impactsId) {
       var impacts = new List<Impact<ImpactOnRiskPoints>>();
       foreach (Impact<ImpactOnRiskPoints> impact in impactsId.Select(impactId => _impactsSet.GetImpactOnRiskPoints(impactId))) {
         Assert.IsNotNull(impact, nameof(impact));
@@ -129,20 +124,71 @@ namespace Core.Mono.Scenes.Fight {
       return impacts;
     }
 
-    private int GetNumberOfAttacks(List<Weapon> listOfWeapons, List<Impact<ImpactOnRiskPoints>> listOfImpacts, bool deadlyAttack, bool _attackEveryAtOnce) {
-      if (listOfWeapons.Count <= 0 || deadlyAttack) {
-        return 1;
+    private int GetNumberOfAttacks([NotNull] List<Weapon> listOfWeapons, [NotNull] List<Impact<ImpactOnRiskPoints>> listOfImpacts, bool deadlyAttack, bool attackEveryAtOnce) {
+      const int oneAttack = 1;
+      const int noAttack = 0;
+      if (IsOneAttack()) {
+        return oneAttack;
       }
 
-      if (listOfWeapons.Count > 0 && _attackEveryAtOnce) {
+      if (IsAttackEveryAtOnce()) {
         return listOfWeapons.Count;
       }
 
-      if (listOfWeapons.Count <= 0 && listOfImpacts != null && listOfImpacts.Count != 0) {
-        return listOfWeapons.Count;
+      return IsImpactsAttack() ? listOfImpacts.Count : noAttack;
+
+      bool IsOneAttack() {
+        return listOfWeapons.Count == 0 || deadlyAttack;
       }
 
-      return 0;
+      bool IsAttackEveryAtOnce() {
+        return listOfWeapons.Count > 0 && attackEveryAtOnce;
+      }
+
+      bool IsImpactsAttack() {
+        return !deadlyAttack && listOfWeapons.Count == 0 && listOfImpacts.Count > 0;
+      }
+    }
+
+    private static class NpcRiskPointsBuilder {
+      public static RiskPoints Build(int riskPoints, int lifeDice, DiceType diceType = DiceType.SixEdges) {
+        Assert.IsTrue(riskPoints >= 0, nameof(riskPoints));
+        Assert.IsTrue(lifeDice >= 0, nameof(lifeDice));
+        var npcRiskPoints = new NpcRiskPoints();
+        return new RiskPoints(npcRiskPoints, GetRiskPointsAfterDiceRoll(riskPoints, lifeDice, diceType));
+      }
+
+      private static int GetRiskPointsAfterDiceRoll(int riskPoints, int lifeDice, DiceType diceType) {
+        if (IsFixedValueOfNumberOfRiskPoints()) {
+          return riskPoints;
+        }
+
+        Dices[] dices = GetDices(lifeDice, diceType);
+
+        DiceBox diceBox = GetDiceBox(dices);
+        return diceBox.SumRollsOfDice();
+
+        bool IsFixedValueOfNumberOfRiskPoints() {
+          return riskPoints != 0;
+        }
+      }
+
+      private static Dices[] GetDices(int lifeDice, DiceType diceType) {
+        var dices = new Dices[lifeDice];
+        for (var i = 0; i < dices.Length; i++) {
+          dices[i] = GetLifeDiceForRoll(diceType);
+        }
+
+        return dices;
+      }
+
+      private static SixSidedDice GetLifeDiceForRoll(DiceType diceType) {
+        return new SixSidedDice(diceType);
+      }
+
+      private static DiceBox GetDiceBox(Dices[] dices) {
+        return new DiceBox(dices);
+      }
     }
   }
 }

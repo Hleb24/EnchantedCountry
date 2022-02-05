@@ -32,14 +32,14 @@ namespace Core.SO.Npc {
     private int _classOfArmor;
     [FormerlySerializedAs("LifeDice"), SerializeField]
     private int _lifeDice;
-    [FormerlySerializedAs("RiskPoints"), SerializeField]
-    private int _riskPoints;
+    [FormerlySerializedAs("_riskPoints"),FormerlySerializedAs("RiskPoints"), SerializeField]
+    private int _defaultRiskPoints;
     [FormerlySerializedAs("Morality"), SerializeField]
     private int _morality;
     [SerializeField]
     private List<WeaponSO> _weaponObjects;
-    [FormerlySerializedAs("_weaponId"), SerializeField]
-    private List<int> _weaponsIdList;
+    [FormerlySerializedAs("_weaponsIdList"),FormerlySerializedAs("_weaponId"), SerializeField]
+    private List<int> _weaponsId;
     [SerializeField]
     private List<int> _impactId;
     [SerializeField]
@@ -65,12 +65,12 @@ namespace Core.SO.Npc {
     private IRiskPoints _npcRiskPoints;
 
     public NpcEquipmentsModel GetNpcEquipmentModel() {
-      return new NpcEquipmentsModel(_weaponsIdList, _classOfArmor);
+      return new NpcEquipmentsModel(_weaponsId, _classOfArmor);
     }
 
     public NpcCombatAttributesModel GetNpcCombatAttributesModel() {
       RiskPoints riskPoints = GetNpcRiskPoints();
-      return new NpcCombatAttributesModel(GetListOfImpacts(), riskPoints, _attackEveryAtOnce, GetNumberOfAttacks(), _deadlyAttack, _immortal);
+      return new NpcCombatAttributesModel(_impactId, _defaultRiskPoints, _lifeDice,_attackEveryAtOnce, _deadlyAttack, _immortal);
     }
 
     public NpcMetadataModel GetNpcMetadataModel() {
@@ -83,9 +83,9 @@ namespace Core.SO.Npc {
 
     public void OnValidate() {
       // _name = name;
-      // if (_weaponObjects != null && _weaponId.Count == 0) {
+      // if (_weaponObjects != null && _weaponsId.Count == 0) {
       //   for (var i = 0; i < _weaponObjects.Count; i++) {
-      //     _weaponId.Add(_weaponObjects[i].id);
+      //     _weaponsId.Add(_weaponObjects[i].id);
       //   }
       // }
       //
@@ -102,7 +102,7 @@ namespace Core.SO.Npc {
 
     private int GetRiskPointsAfterDiceRoll() {
       if (IsFixedValueOfNumberOfRiskPoints()) {
-        return _riskPoints;
+        return _defaultRiskPoints;
       }
 
       Dices[] dices = GetDices();
@@ -111,7 +111,7 @@ namespace Core.SO.Npc {
       return diceBox.SumRollsOfDice();
 
       bool IsFixedValueOfNumberOfRiskPoints() {
-        return _riskPoints != 0;
+        return _defaultRiskPoints != 0;
       }
     }
 
