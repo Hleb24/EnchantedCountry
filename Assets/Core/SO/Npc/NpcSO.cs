@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Aberrance.Extensions;
 using Core.Main.Dice;
 using Core.Main.GameRule;
 using Core.Main.GameRule.Impact;
@@ -83,13 +84,13 @@ namespace Core.SO.Npc {
 
     public void OnValidate() {
       // _name = name;
-      // if (_weaponObjects != null && _weaponsId.Count == 0) {
+      // if (_weaponObjects .NotNull() && _weaponsId.Count == 0) {
       //   for (var i = 0; i < _weaponObjects.Count; i++) {
       //     _weaponsId.Add(_weaponObjects[i].id);
       //   }
       // }
       //
-      // if (_impactObjects != null && _impactId.Count == 0) {
+      // if (_impactObjects .NotNull() && _impactId.Count == 0) {
       //   for (var i = 0; i < _impactObjects.Count; i++) {
       //     _impactId.Add(_impactObjects[i].GetId());
       //   }
@@ -156,15 +157,15 @@ namespace Core.SO.Npc {
     }
 
     private int GetNumberOfAttacks() {
-      if (GetListOfWeapon().Count <= 0 || _deadlyAttack) {
+      if (GetListOfWeapon().CountLessThanOrEqual(0) || _deadlyAttack) {
         return 1;
       }
 
-      if (GetListOfWeapon().Count > 0 && _attackWithAllWeapons) {
+      if (GetListOfWeapon().CountGreaterThan(0) && _attackWithAllWeapons) {
         return GetListOfWeapon().Count;
       }
 
-      if (!_deadlyAttack && GetListOfWeapon().Count <= 0 && GetListOfImpacts() != null && GetListOfImpacts().Count != 0) {
+      if (!_deadlyAttack && GetListOfWeapon().CountLessThanOrEqual(0) && GetListOfImpacts().NotNull() && GetListOfImpacts().Count != 0) {
         return GetListOfImpacts().Count;
       }
 

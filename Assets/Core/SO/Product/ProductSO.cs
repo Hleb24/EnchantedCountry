@@ -1,3 +1,4 @@
+using Aberrance.Extensions;
 using Core.SO.Armor;
 using Core.SO.WeaponObjects;
 using UnityEngine;
@@ -77,26 +78,26 @@ namespace Core.SO.Product {
 
     public Main.GameRule.Weapon.WeaponType GetWeaponType() {
       var weapon = _item as WeaponSO;
-      Debug.Assert(weapon != null, nameof(weapon) + " != null");
+      Debug.Assert(weapon.NotNull(), nameof(weapon) + " != null");
       return weapon.weaponType;
     }
 
     public Main.GameRule.Armor.ArmorType GetArmorType() {
       var armor = _item as ArmorSO;
-      Debug.Assert(armor != null, nameof(armor) + " != null");
+      Debug.Assert(armor.NotNull(), nameof(armor) + " != null");
       return armor.armorType;
     }
 
     public Main.GameRule.Armor GetArmor() {
       var armorObject = _item as ArmorSO;
-      Debug.Assert(armorObject != null, nameof(armorObject) + " != null");
+      Debug.Assert(armorObject .NotNull(), nameof(armorObject) + " != null");
       Main.GameRule.Armor armor = armorObject.InitArmor();
       return armor;
     }
 
     public Main.GameRule.Weapon GetWeapon() {
       var weaponObject = _item as WeaponSO;
-      Debug.Assert(weaponObject != null, nameof(weaponObject) + " != null");
+      Debug.Assert(weaponObject .NotNull(), nameof(weaponObject) + " != null");
       Main.GameRule.Weapon weapon = weaponObject.InitWeapon();
       return weapon;
     }

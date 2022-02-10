@@ -1,3 +1,4 @@
+using Aberrance.Extensions;
 using UnityEngine;
 
 namespace Core.Mono.GameSaveSystem
@@ -18,7 +19,7 @@ namespace Core.Mono.GameSaveSystem
             }
         }
         private void Awake() {
-            if (_instance != null) Destroy(this);
+            if (_instance.NotNull()) Destroy(this);
             DontDestroyOnLoad(this);
             GSSSingleton.Instance.LoadData();
         }

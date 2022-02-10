@@ -1,4 +1,5 @@
 ﻿using System;
+using Aberrance.Extensions;
 
 namespace Core.Main.Character.Spell {
     public class Spell {
@@ -21,7 +22,7 @@ namespace Core.Main.Character.Spell {
                 return _spellName;
             }
             set {
-                if(value != null) {
+                if(value.NotNull()) {
                     _spellName = value;
                 }else {
                     throw new InvalidOperationException("Value is invalid");

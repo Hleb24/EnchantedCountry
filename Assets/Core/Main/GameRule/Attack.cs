@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Aberrance.Extensions;
 using Core.Main.Dice;
 
 namespace Core.Main.GameRule {
@@ -28,10 +29,10 @@ namespace Core.Main.GameRule {
         DamageList = new List<float>();
         DamageList.AddRange(damageList);
 
-      if (DamageList.Count != 0) {
-        if (DamageList != null) {
+      if (DamageList.CountNotEqual(0)) {
+        if (DamageList.NotNull()) {
           MinDamage = DamageList[0];
-          MaxDamage = DamageList[DamageList.Count - 1];
+          MaxDamage = DamageList[DamageList.LastIndex()];
         }
       } else {
         MinDamage = 0;
@@ -110,7 +111,7 @@ namespace Core.Main.GameRule {
       var delta = 0;
       float minD = MinDamage;
       float maxD = MaxDamage;
-      if (DamageList != null && DamageList.Count != 0 && MinDamage != MaxDamage) {
+      if (DamageList.NotNull() && DamageList.CountNotEqual(0) && MinDamage != MaxDamage) {
         return DamageList.Count;
       }
 
@@ -144,7 +145,7 @@ namespace Core.Main.GameRule {
         return 0;
       }
 
-      if (DamageList.Count != 0) {
+      if (DamageList.CountNotEqual(0)) {
         return DamageList[edge];
       }
 

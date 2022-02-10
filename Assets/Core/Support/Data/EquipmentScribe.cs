@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Aberrance.Extensions;
 using Core.Main.Character.Equipment;
 using Core.Main.GameRule.EquipmentIdConstants;
 using Core.Support.SaveSystem.SaveManagers;
@@ -44,7 +45,7 @@ namespace Core.Support.Data {
 
     void IScribe.Init(Scrolls scrolls) {
       _equipments = new EquipmentsDataScroll(_startEquipments);
-      if (scrolls is null) {
+      if (scrolls.Null()) {
         return;
       }
 

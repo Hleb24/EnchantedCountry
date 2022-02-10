@@ -1,4 +1,5 @@
 ﻿using System;
+using Aberrance.Extensions;
 
 namespace Core.Main.GameRule {
   public class Armor {
@@ -53,7 +54,7 @@ namespace Core.Main.GameRule {
         return _armorName;
       }
       set {
-        if (value != null) {
+        if (value.NotNull()) {
           _armorName = value;
         } else {
           throw new InvalidOperationException("Value is invalid");
@@ -68,7 +69,7 @@ namespace Core.Main.GameRule {
         return _effectName;
       }
       set {
-        if (value != null) {
+        if (value .NotNull()) {
           _effectName = value;
         } else {
           throw new InvalidOperationException("Value is invalid");

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Aberrance.Extensions;
 using Core.Main.Character;
 using Core.Main.Character.Equipment;
 using Core.Main.Character.Levels;
@@ -62,7 +63,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     public void BuildPlayer() {
       _playerCharacter = new PlayerCharacter(GetCharacterQualities(), GetCharacterType(), GetLevels(), GetGamePoints(), GetRiskPoints(), GetWallet(), GetEquipmentsOfCharacter(),
         GetEquipmentsUsed(), GetArmor(), GetShield(), GetRangeWeapon(), GetMeleeWeapon(), GetProjectiles());
-      Debug.LogWarning("Player create " + (_playerCharacter != null));
+      Debug.LogWarning("Player create " + (_playerCharacter.NotNull()));
     }
 
     private async void WaitLoad() {

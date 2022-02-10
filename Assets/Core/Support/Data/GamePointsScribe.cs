@@ -1,4 +1,5 @@
 ﻿using System;
+using Aberrance.Extensions;
 using Core.Support.SaveSystem.SaveManagers;
 using Core.Support.SaveSystem.Scribe;
 using UnityEngine.Assertions;
@@ -62,7 +63,7 @@ namespace Core.Support.Data {
 
     void IScribe.Init(Scrolls scrolls) {
       _gamePoints = new GamePointsDataScroll(StartGamePoints);
-      if (scrolls is null) {
+      if (scrolls.Null()) {
         return;
       }
 

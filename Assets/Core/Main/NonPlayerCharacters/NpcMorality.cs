@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Aberrance.Extensions;
 using JetBrains.Annotations;
 
 namespace Core.Main.NonPlayerCharacters {
@@ -45,7 +46,7 @@ namespace Core.Main.NonPlayerCharacters {
       DontRunAway = IsDontRunAway();
 
       bool IsDontRunAway() {
-        return EscapePossibility.Count == 0;
+        return EscapePossibility.Empty();
       }
     }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Aberrance.Extensions;
 using Core.Main.Character;
 using Core.Main.Dice;
 using Core.Main.GameRule.Initiative;
@@ -13,7 +14,7 @@ namespace Core.Mono.Scenes.Fight {
   public class InitiativeController : MonoBehaviour {
     public void MoveIndexToBack() {
       if (CurrentIndexOfInitiativeList == 0) {
-        CurrentIndexOfInitiativeList = InitiativeList.Count - 1;
+        CurrentIndexOfInitiativeList = InitiativeList.LastIndex();
         return;
       }
 
@@ -81,7 +82,7 @@ namespace Core.Mono.Scenes.Fight {
         Debug.Log($"Initiative {initiative.Initiative}");
       }
 
-      CurrentIndexOfInitiativeList = InitiativeList.Count - 1;
+      CurrentIndexOfInitiativeList = InitiativeList.LastIndex();
       InitiativeDiceRollComplete?.Invoke();
     }
 

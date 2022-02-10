@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Aberrance.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -110,7 +111,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void CheckUnusedList() {
-      if (ThisProductUnusedList.Count.Equals(0)) {
+      if (ThisProductUnusedList.CountEqual(0)) {
         return;
       }
 

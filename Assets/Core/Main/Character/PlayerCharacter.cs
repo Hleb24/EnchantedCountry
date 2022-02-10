@@ -1,4 +1,5 @@
 using System;
+using Aberrance.Extensions;
 using Core.Main.Character.Equipment;
 using Core.Main.Character.Qualities;
 using Core.Main.Dice;
@@ -22,7 +23,7 @@ namespace Core.Main.Character {
   [Serializable]
   public class PlayerCharacter : ImpactOnRiskPoints, IInitiative {
     public int CompareTo(IInitiative other) {
-      if (other != null) {
+      if (other.NotNull()) {
         return Initiative.CompareTo(other.Initiative);
       }
 
@@ -103,7 +104,7 @@ namespace Core.Main.Character {
         return 0;
       }
 
-      if (_projectiles != null) {
+      if (_projectiles.NotNull()) {
         return _rangeWeapon.Attack.Accuracy + _projectiles.Attack.Accuracy + _characterQualities[QualityType.Agility].Modifier;
       }
 
@@ -123,7 +124,7 @@ namespace Core.Main.Character {
         return 0;
       }
 
-      if (_projectiles != null) {
+      if (_projectiles .NotNull()) {
         return _rangeWeapon.ToDamage() + _projectiles.ToDamage();
       }
 
@@ -163,7 +164,7 @@ namespace Core.Main.Character {
       _rangeWeapon = rangeWeapon;
       _projectiles = projectiles;
       _armorClassOfCharacter = new ArmorClass(_armor.ArmorClass.ClassOfArmor + _characterQualities[QualityType.Agility].Modifier);
-      if (_shield != null) {
+      if (_shield .NotNull()) {
         _armorClassOfCharacter = new ArmorClass(_armor.ArmorClass.ClassOfArmor + _shield.ArmorClass.ClassOfArmor + _characterQualities[QualityType.Agility].Modifier);
       }
     }

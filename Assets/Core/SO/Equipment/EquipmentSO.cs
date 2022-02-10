@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Aberrance.Extensions;
 using Core.Main.Character.Equipment;
 using Core.Main.GameRule.EquipmentIdConstants;
 using UnityEngine;
@@ -117,7 +118,7 @@ namespace Core.SO.Equipment {
 		}
 		[ContextMenu("Remove all equipment cards")]
 		public void RemoveAllEquipmentCards() {
-			for (int i = equipmentCards.Count - 1; i >= 0; i--) {
+			for (int i = equipmentCards.LastIndex(); i >= 0; i--) {
 				if (equipmentCards[i].ID == EquipmentIdConstants.NO_ARMOR_ID)
 					continue;
 				equipmentCards.RemoveAt(i);

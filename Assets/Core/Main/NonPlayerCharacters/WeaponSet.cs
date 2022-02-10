@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Aberrance.Extensions;
 using Core.Main.GameRule;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace Core.Main.NonPlayerCharacters {
     public WeaponSet([NotNull, ItemNotNull] List<Weapon> weapons) {
       _weapons = weapons;
       Debug.LogWarning("Weapons count " + weapons.Count);
-      if (_weapons.Count == 0) {
+      if (_weapons.Empty()) {
         return;
       }
 
@@ -57,7 +58,7 @@ namespace Core.Main.NonPlayerCharacters {
     }
 
     private bool WeaponsNotExists(int weaponIndex) {
-      return _weapons is null || _weapons.Count < 0 || _weapons.Count <= weaponIndex;
+      return _weapons.Null() || _weapons.CountLessThanOrEqual(weaponIndex);
     }
   }
 }

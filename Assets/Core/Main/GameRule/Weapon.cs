@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Aberrance.Extensions;
 using Core.Main.Dice;
 
 namespace Core.Main.GameRule {
@@ -116,7 +117,7 @@ namespace Core.Main.GameRule {
         return _effectName;
       }
       set {
-        if (value != null) {
+        if (value.NotNull()) {
           _effectName = value;
         } else {
           throw new InvalidOperationException("Value is invalid");

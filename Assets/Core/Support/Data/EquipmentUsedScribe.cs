@@ -1,4 +1,5 @@
 ﻿using System;
+using Aberrance.Extensions;
 using Core.Main.GameRule.EquipmentIdConstants;
 using Core.Support.SaveSystem.SaveManagers;
 using Core.Support.SaveSystem.Scribe;
@@ -101,7 +102,7 @@ namespace Core.Support.Data {
 
     void IScribe.Init(Scrolls scrolls) {
       _equipmentUsed = new EquipmentUsedDataScroll(EquipmentIdConstants.NO_ARMOR_ID);
-      if (scrolls is null) {
+      if (scrolls.Null()) {
         return;
       }
 

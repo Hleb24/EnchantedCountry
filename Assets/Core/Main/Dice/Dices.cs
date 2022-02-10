@@ -1,4 +1,5 @@
 using System;
+using Aberrance.Extensions;
 
 namespace Core.Main.Dice {
     public enum DiceType {
@@ -43,7 +44,7 @@ namespace Core.Main.Dice {
 
         public int CompareTo(Dices other) {
             int result = 0;
-            if (other != null) {
+            if (other.NotNull()) {
                 if (this._edges.Length > other._edges.Length) {
                     result = 1;
                     return result;

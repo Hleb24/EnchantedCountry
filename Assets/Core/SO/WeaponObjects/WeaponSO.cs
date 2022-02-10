@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Aberrance.Extensions;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -21,7 +22,7 @@ namespace Core.SO.WeaponObjects {
     }
 
     public void OnValidate() {
-      if (damageList.Count != 0 || damageList != null) {
+      if (damageList.CountNotEqual(0)|| damageList.NotNull()) {
         InitWeaponWithDamageList();
       } else {
         InitWeapon();

@@ -19,6 +19,8 @@ namespace Core.Main.NonPlayerCharacters.Variants {
       _npcCombatAttributes.SetNumberOfAttack(numberOfAttack);
     }
 
-    public Hydra([NotNull] NpcMetadata npcMetadata, [NotNull] NpcMorality npcMorality, [NotNull] NpcCombatAttributes npcCombatAttributes, [NotNull] NpcEquipments npcEquipments) : base(npcMetadata, npcMorality, npcCombatAttributes, npcEquipments) { }
+    public Hydra([NotNull] NpcMetadata npcMetadata, [NotNull] NpcMorality npcMorality, [NotNull] NpcCombatAttributes npcCombatAttributes, [NotNull] NpcEquipments npcEquipments) :
+      base(npcMetadata, npcMorality, npcCombatAttributes, npcEquipments) {
+    }
   }
 }
