@@ -22,7 +22,7 @@ namespace Core.SO.WeaponObjects {
     }
 
     public void OnValidate() {
-      if (damageList.CountNotEqual(0)|| damageList.NotNull()) {
+      if (damageList.NotNullAndEmpty()) {
         InitWeaponWithDamageList();
       } else {
         InitWeapon();
@@ -32,7 +32,7 @@ namespace Core.SO.WeaponObjects {
     }
 
     public Main.GameRule.Weapon InitWeapon() {
-      if (weapon == null) {
+      if (weapon.Null()) {
         weapon = new Main.GameRule.Weapon(maxDamage, weaponType, weaponName, minDamage, accuracy, effectName, id);
       } else {
         weapon.Init(maxDamage, weaponType, weaponName, minDamage, accuracy, effectName, id);

@@ -1,3 +1,4 @@
+using Aberrance.Aspects;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -39,6 +40,16 @@ namespace Aberrance.Extensions {
     }
 
     [PublicAPI, Pure]
+    public static float ToFloat(this int number) {
+      return number;
+    }
+
+    [PublicAPI, Pure]
+    public static double ToDouble(this int number) {
+      return number;
+    }
+
+    [PublicAPI, Pure]
     public static bool Zero(this float number) {
       return number == 0;
     }
@@ -48,6 +59,11 @@ namespace Aberrance.Extensions {
       return number != 0;
     }
 
+    [PublicAPI, Pure]
+    public static int ToInt(this float number) {
+      return (int)number;
+    }
+
     public static bool Zero(this double number) {
       return number == 0;
     }
@@ -55,6 +71,11 @@ namespace Aberrance.Extensions {
     [PublicAPI, Pure]
     public static bool NotZero(this double number) {
       return number != 0;
+    }
+
+    [PublicAPI, Pure]
+    public static int ToInt(this double number) {
+      return Fuse.Try(() => checked((int)number));
     }
     #endregion
 

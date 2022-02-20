@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Aberrance.Aspects {
   public static class Fuse {
-    [PublicAPI, Pure]
+    [PublicAPI, MustUseReturnValue]
     public static bool Try([NotNull] Func<bool> func) {
       try {
         return func.Invoke();
@@ -15,7 +15,7 @@ namespace Aberrance.Aspects {
       return false;
     }
 
-    [PublicAPI, Pure]
+    [PublicAPI, MustUseReturnValue]
     public static T Try<T>([NotNull] Func<T> func) {
       try {
         return func.Invoke();

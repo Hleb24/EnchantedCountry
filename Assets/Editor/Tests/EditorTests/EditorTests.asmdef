@@ -17,7 +17,9 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "nunit.framework.dll",
-        "Zenject-usage.dll"
+        "Zenject-usage.dll",
+        "Castle.Core.dll",
+        "NSubstitute.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [
