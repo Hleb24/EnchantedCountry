@@ -1,19 +1,22 @@
 ﻿using System.Collections.Generic;
 
 namespace Core.Main.Dice {
-    public static class KitOfDice {
-        #region Fields
-        public const string SetWithOneSixSidedDice = "Set With One Six-Sided Dice";
-        public const string SetWithFourSixSidedDice = "Set With Four Six-Sided Dice";
-        public const string SetWithOneThreeSidedAndOneSixSidedDice = "Set With One Three-Sided and One Six-Sided Dice";
-        public const string SetWithOneTwelveSidedAndOneSixSidedDice = "Set With One Twelve-Sided and One Six-Sided  Dice";
-        public static Dictionary<string, DiceBox> diceKit = new Dictionary<string, DiceBox> {
-            [SetWithOneSixSidedDice] = new DiceBox(new SixSidedDice(DiceType.SixEdges)),
-            [SetWithOneThreeSidedAndOneSixSidedDice] = new DiceBox(new ThreeSidedDice(DiceType.ThreeEdges), new SixSidedDice(DiceType.SixEdges)),
-            [SetWithFourSixSidedDice] = new DiceBox(new SixSidedDice(DiceType.SixEdges), new SixSidedDice(DiceType.SixEdges), new SixSidedDice(DiceType.SixEdges),
-                new SixSidedDice(DiceType.SixEdges)),
-            [SetWithOneTwelveSidedAndOneSixSidedDice] = new DiceBox(new TwelveSidedDice(DiceType.TwelveEdges), new SixSidedDice(DiceType.SixEdges))
-        };
-        #endregion
-    }
+  public static class KitOfDice {
+    private static readonly Dice[] OneSixSidedDice = { new SixSidedDice() };
+    private static readonly Dice[] OneThreeSidedAndOneSixSidedDice = { new ThreeSidedDice(), new SixSidedDice() };
+    private static readonly Dice[] OneTwelveSidedAndOneSixSidedDice = { new TwelveSidedDice(), new SixSidedDice() };
+    private static readonly Dice[] FourSixSidedDice = { new SixSidedDice(), new SixSidedDice(), new SixSidedDice(), new SixSidedDice() };
+
+    public static readonly Dictionary<string, DiceBox> DiceKit = new Dictionary<string, DiceBox> {
+      [SetWithOneSixSidedDice] = new DiceBox(OneSixSidedDice),
+      [SetWithOneThreeSidedAndOneSixSidedDice] = new DiceBox(OneThreeSidedAndOneSixSidedDice),
+      [SetWithOneTwelveSidedAndOneSixSidedDice] = new DiceBox(OneTwelveSidedAndOneSixSidedDice),
+      [SetWithFourSixSidedDice] = new DiceBox(FourSixSidedDice)
+    };
+
+    public const string SetWithOneSixSidedDice = "SetWithOneSixSidedDice";
+    public const string SetWithOneThreeSidedAndOneSixSidedDice = "SetWithOneThreeSidedAndOneSixSidedDice";
+    public const string SetWithOneTwelveSidedAndOneSixSidedDice = "SetWithOneTwelveSidedAndOneSixSidedDice";
+    public const string SetWithFourSixSidedDice = "SetWithFourSixSidedDice";
+  }
 }

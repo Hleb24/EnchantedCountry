@@ -3,7 +3,7 @@ using Core.Support.Data;
 
 namespace Core.Mono.Scenes.QualitiesImprovement {
   public class QualityIncrease {
-    private Dices _dice;
+    private Dice _die;
     private int[] _diceRollValueForQualitiesIncrease;
     private int _pointer;
 
@@ -13,7 +13,7 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
     }
     
     private void SetDiceBox() {
-      _dice = new SixSidedDice(DiceType.SixEdges);
+      _die = new SixSidedDice();
     }
 
     public void IncreaseQualitiesForWizard() {
@@ -95,7 +95,7 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
     }
 
     private int GetDiceRollValue() {
-      return _dice.RollOfDice();
+      return _die.GetDiceRoll();
     }
 
     private void MovePointerForward() {

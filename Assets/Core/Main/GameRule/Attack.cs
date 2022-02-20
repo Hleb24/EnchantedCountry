@@ -136,8 +136,8 @@ namespace Core.Main.GameRule {
     }
 
     public float GetDamageAfterDiceRoll() {
-      Dices dice = new SixSidedDice(DiceType.SixEdges);
-      return GetDamage(dice.RollOfDice(DiceEdges));
+      SixSidedDice dice = new SixSidedDice();
+      return GetDamage(dice.GetDiceRollAccordingToEdges(DiceEdges));
     }
 
     public float GetDamage(int edge) {

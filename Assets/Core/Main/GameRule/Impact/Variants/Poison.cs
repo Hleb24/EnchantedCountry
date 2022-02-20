@@ -6,7 +6,7 @@ namespace Core.Main.GameRule.Impact.Variants {
         string name = "Poison", int diceRollValue = 19, int protectiveThrow = 0) : base(impactType, name, diceRollValue, protectiveThrow) { }
 
         public override void ImpactAction(ImpactOnRiskPoints impactAction) {
-            int damage = KitOfDice.diceKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].SumRollsOfDice();
+            int damage = KitOfDice.DiceKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].SumRollsOfDice();
             impactAction.SetRiskPoints(typeOfImpact, damage, ProtectiveThrow);
         }
     }

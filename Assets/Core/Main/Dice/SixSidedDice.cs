@@ -1,61 +1,42 @@
-﻿namespace Core.Main.Dice {
-    public class SixSidedDice : Dices {
-        private DiceType _diceType = DiceType.SixEdges;
-        public SixSidedDice(DiceType diceType) : base(diceType) { }
-        public SixSidedDice(int range, params int[] values) : base(range, values){}
-        public override int this[int index] => _edges[index];
-        public override int RollOfDice() {
-            int randomIndex = UnityEngine.Random.Range(0, _edges.Length);
-            return _edges[randomIndex];
-        }
+﻿using JetBrains.Annotations;
+using UnityEngine;
+using UnityEngine.Assertions;
 
-        public override int RollOfDice(int edges) {
-            int randomIndex = UnityEngine.Random.Range(0, _edges.Length);
-            if (edges == 2) {
-                if (randomIndex <= 2) {
-                    return 1;
-                }
+namespace Core.Main.Dice {
+  public sealed class SixSidedDice : Dice {
+    private const int MinEdges = 2;
+    private const int MaxEdges = 6;
 
-                return 2;
-            }
-            if (edges == 3) {
-                if (randomIndex <= 1) {
-                    return 1;
-                }
-
-                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-                if (randomIndex > 1 && randomIndex <= 3) {
-                    return 2;
-                }
-
-                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-                if (randomIndex > 3 && randomIndex <= 5) {
-                    return 3;
-                }
-            }
-            if (edges == 4) {
-                if (randomIndex <= 3) {
-                    return ++randomIndex;
-                }
-
-                return 4;
-            }
-            if (edges == 5) {
-                if (randomIndex <= 4) {
-                    return ++randomIndex;
-                }
-
-                return 5;
-            }
-            if (edges == 6) {
-                return ++randomIndex;
-            }
-            return 0;
-        }
-        public override DiceType DiceType {
-            get {
-                return _diceType;
-            }
-        }
+    public override DiceType DiceType {
+      get {
+        return DiceType.TwelveEdges;
+      }
     }
+
+    protected override int[] Edges { get; } = { 1, 2, 3, 4, 5, 6 };
+
+    /// <summary>
+    ///   Бросок кости з указаным количеством граней.
+    /// </summary>
+    /// <param name="edges">Количество граней. Должно быть в диапазоне от <see cref="MinEdges" /> до <see cref="MaxEdges" />.</param>
+    /// <returns>Значение броска кости.</returns>
+    [MustUseReturnValue]
+    public int GetDiceRollAccordingToEdges(int edges) {
+      Assert.IsTrue(edges >= MinEdges && edges <= MaxEdges, nameof(edges));
+      int randomIndex = Random.Range(0, Edges.Length);
+      return edges switch {
+               2 when randomIndex <= 2 => 1,
+               2 => 2,
+               3 when randomIndex <= 1 => 1,
+               3 when randomIndex <= 3 => 2,
+               3 when randomIndex <= 5 => 3,
+               4 when randomIndex <= 3 => ++randomIndex,
+               4 => 4,
+               5 when randomIndex <= 4 => ++randomIndex,
+               5 => 5,
+               6 => ++randomIndex,
+               _ => 0
+             };
+    }
+  }
 }

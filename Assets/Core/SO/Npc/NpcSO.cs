@@ -16,10 +16,10 @@ namespace Core.SO.Npc {
   [CreateAssetMenu(menuName = "NPC", fileName = "NPC", order = 58)]
   public class NpcSO : ScriptableObject, INpcModel {
     private static SixSidedDice GetLifeDiceForRoll() {
-      return new SixSidedDice(DiceType.SixEdges);
+      return new SixSidedDice();
     }
 
-    private static DiceBox GetDiceBox(Dices[] dices) {
+    private static DiceBox GetDiceBox(Dice[] dices) {
       return new DiceBox(dices);
     }
 
@@ -106,7 +106,7 @@ namespace Core.SO.Npc {
         return _defaultRiskPoints;
       }
 
-      Dices[] dices = GetDices();
+      Dice[] dices = GetDices();
 
       DiceBox diceBox = GetDiceBox(dices);
       return diceBox.SumRollsOfDice();
@@ -116,8 +116,8 @@ namespace Core.SO.Npc {
       }
     }
 
-    private Dices[] GetDices() {
-      var dices = new Dices[_lifeDice];
+    private Dice[] GetDices() {
+      var dices = new Dice[_lifeDice];
       for (var i = 0; i < dices.Length; i++) {
         dices[i] = GetLifeDiceForRoll();
       }

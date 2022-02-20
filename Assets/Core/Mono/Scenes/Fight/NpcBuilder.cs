@@ -134,7 +134,7 @@ namespace Core.Mono.Scenes.Fight {
           return riskPoints;
         }
 
-        Dices[] dices = GetDices(lifeDice, diceType);
+        Dice[] dices = GetDices(lifeDice);
 
         DiceBox diceBox = GetDiceBox(dices);
         return diceBox.SumRollsOfDice();
@@ -144,20 +144,20 @@ namespace Core.Mono.Scenes.Fight {
         }
       }
 
-      private static Dices[] GetDices(int lifeDice, DiceType diceType) {
-        var dices = new Dices[lifeDice];
+      private static Dice[] GetDices(int lifeDice) {
+        var dices = new Dice[lifeDice];
         for (var i = 0; i < dices.Length; i++) {
-          dices[i] = GetLifeDiceForRoll(diceType);
+          dices[i] = GetLifeDiceForRoll();
         }
 
         return dices;
       }
 
-      private static SixSidedDice GetLifeDiceForRoll(DiceType diceType) {
-        return new SixSidedDice(diceType);
+      private static SixSidedDice GetLifeDiceForRoll() {
+        return new SixSidedDice();
       }
 
-      private static DiceBox GetDiceBox(Dices[] dices) {
+      private static DiceBox GetDiceBox(Dice[] dices) {
         return new DiceBox(dices);
       }
     }

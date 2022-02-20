@@ -1,49 +1,36 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
+using UnityEngine.Assertions;
 
 namespace Core.Main.Dice {
-    public class DiceBox {
-        private List<Dices> _setOfDice;
-        public DiceBox(params Dices[] dices) {
-            _setOfDice = new List<Dices>();
-            for (int i = 0; i < dices.Length; i++) {
-                _setOfDice.Add(dices[i]);
-            }
-        }
-        public Dices this[int index] {
-            get {
-                return _setOfDice[index];
-            }
-        }
-        public int GetCountSetOfDice() {
-            return _setOfDice.Count;
-        }
+  public class DiceBox {
+    private readonly List<Dice> _setOfDice;
 
-        public int SumRollsOfDice() {
-            int sum = 0;
-            foreach (var dice in _setOfDice) {
-                sum += dice.RollOfDice();
-            }
-            return sum;
-        }
-        public int SumRollsOfDice(int edges) {
-            int sum = 0;
-            foreach (var dice in _setOfDice) {
-                sum += dice.RollOfDice(edges);
-            }
-            return sum;
-        }
-
-        public void AddDiceInSetOfDict(Dices dices) {
-            _setOfDice.Add(dices);
-        }
-
-        public void RemoveDiceFromSetOfDice(DiceType diceTypeForRemove) {
-            for (int i = 0; i < _setOfDice.Count; i++) {
-                if (_setOfDice[i].DiceType == diceTypeForRemove) {
-                    _setOfDice.RemoveAt(i);
-                    return;
-                }
-            }
-        }
+    public DiceBox([NotNull, ItemNotNull] IReadOnlyList<Dice> dices) {
+      Assert.IsNotNull(dices, nameof(dices));
+      _setOfDice = new List<Dice>(dices.Count);
+      for (var i = 0; i < dices.Count; i++) {
+        _setOfDice.Add(dices[i]);
+      }
     }
+
+    public int GetCountSetOfDice() {
+      return _setOfDice.Count;
+    }
+
+    public int SumRollsOfDice() {
+      var sum = 0;
+      foreach (Dice dice in _setOfDice) {
+        sum += dice.GetDiceRoll();
+      }
+
+      return sum;
+    }
+
+    public Dice this[int index] {
+      get {
+        return _setOfDice[index];
+      }
+    }
+  }
 }

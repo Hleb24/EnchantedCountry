@@ -1,11 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Aberrance.Extensions;
 using Core.Main.Dice;
 
 namespace Core.Main.GameRule {
   public class Weapon {
+    public static bool Is(WeaponType conditionalWeaponType, WeaponType targetWeaponType) {
+      return (conditionalWeaponType & targetWeaponType) == targetWeaponType;
+    }
+
+    private static bool IsEdgesEqualOne(int edges) {
+      return edges == 1;
+    }
+
+    private static bool IsEdgesAtMostSix(int edges) {
+      return edges <= 6;
+    }
+
+    private static bool IsEdgesEqualToNine(int edges) {
+      return edges == 9;
+    }
+
+    private static bool IsEdgesEqualToEighteen(int edges) {
+      return edges == 18;
+    }
+
+    public const string DefalultName = "Rock";
+
     [Flags]
     public enum WeaponType {
       //None                = 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000,
@@ -89,13 +110,13 @@ namespace Core.Main.GameRule {
       CatapultSet = Catapult | CatapultCores
     }
 
-    public const string DefalultName = "Rock";
     public string NameOfWeapon;
     private string _effectName = string.Empty;
 
-    public Weapon(float maxDamage = 0, WeaponType weaponType = WeaponType.None, string name = DefalultName, float minDamage = 0, int accurancy = 0, string effectName = "", int id = 100) {
+    public Weapon(float maxDamage = 0, WeaponType weaponType = WeaponType.None, string name = DefalultName, float minDamage = 0, int accurancy = 0, string effectName = "",
+      int id = 100) {
       NameOfWeapon = name;
-      this.EffectName = effectName;
+      EffectName = effectName;
       this.weaponType = weaponType;
       Attack = new Attack(maxDamage, minDamage, accurancy);
       Id = id;
@@ -103,34 +124,16 @@ namespace Core.Main.GameRule {
 
     public Weapon(List<float> damageList, WeaponType weaponType = WeaponType.None, string name = DefalultName, int accurancy = 0, string effectName = "", int id = 100) {
       NameOfWeapon = name;
-      this.EffectName = effectName;
+      EffectName = effectName;
       this.weaponType = weaponType;
       Attack = new Attack(damageList, accurancy);
       Id = id;
     }
 
-    public Attack Attack { get; private set; }
-    public WeaponType weaponType { get; set; }
-
-    public string EffectName {
-      get {
-        return _effectName;
-      }
-      set {
-        if (value.NotNull()) {
-          _effectName = value;
-        } else {
-          throw new InvalidOperationException("Value is invalid");
-        }
-      }
-    }
-
-    public int Id { get; private set; }
-
-    public void Init(float maxDamage = 1, WeaponType weaponType = WeaponType.None, string name = DefalultName, float minDamage = 0, int accurancy = 0,
-      string effectName = "normal", int id = 100) {
+    public void Init(float maxDamage = 1, WeaponType weaponType = WeaponType.None, string name = DefalultName, float minDamage = 0, int accurancy = 0, string effectName = "normal",
+      int id = 100) {
       NameOfWeapon = name;
-      this.EffectName = effectName;
+      EffectName = effectName;
       this.weaponType = weaponType;
       Attack = new Attack(maxDamage, minDamage, accurancy);
       Id = id;
@@ -138,7 +141,7 @@ namespace Core.Main.GameRule {
 
     public void Init(List<float> damageList, WeaponType weaponType = WeaponType.None, string name = DefalultName, int accurancy = 0, string effectName = "", int id = 100) {
       NameOfWeapon = name;
-      this.EffectName = effectName;
+      EffectName = effectName;
       this.weaponType = weaponType;
       Attack = new Attack(damageList, accurancy);
       Id = id;
@@ -155,37 +158,22 @@ namespace Core.Main.GameRule {
       }
 
       if (IsEdgesAtMostSix(edges)) {
-        int edge = KitOfDice.diceKit[KitOfDice.SetWithOneSixSidedDice][0].RollOfDice(edges);
+        var sixSidedDice = new SixSidedDice();
+        int edge = sixSidedDice.GetDiceRollAccordingToEdges(edges);
         return Attack.GetDamage(edge);
       }
 
       if (IsEdgesEqualToNine(edges)) {
-        int edge = KitOfDice.diceKit[KitOfDice.SetWithOneThreeSidedAndOneSixSidedDice].SumRollsOfDice();
+        int edge = KitOfDice.DiceKit[KitOfDice.SetWithOneThreeSidedAndOneSixSidedDice].SumRollsOfDice();
         return Attack.GetDamage(edge);
       }
 
       if (IsEdgesEqualToEighteen(edges)) {
-        int edge = KitOfDice.diceKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].SumRollsOfDice();
+        int edge = KitOfDice.DiceKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].SumRollsOfDice();
         return Attack.GetDamage(edge);
       }
 
       throw new InvalidOperationException("Edges is invalid");
-    }
-
-    private static bool IsEdgesEqualOne(int edges) {
-      return edges == 1;
-    }
-
-    private static bool IsEdgesAtMostSix(int edges) {
-      return edges <= 6;
-    }
-
-    private static bool IsEdgesEqualToNine(int edges) {
-      return edges == 9;
-    }
-
-    private static bool IsEdgesEqualToEighteen(int edges) {
-      return edges == 18;
     }
 
     public void AddEffectOnWeapon(string nameOfEffect, float maxDamage) {
@@ -212,8 +200,22 @@ namespace Core.Main.GameRule {
       Attack.Accuracy = accurancy;
     }
 
-    public static bool Is(WeaponType conditionalWeaponType, WeaponType targetWeaponType) {
-      return (conditionalWeaponType & targetWeaponType) == targetWeaponType;
+    public Attack Attack { get; private set; }
+    public WeaponType weaponType { get; set; }
+
+    public string EffectName {
+      get {
+        return _effectName;
+      }
+      set {
+        if (value.NotNull()) {
+          _effectName = value;
+        } else {
+          throw new InvalidOperationException("Value is invalid");
+        }
+      }
     }
+
+    public int Id { get; private set; }
   }
 }

@@ -14,9 +14,9 @@ namespace Core.Main.Dice {
     /// <returns>Значение бросков кубика.</returns>
     public int GetSumDiceRollForQuality() {
       _valuesWhiteDiceRoll = new List<int>();
-      DiceBox diceBox = KitOfDice.diceKit[KitOfDice.SetWithFourSixSidedDice];
+      DiceBox diceBox = KitOfDice.DiceKit[KitOfDice.SetWithFourSixSidedDice];
       for (var i = 0; i < diceBox.GetCountSetOfDice(); i++) {
-        _valuesWhiteDiceRoll.Add(diceBox[i].RollOfDice());
+        _valuesWhiteDiceRoll.Add(diceBox[i].GetDiceRoll());
       }
 
       return SortRemoveAndSumValuesWhiteDiceRoll(_valuesWhiteDiceRoll);
@@ -28,9 +28,9 @@ namespace Core.Main.Dice {
     /// <returns>Стартовое количество монет.</returns>
     public int GetSumDiceRollForCoins() {
       _valuesWhiteDiceRoll = new List<int>();
-      DiceBox diceBox = KitOfDice.diceKit[KitOfDice.SetWithFourSixSidedDice];
+      DiceBox diceBox = KitOfDice.DiceKit[KitOfDice.SetWithFourSixSidedDice];
       for (var i = 0; i < diceBox.GetCountSetOfDice(); i++) {
-        _valuesWhiteDiceRoll.Add(diceBox[i].RollOfDice());
+        _valuesWhiteDiceRoll.Add(diceBox[i].GetDiceRoll());
       }
 
       return SortRemoveAndSumValuesWhiteDiceRollForNumberOfCoins(_valuesWhiteDiceRoll);

@@ -2,12 +2,11 @@
     "name": "TestEditor",
     "rootNamespace": "",
     "references": [
-        "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Tests",
         "Zenject",
         "Core",
-        "Zenject-TestFramework"
+        "Zenject-TestFramework",
+        "BoundfoxStudios.FluentAssertions"
     ],
     "includePlatforms": [
         "Editor"
