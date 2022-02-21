@@ -137,7 +137,7 @@ namespace Core.SO.Npc {
 
       var weapons = new List<Weapon>();
       foreach (WeaponSO weaponObject in _weaponObjects) {
-        weapons.Add(weaponObject.weapon);
+        weapons.Add(weaponObject.GetWeapon());
       }
 
       return weapons;

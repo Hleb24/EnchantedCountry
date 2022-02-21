@@ -4,8 +4,8 @@ using JetBrains.Annotations;
 namespace Core.Main.NonPlayerCharacters.Variants {
   public class Wearbear : NonPlayerCharacter {
     private const float AdditionalDamageFromSilverDagger = 3.0f;
-    public override bool GetDamaged(int diceRoll, float damage, int weaponId = 100, Weapon.WeaponType type = Weapon.WeaponType.None, bool isSpell = false) {
-      if (Weapon.Is(Weapon.WeaponType.SilverDagger, type)) {
+    public override bool GetDamaged(int diceRoll, float damage, int weaponId = 100, WeaponType type = WeaponType.None, bool isSpell = false) {
+      if (Weapon.Is(WeaponType.SilverDagger, type)) {
         damage += AdditionalDamageFromSilverDagger;
       }
 

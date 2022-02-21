@@ -3,8 +3,8 @@ using JetBrains.Annotations;
 
 namespace Core.Main.NonPlayerCharacters.Variants {
   public class Jaw : NonPlayerCharacter {
-    public override bool GetDamaged(int diceRoll, float damage, int weaponId = 100, Weapon.WeaponType type = Weapon.WeaponType.None, bool isSpell = false) {
-      if ((type & Weapon.WeaponType.Spear) == Weapon.WeaponType.Spear) {
+    public override bool GetDamaged(int diceRoll, float damage, int weaponId = 100, WeaponType type = WeaponType.None, bool isSpell = false) {
+      if ((type & WeaponType.Spear) == WeaponType.Spear) {
         damage += 2f;
       }
 

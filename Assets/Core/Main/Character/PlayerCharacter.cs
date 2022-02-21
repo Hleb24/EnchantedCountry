@@ -19,18 +19,18 @@ namespace Core.Main.Character {
   }
 
   public class PlayerCharacter : ImpactOnRiskPoints, IInitiative {
-    public event Action<string> IsDead;
-    public string Name = "Kell";
     private readonly Qualities _qualities;
-    private Level _level;
-    private IGamePoints _gamePoints;
-    private IWallet _wallet;
     private readonly ArmorClass _armorClassOfCharacter;
-    private EquipmentsOfCharacter _equipmentsOfCharacter;
-    private IEquipmentUsed _equipmentsUsed;
     private readonly Armor _shield;
     private readonly Weapon _rangeWeapon;
     private readonly Weapon _projectiles;
+    public event Action<string> IsDead;
+    public string Name = "Kell";
+    private Level _level;
+    private IGamePoints _gamePoints;
+    private IWallet _wallet;
+    private EquipmentsOfCharacter _equipmentsOfCharacter;
+    private IEquipmentUsed _equipmentsUsed;
 
     public PlayerCharacter(Qualities qualities, ClassType classType, Level level, IGamePoints gamePoints, RiskPoints riskPoints, IWallet wallet,
       EquipmentsOfCharacter equipmentsOfCharacter, IEquipmentUsed equipmentsUsed, Armor armor, Armor shield, Weapon rangeWeapon, Weapon meleeWeapon, Weapon projectiles) {
@@ -105,27 +105,30 @@ namespace Core.Main.Character {
     }
 
     public int GetMeleeAccuracy() {
-      if (MeleeWeapon == null) {
+      if (MeleeWeapon.Null()) {
         return 0;
       }
 
-      return MeleeWeapon.Attack.Accuracy + _qualities.GetModifierOf(QualityType.Strength);
+      int meleeAccuracy = MeleeWeapon.Attack.GetAccuracy();
+      return meleeAccuracy + _qualities.GetModifierOf(QualityType.Strength);
     }
 
     public int GetRangeAccuracy() {
-      if (_rangeWeapon == null) {
+      if (_rangeWeapon.Null()) {
         return 0;
       }
 
-      if (_projectiles.NotNull()) {
-        return _rangeWeapon.Attack.Accuracy + _projectiles.Attack.Accuracy + _qualities.GetModifierOf(QualityType.Agility);
+      int rangeAccuracy = _rangeWeapon.Attack.GetAccuracy();
+      if (_projectiles.Null()) {
+        return rangeAccuracy + _qualities.GetModifierOf(QualityType.Agility);
       }
 
-      return _rangeWeapon.Attack.Accuracy + _qualities.GetModifierOf(QualityType.Agility);
+      int projectilesAccuracy = _projectiles.Attack.GetAccuracy();
+      return rangeAccuracy + projectilesAccuracy + _qualities.GetModifierOf(QualityType.Agility);
     }
 
     public float GetMeleeDamage() {
-      if (MeleeWeapon == null) {
+      if (MeleeWeapon.Null()) {
         return 0;
       }
 
@@ -133,7 +136,7 @@ namespace Core.Main.Character {
     }
 
     public float GetRangeDamage() {
-      if (_rangeWeapon == null) {
+      if (_rangeWeapon.Null()) {
         return 0;
       }
 
@@ -144,8 +147,8 @@ namespace Core.Main.Character {
       return _rangeWeapon.ToDamage();
     }
 
-    public virtual bool GetDamaged(int diceRoll, float damage, int weaponId = 100, Weapon.WeaponType type = Weapon.WeaponType.None) {
-      if (!IsHit(diceRoll)) {
+    public virtual bool GetDamaged(int diceRoll, float damage, int weaponId = 100, WeaponType type = WeaponType.None) {
+      if (IsHit(diceRoll).False()) {
         return false;
       }
 

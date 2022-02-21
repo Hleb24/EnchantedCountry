@@ -105,7 +105,7 @@ namespace Core.Mono.Scenes.CharacterList {
     private int GetAttack(StorageSO storageSO, int id) {
       ProductSO product = storageSO.GetWeaponFromList(id);
       Weapon weapon = product;
-      int attack = weapon.Attack.Accuracy;
+      int attack = weapon.Attack.GetAccuracy();
       return attack;
     }
 
@@ -145,8 +145,8 @@ namespace Core.Mono.Scenes.CharacterList {
     private void GetMeleeDamage(StorageSO storageSO, int id) {
       ProductSO product = storageSO.GetWeaponFromList(id);
       Weapon weapon = product;
-      _meleeMinDamage = weapon.Attack.MinDamage;
-      _meleeMaxDamage = weapon.Attack.MaxDamage;
+      _meleeMinDamage = weapon.Attack.GetMinDamage();
+      _meleeMaxDamage = weapon.Attack.GetMaxDamage();
     }
 
     private void GetDamageForRangeWeapon(StorageSO storageSO, int rangeId, int projectiliesId = 0) {
@@ -163,16 +163,16 @@ namespace Core.Mono.Scenes.CharacterList {
     private void GetRangeDamage(StorageSO storageSO, int rangeId, int projectiliesId = 0) {
       ProductSO product = storageSO.GetWeaponFromList(rangeId);
       Weapon weapon = product;
-      _rangeMinDamage = weapon.Attack.MinDamage;
-      _rangeMaxDamage = weapon.Attack.MaxDamage;
+      _rangeMinDamage = weapon.Attack.GetMinDamage();
+      _rangeMaxDamage = weapon.Attack.GetMaxDamage();
       if (projectiliesId == 0) {
         return;
       }
 
       ProductSO projectiliesProduct = storageSO.GetProjectilesFromList(projectiliesId);
       Weapon projectilies = projectiliesProduct;
-      _rangeMinDamage += projectilies.Attack.MinDamage;
-      _rangeMaxDamage += projectilies.Attack.MaxDamage;
+      _rangeMinDamage += projectilies.Attack.GetMinDamage();
+      _rangeMaxDamage += projectilies.Attack.GetMaxDamage();
     }
 
     private void MaxAmountOfCoins(StorageSO storageSO) {

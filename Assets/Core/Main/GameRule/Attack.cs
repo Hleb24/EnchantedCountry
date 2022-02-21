@@ -1,121 +1,123 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Aberrance.Extensions;
-using Core.Main.Dice;
 
 namespace Core.Main.GameRule {
   public class Attack {
-    #region Fields
-    private const int BOTTOM_BORDER = 0;
-    private const int TOP_BORDER_FOR_ACCURANCY = 17;
-    private const int TOP_BORDER_FOR_DAMAGE = 18;
-    public readonly List<float> DamageList;
-    private int _accuracy;
-    private float _minDamage;
-    private float _maxDamage;
-    #endregion
-
-    #region Constructors
-    public Attack() { }
-
-    public Attack(float maxDamage, float minDamage = 0f, int accuracy = 0) {
-      this.MinDamage = minDamage;
-      this.MaxDamage = maxDamage;
-      this.Accuracy = accuracy;
-      DamageList = new List<float>();
-    }
-
-    public Attack(List<float> damageList, int accuracy = 0) {
-        DamageList = new List<float>();
-        DamageList.AddRange(damageList);
-
-      if (DamageList.CountNotEqual(0)) {
-        if (DamageList.NotNull()) {
-          MinDamage = DamageList[0];
-          MaxDamage = DamageList[DamageList.LastIndex()];
-        }
-      } else {
-        MinDamage = 0;
-        MaxDamage = 0;
-      }
-
-      this.Accuracy = accuracy;
-    }
-    #endregion
-
-    #region Properties
-    public bool IsFatalDamage { get; set; }
-
-    public int Accuracy {
-      get {
-        return _accuracy;
-      }
-      set {
-        if (AccurancyWithinInBorders(value)) {
-          _accuracy = value;
-        } else {
-          throw new InvalidOperationException("Value is invalid");
-        }
-      }
-    }
-
-    public float MinDamage {
-      get {
-        return _minDamage;
-      }
-      set {
-        if (DamageWithinInBorders(value)) {
-          _minDamage = value;
-          if (IsMaxDamageGreaterOrEqualToMinDamage()) {
-            GetDiceEdges();
-          }
-        } else {
-          throw new InvalidOperationException("Value is invalid");
-        }
-      }
-    }
-
-    public float MaxDamage {
-      get {
-        return _maxDamage;
-      }
-      set {
-        if (DamageWithinInBorders(value)) {
-          _maxDamage = value;
-          if (IsMaxDamageGreaterOrEqualToMinDamage()) {
-            GetDiceEdges();
-          }
-        } else {
-          throw new InvalidOperationException("Value is invalid");
-        }
-      }
-    }
-
-    public int DiceEdges { get; private set; }
-    #endregion
-
-    #region Methods
     private static bool AccurancyWithinInBorders(int value) {
-      return value >= BOTTOM_BORDER && value <= TOP_BORDER_FOR_ACCURANCY;
+      return value >= BOTTOM_BORDER && value <= TOP_BORDER_FOR_ACCURACY;
     }
 
     private static bool DamageWithinInBorders(float value) {
       return value >= BOTTOM_BORDER && value <= TOP_BORDER_FOR_DAMAGE;
     }
 
+    private const int BOTTOM_BORDER = 0;
+    private const int TOP_BORDER_FOR_ACCURACY = 17;
+    private const int TOP_BORDER_FOR_DAMAGE = 18;
+    private readonly List<float> _damageList;
+    private readonly float _minDamage;
+    private readonly float _maxDamage;
+    private readonly int _accuracy;
+
+    public Attack(float maxDamage, float minDamage = 0f, int accuracy = 0) {
+      
+
+      if (DamageWithinInBorders(minDamage)) {
+        _minDamage = minDamage;
+        if (IsMaxDamageGreaterOrEqualToMinDamage()) {
+          GetDiceEdges();
+        }
+      }
+      
+      if (DamageWithinInBorders(maxDamage)) {
+        _maxDamage = maxDamage;
+        if (IsMaxDamageGreaterOrEqualToMinDamage()) {
+          GetDiceEdges();
+        }
+      }
+
+      if (AccurancyWithinInBorders(accuracy)) {
+        _accuracy = accuracy;
+      }
+
+      _damageList = new List<float>();
+    }
+
+    public Attack(List<float> damageList, int accuracy = 0) {
+      _damageList = new List<float>();
+      _damageList.AddRange(damageList);
+
+      if (_damageList.NotNullAndEmpty()) {
+        _minDamage = _damageList[0];
+        _maxDamage = _damageList[_damageList.LastIndex()];
+      } else {
+        _minDamage = 0;
+        _maxDamage = 0;
+      }
+
+      if (AccurancyWithinInBorders(accuracy)) {
+        _accuracy = accuracy;
+      }
+    }
+
+    public float GetDamage(int edge) {
+      if (edge == 0) {
+        return 0;
+      }
+
+      if (_damageList.CountNotEqual(0)) {
+        return _damageList[edge];
+      }
+
+      if (edge == DiceEdges) {
+        return _maxDamage;
+      }
+
+      if (edge == 1) {
+        return _minDamage;
+      }
+
+      if (DiceEdges != 0) {
+        return _maxDamage / DiceEdges * edge;
+      }
+
+      return 0;
+    }
+
+    public float GetDamage() {
+      int edge = GetDiceEdges();
+      if (edge == 0) {
+        return 0;
+      }
+
+      if (edge == DiceEdges) {
+        return _maxDamage;
+      }
+
+      if (edge == 1) {
+        return _minDamage;
+      }
+
+      if (DiceEdges != 0) {
+        return _maxDamage / DiceEdges * edge;
+      }
+
+      return 0;
+    }
+
     private bool IsMaxDamageGreaterOrEqualToMinDamage() {
-      return _maxDamage >= MinDamage;
+      return _maxDamage >= _minDamage;
     }
 
     private int GetDiceEdges() {
       var delta = 0;
-      float minD = MinDamage;
-      float maxD = MaxDamage;
-      if (DamageList.NotNull() && DamageList.CountNotEqual(0) && MinDamage != MaxDamage) {
-        return DamageList.Count;
+      float minD = _minDamage;
+      float maxD = _maxDamage;
+      if (_damageList.NotNullAndEmpty() && _minDamage != _maxDamage) {
+        return _damageList.Count;
       }
 
-      if (MinDamage == MaxDamage) {
+      if (_minDamage == _maxDamage) {
         DiceEdges = 1;
       }
 
@@ -130,60 +132,24 @@ namespace Core.Main.GameRule {
       }
 
       float deltaDamage = maxD + 1f - minD;
-      delta = (int) deltaDamage;
+      delta = (int)deltaDamage;
       DiceEdges = delta;
       return DiceEdges;
     }
 
-    public float GetDamageAfterDiceRoll() {
-      SixSidedDice dice = new SixSidedDice();
-      return GetDamage(dice.GetDiceRollAccordingToEdges(DiceEdges));
+    public int DiceEdges { get; private set; }
+
+    public float GetMaxDamage() {
+      return _maxDamage;
+    }
+    
+
+    public float GetMinDamage() {
+      return _minDamage;
     }
 
-    public float GetDamage(int edge) {
-      if (edge == 0) {
-        return 0;
-      }
-
-      if (DamageList.CountNotEqual(0)) {
-        return DamageList[edge];
-      }
-
-      if (edge == DiceEdges) {
-        return MaxDamage;
-      }
-
-      if (edge == 1) {
-        return MinDamage;
-      }
-
-      if (DiceEdges != 0) {
-        return MaxDamage / DiceEdges * edge;
-      }
-
-      return 0;
-    }
-
-    public float GetDamage() {
-      int edge = GetDiceEdges();
-      if (edge == 0) {
-        return 0;
-      }
-
-      if (edge == DiceEdges) {
-        return MaxDamage;
-      }
-
-      if (edge == 1) {
-        return MinDamage;
-      }
-
-      if (DiceEdges != 0) {
-        return MaxDamage / DiceEdges * edge;
-      }
-
-      return 0;
+    public int GetAccuracy() {
+      return _accuracy;
     }
   }
-  #endregion
 }

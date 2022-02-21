@@ -48,7 +48,7 @@ namespace Core.Main.NonPlayerCharacters {
         return accuracy;
       }
 
-      accuracy = _weapons[GetIndexOfWeapon(weaponIndex)].Attack.Accuracy;
+      accuracy = _weapons[GetIndexOfWeapon(weaponIndex)].Attack.GetAccuracy();
 
       return accuracy;
     }

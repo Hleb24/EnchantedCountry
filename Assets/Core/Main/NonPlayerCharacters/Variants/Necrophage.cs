@@ -5,7 +5,7 @@ namespace Core.Main.NonPlayerCharacters.Variants {
   public class Necrophage : NonPlayerCharacter {
     private const int KillStake = 5;
 
-    public override bool GetDamaged(int diceRoll, float damage, int weaponId, Weapon.WeaponType type = Weapon.WeaponType.None, bool isSpell = false) {
+    public override bool GetDamaged(int diceRoll, float damage, int weaponId, WeaponType type = WeaponType.None, bool isSpell = false) {
       if (weaponId == GameRule.EquipmentIdConstants.EquipmentIdConstants.STAKE && diceRoll >= KillStake) {
         damage += 10000f;
       }

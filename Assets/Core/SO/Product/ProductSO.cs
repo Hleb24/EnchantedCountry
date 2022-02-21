@@ -3,6 +3,7 @@ using Core.Main.GameRule;
 using Core.SO.Armor;
 using Core.SO.WeaponObjects;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Serialization;
 
 namespace Core.SO.Product {
@@ -12,7 +13,7 @@ namespace Core.SO.Product {
       return productSO.GetArmor();
     }
 
-    public static implicit operator Main.GameRule.Weapon(ProductSO productSO) {
+    public static implicit operator Weapon(ProductSO productSO) {
       return productSO.GetWeapon();
     }
 
@@ -77,29 +78,32 @@ namespace Core.SO.Product {
       GetNameWithItem();
     }
 
-    public Main.GameRule.Weapon.WeaponType GetWeaponType() {
+    public WeaponType GetWeaponType() {
       var weapon = _item as WeaponSO;
-      Debug.Assert(weapon.NotNull(), nameof(weapon) + " != null");
+      Assert.IsNotNull(weapon, nameof(weapon));
+
       return weapon.weaponType;
     }
 
     public ArmorType GetArmorType() {
       var armor = _item as ArmorSO;
-      Debug.Assert(armor.NotNull(), nameof(armor) + " != null");
+      Assert.IsNotNull(armor, nameof(armor));
+
       return armor.armorType;
     }
 
     public Main.GameRule.Armor GetArmor() {
       var armorObject = _item as ArmorSO;
-      Debug.Assert(armorObject .NotNull(), nameof(armorObject) + " != null");
+      Assert.IsNotNull(armorObject, nameof(armorObject));
+
       Main.GameRule.Armor armor = armorObject.GetArmor();
       return armor;
     }
 
-    public Main.GameRule.Weapon GetWeapon() {
+    public Weapon GetWeapon() {
       var weaponObject = _item as WeaponSO;
-      Debug.Assert(weaponObject .NotNull(), nameof(weaponObject) + " != null");
-      Main.GameRule.Weapon weapon = weaponObject.InitWeapon();
+      Assert.IsNotNull(weaponObject, nameof(weaponObject));
+      Weapon weapon = weaponObject.GetWeapon();
       return weapon;
     }
 
