@@ -12,11 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e790fb2ca22944aae32ed4bde2981b, type: 3}
   m_Name: 4.0-9.0_WSO
   m_EditorClassIdentifier: 
+  accuracy: 0
   weaponType: 0
-  weaponName: 4.0-9.0_WSO
+  weaponName: 4.0-9.0_WithList_WSO
   minDamage: 4
   maxDamage: 9
-  damageList: []
-  accurancy: 0
+  damageList:
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
   effectName: 
-  id: 3036
+  id: 3033

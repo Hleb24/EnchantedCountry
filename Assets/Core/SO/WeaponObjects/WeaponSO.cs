@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Aberrance.Extensions;
 using Core.Main.GameRule;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -19,6 +20,12 @@ namespace Core.SO.WeaponObjects {
 
     public int GetId() {
       return id;
+    }
+
+    private void SetDamageList() {
+      if (damageList.Empty()) {
+        
+      }
     }
 
     public Weapon GetWeapon() {

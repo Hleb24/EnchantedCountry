@@ -10,17 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77e790fb2ca22944aae32ed4bde2981b, type: 3}
-  m_Name: 0.0-3.0_WithList_WSO
+  m_Name: 0.0-1.0_WSO
   m_EditorClassIdentifier: 
+  accuracy: 0
   weaponType: 0
-  weaponName: 0.0-3.0_WithList_WSO
+  weaponName: 0.0-1.0_WithList_WSO
   minDamage: 0
-  maxDamage: 3
+  maxDamage: 1
   damageList:
   - 0
   - 1
-  - 2
-  - 3
-  accurancy: 0
   effectName: 
-  id: 3001
+  id: 3000
