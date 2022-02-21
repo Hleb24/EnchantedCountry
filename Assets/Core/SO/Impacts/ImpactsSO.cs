@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using Core.Main.GameRule.Impact;
-using Core.Main.GameRule.Impact.Variants;
 using Core.SO.Npc;
 using Core.Support.SaveSystem.Saver;
 using UnityEngine;

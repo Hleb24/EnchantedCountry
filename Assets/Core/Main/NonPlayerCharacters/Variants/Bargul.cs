@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace Core.Main.NonPlayerCharacters.Variants {
   public class Bargul : NonPlayerCharacter {
-    public override void ToDamagedOfImpact(int diceRoll, ImpactOnRiskPoints character, int indexOfImpact) {
+    protected override void ToDamagedOfImpact(int diceRoll, ImpactOnRiskPoints character, int indexOfImpact) {
       if (_npcCombatAttributes.CanUseImpact(diceRoll, indexOfImpact)) {
         _npcCombatAttributes.UseImpact(character, indexOfImpact);
       }

@@ -14,8 +14,6 @@ namespace Core.Mono.Scenes.CharacterList {
     private int _testPoints;
     [SerializeField]
     private bool _useTestPoints;
-    [SerializeField]
-    private bool _useGameSave;
     private IStartGame _startGame;
     private IGamePoints _gamePoints;
 

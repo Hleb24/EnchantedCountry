@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Aberrance.Extensions;
 using Core.Main.Character;
-using Core.Main.GameRule.EquipmentIdConstants;
+using Core.Main.GameRule;
 using UnityEngine;
 
 namespace Core.SO.Equipment {

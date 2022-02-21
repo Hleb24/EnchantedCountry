@@ -20,8 +20,6 @@ namespace Core.Mono.Scenes.CharacterList {
     private ClassType _classTypeEnum;
     [SerializeField]
     private bool _useCharacterTypeForTest;
-    [SerializeField]
-    private bool _useGameSave;
     private IStartGame _startGame;
     private IClassType _classType;
     private IRiskPoints _riskPoints;

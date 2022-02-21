@@ -2,19 +2,17 @@
 using Core.Main.Dice;
 using Core.Main.GameRule;
 using Core.Main.GameRule.Impact;
-using Core.Main.GameRule.Initiative;
 using JetBrains.Annotations;
 using UnityEngine.Assertions;
 
 namespace Core.Main.NonPlayerCharacters {
-  [Serializable]
   public class NonPlayerCharacter : ImpactOnRiskPoints, IInitiative {
-    protected const float DeadlyDamage = 10000;
+    protected const float DEADLY_DAMAGE = 10000;
+    protected readonly NpcCombatAttributes _npcCombatAttributes;
+    protected readonly NpcEquipments _npcEquipments;
+    private readonly NpcMetadata _npcMetadata;
     public event Action<string> IsDead;
-    protected NpcMetadata _npcMetadata;
-    protected NpcMorality _npcMorality;
-    protected NpcCombatAttributes _npcCombatAttributes;
-    protected NpcEquipments _npcEquipments;
+    private NpcMorality _npcMorality;
 
     public NonPlayerCharacter([NotNull] NpcMetadata npcMetadata, [NotNull] NpcMorality npcMorality, [NotNull] NpcCombatAttributes npcCombatAttributes,
       [NotNull] NpcEquipments npcEquipments) {
@@ -77,21 +75,7 @@ namespace Core.Main.NonPlayerCharacters {
       return damage;
     }
 
-    public virtual void ToDamagedOfImpact(int diceRoll, [NotNull] ImpactOnRiskPoints character, int indexOfImpact) {
-      if (_npcCombatAttributes.CanUseImpact(diceRoll, indexOfImpact)) {
-        _npcCombatAttributes.UseImpact(character, indexOfImpact);
-      }
-    }
-
-    public virtual int GetIndexForImpact(int index = 0) {
-      return index;
-    }
-
-    public virtual int GetIndexOfWeapon(int index = 0) {
-      return index;
-    }
-
-    public virtual bool GetDamaged(int diceRoll, float damage, int weaponId = 100, WeaponType type = WeaponType.None, bool isSpell = false) {
+    public virtual bool GetDamaged(int diceRoll, float damage, int weaponId , WeaponType type , bool isSpell = false) {
       if (СanKillIfIsKillOnlySpell(isSpell)) {
         return false;
       }
@@ -108,11 +92,7 @@ namespace Core.Main.NonPlayerCharacters {
       return _npcCombatAttributes.IsDead();
     }
 
-    public virtual bool IsHit(int hit) {
-      return _npcEquipments.IsHit(hit);
-    }
-
-    public virtual bool GetDamaged(int diceRoll, float damage, bool isSpell = false) {
+    public bool GetDamaged(int diceRoll, float damage, bool isSpell = false) {
       if (_npcEquipments.IsKillOnlySpell() && !isSpell) {
         return false;
       }
@@ -137,14 +117,9 @@ namespace Core.Main.NonPlayerCharacters {
       return _npcCombatAttributes.GetNumberOfAttack();
     }
 
-    public bool IsHasNumberOfAttack() {
-      const int noAttack = 0;
-      return  _npcCombatAttributes.GetNumberOfAttack() != noAttack;
-    }
-    
     public bool IsHasNoNumberOfAttack() {
       const int noAttack = 0;
-      return  _npcCombatAttributes.GetNumberOfAttack() == noAttack;
+      return _npcCombatAttributes.GetNumberOfAttack() == noAttack;
     }
 
     public int GetNumberOfWeapon() {
@@ -158,19 +133,23 @@ namespace Core.Main.NonPlayerCharacters {
     public bool IsAttackWithOneWeapon() {
       return !_npcCombatAttributes.IsAttackWithAllWeapons();
     }
-    
-    
 
     public string GetName() {
       return _npcMetadata.GetName();
     }
 
-    protected bool IsNotHit(int diceRoll) {
-      return !IsHit(diceRoll);
+    protected virtual void ToDamagedOfImpact(int diceRoll, [NotNull] ImpactOnRiskPoints character, int indexOfImpact) {
+      if (_npcCombatAttributes.CanUseImpact(diceRoll, indexOfImpact)) {
+        _npcCombatAttributes.UseImpact(character, indexOfImpact);
+      }
     }
 
-    protected bool IsHasNotWeapon() {
-      return !_npcEquipments.IsHasWeapon();
+    protected int GetIndexOfWeapon(int index = 0) {
+      return index;
+    }
+
+    protected virtual bool IsHit(int hit) {
+      return _npcEquipments.IsHit(hit);
     }
 
     protected bool IsNotDeadlyAttack() {
@@ -214,7 +193,7 @@ namespace Core.Main.NonPlayerCharacters {
     /// <remarks>Вызывать всегда после создания npc.</remarks>
     internal virtual void PrepareNumberOfAttacks() {
       const int oneAttack = 1;
-      int numberOfAttack = 0;
+      var numberOfAttack = 0;
       if (_npcCombatAttributes.IsDeadlyAttack()) {
         _npcCombatAttributes.SetNumberOfAttack(oneAttack);
         return;
@@ -238,6 +217,18 @@ namespace Core.Main.NonPlayerCharacters {
       }
 
       _npcCombatAttributes.SetNumberOfAttack(numberOfAttack);
+    }
+
+    private int GetIndexForImpact(int index = 0) {
+      return index;
+    }
+
+    private bool IsNotHit(int diceRoll) {
+      return !IsHit(diceRoll);
+    }
+
+    private bool IsHasNotWeapon() {
+      return !_npcEquipments.IsHasWeapon();
     }
 
     public int Initiative { get; set; }

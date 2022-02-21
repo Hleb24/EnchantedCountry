@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Core.Main.Character;
 using Core.Main.Dice;
 using Core.Main.GameRule;
 using Core.Main.GameRule.Impact;
-using Core.Main.GameRule.Points;
 using Core.Main.NonPlayerCharacters;
 using Core.SO.Impacts;
 using Core.SO.Npc;
@@ -122,14 +122,14 @@ namespace Core.Mono.Scenes.Fight {
     }
 
     private static class NpcRiskPointsBuilder {
-      public static RiskPoints Build(int riskPoints, int lifeDice, DiceType diceType = DiceType.SixEdges) {
+      public static RiskPoints Build(int riskPoints, int lifeDice) {
         Assert.IsTrue(riskPoints >= 0, nameof(riskPoints));
         Assert.IsTrue(lifeDice >= 0, nameof(lifeDice));
         var npcRiskPoints = new NpcRiskPoints();
-        return new RiskPoints(npcRiskPoints, GetRiskPointsAfterDiceRoll(riskPoints, lifeDice, diceType));
+        return new RiskPoints(npcRiskPoints, GetRiskPointsAfterDiceRoll(riskPoints, lifeDice));
       }
 
-      private static int GetRiskPointsAfterDiceRoll(int riskPoints, int lifeDice, DiceType diceType) {
+      private static int GetRiskPointsAfterDiceRoll(int riskPoints, int lifeDice) {
         if (IsFixedValueOfNumberOfRiskPoints()) {
           return riskPoints;
         }

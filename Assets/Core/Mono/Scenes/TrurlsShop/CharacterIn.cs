@@ -6,12 +6,10 @@ using Core.Mono.MainManagers;
 using Core.Support.Data;
 using UnityEngine;
 using Zenject;
-using static Core.Main.GameRule.Armor;
-using static Core.Main.GameRule.Weapon;
 
 namespace Core.Mono.Scenes.TrurlsShop {
   public class CharacterIn : MonoBehaviour {
-    private readonly List<(ClassType, ArmorType)> _armorKits = new List<(ClassType, ArmorType)> {
+    private readonly List<(ClassType, ArmorType)> _armorKits = new() {
       (ClassType.Warrior, ArmorType.WarriorArmorKit),
       (ClassType.Elf, ArmorType.ElfArmorKit),
       (ClassType.Wizard, ArmorType.WizardArmorKit),
@@ -26,24 +24,23 @@ namespace Core.Mono.Scenes.TrurlsShop {
     protected IStartGame _startGame;
     private IClassType _classType;
 
-    private List<(ClassType, WeaponType)> _weaponKits = new List<(ClassType, WeaponType)> {
+    private readonly List<(ClassType, WeaponType)> _weaponKits = new() {
       (ClassType.Warrior, WeaponType.WarriorWeaponKit),
       (ClassType.Elf, WeaponType.ElfWeaponKit),
       (ClassType.Wizard, WeaponType.WizardWeaponKit),
       (ClassType.Kron, WeaponType.KronWeaponKit),
       (ClassType.Gnom, WeaponType.GnomWeaponKit)
     };
-    
-    [Inject]
-    public void Constructor(IStartGame startGame, IClassType classType) {
-      _startGame = startGame;
-      _classType = classType;
-    }
-
 
     protected virtual void Start() {
       TestCharacterType();
       LoadCharacterTypeWithInvoke();
+    }
+
+    [Inject]
+    public void Constructor(IStartGame startGame, IClassType classType) {
+      _startGame = startGame;
+      _classType = classType;
     }
 
     public ArmorType GetArmorKit() {
@@ -73,8 +70,6 @@ namespace Core.Mono.Scenes.TrurlsShop {
 
       if (_startGame.UseGameSave()) {
         SetClassTypeEnum();
-      } else {
-        // SaveSystem.LoadWithInvoke(_type, SaveSystem.Constants.ClassOfCharacter, (nameInvoke, time) => Invoke(nameInvoke, time), nameof(TrySetCharacterType), 0.3f);
       }
     }
 

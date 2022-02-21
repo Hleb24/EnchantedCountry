@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Aberrance.Extensions;
-using Core.Main.Dice;
+﻿using Core.Main.Dice;
+using UnityEngine.Assertions;
 
 namespace Core.Main.GameRule {
   public class Weapon {
@@ -25,90 +23,65 @@ namespace Core.Main.GameRule {
       return edges == 18;
     }
 
-    public const string DefalultName = "Rock";
+    private readonly int _id;
+    private readonly Attack _attack;
+    private string _nameOfWeapon;
+    private string _effectName;
 
-    
-
-    public string NameOfWeapon;
-    private string _effectName = string.Empty;
-
-    public Weapon(float maxDamage = 0, WeaponType weaponType = WeaponType.None, string name = DefalultName, float minDamage = 0, int accurancy = 0, string effectName = "",
-      int id = 100) {
-      NameOfWeapon = name;
-      EffectName = effectName;
-      this.weaponType = weaponType;
-      Attack = new Attack(maxDamage, minDamage, accurancy);
-      Id = id;
-    }
-
-   
-
-    public void Init(float maxDamage = 1, WeaponType weaponType = WeaponType.None, string name = DefalultName, float minDamage = 0, int accurancy = 0, string effectName = "normal",
-      int id = 100) {
-      NameOfWeapon = name;
-      EffectName = effectName;
-      this.weaponType = weaponType;
-      Attack = new Attack(maxDamage, minDamage, accurancy);
-      Id = id;
-    }
-
-    public void Init(List<float> damageList, WeaponType weaponType = WeaponType.None, string name = DefalultName, int accurancy = 0, string effectName = "", int id = 100) {
-      NameOfWeapon = name;
-      EffectName = effectName;
-      this.weaponType = weaponType;
-      Attack = new Attack(damageList, accurancy);
-      Id = id;
+    public Weapon(Attack attack, WeaponType weaponType, string name, string effectName, int id) {
+      Assert.IsNotNull(name, nameof(name));
+      Assert.IsNotNull(attack, nameof(attack));
+      Assert.IsNotNull(effectName, nameof(effectName));
+      _nameOfWeapon = name;
+      _effectName = effectName;
+      _attack = attack;
+      _id = id;
+      WeaponType = weaponType;
     }
 
     public float ToDamage() {
-      int edges = Attack.DiceEdges;
-      if (edges == 0) {
-        return 0;
-      }
+      int edges = _attack.GetDiceEdges();
 
       if (IsEdgesEqualOne(edges)) {
-        return Attack.GetMaxDamage();
+        return _attack.GetMaxDamage();
       }
 
       if (IsEdgesAtMostSix(edges)) {
         var sixSidedDice = new SixSidedDice();
         int edge = sixSidedDice.GetDiceRollAccordingToEdges(edges);
-        return Attack.GetDamage(edge);
+        return _attack.GetDamage(edge);
       }
 
       if (IsEdgesEqualToNine(edges)) {
-        int edge = KitOfDice.DicesKit[KitOfDice.SetWithOneThreeSidedAndOneSixSidedDice].GetSumRollOfBoxDices();
-        return Attack.GetDamage(edge);
+        DiceBox diceBox = KitOfDice.DicesKit[KitOfDice.SetWithOneThreeSidedAndOneSixSidedDice];
+        int edge = diceBox.GetSumRollOfBoxDices();
+        return _attack.GetDamage(edge);
       }
 
       if (IsEdgesEqualToEighteen(edges)) {
         int edge = KitOfDice.DicesKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].GetSumRollOfBoxDices();
-        return Attack.GetDamage(edge);
+        return _attack.GetDamage(edge);
       }
 
-      throw new InvalidOperationException("Edges is invalid");
+      return 0;
     }
 
-    
-
-   
-
-    public Attack Attack { get; private set; }
-    public WeaponType weaponType { get; set; }
-
-    public string EffectName {
-      get {
-        return _effectName;
-      }
-      set {
-        if (value.NotNull()) {
-          _effectName = value;
-        } else {
-          throw new InvalidOperationException("Value is invalid");
-        }
-      }
+    public int GetAccuracy() {
+      return _attack.GetAccuracy();
     }
 
-    public int Id { get; private set; }
+    public float GetMaxDamage() {
+      return _attack.GetMaxDamage();
+    }
+
+    public float GetMinDamage() {
+      return _attack.GetMinDamage();
+    }
+
+    public int GetWeaponId() {
+      return _id;
+    }
+
+    public WeaponType WeaponType { get; }
   }
 }

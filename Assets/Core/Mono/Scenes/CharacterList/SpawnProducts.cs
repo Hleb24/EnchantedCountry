@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Core.Main.Character;
 using Core.Main.GameRule;
-using Core.Main.GameRule.EquipmentIdConstants;
 using Core.SO.Equipment;
 using Core.SO.Product;
 using Core.SO.Storage;
@@ -10,13 +9,11 @@ using Core.Support.Data;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
-using static Core.Main.GameRule.Armor;
-using static Core.Main.GameRule.Weapon;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class SpawnProducts : MonoBehaviour {
-    private const int TestNumberOfProduct = 5;
-    private const int NumberOfProjectiles = 20;
+    private const int TEST_NUMBER_OF_PRODUCT = 5;
+    private const int NUMBER_OF_PROJECTILES = 20;
 
     public static event Action SpawnCompleted;
     [SerializeField]
@@ -149,7 +146,7 @@ namespace Core.Mono.Scenes.CharacterList {
 
       for (var i = 0; i < _armorListSo.Count; i++) {
         int index = i;
-        InitializeProductFields(_productViewListForArmor[index], _armorListSo[index], TestNumberOfProduct);
+        InitializeProductFields(_productViewListForArmor[index], _armorListSo[index], TEST_NUMBER_OF_PRODUCT);
       }
     }
 
@@ -163,7 +160,7 @@ namespace Core.Mono.Scenes.CharacterList {
 
       for (var i = 0; i < _weaponListSo.Count; i++) {
         int index = i;
-        InitializeProductFields(_productViewListForWeapon[index], _weaponListSo[index], TestNumberOfProduct);
+        InitializeProductFields(_productViewListForWeapon[index], _weaponListSo[index], TEST_NUMBER_OF_PRODUCT);
       }
     }
 
@@ -177,7 +174,7 @@ namespace Core.Mono.Scenes.CharacterList {
 
       for (var i = 0; i < _projectilesListSo.Count; i++) {
         int index = i;
-        InitializeProductFields(_productViewListForProjectilies[index], _projectilesListSo[index], NumberOfProjectiles);
+        InitializeProductFields(_productViewListForProjectilies[index], _projectilesListSo[index], NUMBER_OF_PROJECTILES);
       }
     }
 
@@ -191,7 +188,7 @@ namespace Core.Mono.Scenes.CharacterList {
 
       for (var i = 0; i < _itemsListSo.Count; i++) {
         int index = i;
-        InitializeProductFields(_productViewListForItems[index], _itemsListSo[index], TestNumberOfProduct);
+        InitializeProductFields(_productViewListForItems[index], _itemsListSo[index], TEST_NUMBER_OF_PRODUCT);
         SetCanNotUsedForItem(_productViewListForItems[index], _itemsListSo[index]);
       }
     }

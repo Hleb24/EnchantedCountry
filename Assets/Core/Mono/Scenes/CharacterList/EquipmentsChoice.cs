@@ -1,6 +1,5 @@
 using System;
 using Core.Main.GameRule;
-using Core.Main.GameRule.EquipmentIdConstants;
 using Core.Mono.MainManagers;
 using Core.SO.Armor;
 using Core.SO.Product;
@@ -11,8 +10,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
-using static Core.Main.GameRule.Armor;
-using static Core.Main.GameRule.Weapon;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class EquipmentsChoice : MonoBehaviour {
@@ -45,8 +42,6 @@ namespace Core.Mono.Scenes.CharacterList {
     private TMP_Text _carriage;
     [SerializeField]
     private bool _testUsedEquipment;
-    [SerializeField]
-    private bool _useGameSave;
     private IStartGame _startGame;
     private IEquipmentUsed _equipmentUsed;
     private (ArmorType, TMP_Text) _armorTupleForText;
@@ -101,13 +96,13 @@ namespace Core.Mono.Scenes.CharacterList {
       _oneHandedTupleForText = (WeaponType.OneHanded, _oneHandedText);
       _twoHandedTupleForText = (WeaponType.TwoHanded, _twoHandedText);
       _rangeTupleForText = (WeaponType.Range, _rangeText);
-      _projectilesTupleForText = (WeaponType.Projectilies, _projectilesText);
+      _projectilesTupleForText = (WeaponType.Projectiles, _projectilesText);
       _armorTuple = (ArmorType.OnlyArmor, EquipmentIdConstants.NO_ARMOR_ID);
       _shieldTuple = (ArmorType.Shield, 0);
       _oneHandedTuple = (WeaponType.OneHanded, 0);
       _twoHandedTuple = (WeaponType.TwoHanded, 0);
       _rangeTuple = (WeaponType.Range, 0);
-      _projectilesTuple = (WeaponType.Projectilies, 0);
+      _projectilesTuple = (WeaponType.Projectiles, 0);
     }
 
     private void SetTupleByIdOnApplyButtonClicked() {
@@ -228,12 +223,12 @@ namespace Core.Mono.Scenes.CharacterList {
           rangeSet = WeaponType.CrossbowSet;
         }
 
-        if ((weapon.weaponType & WeaponType.ShotbowSet) != WeaponType.None) {
-          rangeSet = WeaponType.ShotbowSet;
+        if ((weapon.weaponType & WeaponType.ShortBowSet) != WeaponType.None) {
+          rangeSet = WeaponType.ShortBowSet;
         }
 
-        if ((weapon.weaponType & WeaponType.LongbowSet) != WeaponType.None) {
-          rangeSet = WeaponType.LongbowSet;
+        if ((weapon.weaponType & WeaponType.LongBowSet) != WeaponType.None) {
+          rangeSet = WeaponType.LongBowSet;
         }
 
         if ((weapon.weaponType & WeaponType.CatapultSet) != WeaponType.None) {
@@ -263,12 +258,12 @@ namespace Core.Mono.Scenes.CharacterList {
           rangeSet = WeaponType.CrossbowSet;
         }
 
-        if ((weapon.weaponType & WeaponType.ShotbowSet) != WeaponType.None) {
-          rangeSet = WeaponType.ShotbowSet;
+        if ((weapon.weaponType & WeaponType.ShortBowSet) != WeaponType.None) {
+          rangeSet = WeaponType.ShortBowSet;
         }
 
-        if ((weapon.weaponType & WeaponType.LongbowSet) != WeaponType.None) {
-          rangeSet = WeaponType.LongbowSet;
+        if ((weapon.weaponType & WeaponType.LongBowSet) != WeaponType.None) {
+          rangeSet = WeaponType.LongBowSet;
         }
 
         if ((weapon.weaponType & WeaponType.CatapultSet) != WeaponType.None) {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Aberrance.Extensions;
 using Core.Main.Character;
-using Core.Main.GameRule.EquipmentIdConstants;
+using Core.Main.GameRule;
 using Core.Support.SaveSystem.SaveManagers;
 using Core.Support.SaveSystem.Scribe;
 using UnityEngine;

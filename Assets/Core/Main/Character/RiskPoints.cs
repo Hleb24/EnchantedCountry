@@ -1,6 +1,6 @@
 ﻿using Core.Support.Data;
 
-namespace Core.Main.GameRule.Points {
+namespace Core.Main.Character {
   public class RiskPoints {
     private readonly IRiskPoints _riskPoints;
 

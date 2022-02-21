@@ -2,8 +2,6 @@ using System.Threading.Tasks;
 using Aberrance.Extensions;
 using Core.Main.Character;
 using Core.Main.GameRule;
-using Core.Main.GameRule.EquipmentIdConstants;
-using Core.Main.GameRule.Points;
 using Core.Mono.MainManagers;
 using Core.SO.Product;
 using Core.SO.Storage;
@@ -56,7 +54,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
       _wallet = wallet;
     }
 
-    public void BuildPlayer() {
+    private void BuildPlayer() {
       _playerCharacter = new PlayerCharacter(GetQualities(), GetCharacterType(), GetLevels(), GetGamePoints(), GetRiskPoints(), GetWallet(), GetEquipmentsOfCharacter(),
         GetEquipmentsUsed(), GetArmor(), GetShield(), GetRangeWeapon(), GetMeleeWeapon(), GetProjectiles());
       Debug.LogWarning("Player create " + _playerCharacter.NotNull());

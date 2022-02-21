@@ -4,7 +4,7 @@ namespace Core.Main.NonPlayerCharacters.Variants {
   public class Danav : NonPlayerCharacter {
     private int _numberOfHands = 6;
 
-    public override bool IsHit(int hit) {
+    protected override bool IsHit(int hit) {
       if (hit >= 9 && _numberOfHands != 0) {
         _numberOfHands--;
         PrepareNumberOfAttacks();

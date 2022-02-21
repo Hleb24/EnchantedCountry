@@ -12,11 +12,6 @@ namespace Core.Mono.Scenes.Fight {
     [SerializeField]
     private bool _buildOnStart;
     private NpcBuilder _npcBuilder;
-    
-    [Inject]
-    public void Constructor(NpcBuilder builder) {
-      _npcBuilder = builder;
-    }
 
     private void Start() {
       if (_buildOnStart) {
@@ -32,6 +27,11 @@ namespace Core.Mono.Scenes.Fight {
       RemoveListeners();
     }
 
+    [Inject]
+    public void Constructor(NpcBuilder builder) {
+      _npcBuilder = builder;
+    }
+
     private void AddListeners() {
       _createNpc.onClick.AddListener(BuildNpc);
     }
@@ -42,10 +42,7 @@ namespace Core.Mono.Scenes.Fight {
 
     private void BuildNpc() {
       NonPlayerCharacter = _npcBuilder.Build(_npcId);
-      
     }
-
-   
 
     public NonPlayerCharacter NonPlayerCharacter { get; private set; }
   }

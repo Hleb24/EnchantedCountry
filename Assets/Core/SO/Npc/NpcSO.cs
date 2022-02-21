@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Aberrance.Extensions;
+using Core.Main.Character;
 using Core.Main.Dice;
 using Core.Main.GameRule;
 using Core.Main.GameRule.Impact;
-using Core.Main.GameRule.Points;
 using Core.Main.NonPlayerCharacters;
 using Core.Mono.Scenes.Fight;
 using Core.SO.Impacts;

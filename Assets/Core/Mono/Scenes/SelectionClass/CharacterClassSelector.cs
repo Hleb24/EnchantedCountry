@@ -15,9 +15,6 @@ namespace Core.Mono.Scenes.SelectionClass {
     public event Action WizardSelected;
     public event Action KronSelected;
     public event Action ElseCharacterTypeSelected;
-    // ReSharper disable once Unity.RedundantSerializeFieldAttribute
-    [SerializeField]
-    private IQualityPoints _mockQualitiesPoints;
     [SerializeField]
     private Button _warriorButton;
     [SerializeField]
@@ -30,6 +27,7 @@ namespace Core.Mono.Scenes.SelectionClass {
     private Button _gnomButton;
     [SerializeField]
     private bool _useGameSave;
+    private IQualityPoints _mockQualitiesPoints;
     private IQualityPoints _qualityPoints;
     private IClassType _classType;
     private ClassType _classTypeEnum;

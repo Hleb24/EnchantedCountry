@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Core.Main.GameRule.EquipmentIdConstants;
+using Core.Main.GameRule;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Assertions;

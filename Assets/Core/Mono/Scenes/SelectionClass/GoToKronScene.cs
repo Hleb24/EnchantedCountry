@@ -5,7 +5,7 @@ namespace Core.Mono.Scenes.SelectionClass {
   public class GoToKronScene : GoToScene {
     [SerializeField]
     private CharacterClassSelector _selector;
-    
+
     private void Start() {
       _selector.KronSelected += OnKronSelected;
     }

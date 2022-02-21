@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Core.Main.GameRule;
+﻿using Core.Main.GameRule;
 using JetBrains.Annotations;
 using UnityEngine.Assertions;
 
@@ -23,17 +21,15 @@ namespace Core.Main.NonPlayerCharacters {
     public bool IsKillOnlySpell() {
       return _armorClass.isKillOnlySpell;
     }
-      
+
     public bool IsHasWeapon() {
       return _weaponSet.HasWeapon();
     }
 
     public float ToDamage(int weaponIndex) {
       return _weaponSet.ToDamage(weaponIndex);
-
-        
     }
-      
+
     public int GetAccuracy(int weaponIndex = 0) {
       return _weaponSet.GetAccuracy(weaponIndex);
     }
@@ -42,20 +38,8 @@ namespace Core.Main.NonPlayerCharacters {
       return _weaponSet.GetNumberOfWeapon();
     }
 
-    
-
     public int GetClassOfArmor() {
       return _armorClass.GetArmorClass();
     }
-  }
-  
-  public class NpcEquipmentsModel {
-    public NpcEquipmentsModel([NotNull] IEnumerable<int> weaponsIdList,int classOfArmor) {
-      ClassOfArmor = classOfArmor;
-      WeaponsIdList = weaponsIdList;
-    }
-
-    public int ClassOfArmor { get; }
-    public IEnumerable<int> WeaponsIdList { get; }
   }
 }

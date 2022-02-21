@@ -1,6 +1,6 @@
 using Core.Main.Dice;
 
-namespace Core.Main.GameRule.Impact.Variants {
+namespace Core.Main.GameRule.Impact {
     public sealed class Poison : Impact<ImpactOnRiskPoints> {
         public Poison(ImpactType impactType = ImpactType.Negative,
         string name = "Poison", int diceRollValue = 19, int protectiveThrow = 0) : base(impactType, name, diceRollValue, protectiveThrow) { }

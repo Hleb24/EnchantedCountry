@@ -2,7 +2,7 @@ using System;
 using Aberrance.Extensions;
 using Core.Main.Character;
 using Core.Main.Dice;
-using Core.Main.GameRule.Initiative;
+using Core.Main.GameRule;
 using Core.Main.NonPlayerCharacters;
 using UnityEngine;
 using UnityEngine.UI;
@@ -69,9 +69,9 @@ namespace Core.Mono.Scenes.Fight {
         int diceRollValue = GetDiceRollValue(_playerCharacter.GetMeleeAccuracy());
         Debug.Log($"<color=orange>{_playerCharacter.ClassType}</color>: атака ближним оружием.");
         float meleeDamage = _playerCharacter.GetMeleeDamage();
-        if (_nonPlayerCharacter.GetDamaged(diceRollValue, meleeDamage, _playerCharacter.MeleeWeapon.Id, _playerCharacter.MeleeWeapon.weaponType)) {
+        if (_nonPlayerCharacter.GetDamaged(diceRollValue, meleeDamage, _playerCharacter.MeleeWeapon.GetWeaponId(), _playerCharacter.MeleeWeapon.WeaponType)) {
           Debug.Log(
-            $"<color=orange>{_playerCharacter.ClassType}</color>: значения бросков кубика <color=orange>{diceRollValue}</color> - <color=orange>{meleeDamage}</color> урон(а), тип оружия - <color=orange>{_playerCharacter.MeleeWeapon.weaponType}</color>.");
+            $"<color=orange>{_playerCharacter.ClassType}</color>: значения бросков кубика <color=orange>{diceRollValue}</color> - <color=orange>{meleeDamage}</color> урон(а), тип оружия - <color=orange>{_playerCharacter.MeleeWeapon.WeaponType}</color>.");
           AttackButtonClicked?.Invoke(_nonPlayerCharacter.GetName(), _nonPlayerCharacter.GetPointsOfRisk());
         }
       }

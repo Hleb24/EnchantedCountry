@@ -30,19 +30,15 @@ namespace Core.Mono.BaseClass {
       _armorButton.onClick.AddListener(HandlerForArmorButton);
       _weaponButton.onClick.AddListener(HandlerForWeaponButton);
       _itemButton.onClick.AddListener(HandlerForItemButton);
-      //SpawnProductInTrulsShop.SpawnCompleted += OnSpawnCompleted;
-      //SpawnProductsInCharacterList.SpawnCompleted += OnSpawnCompleted;
     }
 
     protected virtual void RemoveListener() {
       _armorButton.onClick.RemoveListener(HandlerForArmorButton);
       _weaponButton.onClick.RemoveListener(HandlerForWeaponButton);
       _itemButton.onClick.RemoveListener(HandlerForItemButton);
-      //SpawnProductInTrulsShop.SpawnCompleted -= OnSpawnCompleted;
-      //SpawnProductsInCharacterList.SpawnCompleted -= OnSpawnCompleted;
     }
 
-    protected virtual void OnSpawnCompleted() {
+    protected void OnSpawnCompleted() {
       ActivateArmorScrollView();
       DeactivateWeaponScrollView();
       DeactivateItemScrollView();
@@ -53,7 +49,6 @@ namespace Core.Mono.BaseClass {
       DeactivateWeaponScrollView();
       DeactivateItemScrollView();
       OpenNewListOfProducts?.Invoke();
-      //OpenArmorListOfProducts?.Invoke();
     }
 
     protected virtual void HandlerForWeaponButton() {
@@ -61,7 +56,6 @@ namespace Core.Mono.BaseClass {
       DeactivateArmorScrollView();
       DeactivateItemScrollView();
       OpenNewListOfProducts?.Invoke();
-      //OpenWeaponListOfProducts?.Invoke();
     }
 
     protected virtual void HandlerForItemButton() {
@@ -69,7 +63,6 @@ namespace Core.Mono.BaseClass {
       DeactivateArmorScrollView();
       DeactivateWeaponScrollView();
       OpenNewListOfProducts?.Invoke();
-      //OpenItemListOfProducts?.Invoke();
     }
 
     private void ActivateArmorScrollView() {

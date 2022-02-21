@@ -44,10 +44,6 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
       _diceRollCalculator = diceRollCalculator;
     }
 
-    private void SetDiceRollData(IDiceRoll diceRoll) {
-      _diceRollData = diceRoll;
-    }
-
     private void AddListener() {
       _diceRollButton.onClick.AddListener(SetDiceRollValuesAndIncreaseCount);
       _load.onClick.AddListener(LoadAndSetDiceRollData);

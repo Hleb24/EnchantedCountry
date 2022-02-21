@@ -3,6 +3,7 @@
 namespace Core.Main.GameRule {
   [Flags]
   public enum WeaponType {
+    #region BitOperation
     //None                = 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000,
     //Rock                = 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0001,
     //Dart                = 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0010,
@@ -33,6 +34,8 @@ namespace Core.Main.GameRule {
     //WizardWeaponKit     = 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0110_0000_1000,
     //KronWeaponKit       = 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0010_0000_0001_1000_0000_0000,
     //GnomWeaponKit       = 0b0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_1011_1100_0001_1111_1111_1111,
+    #endregion
+
     None = 0,
     Rock = 1 << 0,
     Dart = 1 << 1,
@@ -40,7 +43,7 @@ namespace Core.Main.GameRule {
     PlainDagger = 1 << 3,
     WarHammer = 1 << 4,
     Spear = 1 << 5,
-    ThrowingAx = 1 << 6,
+    ThrowingAxe = 1 << 6,
     CrossbowArrows = 1 << 7,
     SlingCores = 1 << 8,
     GoldDagger = 1 << 9,
@@ -65,9 +68,9 @@ namespace Core.Main.GameRule {
     Scythe = 1 << 28,
     Club = 1 << 29,
 
-    All = Rock | Dart | SlingStone | PlainDagger | WarHammer | Spear | ThrowingAx | CrossbowArrows | SlingCores | GoldDagger | SilverDagger | ShortSword | ShortBowArrows |
-          LongSword | LongbowArrows | TwoHandedHalberd | BattleAxe | TwoHandedSword | Sling | CatapultCores | Crossbow | ShortBow | LongBow | Catapult | Claw | Fang | Horn |
-          Jaws | Scythe | Club,
+    All = Rock | Dart | SlingStone | PlainDagger | WarHammer | Spear | ThrowingAxe | CrossbowArrows | SlingCores | GoldDagger | SilverDagger | ShortSword | ShortBowArrows |
+          LongSword | LongbowArrows | TwoHandedHalberd | BattleAxe | TwoHandedSword | Sling | CatapultCores | Crossbow | ShortBow | LongBow | Catapult | Claw | Fang | Horn | Jaws |
+          Scythe | Club,
     WarriorWeaponKit = All ^ (Claw | Fang | Horn | Jaws),
     ElfWeaponKit = All ^ (TwoHandedSword | TwoHandedHalberd | BattleAxe | Claw | Fang | Horn | Jaws | Scythe | Club),
     WizardWeaponKit = PlainDagger | SilverDagger | GoldDagger | Rock,
@@ -75,12 +78,12 @@ namespace Core.Main.GameRule {
     GnomWeaponKit = All ^ TwoHandedSword ^ TwoHandedHalberd ^ BattleAxe ^ LongSword ^ LongBow ^ LongbowArrows ^ (Claw | Fang | Horn | Jaws | Scythe),
     OneHanded = Rock | PlainDagger | WarHammer | Spear | GoldDagger | SilverDagger | ShortSword | LongSword | Club,
     TwoHanded = TwoHandedHalberd | BattleAxe | TwoHandedSword | Scythe,
-    Range = Sling | Dart | Crossbow | ShortBow | LongBow | Catapult | ThrowingAx,
-    Projectilies = SlingStone | SlingCores | CrossbowArrows | ShortBowArrows | LongbowArrows | CatapultCores,
+    Range = Sling | Dart | Crossbow | ShortBow | LongBow | Catapult | ThrowingAxe,
+    Projectiles = SlingStone | SlingCores | CrossbowArrows | ShortBowArrows | LongbowArrows | CatapultCores,
     SlingSet = Sling | SlingStone | SlingCores,
     CrossbowSet = Crossbow | CrossbowArrows,
-    ShotbowSet = ShortBow | ShortBowArrows,
-    LongbowSet = LongBow | LongbowArrows,
+    ShortBowSet = ShortBow | ShortBowArrows,
+    LongBowSet = LongBow | LongbowArrows,
     CatapultSet = Catapult | CatapultCores
   }
 }

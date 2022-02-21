@@ -8,11 +8,6 @@ using Zenject;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class SetRiskPoints : MonoBehaviour {
-    // ReSharper disable once UnusedMember.Local
-    private static bool IsDiceThrownForRiskPoints(int diceRollForRiskPointsPrefs) {
-      return diceRollForRiskPointsPrefs == PrefsConstants.COMPLETED;
-    }
-
     private static bool IsDiceNotThrownForRiskPoints(int diceRollForRiskPointsPrefs) {
       return diceRollForRiskPointsPrefs == PrefsConstants.INITIAL;
     }
@@ -21,17 +16,8 @@ namespace Core.Mono.Scenes.CharacterList {
     private TMP_Text _numberOfRiskPointsText;
     [SerializeField]
     private bool _useRiskPointsDataForTest;
-    [SerializeField]
-    private bool _useGameSave;
     private IStartGame _startGame;
     private IRiskPoints _riskPoints;
-
-    [Inject]
-    public void Constructor(IStartGame  startGame, IRiskPoints riskPoints) {
-      _startGame = startGame;
-      _riskPoints = riskPoints;
-    }
-   
 
     private void Start() {
       LoadRiskPointsData();
@@ -43,6 +29,12 @@ namespace Core.Mono.Scenes.CharacterList {
 
     private void OnDisable() {
       DiceRollForRiskPoints.DiceRollForRiskPointsCompleted -= OnDiceRollForRiskPointsCompleted;
+    }
+
+    [Inject]
+    public void Constructor(IStartGame startGame, IRiskPoints riskPoints) {
+      _startGame = startGame;
+      _riskPoints = riskPoints;
     }
 
     private void OnDiceRollForRiskPointsCompleted() {

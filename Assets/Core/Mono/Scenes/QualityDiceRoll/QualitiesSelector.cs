@@ -15,7 +15,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
       return numberOfSelectedValues == QualityTypeHandler.NUMBER_OF_QUALITY - 1;
     }
 
-    private const int StartValueForQuality = 0;
+    private const int START_VALUE_FOR_QUALITY = 0;
     public event Action AllValuesSelected;
     public event Action DistributeValues;
     [SerializeField]
@@ -34,13 +34,6 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     private int _indexOfQualityText = -1;
     private bool _progress;
 
-    
-    [Inject]
-    public void Constructor(IDiceRoll diceRollData, IQualityPoints qualityPoints) {
-      _diceRollData = diceRollData;
-      _qualityPoints = qualityPoints;
-    }
-
     private void Start() {
       Init();
       DisableButtons();
@@ -52,6 +45,12 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
 
     private void OnDisable() {
       RemoveListeners();
+    }
+
+    [Inject]
+    public void Constructor(IDiceRoll diceRollData, IQualityPoints qualityPoints) {
+      _diceRollData = diceRollData;
+      _qualityPoints = qualityPoints;
     }
 
     public void EnableDistribute() {
@@ -144,7 +143,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
         await Task.Yield();
       }
 
-      int index = _qualities.IndexOf(StartValueForQuality);
+      int index = _qualities.IndexOf(START_VALUE_FOR_QUALITY);
       ValuesNotSelected(index);
       SaveSelectionValue(index);
       DisableAcceptButton(index);

@@ -1,6 +1,6 @@
 using System;
 using Aberrance.Extensions;
-using Core.Main.GameRule.EquipmentIdConstants;
+using Core.Main.GameRule;
 using Core.Mono.BaseClass;
 using Core.Mono.MainManagers;
 using Core.SO.Equipment;

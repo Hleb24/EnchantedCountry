@@ -177,8 +177,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
       }
 
       Limbo.GetOff(PrefsConstants.COINS_IN_WALLET, out int coinsInWallet);
-      int price;
-      if (TryGetPrice(out price)) {
+      if (TryGetPrice(out int price)) {
         if (IsNotEnoughCoinForBuyProduct(coinsInWallet, price)) {
           _background.color = Color.red;
           return;

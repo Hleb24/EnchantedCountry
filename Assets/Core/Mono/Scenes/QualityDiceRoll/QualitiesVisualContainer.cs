@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.Mono.Scenes.QualityDiceRoll {
   /// <summary>
-  /// Класс для работы с коллекцией <see cref="QualityVisual"/>.
+  ///   Класс для работы с коллекцией <see cref="QualityVisual" />.
   /// </summary>
   public class QualitiesVisualContainer : MonoBehaviour {
     [SerializeField]
@@ -44,9 +44,6 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     public QualityVisual this[QualityType index] {
       get {
         return _qualities[index];
-      }
-      set {
-        _qualities[index] = value;
       }
     }
   }

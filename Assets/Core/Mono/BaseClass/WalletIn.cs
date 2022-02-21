@@ -1,5 +1,6 @@
 using Core.Main.Character;
 using Core.Mono.MainManagers;
+using Core.SO.Wallet;
 using Core.Support.Data;
 using TMPro;
 using UnityEngine;

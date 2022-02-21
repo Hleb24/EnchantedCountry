@@ -2,7 +2,7 @@ using Core.Support.Data;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace Core.Main.Character {
+namespace Core.SO.Wallet {
   [CreateAssetMenu(menuName = "Wallet", fileName = "Wallet", order = 54)]
   public class WalletSO : ScriptableObject, IWallet {
     [SerializeField]

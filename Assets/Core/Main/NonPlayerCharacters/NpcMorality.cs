@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Aberrance.Extensions;
 using JetBrains.Annotations;
 
 namespace Core.Main.NonPlayerCharacters {
@@ -36,26 +35,5 @@ namespace Core.Main.NonPlayerCharacters {
     public bool CanRunAway() {
       return !_dontRunAway;
     }
-  }
-  
-  public class NpcMoralityModel {
-    public NpcMoralityModel(int morality, bool immoral, List<int> escapePossibility) {
-      Morality = morality;
-      Immoral = immoral;
-      EscapePossibility = escapePossibility ?? throw new ArgumentNullException(nameof(escapePossibility));
-      DontRunAway = IsDontRunAway();
-
-      bool IsDontRunAway() {
-        return EscapePossibility.Empty();
-      }
-    }
-
-    public int Morality { get; }
-
-    public bool Immoral { get; }
-
-    public bool DontRunAway { get; }
-
-    public List<int> EscapePossibility { get; }
   }
 }

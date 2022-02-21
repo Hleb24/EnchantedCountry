@@ -7,19 +7,19 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
   ///   Класс для отображения инфомации о бросках кубиков для качеств персонажа.
   /// </summary>
   public class DiceRollInfo : MonoBehaviour {
-    private const string AllDiceAreRolled = "all dice are rolled";
-    private const string ValuesLoad = "Info: values load.";
-    private const string Reset = "Info: reset.";
-    private const string Save = "Info: save.";
-    private const string DiceRoll = "Info: dice roll.";
-    private const string StartDiceRollValue = "0";
+    private const string ALL_DICE_ARE_ROLLED = "all dice are rolled";
+    private const string VALUES_LOAD = "Info: values load.";
+    private const string RESET = "Info: reset.";
+    private const string SAVE = "Info: save.";
+    private const string DICE_ROLL = "Info: dice roll.";
+    private const string START_DICE_ROLL_VALUE = "0";
     [SerializeField]
     private TMP_Text _info;
     [SerializeField]
     private List<TMP_Text> _diceRollValuesText;
 
     public void SetValueLoadForInfo() {
-      _info.text = ValuesLoad;
+      _info.text = VALUES_LOAD;
     }
 
     public void SetDiceRollValuesText(List<string> diceRollValues) {
@@ -29,22 +29,22 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     }
 
     public void SetAllDiceRolledForInfo() {
-      _info.text += AllDiceAreRolled;
+      _info.text += ALL_DICE_ARE_ROLLED;
     }
 
     public void ResetTexts() {
-      _info.text = Reset;
+      _info.text = RESET;
       for (var i = 0; i < _diceRollValuesText.Count; i++) {
-        _diceRollValuesText[i].text = StartDiceRollValue;
+        _diceRollValuesText[i].text = START_DICE_ROLL_VALUE;
       }
     }
 
     public void SetSaveForInfo() {
-      _info.text = Save;
+      _info.text = SAVE;
     }
 
     public void SetDiceRollForInfo() {
-      _info.text = DiceRoll;
+      _info.text = DICE_ROLL;
     }
 
     public void SetDiceRollTextValues(int index, int diceRollValue) {

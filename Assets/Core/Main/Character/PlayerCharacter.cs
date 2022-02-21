@@ -3,8 +3,6 @@ using Aberrance.Extensions;
 using Core.Main.Dice;
 using Core.Main.GameRule;
 using Core.Main.GameRule.Impact;
-using Core.Main.GameRule.Initiative;
-using Core.Main.GameRule.Points;
 using Core.Support.Data;
 using UnityEngine;
 
@@ -109,7 +107,7 @@ namespace Core.Main.Character {
         return 0;
       }
 
-      int meleeAccuracy = MeleeWeapon.Attack.GetAccuracy();
+      int meleeAccuracy = MeleeWeapon.GetAccuracy();
       return meleeAccuracy + _qualities.GetModifierOf(QualityType.Strength);
     }
 
@@ -118,12 +116,12 @@ namespace Core.Main.Character {
         return 0;
       }
 
-      int rangeAccuracy = _rangeWeapon.Attack.GetAccuracy();
+      int rangeAccuracy = _rangeWeapon.GetAccuracy();
       if (_projectiles.Null()) {
         return rangeAccuracy + _qualities.GetModifierOf(QualityType.Agility);
       }
 
-      int projectilesAccuracy = _projectiles.Attack.GetAccuracy();
+      int projectilesAccuracy = _projectiles.GetAccuracy();
       return rangeAccuracy + projectilesAccuracy + _qualities.GetModifierOf(QualityType.Agility);
     }
 

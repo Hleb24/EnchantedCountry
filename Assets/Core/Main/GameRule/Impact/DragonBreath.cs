@@ -1,6 +1,6 @@
 ﻿using Core.Main.Dice;
 
-namespace Core.Main.GameRule.Impact.Variants {
+namespace Core.Main.GameRule.Impact {
     public sealed class DragonBreath : Impact<ImpactOnRiskPoints> {
         #region Fields
         #endregion

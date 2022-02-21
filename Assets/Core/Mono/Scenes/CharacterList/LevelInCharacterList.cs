@@ -29,6 +29,10 @@ namespace Core.Mono.Scenes.CharacterList {
       _characterLevel = characterLevel;
     }
 
+    public int GetCurrentLevel() {
+      return _characterLevel.GetCurrentLevel();
+    }
+
     private void AddListeners() {
       _characterInCharacterList.GetCharacterType += OnGetCharacterType;
       _characterGamePoints.LoadGamePoints += OnLoadCharacterGamePoints;
@@ -56,10 +60,5 @@ namespace Core.Mono.Scenes.CharacterList {
     private void SetLevelText() {
       _levelText.text = GetCurrentLevel().ToString();
     }
-
-    public int GetCurrentLevel() {
-    return  _characterLevel.GetCurrentLevel();
-    }
-
   }
 }

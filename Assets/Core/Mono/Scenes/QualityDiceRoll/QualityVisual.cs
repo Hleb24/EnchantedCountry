@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.QualityDiceRoll {
   /// <summary>
-  /// Класс отвечает за отображение качества персонажа.
+  ///   Класс отвечает за отображение качества персонажа.
   /// </summary>
   public class QualityVisual : MonoBehaviour {
     [SerializeField]
@@ -28,11 +28,6 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
 
     public QualityType GetQualityType() {
       return _qualityType;
-    }
-
-    public TMP_Text GetQualityValueText() {
-      Assert.IsNotNull(_qualityValue);
-      return _qualityValue;
     }
 
     public void AddNextPreviousListener(Action nextAction, Action previousAction) {
@@ -68,14 +63,6 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
       _nextValue.onClick.RemoveAllListeners();
       _previousValue.onClick.RemoveAllListeners();
       _accept.onClick.RemoveAllListeners();
-    }
-
-    public Button GetAcceptButton() {
-      return _accept;
-    }
-
-    public void InvokeAcceptButton() {
-      _accept.onClick.Invoke();
     }
 
     public void DisableAcceptButton() {

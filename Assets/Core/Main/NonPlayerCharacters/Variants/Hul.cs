@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace Core.Main.NonPlayerCharacters.Variants {
   public class Hul : NonPlayerCharacter {
-    public override bool GetDamaged(int diceRoll, float damage, int weaponId, WeaponType type = WeaponType.None, bool isSpell = false) {
+    public override bool GetDamaged(int diceRoll, float damage, int weaponId, WeaponType type, bool isSpell = false) {
       if ((type & WeaponType.LongSword) == WeaponType.LongSword || (type & WeaponType.ShortSword) == WeaponType.ShortSword ||
           (type & WeaponType.TwoHandedSword) == WeaponType.TwoHandedSword) {
         return false;

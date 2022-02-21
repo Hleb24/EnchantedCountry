@@ -4,16 +4,14 @@ using Core.Main.GameRule;
 using Core.SO.Product;
 using UnityEngine;
 using UnityEngine.Serialization;
-using static Core.Main.GameRule.Armor;
-using static Core.Main.GameRule.Weapon;
 
 namespace Core.Mono.Scenes.TrurlsShop {
-	/// <summary>
-	///   Класс для создание товаров в стартовой лавке Трурля.
-	/// </summary>
-	public class SpawnProduct : MonoBehaviour {
-    private const int TestNumberOfProduct = 5;
-    private const int NumberOfProjectiles = 20;
+  /// <summary>
+  ///   Класс для создание товаров в стартовой лавке Трурля.
+  /// </summary>
+  public class SpawnProduct : MonoBehaviour {
+    private const int TEST_NUMBER_OF_PRODUCT = 5;
+    private const int NUMBER_OF_PROJECTILES = 20;
     public static event Action SpawnCompleted;
     [SerializeField]
     private CharacterInTrurlsShop _characterInTrurlsShop;
@@ -67,7 +65,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
       }
 
       for (var i = 0; i < _armorListSo.Count; i++) {
-        InitializeProductFields(_productViewListForArmor[i], _armorListSo[i], TestNumberOfProduct);
+        InitializeProductFields(_productViewListForArmor[i], _armorListSo[i], TEST_NUMBER_OF_PRODUCT);
       }
     }
 
@@ -80,7 +78,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
       }
 
       for (var i = 0; i < _weaponListSo.Count; i++) {
-        InitializeProductFields(_productViewListForWeapon[i], _weaponListSo[i], TestNumberOfProduct);
+        InitializeProductFields(_productViewListForWeapon[i], _weaponListSo[i], TEST_NUMBER_OF_PRODUCT);
       }
     }
 
@@ -93,7 +91,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
       }
 
       for (var i = 0; i < _projectilesListSo.Count; i++) {
-        InitializeProductFields(_productViewListForProjectiles[i], _projectilesListSo[i], NumberOfProjectiles);
+        InitializeProductFields(_productViewListForProjectiles[i], _projectilesListSo[i], NUMBER_OF_PROJECTILES);
       }
     }
 
@@ -106,7 +104,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
       }
 
       for (var i = 0; i < _itemsListSo.Count; i++) {
-        InitializeProductFields(_productViewListForItems[i], _itemsListSo[i], TestNumberOfProduct);
+        InitializeProductFields(_productViewListForItems[i], _itemsListSo[i], TEST_NUMBER_OF_PRODUCT);
       }
     }
 
@@ -169,17 +167,11 @@ namespace Core.Mono.Scenes.TrurlsShop {
       get {
         return _productViewListForArmor;
       }
-      set {
-        _productViewListForArmor = value;
-      }
     }
 
     public List<ProductView> ProductViewListForWeapon {
       get {
         return _productViewListForWeapon;
-      }
-      set {
-        _productViewListForWeapon = value;
       }
     }
 
@@ -187,17 +179,11 @@ namespace Core.Mono.Scenes.TrurlsShop {
       get {
         return _productViewListForProjectiles;
       }
-      set {
-        _productViewListForProjectiles = value;
-      }
     }
 
     public List<ProductView> ProductViewListForItems {
       get {
         return _productViewListForItems;
-      }
-      set {
-        _productViewListForItems = value;
       }
     }
   }

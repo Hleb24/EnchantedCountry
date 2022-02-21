@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Aberrance.Extensions;
 using Core.Main.GameRule;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -22,15 +21,9 @@ namespace Core.SO.WeaponObjects {
       return id;
     }
 
-
-    private void SetDamageList() {
-      if (damageList.Empty()) {
-        
-      }
-    }
-
     public Weapon GetWeapon() {
-      return new Weapon(maxDamage, weaponType, weaponName, minDamage, accuracy, effectName, id);
+      var attack = new Attack(damageList, accuracy);
+      return new Weapon(attack, weaponType, weaponName, effectName, id);
     }
   }
 }

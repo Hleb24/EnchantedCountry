@@ -3,9 +3,9 @@ using JetBrains.Annotations;
 
 namespace Core.Main.NonPlayerCharacters.Variants {
   public class Wearwolf : NonPlayerCharacter {
-    public override bool GetDamaged(int diceRoll, float damage, int weaponId = 100, WeaponType type = WeaponType.None, bool isSpell = false) {
+    public override bool GetDamaged(int diceRoll, float damage, int weaponId, WeaponType type, bool isSpell = false) {
       if ((type & WeaponType.SilverDagger) == WeaponType.SilverDagger && diceRoll >= 8) {
-        damage += DeadlyDamage;
+        damage += DEADLY_DAMAGE;
       }
 
       return base.GetDamaged(diceRoll, damage, weaponId, type, isSpell);
