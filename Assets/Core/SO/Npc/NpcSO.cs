@@ -109,7 +109,7 @@ namespace Core.SO.Npc {
       Dice[] dices = GetDices();
 
       DiceBox diceBox = GetDiceBox(dices);
-      return diceBox.SumRollsOfDice();
+      return diceBox.GetSumRollOfBoxDices();
 
       bool IsFixedValueOfNumberOfRiskPoints() {
         return _defaultRiskPoints != 0;

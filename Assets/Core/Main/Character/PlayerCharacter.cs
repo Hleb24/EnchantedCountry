@@ -31,7 +31,7 @@ namespace Core.Main.Character {
     }
 
     void ImpactOnRiskPoints.SetRiskPoints(ImpactType impactType, int points, int protectiveThrow) {
-      int playerLuckRoll = KitOfDice.DiceKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].SumRollsOfDice();
+      int playerLuckRoll = KitOfDice.DicesKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].GetSumRollOfBoxDices();
       if (playerLuckRoll >= protectiveThrow) {
         return;
       }

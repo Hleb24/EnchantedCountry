@@ -1,65 +1,58 @@
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Core.Main.Dice {
   /// <summary>
   ///   Класс для получение конечного результата бросков кубика.
   /// </summary>
   public class DiceRollCalculator {
-    private const int Multiplier = 10;
-    private List<int> _valuesWhiteDiceRoll;
+    private static int GetCoinsAfterMultiplier(int sum) {
+      sum *= MultiplierForCoins;
+      return sum;
+    }
+
+    private static int SortRemoveAndSumValuesOfDiceRoll(List<int> valuesDicesRoll) {
+      var sum = 0;
+      valuesDicesRoll.Sort();
+      valuesDicesRoll.RemoveAt(0);
+      for (var i = 0; i < valuesDicesRoll.Count; i++) {
+        sum += valuesDicesRoll[i];
+      }
+
+      return sum;
+    }
+
+    private const int MultiplierForCoins = 10;
 
     /// <summary>
     ///   Получить конечное значение броска кубиков для качества.
     /// </summary>
     /// <returns>Значение бросков кубика.</returns>
+    [MustUseReturnValue]
     public int GetSumDiceRollForQuality() {
-      _valuesWhiteDiceRoll = new List<int>();
-      DiceBox diceBox = KitOfDice.DiceKit[KitOfDice.SetWithFourSixSidedDice];
-      for (var i = 0; i < diceBox.GetCountSetOfDice(); i++) {
-        _valuesWhiteDiceRoll.Add(diceBox[i].GetDiceRoll());
+      DiceBox diceBox = KitOfDice.DicesKit[KitOfDice.SetWithFourSixSidedDice];
+      var dicesRollValues = new List<int>(diceBox.GetNumberOfDicesInBox());
+      for (var i = 0; i < diceBox.GetNumberOfDicesInBox(); i++) {
+        dicesRollValues.Add(diceBox[i].GetDiceRoll());
       }
 
-      return SortRemoveAndSumValuesWhiteDiceRoll(_valuesWhiteDiceRoll);
+      return SortRemoveAndSumValuesOfDiceRoll(dicesRollValues);
     }
 
     /// <summary>
     ///   Получить конечное значение броска кубиков для стартового количества монет .
     /// </summary>
     /// <returns>Стартовое количество монет.</returns>
+    [MustUseReturnValue]
     public int GetSumDiceRollForCoins() {
-      _valuesWhiteDiceRoll = new List<int>();
-      DiceBox diceBox = KitOfDice.DiceKit[KitOfDice.SetWithFourSixSidedDice];
-      for (var i = 0; i < diceBox.GetCountSetOfDice(); i++) {
-        _valuesWhiteDiceRoll.Add(diceBox[i].GetDiceRoll());
+      DiceBox diceBox = KitOfDice.DicesKit[KitOfDice.SetWithFourSixSidedDice];
+      var dicesRollValues = new List<int>(diceBox.GetNumberOfDicesInBox());
+      for (var i = 0; i < diceBox.GetNumberOfDicesInBox(); i++) {
+        dicesRollValues.Add(diceBox[i].GetDiceRoll());
       }
 
-      return SortRemoveAndSumValuesWhiteDiceRollForNumberOfCoins(_valuesWhiteDiceRoll);
-    }
-
-    private int SortRemoveAndSumValuesWhiteDiceRoll(List<int> valuesDiceRoll) {
-      var sum = 0;
-      valuesDiceRoll.Sort();
-      var tempValues = new List<int>();
-      tempValues.AddRange(valuesDiceRoll);
-      tempValues.RemoveAt(0);
-      for (var i = 0; i < tempValues.Count; i++) {
-        sum += tempValues[i];
-      }
-
-      return sum;
-    }
-
-    private int SortRemoveAndSumValuesWhiteDiceRollForNumberOfCoins(List<int> valuesDiceRoll) {
-      var sum = 0;
-      valuesDiceRoll.Sort();
-      var tempValues = new List<int>();
-      tempValues.AddRange(valuesDiceRoll);
-      tempValues.RemoveAt(0);
-      for (var i = 0; i < tempValues.Count; i++) {
-        sum += tempValues[i];
-      }
-
-      sum *= Multiplier;
+      int sum = SortRemoveAndSumValuesOfDiceRoll(dicesRollValues);
+      sum = GetCoinsAfterMultiplier(sum);
       return sum;
     }
   }

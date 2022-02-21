@@ -11,7 +11,7 @@ namespace Core.Main.GameRule.Impact.Variants {
         #endregion
         #region Implementations
         public override void ImpactAction(ImpactOnRiskPoints impactAction) {
-            int damage = KitOfDice.DiceKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].SumRollsOfDice();
+            int damage = KitOfDice.DicesKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].GetSumRollOfBoxDices();
             impactAction.SetRiskPoints(typeOfImpact, damage, ProtectiveThrow);
         }
         #endregion

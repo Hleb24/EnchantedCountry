@@ -137,7 +137,7 @@ namespace Core.Mono.Scenes.Fight {
         Dice[] dices = GetDices(lifeDice);
 
         DiceBox diceBox = GetDiceBox(dices);
-        return diceBox.SumRollsOfDice();
+        return diceBox.GetSumRollOfBoxDices();
 
         bool IsFixedValueOfNumberOfRiskPoints() {
           return riskPoints != 0;

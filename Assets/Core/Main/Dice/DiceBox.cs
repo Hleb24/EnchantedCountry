@@ -4,23 +4,20 @@ using UnityEngine.Assertions;
 
 namespace Core.Main.Dice {
   public class DiceBox {
-    private readonly List<Dice> _setOfDice;
+    private readonly List<Dice> _boxOfDices;
 
     public DiceBox([NotNull, ItemNotNull] IReadOnlyList<Dice> dices) {
       Assert.IsNotNull(dices, nameof(dices));
-      _setOfDice = new List<Dice>(dices.Count);
-      for (var i = 0; i < dices.Count; i++) {
-        _setOfDice.Add(dices[i]);
-      }
+      _boxOfDices = new List<Dice>(dices);
     }
 
-    public int GetCountSetOfDice() {
-      return _setOfDice.Count;
+    public int GetNumberOfDicesInBox() {
+      return _boxOfDices.Count;
     }
 
-    public int SumRollsOfDice() {
+    public int GetSumRollOfBoxDices() {
       var sum = 0;
-      foreach (Dice dice in _setOfDice) {
+      foreach (Dice dice in _boxOfDices) {
         sum += dice.GetDiceRoll();
       }
 
@@ -29,7 +26,7 @@ namespace Core.Main.Dice {
 
     public Dice this[int index] {
       get {
-        return _setOfDice[index];
+        return _boxOfDices[index];
       }
     }
   }

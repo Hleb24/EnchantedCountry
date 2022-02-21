@@ -42,7 +42,7 @@ namespace Core.Mono.Scenes.Fight {
     }
 
     private int GetDiceRollValue(int accuracy = 0) {
-      return KitOfDice.DiceKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].SumRollsOfDice() + accuracy;
+      return KitOfDice.DicesKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].GetSumRollOfBoxDices() + accuracy;
     }
 
     private bool IsPlayerCharacter(IInitiative initiative) {

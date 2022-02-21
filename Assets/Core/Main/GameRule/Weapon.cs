@@ -164,12 +164,12 @@ namespace Core.Main.GameRule {
       }
 
       if (IsEdgesEqualToNine(edges)) {
-        int edge = KitOfDice.DiceKit[KitOfDice.SetWithOneThreeSidedAndOneSixSidedDice].SumRollsOfDice();
+        int edge = KitOfDice.DicesKit[KitOfDice.SetWithOneThreeSidedAndOneSixSidedDice].GetSumRollOfBoxDices();
         return Attack.GetDamage(edge);
       }
 
       if (IsEdgesEqualToEighteen(edges)) {
-        int edge = KitOfDice.DiceKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].SumRollsOfDice();
+        int edge = KitOfDice.DicesKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].GetSumRollOfBoxDices();
         return Attack.GetDamage(edge);
       }
 

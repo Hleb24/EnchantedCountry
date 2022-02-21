@@ -52,7 +52,7 @@ namespace Core.Mono.Scenes.Fight {
     }
     
     private int DiceRollForInitiative(int bonus = 0) {
-      return KitOfDice.DiceKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].SumRollsOfDice() + bonus;
+      return KitOfDice.DicesKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].GetSumRollOfBoxDices() + bonus;
     }
 
     private void GetPlayerCharacter() {
