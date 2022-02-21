@@ -1,4 +1,4 @@
-using Core.Main.Character.GamePoints;
+using Core.Main.Character;
 using Core.Main.Dice;
 using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;

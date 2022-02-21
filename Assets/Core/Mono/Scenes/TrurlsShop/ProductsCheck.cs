@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Core.Main.Character.Equipment;
+using Core.Main.Character;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -36,7 +36,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
 				return;
 			for (int i = 0; i < productsViewList.Count; i++) {
 				for (int j = 0; j < equipmentsCardList.Count; j++) {
-					if (productsViewList[i].GetId() == equipmentsCardList[j].ID) {
+					if (productsViewList[i].GetId() == equipmentsCardList[j].Id) {
 						productsViewList[i].SetCharacterHasTrueAndBackgroundGreen();
 					}
 				}
@@ -48,7 +48,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
 				return;
 			for (int i = 0; i < productsViewList.Count; i++) {
 				for (int j = 0; j < equipmentsCardList.Count; j++) {
-					if (productsViewList[i].GetId() == equipmentsCardList[j].ID) {
+					if (productsViewList[i].GetId() == equipmentsCardList[j].Id) {
 						productsViewList[i].SetCharacterHasTrueAndBackgroundGreen();
 					}
 				}
@@ -61,7 +61,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
 				return;
 			for (int i = 0; i < productsViewList.Count; i++) {
 				for (int j = 0; j < equipmentsCardList.Count; j++) {
-					if (productsViewList[i].GetId() == equipmentsCardList[j].ID) {
+					if (productsViewList[i].GetId() == equipmentsCardList[j].Id) {
 						productsViewList[i].SetCharacterHasTrueAndBackgroundGreen();
 					}
 				}
@@ -73,7 +73,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
 				return;
 			for (int i = 0; i < productsViewList.Count; i++) {
 				for (int j = 0; j < equipmentsCardList.Count; j++) {
-					if (productsViewList[i].GetId() == equipmentsCardList[j].ID) {
+					if (productsViewList[i].GetId() == equipmentsCardList[j].Id) {
 						productsViewList[i].SetCharacterHasTrueAndBackgroundGreen();
 					}
 				}

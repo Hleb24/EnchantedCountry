@@ -1,5 +1,4 @@
-using Core.Main.Character.Levels;
-using Core.Main.Character.Qualities;
+using Core.Main.Character;
 using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
 using Zenject;
@@ -14,8 +13,8 @@ namespace Aberrance.Installers {
       Container.Bind<IGamePoints>().FromResolveGetter(Dealers.Resolve<IGamePoints>()).AsSingle();
       Container.Bind<IWallet>().FromResolveGetter(Dealers.Resolve<IWallet>()).AsSingle();
       Container.Bind<IQualityPoints>().FromResolveGetter(Dealers.Resolve<IQualityPoints>()).AsSingle();
-      Container.Bind<Levels>().AsSingle();
-      Container.Bind<DefiningLevels>().AsSingle();
+      Container.Bind<Level>().AsSingle();
+      Container.Bind<CharacterLevel>().AsSingle();
       Container.Bind<Qualities>().AsSingle();
     }
   }

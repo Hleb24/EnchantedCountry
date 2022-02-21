@@ -1,4 +1,5 @@
 using System;
+using Core.Main.GameRule;
 using Core.Main.GameRule.EquipmentIdConstants;
 using Core.Mono.MainManagers;
 using Core.SO.Armor;

@@ -11,10 +11,12 @@ namespace Core.Main.Dice {
       _boxOfDices = new List<Dice>(dices);
     }
 
+    [MustUseReturnValue]
     public int GetNumberOfDicesInBox() {
       return _boxOfDices.Count;
     }
 
+    [MustUseReturnValue]
     public int GetSumRollOfBoxDices() {
       var sum = 0;
       foreach (Dice dice in _boxOfDices) {

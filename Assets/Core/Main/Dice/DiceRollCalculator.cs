@@ -7,7 +7,8 @@ namespace Core.Main.Dice {
   /// </summary>
   public class DiceRollCalculator {
     private static int GetCoinsAfterMultiplier(int sum) {
-      sum *= MultiplierForCoins;
+      const int multiplierForCoins = 10;
+      sum *= multiplierForCoins;
       return sum;
     }
 
@@ -21,8 +22,6 @@ namespace Core.Main.Dice {
 
       return sum;
     }
-
-    private const int MultiplierForCoins = 10;
 
     /// <summary>
     ///   Получить конечное значение броска кубиков для качества.

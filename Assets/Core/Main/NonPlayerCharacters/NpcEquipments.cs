@@ -42,12 +42,10 @@ namespace Core.Main.NonPlayerCharacters {
       return _weaponSet.GetNumberOfWeapon();
     }
 
-    public ArmorClass GetArmorClass() {
-      return _armorClass;
-    }
+    
 
     public int GetClassOfArmor() {
-      return _armorClass.ClassOfArmor;
+      return _armorClass.GetArmorClass();
     }
   }
   

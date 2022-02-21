@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Core.Main.Character.Equipment;
+using Core.Main.Character;
+using Core.Main.GameRule;
 using Core.Main.GameRule.EquipmentIdConstants;
 using Core.SO.Equipment;
 using Core.SO.Product;
@@ -85,12 +86,12 @@ namespace Core.Mono.Scenes.CharacterList {
     private void SetArmorListSo(List<EquipmentCard> equipmentCards, List<ProductSO> armorList) {
       _armorListSo = new List<ProductSO>();
       for (var i = 0; i < equipmentCards.Count; i++) {
-        if (equipmentCards[i].ID == EquipmentIdConstants.NO_ARMOR_ID) {
+        if (equipmentCards[i].Id == EquipmentIdConstants.NO_ARMOR_ID) {
           continue;
         }
 
         for (var j = 0; j < armorList.Count; j++) {
-          if (equipmentCards[i].ID == armorList[j].GetId()) {
+          if (equipmentCards[i].Id == armorList[j].GetId()) {
             _armorListSo.Add(armorList[j]);
           }
         }
@@ -101,7 +102,7 @@ namespace Core.Mono.Scenes.CharacterList {
       _weaponListSo = new List<ProductSO>();
       for (var i = 0; i < equipmentCards.Count; i++) {
         for (var j = 0; j < weaponList.Count; j++) {
-          if (equipmentCards[i].ID == weaponList[j].GetId()) {
+          if (equipmentCards[i].Id == weaponList[j].GetId()) {
             _weaponListSo.Add(weaponList[j]);
           }
         }
@@ -112,7 +113,7 @@ namespace Core.Mono.Scenes.CharacterList {
       _projectilesListSo = new List<ProductSO>();
       for (var i = 0; i < equipmentCards.Count; i++) {
         for (var j = 0; j < projectiliesList.Count; j++) {
-          if (equipmentCards[i].ID == projectiliesList[j].GetId()) {
+          if (equipmentCards[i].Id == projectiliesList[j].GetId()) {
             _projectilesListSo.Add(projectiliesList[j]);
           }
         }
@@ -123,7 +124,7 @@ namespace Core.Mono.Scenes.CharacterList {
       _itemsListSo = new List<ProductSO>();
       for (var i = 0; i < equipmentCards.Count; i++) {
         for (var j = 0; j < itemList.Count; j++) {
-          if (equipmentCards[i].ID == itemList[j].GetId()) {
+          if (equipmentCards[i].Id == itemList[j].GetId()) {
             _itemsListSo.Add(itemList[j]);
           }
         }

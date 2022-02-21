@@ -1,6 +1,5 @@
 using System;
 using Core.Main.Character;
-using Core.Main.Character.Qualities;
 using Core.Main.Dice;
 using Core.Mono.MainManagers;
 using Core.Support.Data;
@@ -85,7 +84,7 @@ namespace Core.Mono.Scenes.CharacterList {
     private void OnDiceRollForRiskPointsButtonClicked() {
       Limbo.Enter(PrefsConstants.DICE_ROLL_FOR_RISK_POINTS, PrefsConstants.COMPLETED);
       _numberOfRiskPoints = GetDiceRollValueForCharacterType();
-      _numberOfRiskPoints += _qualities[QualityType.Constitution].Modifier;
+      _numberOfRiskPoints += _qualities.GetModifierOf(QualityType.Constitution);
       SetRiskPointsData(_numberOfRiskPoints);
       SetNumberOfRiskPointsText(_numberOfRiskPointsText, _numberOfRiskPoints);
       DisableDiceRollButton();

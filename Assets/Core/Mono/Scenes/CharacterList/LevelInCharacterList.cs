@@ -1,4 +1,4 @@
-using Core.Main.Character.Levels;
+using Core.Main.Character;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -12,7 +12,7 @@ namespace Core.Mono.Scenes.CharacterList {
     private CharacterInCharacterList _characterInCharacterList;
     [FormerlySerializedAs("_gamePointsInCharacterList"), SerializeField]
     private CharacterGamePoints _characterGamePoints;
-    private DefiningLevels _definingLevels;
+    private CharacterLevel _characterLevel;
     private bool _getGamePoints;
     private bool _getCharacterType;
 
@@ -25,8 +25,8 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     [Inject]
-    public void Constructor(DefiningLevels definingLevels) {
-      _definingLevels = definingLevels;
+    public void Constructor(CharacterLevel characterLevel) {
+      _characterLevel = characterLevel;
     }
 
     private void AddListeners() {
@@ -58,7 +58,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     public int GetCurrentLevel() {
-    return  _definingLevels.GetCurrentLevel();
+    return  _characterLevel.GetCurrentLevel();
     }
 
   }

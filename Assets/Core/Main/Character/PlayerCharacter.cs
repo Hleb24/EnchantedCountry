@@ -1,7 +1,5 @@
 using System;
 using Aberrance.Extensions;
-using Core.Main.Character.Equipment;
-using Core.Main.Character.Qualities;
 using Core.Main.Dice;
 using Core.Main.GameRule;
 using Core.Main.GameRule.Impact;
@@ -20,8 +18,41 @@ namespace Core.Main.Character {
     Gnom
   }
 
-  [Serializable]
   public class PlayerCharacter : ImpactOnRiskPoints, IInitiative {
+    public event Action<string> IsDead;
+    public string Name = "Kell";
+    private readonly Qualities _qualities;
+    private Level _level;
+    private IGamePoints _gamePoints;
+    private IWallet _wallet;
+    private readonly ArmorClass _armorClassOfCharacter;
+    private EquipmentsOfCharacter _equipmentsOfCharacter;
+    private IEquipmentUsed _equipmentsUsed;
+    private readonly Armor _shield;
+    private readonly Weapon _rangeWeapon;
+    private readonly Weapon _projectiles;
+
+    public PlayerCharacter(Qualities qualities, ClassType classType, Level level, IGamePoints gamePoints, RiskPoints riskPoints, IWallet wallet,
+      EquipmentsOfCharacter equipmentsOfCharacter, IEquipmentUsed equipmentsUsed, Armor armor, Armor shield, Weapon rangeWeapon, Weapon meleeWeapon, Weapon projectiles) {
+      _qualities = qualities;
+      ClassType = classType;
+      _level = level;
+      _gamePoints = gamePoints;
+      RiskPoints = riskPoints;
+      _wallet = wallet;
+      _equipmentsOfCharacter = equipmentsOfCharacter;
+      _equipmentsUsed = equipmentsUsed;
+      Armor = armor;
+      _shield = shield;
+      MeleeWeapon = meleeWeapon;
+      _rangeWeapon = rangeWeapon;
+      _projectiles = projectiles;
+      _armorClassOfCharacter = new ArmorClass(Armor.GetArmorClass() + _qualities.GetModifierOf(QualityType.Agility));
+      if (_shield.NotNull()) {
+        _armorClassOfCharacter = new ArmorClass(Armor.GetArmorClass() + _shield.GetArmorClass() + _qualities.GetModifierOf(QualityType.Agility));
+      }
+    }
+
     public int CompareTo(IInitiative other) {
       if (other.NotNull()) {
         return Initiative.CompareTo(other.Initiative);
@@ -38,65 +69,47 @@ namespace Core.Main.Character {
 
       switch (impactType) {
         case ImpactType.Poison:
-          _riskPoints.ChangeRiskPoints(-points);
-          Debug.Log($"<color=magenta>Poison</color>: {points} урон(а), спасброскок - {protectiveThrow} и больше, бросок удачи - {playerLuckRoll}.");
+          RiskPoints.ChangeRiskPoints(-points);
+          Debug.Log($"<color=magenta>Яд</color>: {points} урон(а), спасброскок - {protectiveThrow} и больше, бросок удачи - {playerLuckRoll}.");
           break;
         case ImpactType.Paralysis:
-          _riskPoints.ChangeRiskPoints(-points);
+          RiskPoints.ChangeRiskPoints(-points);
 
-          Debug.Log($"<color=magenta>Paralysis</color> {points}");
+          Debug.Log($"<color=magenta>Паралич</color>: {points} урон(а), спасброскок - {protectiveThrow} и больше, бросок удачи - {playerLuckRoll}.");
           break;
         case ImpactType.Petrification:
-          _riskPoints.ChangeRiskPoints(-points);
+          RiskPoints.ChangeRiskPoints(-points);
 
-          Debug.Log($"<color=magenta>Petrification</color> {points}");
+          Debug.Log($"<color=magenta>Окаменение</color>: {points} урон(а), спасброскок - {protectiveThrow} и больше, бросок удачи - {playerLuckRoll}.");
           break;
         case ImpactType.Acid:
-          _riskPoints.ChangeRiskPoints(-points);
+          RiskPoints.ChangeRiskPoints(-points);
 
-          Debug.Log($"<color=magenta>Acid</color> {points}");
+          Debug.Log($"<color=magenta>Acid</color> {points} урон(а), спасброскок - {protectiveThrow} и больше, бросок удачи - {playerLuckRoll}.");
           break;
         case ImpactType.Gas:
-          _riskPoints.ChangeRiskPoints(-points);
+          RiskPoints.ChangeRiskPoints(-points);
 
-          Debug.Log($"<color=magenta>Gas</color> {points}");
+          Debug.Log($"<color=magenta>Газ</color>: {points} урон(а), спасброскок - {protectiveThrow} и больше, бросок удачи - {playerLuckRoll}.");
           break;
         case ImpactType.Fire:
-          _riskPoints.ChangeRiskPoints(-points);
+          RiskPoints.ChangeRiskPoints(-points);
 
-          Debug.Log($"<color=magenta>Fire</color> {points}");
+          Debug.Log($"<color=magenta>Огонь</color>: {points} урон(а), спасброскок - {protectiveThrow} и больше, бросок удачи - {playerLuckRoll}.");
           break;
         case ImpactType.DragonBreath:
-          _riskPoints.ChangeRiskPoints(-points);
-
-          Debug.Log($"<color=magenta>DragonBreath</color> {points}");
+          RiskPoints.ChangeRiskPoints(-points);
+          Debug.Log($"<color=magenta>Дух дракона</color>: {points} урон(а), спасброскок - {protectiveThrow} и больше, бросок удачи - {playerLuckRoll}.");
           break;
       }
     }
 
-    public event Action<string> IsDead;
-    public string Name = "Kell";
-    private CharacterQualities _characterQualities;
-    private ClassType _classType;
-    private Levels.Levels _levels;
-    private IGamePoints _gamePoints;
-    private RiskPoints _riskPoints;
-    private IWallet _wallet;
-    private ArmorClass _armorClassOfCharacter;
-    private EquipmentsOfCharacter _equipmentsOfCharacter;
-    private IEquipmentUsed _equipmentsUsed;
-    private Armor _armor;
-    private Armor _shield;
-    private Weapon _meleeWeapon;
-    private Weapon _rangeWeapon;
-    private Weapon _projectiles;
-
     public int GetMeleeAccuracy() {
-      if (_meleeWeapon == null) {
+      if (MeleeWeapon == null) {
         return 0;
       }
 
-      return _meleeWeapon.Attack.Accuracy + _characterQualities[QualityType.Strength].Modifier;
+      return MeleeWeapon.Attack.Accuracy + _qualities.GetModifierOf(QualityType.Strength);
     }
 
     public int GetRangeAccuracy() {
@@ -105,18 +118,18 @@ namespace Core.Main.Character {
       }
 
       if (_projectiles.NotNull()) {
-        return _rangeWeapon.Attack.Accuracy + _projectiles.Attack.Accuracy + _characterQualities[QualityType.Agility].Modifier;
+        return _rangeWeapon.Attack.Accuracy + _projectiles.Attack.Accuracy + _qualities.GetModifierOf(QualityType.Agility);
       }
 
-      return _rangeWeapon.Attack.Accuracy + _characterQualities[QualityType.Agility].Modifier;
+      return _rangeWeapon.Attack.Accuracy + _qualities.GetModifierOf(QualityType.Agility);
     }
 
     public float GetMeleeDamage() {
-      if (_meleeWeapon == null) {
+      if (MeleeWeapon == null) {
         return 0;
       }
 
-      return _meleeWeapon.ToDamage();
+      return MeleeWeapon.ToDamage();
     }
 
     public float GetRangeDamage() {
@@ -124,7 +137,7 @@ namespace Core.Main.Character {
         return 0;
       }
 
-      if (_projectiles .NotNull()) {
+      if (_projectiles.NotNull()) {
         return _rangeWeapon.ToDamage() + _projectiles.ToDamage();
       }
 
@@ -136,163 +149,26 @@ namespace Core.Main.Character {
         return false;
       }
 
-      _riskPoints.ChangeRiskPoints(-damage);
-      if (_riskPoints.IsDead()) {
+      RiskPoints.ChangeRiskPoints(-damage);
+      if (RiskPoints.IsDead()) {
         IsDead?.Invoke(Name);
       }
 
-      return _riskPoints.IsDead();
+      return RiskPoints.IsDead();
     }
 
-    public bool IsHit(int hit) {
+    private bool IsHit(int hit) {
       return _armorClassOfCharacter.IsHit(hit);
     }
 
-    public PlayerCharacter(CharacterQualities characterQualities, ClassType classType, Levels.Levels levels, IGamePoints gamePoints, RiskPoints riskPoints, IWallet wallet,
-      EquipmentsOfCharacter equipmentsOfCharacter, IEquipmentUsed equipmentsUsed, Armor armor, Armor shield, Weapon rangeWeapon, Weapon meleeWeapon, Weapon projectiles) {
-      _characterQualities = characterQualities;
-      _classType = classType;
-      _levels = levels;
-      _gamePoints = gamePoints;
-      _riskPoints = riskPoints;
-      _wallet = wallet;
-      _equipmentsOfCharacter = equipmentsOfCharacter;
-      _equipmentsUsed = equipmentsUsed;
-      _armor = armor;
-      _shield = shield;
-      _meleeWeapon = meleeWeapon;
-      _rangeWeapon = rangeWeapon;
-      _projectiles = projectiles;
-      _armorClassOfCharacter = new ArmorClass(_armor.ArmorClass.ClassOfArmor + _characterQualities[QualityType.Agility].Modifier);
-      if (_shield .NotNull()) {
-        _armorClassOfCharacter = new ArmorClass(_armor.ArmorClass.ClassOfArmor + _shield.ArmorClass.ClassOfArmor + _characterQualities[QualityType.Agility].Modifier);
-      }
-    }
-
-
-    public void SetQualityValue(QualityType qualityType, int value) {
-      _characterQualities[qualityType].SetQualityValue(value);
-    }
-
-    public PlayerCharacter() { }
-
-    public CharacterQualities CharacterQualities {
-      get {
-        return _characterQualities;
-      }
-      set {
-        _characterQualities = value;
-      }
-    }
-
-    public ClassType ClassType {
-      get {
-        return _classType;
-      }
-      set {
-        _classType = value;
-      }
-    }
-
-    public Levels.Levels Levels {
-      get {
-        return _levels;
-      }
-      set {
-        _levels = value;
-      }
-    }
-
-    public IGamePoints GamePoints {
-      get {
-        return _gamePoints;
-      }
-      set {
-        _gamePoints = value;
-      }
-    }
-
-    public RiskPoints RiskPoints {
-      get {
-        return _riskPoints;
-      }
-      set {
-        _riskPoints = value;
-      }
-    }
-
-    public IWallet Wallet {
-      get {
-        return _wallet;
-      }
-      set {
-        _wallet = value;
-      }
-    }
-
-    public EquipmentsOfCharacter EquipmentsOfCharacter {
-      get {
-        return _equipmentsOfCharacter;
-      }
-      set {
-        _equipmentsOfCharacter = value;
-      }
-    }
-
-    public IEquipmentUsed EquipmentsUsed {
-      get {
-        return _equipmentsUsed;
-      }
-      set {
-        _equipmentsUsed = value;
-      }
-    }
-
-    public Armor Armor {
-      get {
-        return _armor;
-      }
-      set {
-        _armor = value;
-      }
-    }
-
-    public Armor Shield {
-      get {
-        return _shield;
-      }
-      set {
-        _shield = value;
-      }
-    }
-
-    public Weapon MeleeWeapon {
-      get {
-        return _meleeWeapon;
-      }
-      set {
-        _meleeWeapon = value;
-      }
-    }
-
-    public Weapon RangeWeapon {
-      get {
-        return _rangeWeapon;
-      }
-      set {
-        _rangeWeapon = value;
-      }
-    }
-
-    public Weapon Projectiles {
-      get {
-        return _projectiles;
-      }
-      set {
-        _projectiles = value;
-      }
-    }
-
     public int Initiative { get; set; }
+
+    public ClassType ClassType { get; set; }
+
+    public RiskPoints RiskPoints { get; set; }
+
+    public Armor Armor { get; set; }
+
+    public Weapon MeleeWeapon { get; set; }
   }
 }

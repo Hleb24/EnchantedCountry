@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Aberrance.Extensions;
-using Core.Main.Character.Equipment;
+using Core.Main.Character;
 using Core.Main.GameRule.EquipmentIdConstants;
 using UnityEngine;
 
@@ -16,7 +16,7 @@ namespace Core.SO.Equipment {
 		#region GET_EQUIPMENT_CARD
 		public EquipmentCard GetEquipmentCard(int id) {
 			for (int i = 0; i < equipmentCards.Count; i++) {
-				if (equipmentCards[i].ID == id) {
+				if (equipmentCards[i].Id == id) {
 					return equipmentCards[i];
 				}
 			}
@@ -26,7 +26,7 @@ namespace Core.SO.Equipment {
 		#region GET_QUANTITY_OF_PRODUCT
 		public int GetQuantityOfProductInEquipmentCard(int id) {
 			for (int i = 0; i < equipmentCards.Count; i++) {
-				if (equipmentCards[i].ID == id) {
+				if (equipmentCards[i].Id == id) {
 					return equipmentCards[i].Quantity;
 				}
 			}
@@ -36,7 +36,7 @@ namespace Core.SO.Equipment {
 		#region BOOLEAN
 		public bool ProductIdExistsInEquipmentCards(int id) {
 			for (int i = 0; i < equipmentCards.Count; i++) {
-				if (equipmentCards[i].ID == id) {
+				if (equipmentCards[i].Id == id) {
 					return true;
 				}
 			}
@@ -100,7 +100,7 @@ namespace Core.SO.Equipment {
 		}
 		private int GetEquipmentCardIndexInEquipmentCards(int id) {
 			for (int i = 0; i < equipmentCards.Count; i++) {
-				if (equipmentCards[i].ID == id) {
+				if (equipmentCards[i].Id == id) {
 					return i;
 				}
 			}
@@ -111,7 +111,7 @@ namespace Core.SO.Equipment {
 		public void IfQuantityEqualZeroRemoveFromEquipmentCards() {
 			for (int i = 0; i < equipmentCards.Count; i++) {
 				int index = i;
-				if (QuantityOfProductInEquipmentCardsEqualOrLessZero(equipmentCards[index].ID)) {
+				if (QuantityOfProductInEquipmentCardsEqualOrLessZero(equipmentCards[index].Id)) {
 					RemoveAtIndex(index);
 				}
 			}
@@ -119,7 +119,7 @@ namespace Core.SO.Equipment {
 		[ContextMenu("Remove all equipment cards")]
 		public void RemoveAllEquipmentCards() {
 			for (int i = equipmentCards.LastIndex(); i >= 0; i--) {
-				if (equipmentCards[i].ID == EquipmentIdConstants.NO_ARMOR_ID)
+				if (equipmentCards[i].Id == EquipmentIdConstants.NO_ARMOR_ID)
 					continue;
 				equipmentCards.RemoveAt(i);
 			}

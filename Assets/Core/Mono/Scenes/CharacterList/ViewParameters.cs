@@ -1,4 +1,4 @@
-using Core.Main.Character.Qualities;
+using Core.Main.Character;
 using Core.Main.GameRule;
 using Core.Main.GameRule.EquipmentIdConstants;
 using Core.SO.Product;
@@ -65,7 +65,7 @@ namespace Core.Mono.Scenes.CharacterList {
 
       ProductSO product = storageSO.GetArmorFromList(id);
       Armor armor = product;
-      _classOfArmor = armor.ArmorClass.ClassOfArmor + _qualities[QualityType.Agility].Modifier;
+      _classOfArmor = armor.GetArmorClass() + _qualities.GetModifierOf(QualityType.Agility);
       SetTextForParameters(_armorClassText, _classOfArmor);
     }
 
@@ -89,8 +89,8 @@ namespace Core.Mono.Scenes.CharacterList {
         id = twoHandedId;
       }
 
-      _meleeAttack = GetAttack(storageSO, id) + _qualities[QualityType.Strength].Modifier;
-      Debug.Log($"Strength = {_qualities[QualityType.Strength].GetQualityValue()}, modifier={_qualities[QualityType.Strength].Modifier}");
+      _meleeAttack = GetAttack(storageSO, id) + _qualities.GetModifierOf(QualityType.Strength);
+      Debug.Log($"Сила {_qualities.GetPointsOf(QualityType.Strength)}, модификатор {_qualities.GetModifierOf(QualityType.Strength)}");
     }
 
     private void GetAttackForRangeWeapon(StorageSO storageSO, int rangeId) {
@@ -99,7 +99,7 @@ namespace Core.Mono.Scenes.CharacterList {
         return;
       }
 
-      _rangeAttack = GetAttack(storageSO, rangeId) + _qualities[QualityType.Agility].Modifier;
+      _rangeAttack = GetAttack(storageSO, rangeId) + _qualities.GetModifierOf(QualityType.Agility);
     }
 
     private int GetAttack(StorageSO storageSO, int id) {
@@ -194,7 +194,7 @@ namespace Core.Mono.Scenes.CharacterList {
 
       maxCoins += int.Parse(storageSO.GetProductFromList(EquipmentIdConstants.POCKETS).GetProperty());
       _maxAmountOfCoins = maxCoins;
-      _walletIn.Wallet.SetMaxCoins(_maxAmountOfCoins);
+      _walletIn.SetMaxCoins(_maxAmountOfCoins);
     }
 
     private void ArmorClassParameters() {

@@ -1,4 +1,5 @@
 using Aberrance.Extensions;
+using Core.Main.GameRule;
 using Core.SO.Armor;
 using Core.SO.WeaponObjects;
 using UnityEngine;
@@ -82,7 +83,7 @@ namespace Core.SO.Product {
       return weapon.weaponType;
     }
 
-    public Main.GameRule.Armor.ArmorType GetArmorType() {
+    public ArmorType GetArmorType() {
       var armor = _item as ArmorSO;
       Debug.Assert(armor.NotNull(), nameof(armor) + " != null");
       return armor.armorType;
@@ -91,7 +92,7 @@ namespace Core.SO.Product {
     public Main.GameRule.Armor GetArmor() {
       var armorObject = _item as ArmorSO;
       Debug.Assert(armorObject .NotNull(), nameof(armorObject) + " != null");
-      Main.GameRule.Armor armor = armorObject.InitArmor();
+      Main.GameRule.Armor armor = armorObject.GetArmor();
       return armor;
     }
 

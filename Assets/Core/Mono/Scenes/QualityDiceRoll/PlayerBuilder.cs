@@ -1,9 +1,6 @@
 using System.Threading.Tasks;
 using Aberrance.Extensions;
 using Core.Main.Character;
-using Core.Main.Character.Equipment;
-using Core.Main.Character.Levels;
-using Core.Main.Character.Qualities;
 using Core.Main.GameRule;
 using Core.Main.GameRule.EquipmentIdConstants;
 using Core.Main.GameRule.Points;
@@ -18,9 +15,8 @@ using Zenject;
 
 namespace Core.Mono.Scenes.QualityDiceRoll {
   public class PlayerBuilder : MonoBehaviour {
-    [FormerlySerializedAs("_storageObject"),FormerlySerializedAs("_storageSo"), SerializeField]
+    [FormerlySerializedAs("_storageObject"), FormerlySerializedAs("_storageSo"), SerializeField]
     private StorageSO _storageSO;
-    [SerializeField]
     private PlayerCharacter _playerCharacter;
     [SerializeField]
     private Button _createPlayer;
@@ -61,9 +57,9 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     }
 
     public void BuildPlayer() {
-      _playerCharacter = new PlayerCharacter(GetCharacterQualities(), GetCharacterType(), GetLevels(), GetGamePoints(), GetRiskPoints(), GetWallet(), GetEquipmentsOfCharacter(),
+      _playerCharacter = new PlayerCharacter(GetQualities(), GetCharacterType(), GetLevels(), GetGamePoints(), GetRiskPoints(), GetWallet(), GetEquipmentsOfCharacter(),
         GetEquipmentsUsed(), GetArmor(), GetShield(), GetRangeWeapon(), GetMeleeWeapon(), GetProjectiles());
-      Debug.LogWarning("Player create " + (_playerCharacter.NotNull()));
+      Debug.LogWarning("Player create " + _playerCharacter.NotNull());
     }
 
     private async void WaitLoad() {
@@ -72,7 +68,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
       }
 
       if (_buildOnStart) {
-       BuildPlayer();
+        BuildPlayer();
       }
     }
 
@@ -80,8 +76,8 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
       return _gamePoints;
     }
 
-    private Levels GetLevels() {
-      var levels = new Levels(_gamePoints.GetPoints());
+    private Level GetLevels() {
+      var levels = new Level(_gamePoints.GetPoints());
       return levels;
     }
 
@@ -172,10 +168,8 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
       return _classType.GetClassType();
     }
 
-    private CharacterQualities GetCharacterQualities() {
-      var characterQualities = new CharacterQualities(QualityType.Strength, _qualityPoints.GetQualityPoints(QualityType.Strength), QualityType.Agility,
-        _qualityPoints.GetQualityPoints(QualityType.Agility), QualityType.Constitution, _qualityPoints.GetQualityPoints(QualityType.Constitution), QualityType.Wisdom,
-        _qualityPoints.GetQualityPoints(QualityType.Wisdom), QualityType.Courage, _qualityPoints.GetQualityPoints(QualityType.Courage));
+    private Qualities GetQualities() {
+      var characterQualities = new Qualities(_qualityPoints);
       return characterQualities;
     }
 

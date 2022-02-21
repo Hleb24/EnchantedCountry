@@ -1,11 +1,12 @@
 using System.Collections.Generic;
-using Core.Main.Character.Levels;
+using Aberrance.Extensions;
+using Core.Main.Character;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class ProgressPresenter : MonoBehaviour {
-    [Header("Set in Inspector"),SerializeField]
+    [Header("Set in Inspector"), SerializeField]
     private GameObject _progressPrefab;
     [SerializeField]
     private Transform _contentOfProgress;
@@ -21,7 +22,7 @@ namespace Core.Mono.Scenes.CharacterList {
     private Button _progressButton;
     [SerializeField]
     private Button _closeButton;
-    [Header("Set dynamically"),SerializeField]
+    [Header("Set dynamically"), SerializeField]
     private List<ProgressView> _progressViewList;
     private bool _isSpawnProgress;
 
@@ -53,34 +54,35 @@ namespace Core.Mono.Scenes.CharacterList {
       _canvasCharacterList.SetActive(true);
       _canvasProgress.SetActive(false);
     }
-    
+
     private void SpawnProgress() {
-      if(_isSpawnProgress)
+      if (_isSpawnProgress) {
         return;
+      }
+
       _progressViewList = new List<ProgressView>();
-      for (int i = 0; i < LevelDictionaries.DefiningLevelsForСharacterTypes[default].Count; i++) {
+      ClassType classType = _characterInCharacterList.ClassTypeEnum;
+      for (var i = 0; i < LevelDictionaries.GetNumberOfLevelsByClassType(classType); i++) {
         GameObject gObject = Instantiate(_progressPrefab, _contentOfProgress);
         _progressViewList.Add(gObject.GetComponent<ProgressView>());
       }
+
       SetFieldsForProgressViewPrefab();
       _isSpawnProgress = true;
     }
 
     private void SetFieldsForProgressViewPrefab() {
       int currentLevel = _levelInCharacterList.GetCurrentLevel();
-      for (int i = 0; i < _progressViewList.Count; i++) {
+      ClassType characterType = _characterInCharacterList.ClassTypeEnum;
+      for (var i = 0; i < _progressViewList.Count; i++) {
         int level = i;
         bool isCurrentLevel = currentLevel == level;
-        if (!LevelDictionaries.DefiningSpellLevelsForСharacterTypes[_characterInCharacterList.ClassTypeEnum]
-          .ContainsKey(level)) {
-          _progressViewList[level].SetTextFields(level
-            ,LevelDictionaries.DefiningLevelsForСharacterTypes[_characterInCharacterList.ClassTypeEnum][level]
-            , isCurrentLevel);
+        int gamePoints = LevelDictionaries.GetGamePointsByCharacterLevel(characterType, level);
+        if (LevelDictionaries.HasSpellLevelInCharacterLevel(characterType, level).False()) {
+          _progressViewList[level].SetTextFields(level, gamePoints, isCurrentLevel);
         } else {
-          _progressViewList[level].SetTextFields(level
-            ,LevelDictionaries.DefiningLevelsForСharacterTypes[_characterInCharacterList.ClassTypeEnum][level]
-            ,LevelDictionaries.DefiningSpellLevelsForСharacterTypes[_characterInCharacterList.ClassTypeEnum][level]
-            , isCurrentLevel);
+          int spellLevel = LevelDictionaries.GetSpellLevelByCharacterLevel(characterType, level);
+          _progressViewList[level].SetTextFields(level, gamePoints, spellLevel, isCurrentLevel);
         }
       }
     }

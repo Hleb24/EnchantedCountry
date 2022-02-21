@@ -1,8 +1,12 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using UnityEngine.Assertions;
 
 namespace Core.Main.GameRule {
   public class ArmorClass {
-    #region Fields
+    private static bool IsWithinBorders(int value) {
+      return value >= BOTTOM_BORDER && value <= TOP_BORDER;
+    }
+
     private const int TOP_BORDER = 16;
     private const int BOTTOM_BORDER = -3;
     private const int ARMOR_CLASS_WITH_HIGH_NUMBER_OF_POINTS_TO_HIT = -2;
@@ -11,67 +15,48 @@ namespace Core.Main.GameRule {
     private const int NUMBER_OF_POINTS_TO_HIT_FOR_KILL_ONLY_SPELL = 0;
     public bool isKillOnlySpell;
     private int _classOfArmor;
-    #endregion
 
-    #region Constructors
-    public ArmorClass() { }
-
-    public ArmorClass(int startArmorClass) {
-      ClassOfArmor = startArmorClass;
+    public ArmorClass(int armorClass) {
+      Assert.IsTrue(IsWithinBorders(armorClass), nameof(armorClass));
+      _classOfArmor = armorClass;
+      SetKillOnlySpell();
     }
-    #endregion
 
-    #region Properties
-    public int ClassOfArmor {
-      get {
-        return _classOfArmor;
+    [MustUseReturnValue]
+    public int GetArmorClass() {
+      return _classOfArmor;
+    }
+
+    public void ChangeArmorClass(int value) {
+      _classOfArmor += value;
+      if (_classOfArmor > TOP_BORDER) {
+        _classOfArmor = TOP_BORDER;
+      } else if (_classOfArmor < BOTTOM_BORDER) {
+        _classOfArmor = BOTTOM_BORDER;
       }
-      set {
-        if (IsWithinBorders(value)) {
-          _classOfArmor = value;
-          KillOnlySpell(value);
-          GetNumberOfPointsToHit();
-        } else {
-          throw new InvalidOperationException("Value is invalid");
-        }
-      }
+
+      SetKillOnlySpell();
     }
 
-    public int NumberOfPointsToHit { get; private set; }
-    #endregion
-
-    #region Methods
-    private static bool IsWithinBorders(int value) {
-      return value >= BOTTOM_BORDER && value <= TOP_BORDER;
-    }
-
-    private void KillOnlySpell(int value) {
-      if (value == BOTTOM_BORDER) {
-        isKillOnlySpell = true;
-      } else {
-        isKillOnlySpell = false;
-      }
-    }
-
-    private void GetNumberOfPointsToHit() {
-      if (isKillOnlySpell) {
-        NumberOfPointsToHit = NUMBER_OF_POINTS_TO_HIT_FOR_KILL_ONLY_SPELL;
-      } else {
-        if (_classOfArmor == ARMOR_CLASS_WITH_HIGH_NUMBER_OF_POINTS_TO_HIT) {
-          NumberOfPointsToHit = HIGH_NUMBER_OF_POINTS_TO_HIT;
-        } else {
-          NumberOfPointsToHit = BASE_NUMBER_OF_POINTS_TO_HIT_FOR_EXPRESSION - ClassOfArmor;
-        }
-      }
-    }
-
+    [Pure]
     public bool IsHit(int hit) {
-      if (hit < NumberOfPointsToHit) {
-        return false;
+      return hit >= GetNumberOfPointsToHit();
+    }
+
+    private void SetKillOnlySpell() {
+      isKillOnlySpell = _classOfArmor <= BOTTOM_BORDER;
+    }
+
+    private int GetNumberOfPointsToHit() {
+      if (isKillOnlySpell) {
+        return NUMBER_OF_POINTS_TO_HIT_FOR_KILL_ONLY_SPELL;
       }
 
-      return true;
+      if (_classOfArmor == ARMOR_CLASS_WITH_HIGH_NUMBER_OF_POINTS_TO_HIT) {
+        return HIGH_NUMBER_OF_POINTS_TO_HIT;
+      }
+
+      return BASE_NUMBER_OF_POINTS_TO_HIT_FOR_EXPRESSION - _classOfArmor;
     }
-    #endregion
   }
 }

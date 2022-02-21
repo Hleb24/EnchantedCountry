@@ -1,4 +1,4 @@
-using Core.Main.Character.Wallet;
+using Core.Main.Character;
 using Core.Mono.MainManagers;
 using Core.Support.Data;
 using TMPro;
@@ -11,8 +11,9 @@ namespace Core.Mono.BaseClass {
     protected TMP_Text _coins;
     [SerializeField]
     protected WalletSO _walletSo;
-    protected IWallet _wallet;
-    protected IStartGame _startGame;
+    private IWallet _iWallet;
+    private Wallet _wallet;
+    private IStartGame _startGame;
 
     protected virtual void OnEnable() {
       SetWalletText();
@@ -23,21 +24,24 @@ namespace Core.Mono.BaseClass {
     [Inject]
     public void Constructor(IStartGame startGame, IWallet wallet) {
       _startGame = startGame;
-      _wallet = wallet;
+      _iWallet = wallet;
+      _wallet = _startGame.UseGameSave() ? new Wallet(_iWallet) : new Wallet(_walletSo);
+    }
+
+    public void SetMaxCoins(int coins) {
+      _wallet.SetMaxCoins(coins);
+    }
+
+    public int GetCoins() {
+      return _wallet.GetCoins();
+    }
+
+    public void SetCoins(int coins) {
+      _wallet.SetCoins(coins);
     }
 
     protected void SetWalletText() {
-      if (_startGame.UseGameSave()) {
-        _coins.text = _wallet.GetCoins().ToString();
-      } else {
-        _coins.text = _walletSo.numberOfCoins.ToString();
-      }
-    }
-
-    public IWallet Wallet {
-      get {
-        return _wallet;
-      }
+      _coins.text = _wallet.GetCoins().ToString();
     }
   }
 }

@@ -1,4 +1,5 @@
 using System;
+using Aberrance.Extensions;
 using Core.Main.GameRule.EquipmentIdConstants;
 using Core.Mono.BaseClass;
 using Core.Mono.MainManagers;
@@ -23,8 +24,6 @@ namespace Core.Mono.Scenes.TrurlsShop {
     [SerializeField]
     private Button _buyProduct;
     private IStartGame _startGame;
-    // ReSharper disable once NotAccessedField.Local
-    private IWallet _wallet;
     private int _selectedId;
 
     private void Awake() {
@@ -48,7 +47,6 @@ namespace Core.Mono.Scenes.TrurlsShop {
     public void Constructor(IEquipment equipment, IStartGame startGame, IWallet wallet) {
       Equipments = equipment;
       _startGame = startGame;
-      _wallet = wallet;
     }
 
     private void OnProductSelected(int id) {
@@ -58,12 +56,12 @@ namespace Core.Mono.Scenes.TrurlsShop {
       }
 
       _selectedId = id;
-      if (!CanBuyProduct(_walletIn.Wallet.GetCoins(), GetPrice(_selectedId))) {
+      if (CanBuyProduct(_walletIn.GetCoins(), GetPrice(_selectedId)).False()) {
         DisableInteractableForBuyProductButton();
         return;
       }
 
-      if (!_buyProduct.interactable) {
+      if (_buyProduct.interactable.False()) {
         EnableInteractableForBuyProductButton();
       }
     }
@@ -78,14 +76,14 @@ namespace Core.Mono.Scenes.TrurlsShop {
       }
 
       int price = GetPrice(_selectedId);
-      if (CanBuyProduct(_walletIn.Wallet.GetCoins(), price)) {
-        _walletIn.Wallet.SetCoins(_walletIn.Wallet.GetCoins() - price);
+      int coins = _walletIn.GetCoins();
+      if (CanBuyProduct(coins, price)) {
+        int leftCoins = coins - price;
+        _walletIn.SetCoins(leftCoins);
         AddProductToEquipmentCard(_selectedId);
         BuyProductSuccess?.Invoke();
         BuyProductSuccessAndCheckPrice?.Invoke(_selectedId);
-      }
-
-      if (!CanBuyProduct(_walletIn.Wallet.GetCoins(), GetPrice(_selectedId))) {
+      } else {
         DisableInteractableForBuyProductButton();
       }
     }
@@ -116,12 +114,6 @@ namespace Core.Mono.Scenes.TrurlsShop {
 
     private void DisableInteractableForBuyProductButton() {
       _buyProduct.interactable = false;
-    }
-
-    public EquipmentSO Equipment {
-      get {
-        return _equipment;
-      }
     }
 
     public IEquipment Equipments { get; private set; }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Aberrance.Extensions;
-using Core.Main.Character.Equipment;
+using Core.Main.Character;
 using Core.Main.GameRule.EquipmentIdConstants;
 using Core.Support.SaveSystem.SaveManagers;
 using Core.Support.SaveSystem.Scribe;
@@ -92,7 +92,7 @@ namespace Core.Support.Data {
     private void IfQuantityEqualZeroRemoveFromEquipmentCards() {
       for (var i = 0; i < EquipmentCards.Count; i++) {
         int index = i;
-        if (QuantityOfProductInEquipmentCardsEqualOrLessZero(EquipmentCards[index].ID)) {
+        if (QuantityOfProductInEquipmentCardsEqualOrLessZero(EquipmentCards[index].Id)) {
           RemoveAtIndex(index);
         }
       }
@@ -123,7 +123,7 @@ namespace Core.Support.Data {
 
     private bool ProductIdExistsInEquipmentCards(int id) {
       for (var i = 0; i < EquipmentCards.Count; i++) {
-        if (EquipmentCards[i].ID == id) {
+        if (EquipmentCards[i].Id == id) {
           return true;
         }
       }
@@ -137,7 +137,7 @@ namespace Core.Support.Data {
 
     private int GetQuantityOfProductInEquipmentCard(int id) {
       for (var i = 0; i < EquipmentCards.Count; i++) {
-        if (EquipmentCards[i].ID == id) {
+        if (EquipmentCards[i].Id == id) {
           return EquipmentCards[i].Quantity;
         }
       }
@@ -152,7 +152,7 @@ namespace Core.Support.Data {
 
     private EquipmentCard GetEquipmentCard(int id) {
       for (var i = 0; i < EquipmentCards.Count; i++) {
-        if (EquipmentCards[i].ID == id) {
+        if (EquipmentCards[i].Id == id) {
           return EquipmentCards[i];
         }
       }

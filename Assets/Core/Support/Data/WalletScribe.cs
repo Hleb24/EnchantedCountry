@@ -44,7 +44,7 @@ namespace Core.Support.Data {
     /// </summary>
     /// <param name="coins">Нужное количество монет.</param>
     /// <returns>Истина - монет хватает, ложь - монет не хватает.</returns>
-    public bool CoinsEnough(int coins);
+    public bool IsCoinsEnough(int coins);
   }
 
   /// <summary>
@@ -78,6 +78,12 @@ namespace Core.Support.Data {
     }
 
     void IWallet.SetCoins(int coins) {
+      if (coins < 0) {
+        coins = 0;
+      } else if (coins > _walletDataScroll.MaxCoins) {
+        coins = _walletDataScroll.MaxCoins;
+      }
+
       _walletDataScroll.Coins = coins;
     }
 
@@ -85,6 +91,8 @@ namespace Core.Support.Data {
       _walletDataScroll.Coins += coins;
       if (_walletDataScroll.Coins < 0) {
         _walletDataScroll.Coins = 0;
+      } else if (_walletDataScroll.Coins > _walletDataScroll.MaxCoins) {
+        _walletDataScroll.Coins = _walletDataScroll.MaxCoins;
       }
     }
 
@@ -97,9 +105,8 @@ namespace Core.Support.Data {
       _walletDataScroll.MaxCoins = maxCoins;
     }
 
-    bool IWallet.CoinsEnough(int coins) {
-      _walletDataScroll.Coins -= coins;
-      return _walletDataScroll.Coins >= 0;
+    bool IWallet.IsCoinsEnough(int coins) {
+      return _walletDataScroll.Coins + coins >= 0;
     }
   }
 

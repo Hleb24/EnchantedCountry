@@ -32,7 +32,7 @@ namespace Editor.Tests.EditorTests {
     private const int NumberOfRepeatForBoxDicesRoll = 36;
 
     [SetUp]
-    public void OneTimeSetup() {
+    public void ContainerSetup() {
       Container.Bind<ThreeSidedDice>().AsSingle();
       Container.Bind<SixSidedDice>().AsSingle();
       Container.Bind<TwelveSidedDice>().AsSingle();
