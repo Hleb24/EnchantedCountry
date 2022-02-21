@@ -22,6 +22,7 @@ namespace Core.SO.WeaponObjects {
       return id;
     }
 
+
     private void SetDamageList() {
       if (damageList.Empty()) {
         

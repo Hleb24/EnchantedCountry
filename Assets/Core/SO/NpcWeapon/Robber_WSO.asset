@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e790fb2ca22944aae32ed4bde2981b, type: 3}
   m_Name: Robber_WSO
   m_EditorClassIdentifier: 
+  accuracy: 0
   weaponType: 0
   weaponName: Robber_WSO
-  minDamage: 0
-  maxDamage: 0
+  minDamage: 0.5
+  maxDamage: 2
   damageList:
   - 0.5
   - 1
   - 2
-  accurancy: 0
   effectName: 
   id: 3157

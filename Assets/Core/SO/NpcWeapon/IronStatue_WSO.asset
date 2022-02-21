@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77e790fb2ca22944aae32ed4bde2981b, type: 3}
   m_Name: IronStatue_WSO
   m_EditorClassIdentifier: 
+  accuracy: 0
   weaponType: 0
   weaponName: IronStatue_WSO
   minDamage: 0.5
   maxDamage: 2.5
-  damageList: []
-  accurancy: 0
+  damageList:
+  - 0.5
+  - 1
+  - 1.5
+  - 2
+  - 2.5
   effectName: 
   id: 3146
