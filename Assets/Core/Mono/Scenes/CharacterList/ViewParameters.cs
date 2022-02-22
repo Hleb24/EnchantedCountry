@@ -1,8 +1,7 @@
 using Core.Main.Character;
 using Core.Main.GameRule;
-using Core.SO.Product;
+using Core.SO.ProductObjects;
 using Core.SO.Storage;
-using Core.Support.Data;
 using TMPro;
 using UnityEngine;
 using Zenject;

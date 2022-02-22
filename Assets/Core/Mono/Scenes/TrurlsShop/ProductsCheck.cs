@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Core.Main.Character;
+using Core.Main.GameRule;
 using UnityEngine;
 using UnityEngine.Serialization;
 

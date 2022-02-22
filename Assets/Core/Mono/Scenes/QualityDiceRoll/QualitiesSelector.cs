@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Core.Support.Data;
+using Core.Main.Character;
+using Core.Main.Dice;
 using ModestTree;
 using UnityEngine;
 using UnityEngine.UI;

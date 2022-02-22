@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Core.Main.Character;
 using Core.Main.GameRule;
 using Core.Mono.MainManagers;
-using Core.Support.Data;
 using UnityEngine;
 using Zenject;
 

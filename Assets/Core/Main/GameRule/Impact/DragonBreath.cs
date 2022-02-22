@@ -1,7 +1,7 @@
 ﻿using Core.Main.Dice;
 
 namespace Core.Main.GameRule.Impact {
-    public sealed class DragonBreath : Impact<ImpactOnRiskPoints> {
+    public sealed class DragonBreath : Impact<IImpactOnRiskPoints> {
         #region Fields
         #endregion
         #region Constructors
@@ -10,7 +10,7 @@ namespace Core.Main.GameRule.Impact {
 
         #endregion
         #region Implementations
-        public override void ImpactAction(ImpactOnRiskPoints impactAction) {
+        public override void ImpactAction(IImpactOnRiskPoints impactAction) {
             int damage = KitOfDice.DicesKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].GetSumRollOfBoxDices();
             impactAction.SetRiskPoints(typeOfImpact, damage, ProtectiveThrow);
         }

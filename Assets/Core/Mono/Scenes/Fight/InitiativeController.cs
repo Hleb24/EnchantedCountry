@@ -58,7 +58,7 @@ namespace Core.Mono.Scenes.Fight {
     }
 
     private void GetPlayerCharacter() {
-      PlayerCharacter = _playerBuilder.PlayerCharacter;
+      BaseCharacter = _playerBuilder.BaseCharacter;
     }
 
     private void GetNpc() {
@@ -68,14 +68,14 @@ namespace Core.Mono.Scenes.Fight {
     private void CreateListOfInitiative() {
       GetPlayerCharacter();
       GetNpc();
-      SetInitiative(PlayerCharacter, DiceRollForInitiative());
+      SetInitiative(BaseCharacter, DiceRollForInitiative());
       SetInitiative(NonPlayerCharacter, DiceRollForInitiative());
       InitiativeList = new List<IInitiative> {
-        PlayerCharacter,
+        BaseCharacter,
         NonPlayerCharacter
       };
       InitiativeList.Sort();
-      Debug.Log("Initiative player " + PlayerCharacter.Initiative);
+      Debug.Log("Initiative player " + BaseCharacter.Initiative);
       Debug.Log("Initiative npc " + NonPlayerCharacter.Initiative);
       foreach (IInitiative initiative in InitiativeList) {
         Debug.Log($"Initiative {initiative.Initiative}");
@@ -89,7 +89,7 @@ namespace Core.Mono.Scenes.Fight {
 
     private List<IInitiative> InitiativeList { get; set; }
 
-    public PlayerCharacter PlayerCharacter { get; private set; }
+    public BaseCharacter BaseCharacter { get; private set; }
 
     public NonPlayerCharacter NonPlayerCharacter { get; private set; }
   }

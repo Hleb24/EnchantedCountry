@@ -1,5 +1,6 @@
+using Core.Main.Character;
 using Core.Main.Dice;
-using Core.Support.Data;
+using Core.Main.GameRule;
 using Core.Support.SaveSystem.SaveManagers;
 using Zenject;
 

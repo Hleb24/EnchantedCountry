@@ -7,14 +7,14 @@ using UnityEngine.Assertions;
 
 namespace Core.Main.NonPlayerCharacters {
   public class NpcCombatAttributes {
-    private readonly List<Impact<ImpactOnRiskPoints>> _impacts;
+    private readonly List<Impact<IImpactOnRiskPoints>> _impacts;
     private readonly RiskPoints _riskPoints;
     private readonly bool _attackWithAllWeapons;
     private readonly bool _deadlyAttack;
     private readonly bool _isImmortal;
     private int _numberOfAttack;
 
-    public NpcCombatAttributes([NotNull] List<Impact<ImpactOnRiskPoints>> impacts, [NotNull] RiskPoints riskPoints, bool attackWithAllWeapons, bool deadlyAttack,
+    public NpcCombatAttributes([NotNull] List<Impact<IImpactOnRiskPoints>> impacts, [NotNull] RiskPoints riskPoints, bool attackWithAllWeapons, bool deadlyAttack,
       bool isImmortal) {
       Assert.IsNotNull(impacts, nameof(impacts));
       Assert.IsNotNull(riskPoints, nameof(riskPoints));
@@ -69,7 +69,7 @@ namespace Core.Main.NonPlayerCharacters {
       return diceRollValue >= _impacts[impactIndex].DiceRollValueForInvokeImpact;
     }
 
-    public void UseImpact(ImpactOnRiskPoints target, int impactIndex) {
+    public void UseImpact(IImpactOnRiskPoints target, int impactIndex) {
       _impacts[impactIndex].ImpactAction(target);
     }
 

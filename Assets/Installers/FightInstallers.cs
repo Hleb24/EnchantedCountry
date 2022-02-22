@@ -1,17 +1,20 @@
+using Core.Main.Character;
+using Core.Main.GameRule;
+using Core.Main.NonPlayerCharacters;
 using Core.Mono.Scenes.Fight;
-using Core.SO.Impacts;
+using Core.SO.ImpactObjects;
 using Core.SO.NpcSet;
-using Core.Support.Data;
 using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Aberrance.Installers {
   public class FightInstallers : MonoInstaller {
     [SerializeField]
     private NpcSetSO _npcSetSO;
-    [SerializeField]
-    private NpcWeaponSet _npcWeaponSet;
+    [FormerlySerializedAs("_npcWeaponSet"),SerializeField]
+    private NpcWeaponSetSO _npcWeaponSetSO;
     [SerializeField]
     private ImpactsSet _impactsSet;
     
@@ -24,7 +27,7 @@ namespace Aberrance.Installers {
       Container.Bind<IWallet>().FromResolveGetter(Dealers.Resolve<IWallet>()).AsSingle();
       Container.Bind<IQualityPoints>().FromResolveGetter(Dealers.Resolve<IQualityPoints>()).AsSingle();
       Container.Bind<INpcModelSet>().To<NpcSetSO>().FromScriptableObject(_npcSetSO).AsSingle();
-      Container.Bind<INpcWeaponSet>().To<NpcWeaponSet>().FromScriptableObject(_npcWeaponSet).AsSingle();
+      Container.Bind<INpcWeaponSet>().To<NpcWeaponSetSO>().FromScriptableObject(_npcWeaponSetSO).AsSingle();
       Container.Bind<IImpactsSet>().To<ImpactsSet>().FromScriptableObject(_impactsSet).AsSingle();
       Container.Bind<NpcBuilder>().AsSingle();
     }

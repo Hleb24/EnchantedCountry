@@ -1,7 +1,6 @@
 using System;
 using Core.Main.Character;
 using Core.SO.Mock;
-using Core.Support.Data;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;

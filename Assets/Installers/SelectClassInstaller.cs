@@ -1,5 +1,5 @@
 using System;
-using Core.Support.Data;
+using Core.Main.Character;
 using Core.Support.SaveSystem.SaveManagers;
 using Zenject;
 

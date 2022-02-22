@@ -9,7 +9,7 @@ namespace Core.Main.NonPlayerCharacters.Variants {
     public WhiteDragon([NotNull] NpcMetadata npcMetadata, [NotNull] NpcMorality npcMorality, [NotNull] NpcCombatAttributes npcCombatAttributes,
       [NotNull] NpcEquipments npcEquipments) : base(npcMetadata, npcMorality, npcCombatAttributes, npcEquipments) { }
 
-    protected override void ToDamagedOfImpact(int diceRoll, ImpactOnRiskPoints character, int indexOfImpact) {
+    protected override void ToDamagedOfImpact(int diceRoll, IImpactOnRiskPoints character, int indexOfImpact) {
       if (_numberOfDragonBreath == MAX_NUMBER_OF_DRAGON_BREATH) {
         return;
       }

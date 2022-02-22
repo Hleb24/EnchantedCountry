@@ -1,6 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.Support.Data;
+using Core.Main.Character;
+using Core.Main.Dice;
+using Core.Main.GameRule;
+using Core.Support.Data.ClassType;
+using Core.Support.Data.DiceRoll;
+using Core.Support.Data.Equipment;
+using Core.Support.Data.GamePonts;
+using Core.Support.Data.QualityPoints;
+using Core.Support.Data.RiskPoints;
+using Core.Support.Data.Wallet;
 using Core.Support.SaveSystem.Saver;
 using Core.Support.SaveSystem.Scribe;
 

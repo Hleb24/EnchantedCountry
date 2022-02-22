@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using Core.Main.Character;
 using Core.Main.Dice;
-using Core.Support.Data;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;

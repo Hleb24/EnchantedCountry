@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 using UnityEngine.Assertions;
 
 namespace Core.Main.NonPlayerCharacters {
-  public class NonPlayerCharacter : ImpactOnRiskPoints, IInitiative {
+  public class NonPlayerCharacter : IImpactOnRiskPoints, IInitiative {
     protected const float DEADLY_DAMAGE = 10000;
     protected readonly NpcCombatAttributes _npcCombatAttributes;
     protected readonly NpcEquipments _npcEquipments;
@@ -30,7 +30,7 @@ namespace Core.Main.NonPlayerCharacters {
       return Initiative.CompareTo(other.Initiative);
     }
 
-    void ImpactOnRiskPoints.SetRiskPoints(ImpactType impactType, int points, int protectiveThrow) {
+    void IImpactOnRiskPoints.SetRiskPoints(ImpactType impactType, int points, int protectiveThrow) {
       int playerLuckRoll = KitOfDice.DicesKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].GetSumRollOfBoxDices();
       if (IsProtected()) {
         return;
@@ -59,11 +59,11 @@ namespace Core.Main.NonPlayerCharacters {
       return _npcEquipments.GetAccuracy(index);
     }
 
-    public virtual float Attack(int diceRoll, [NotNull] ImpactOnRiskPoints character, int weapon = 0) {
+    public virtual float Attack(int diceRoll, [NotNull] IImpactOnRiskPoints character, int weapon = 0) {
       return ToDamage(diceRoll, character, weapon);
     }
 
-    public virtual float ToDamage(int diceRoll, [NotNull] ImpactOnRiskPoints character, int weapon = 0) {
+    public virtual float ToDamage(int diceRoll, [NotNull] IImpactOnRiskPoints character, int weapon = 0) {
       if (IsDeadlyAttack(out float deadlyDamage)) {
         return deadlyDamage;
       }
@@ -138,7 +138,7 @@ namespace Core.Main.NonPlayerCharacters {
       return _npcMetadata.GetName();
     }
 
-    protected virtual void ToDamagedOfImpact(int diceRoll, [NotNull] ImpactOnRiskPoints character, int indexOfImpact) {
+    protected virtual void ToDamagedOfImpact(int diceRoll, [NotNull] IImpactOnRiskPoints character, int indexOfImpact) {
       if (_npcCombatAttributes.CanUseImpact(diceRoll, indexOfImpact)) {
         _npcCombatAttributes.UseImpact(character, indexOfImpact);
       }
@@ -156,7 +156,7 @@ namespace Core.Main.NonPlayerCharacters {
       return !_npcCombatAttributes.IsDeadlyAttack();
     }
 
-    protected virtual void ImpactsDamage(int diceRoll, [NotNull] ImpactOnRiskPoints character) {
+    protected virtual void ImpactsDamage(int diceRoll, [NotNull] IImpactOnRiskPoints character) {
       if (_npcCombatAttributes.IsHasImpact()) {
         ToDamagedOfImpact(diceRoll, character, GetIndexForImpact());
       }

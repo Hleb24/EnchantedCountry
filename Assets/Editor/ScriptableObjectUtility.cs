@@ -2,14 +2,14 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace Core.Support {
+namespace Aberrance.Editor {
   public class ScriptableObjectUtility : MonoBehaviour {
     /// <summary>
     ///   This makes it easy to create, name and place unique new ScriptableObject asset files.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public static void CreateAsset<T>() where T : UnityEngine.ScriptableObject {
-      var asset = UnityEngine.ScriptableObject.CreateInstance<T>();
+    public static void CreateAsset<T>() where T : ScriptableObject {
+      var asset = ScriptableObject.CreateInstance<T>();
 
       string path = AssetDatabase.GetAssetPath(Selection.activeObject);
       if (path == "") {

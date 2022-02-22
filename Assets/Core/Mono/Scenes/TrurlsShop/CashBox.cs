@@ -1,12 +1,12 @@
 using System;
 using Aberrance.Extensions;
+using Core.Main.Character;
 using Core.Main.GameRule;
 using Core.Mono.BaseClass;
 using Core.Mono.MainManagers;
 using Core.SO.Equipment;
-using Core.SO.Product;
+using Core.SO.ProductObjects;
 using Core.SO.Storage;
-using Core.Support.Data;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -45,8 +45,8 @@ namespace Core.Mono.Scenes.TrurlsShop {
 
     [Inject]
     public void Constructor(IEquipment equipment, IStartGame startGame, IWallet wallet) {
-      Equipments = equipment;
       _startGame = startGame;
+      Equipments = _startGame.UseGameSave() ? equipment : _equipment;
     }
 
     private void OnProductSelected(int id) {
@@ -104,7 +104,6 @@ namespace Core.Mono.Scenes.TrurlsShop {
     }
 
     private void AddProductToEquipmentCard(int id, int amount = 1) {
-      _equipment.IncreaseQuantityOfProduct(id, amount);
       Equipments.ChangeQuantity(id, amount);
     }
 

@@ -1,5 +1,4 @@
-﻿using Core.Support.Data;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Core.Main.Character {

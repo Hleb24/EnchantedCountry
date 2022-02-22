@@ -1,4 +1,4 @@
-﻿using Core.Support.Data;
+﻿using Core.Main.GameRule;
 
 namespace Core.Main.Character {
   public class RiskPoints {

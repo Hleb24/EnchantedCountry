@@ -1,6 +1,6 @@
 using System.Globalization;
+using Core.Main.GameRule;
 using Core.Mono.MainManagers;
-using Core.Support.Data;
 using Core.Support.PrefsTools;
 using TMPro;
 using UnityEngine;

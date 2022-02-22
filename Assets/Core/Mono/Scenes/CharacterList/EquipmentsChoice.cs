@@ -1,11 +1,10 @@
 using System;
 using Core.Main.GameRule;
 using Core.Mono.MainManagers;
-using Core.SO.Armor;
-using Core.SO.Product;
+using Core.SO.ArmorObjects;
+using Core.SO.ProductObjects;
 using Core.SO.Storage;
 using Core.SO.WeaponObjects;
-using Core.Support.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -161,14 +160,14 @@ namespace Core.Mono.Scenes.CharacterList {
           break;
         case ProductSO.ProductType.Armor:
           if (productSO.GetItem() is ArmorSO armor) {
-            if ((armor.armorType & _armorTuple.Item1) != ArmorType.None) {
+            if ((armor.GetArmorType() & _armorTuple.Item1) != ArmorType.None) {
               TakeOffUsedEquipment(_armorTuple.Item2);
               SetIdForArmorTuple();
               SetTextForArmorTuple(productSO.GetProductName());
               SetUsedEquipmentDataForArmor();
             }
 
-            if ((armor.armorType & _shieldTuple.Item1) != ArmorType.None) {
+            if ((armor.GetArmorType() & _shieldTuple.Item1) != ArmorType.None) {
               TakeOffUsedEquipment(_shieldTuple.Item2);
               SetIdForShieldTuple();
               SetTextForShieldTuple(productSO.GetProductName());
@@ -315,11 +314,11 @@ namespace Core.Mono.Scenes.CharacterList {
           break;
         case ProductSO.ProductType.Armor:
           var armor = productSO.GetItem() as ArmorSO;
-          if ((armor.armorType & _armorTuple.Item1) != ArmorType.None) {
+          if ((armor.GetArmorType() & _armorTuple.Item1) != ArmorType.None) {
             SetTextForArmorTuple(productSO.GetProductName());
           }
 
-          if ((armor.armorType & _shieldTuple.Item1) != ArmorType.None) {
+          if ((armor.GetArmorType() & _shieldTuple.Item1) != ArmorType.None) {
             SetTextForShieldTuple(productSO.GetProductName());
           }
 

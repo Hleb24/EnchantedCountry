@@ -1,6 +1,11 @@
 using Core.Main.Character;
 using Core.Main.Dice;
-using Core.Support.Data;
+using Core.Support.Data.ClassType;
+using Core.Support.Data.DiceRoll;
+using Core.Support.Data.Equipment;
+using Core.Support.Data.GamePonts;
+using Core.Support.Data.RiskPoints;
+using Core.Support.Data.Wallet;
 using Core.Support.SaveSystem.SaveManagers;
 using Zenject;
 

@@ -1,5 +1,4 @@
-﻿using Core.Support.Data;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace Core.Main.Character {
   public class Strength : Quality {

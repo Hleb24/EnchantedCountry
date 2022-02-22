@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
-using Core.SO.Product;
+using Core.SO.ProductObjects;
 using Core.Support.Attributes;
 using Core.Support.SaveSystem.Saver;
 using JetBrains.Annotations;
@@ -21,27 +21,32 @@ namespace Core.SO.Storage {
     [FormerlySerializedAs("itemList"), SerializeField]
     private List<ProductSO> _itemList;
 
-[NotNull]
+    [NotNull]
     public List<ProductSO> GetArmors() {
       return _armorList;
     }
+
     [NotNull]
     public List<ProductSO> GetWeapons() {
       return _weaponList;
     }
+
     [NotNull]
     public List<ProductSO> GetProjectiles() {
       return _projectilesList;
     }
+
     [NotNull]
     public List<ProductSO> GetItems() {
       return _itemList;
     }
+
     [NotNull]
     public List<ProductSO> GetProducts() {
       return _productsList;
     }
-    
+
+    [CanBeNull]
     public ProductSO GetProductFromList(int id) {
       for (var i = 0; i < _productsList.Count; i++) {
         if (_productsList[i].GetId() == id) {
@@ -49,10 +54,11 @@ namespace Core.SO.Storage {
         }
       }
 
-      Debug.LogError("ProductSO not found!");
+      Debug.LogError($"Товар с id {id} не найден!");
       return null;
     }
 
+    [CanBeNull]
     public ProductSO GetArmorFromList(int id) {
       for (var i = 0; i < _armorList.Count; i++) {
         if (_armorList[i].GetId() == id) {
@@ -60,10 +66,11 @@ namespace Core.SO.Storage {
         }
       }
 
-      Debug.LogError("ProductSO not found!");
+      Debug.LogError($"Товар с id {id} не найден!");
       return null;
     }
 
+    [CanBeNull]
     public ProductSO GetWeaponFromList(int id) {
       for (var i = 0; i < _weaponList.Count; i++) {
         if (_weaponList[i].GetId() == id) {
@@ -71,10 +78,11 @@ namespace Core.SO.Storage {
         }
       }
 
-      Debug.LogError("ProductSO not found!");
+      Debug.LogError($"Товар с id {id} не найден!");
       return null;
     }
 
+    [CanBeNull]
     public ProductSO GetProjectilesFromList(int id) {
       for (var i = 0; i < _projectilesList.Count; i++) {
         if (_projectilesList[i].GetId() == id) {
@@ -82,10 +90,11 @@ namespace Core.SO.Storage {
         }
       }
 
-      Debug.LogError("ProductSO not found!");
+      Debug.LogError($"Товар с id {id} не найден!");
       return null;
     }
 
+    [CanBeNull]
     public ProductSO GetItemFromList(int id) {
       for (var i = 0; i < _itemList.Count; i++) {
         if (_itemList[i].GetId() == id) {
@@ -93,10 +102,11 @@ namespace Core.SO.Storage {
         }
       }
 
-      Debug.LogError("ProductSO not found!");
+      Debug.LogError($"Товар с id {id} не найден!");
       return null;
     }
 
+    #region SAVE_TO_JSON
     [Button]
     public void SaveArmorToJson() {
       var saver = new JsonSaver();
@@ -136,5 +146,6 @@ namespace Core.SO.Storage {
         saver.Save(_itemList[i], pathToFolder, pathToFile);
       }
     }
+    #endregion
   }
 }

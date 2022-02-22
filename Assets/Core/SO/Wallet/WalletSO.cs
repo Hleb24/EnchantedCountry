@@ -1,4 +1,4 @@
-using Core.Support.Data;
+using Core.Main.Character;
 using UnityEngine;
 using UnityEngine.Assertions;
 

@@ -1,6 +1,6 @@
 using System;
+using Core.Main.GameRule;
 using Core.Mono.MainManagers;
-using Core.Support.Data;
 using TMPro;
 using UnityEngine;
 using Zenject;

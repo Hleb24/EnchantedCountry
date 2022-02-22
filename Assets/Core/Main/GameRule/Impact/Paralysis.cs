@@ -3,7 +3,7 @@ using Core.Main.Dice;
 
 namespace Core.Main.GameRule.Impact {
     [Serializable]
-    public sealed class Paralysis : Impact<ImpactOnRiskPoints> {
+    public sealed class Paralysis : Impact<IImpactOnRiskPoints> {
         #region Constructors
         public Paralysis(ImpactType impactType = ImpactType.Negative,
             string name = "Paralysis", int diceRollValue = 19, int protectiveThrow = 0) : base(impactType, name, diceRollValue, protectiveThrow) { }
@@ -11,7 +11,7 @@ namespace Core.Main.GameRule.Impact {
         #endregion
 
         #region Implementations
-        public override void ImpactAction(ImpactOnRiskPoints impactAction) {
+        public override void ImpactAction(IImpactOnRiskPoints impactAction) {
             int damage = KitOfDice.DicesKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].GetSumRollOfBoxDices();
             impactAction.SetRiskPoints(typeOfImpact, damage, ProtectiveThrow);
         }

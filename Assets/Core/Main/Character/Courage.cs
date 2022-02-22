@@ -1,4 +1,3 @@
-using Core.Support.Data;
 using JetBrains.Annotations;
 
 namespace Core.Main.Character {

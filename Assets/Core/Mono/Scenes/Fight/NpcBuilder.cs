@@ -5,7 +5,7 @@ using Core.Main.Dice;
 using Core.Main.GameRule;
 using Core.Main.GameRule.Impact;
 using Core.Main.NonPlayerCharacters;
-using Core.SO.Impacts;
+using Core.SO.ImpactObjects;
 using Core.SO.Npc;
 using Core.SO.NpcSet;
 using JetBrains.Annotations;
@@ -61,7 +61,7 @@ namespace Core.Mono.Scenes.Fight {
       }
 
       NpcCombatAttributes GetNpcCombatAttributes() {
-        List<Impact<ImpactOnRiskPoints>> listOfImpacts = GetListOfImpacts(npcCombatAttributesModel.Impacts);
+        List<Impact<IImpactOnRiskPoints>> listOfImpacts = GetListOfImpacts(npcCombatAttributesModel.Impacts);
 
         int defaultRiskPoints = npcCombatAttributesModel.DefaultRiskPoints;
         int lifeDice = npcCombatAttributesModel.LifeDice;
@@ -111,9 +111,9 @@ namespace Core.Mono.Scenes.Fight {
     }
 
     [NotNull, ItemNotNull]
-    private List<Impact<ImpactOnRiskPoints>> GetListOfImpacts([NotNull] IEnumerable<int> impactsId) {
-      var impacts = new List<Impact<ImpactOnRiskPoints>>();
-      foreach (Impact<ImpactOnRiskPoints> impact in impactsId.Select(impactId => _impactsSet.GetImpactOnRiskPoints(impactId))) {
+    private List<Impact<IImpactOnRiskPoints>> GetListOfImpacts([NotNull] IEnumerable<int> impactsId) {
+      var impacts = new List<Impact<IImpactOnRiskPoints>>();
+      foreach (Impact<IImpactOnRiskPoints> impact in impactsId.Select(impactId => _impactsSet.GetImpactOnRiskPoints(impactId))) {
         Assert.IsNotNull(impact, nameof(impact));
         impacts.Add(impact);
       }

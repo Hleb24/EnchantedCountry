@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Core.Support.Data;
+using Core.Main.GameRule;
 using JetBrains.Annotations;
 using UnityEngine.Assertions;
 

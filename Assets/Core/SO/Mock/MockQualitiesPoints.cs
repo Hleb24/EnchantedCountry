@@ -1,9 +1,9 @@
-using Core.Support.Data;
+using Core.Main.Character;
 using UnityEngine;
 
 namespace Core.SO.Mock {
   [CreateAssetMenu(menuName = "Mock/QualitiesPoints", fileName = "QualitiesPoints")]
-  public class MockQualitiesPoints : UnityEngine.ScriptableObject, IQualityPoints {
+  public class MockQualitiesPoints : ScriptableObject, IQualityPoints {
     public const string PATH = "Mock/QualitiesPoints";
     [SerializeField]
     private int _strength;

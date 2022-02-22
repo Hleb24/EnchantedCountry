@@ -25,9 +25,9 @@ namespace Core.Mono.Scenes.Fight {
     [SerializeField]
     private List<CardView> _cardViews;
 
-    private List<PlayerCharacter> _playerCharacterList;
+    private List<BaseCharacter> _playerCharacterList;
     private List<NonPlayerCharacter> _npcList;
-    private PlayerCharacter _playerCharacter;
+    private BaseCharacter _baseCharacter;
     private NonPlayerCharacter _nonPlayerCharacter;
 
     private void OnEnable() {
@@ -47,12 +47,12 @@ namespace Core.Mono.Scenes.Fight {
     }
     
     public void SpawnCards() {
-      _playerCharacter = _playerBuilder.PlayerCharacter;
+      _baseCharacter = _playerBuilder.BaseCharacter;
       _nonPlayerCharacter = _npcHolder.NonPlayerCharacter;
       _cardViews = new List<CardView>();
       GameObject cardPlayer = Instantiate(_cardPrefab, _anchorForPlayer);
       _cardViews.Add(cardPlayer.GetComponent<CardView>());
-      _cardViews[0].SetFieldsInCard(_sprites[0], _playerCharacter.Name, _playerCharacter.RiskPoints.GetPoints(), _playerCharacter.Armor.GetArmorClass());
+      _cardViews[0].SetFieldsInCard(_sprites[0], _baseCharacter.Name, _baseCharacter.RiskPoints.GetPoints(), _baseCharacter.Armor.GetArmorClass());
       GameObject cardNpc = Instantiate(_cardPrefab, _anchorForNpc);
       _cardViews.Add(cardNpc.GetComponent<CardView>());
       _cardViews[1].SetFieldsInCard(_sprites[1], _nonPlayerCharacter.GetName(), _nonPlayerCharacter.GetPointsOfRisk(), _nonPlayerCharacter.GetClassOfArmor());

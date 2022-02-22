@@ -19,6 +19,7 @@ namespace Core.SO.WeaponObjects {
     [FormerlySerializedAs("_projectliesSet"), SerializeField]
     private List<WeaponSO> _projectilesSet;
 
+    #region SAVE_TO_JSON
     [Button]
     public void SaveNpcToJson() {
       var saver = new JsonSaver();
@@ -28,5 +29,6 @@ namespace Core.SO.WeaponObjects {
         saver.Save(_weaponSet[i], pathToFolder, pathToFile);
       }
     }
+    #endregion
   }
 }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using Core.Main.Character;
 using Core.Mono.MainManagers;
 using Core.SO.Mock;
-using Core.Support.Data;
 using TMPro;
 using UnityEngine;
 using Zenject;

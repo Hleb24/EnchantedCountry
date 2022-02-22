@@ -15,7 +15,7 @@ namespace Core.Mono.Scenes.Fight {
     private Button _attack;
     [SerializeField]
     private InitiativeController _initiativeController;
-    private PlayerCharacter _playerCharacter;
+    private BaseCharacter _baseCharacter;
     private NonPlayerCharacter _nonPlayerCharacter;
 
     private void OnEnable() {
@@ -37,7 +37,7 @@ namespace Core.Mono.Scenes.Fight {
     }
 
     private void OnInitiativeDiceRollComplete() {
-      _playerCharacter = _initiativeController.PlayerCharacter;
+      _baseCharacter = _initiativeController.BaseCharacter;
       _nonPlayerCharacter = _initiativeController.NonPlayerCharacter;
     }
 
@@ -46,7 +46,7 @@ namespace Core.Mono.Scenes.Fight {
     }
 
     private bool IsPlayerCharacter(IInitiative initiative) {
-      return _playerCharacter == initiative;
+      return _baseCharacter == initiative;
     }
 
     private bool IsNpc(IInitiative initiative) {
@@ -65,13 +65,13 @@ namespace Core.Mono.Scenes.Fight {
     }
 
     private void PlayerTurn() {
-      if (_playerCharacter.MeleeWeapon.NotNull()) {
-        int diceRollValue = GetDiceRollValue(_playerCharacter.GetMeleeAccuracy());
-        Debug.Log($"<color=orange>{_playerCharacter.ClassType}</color>: атака ближним оружием.");
-        float meleeDamage = _playerCharacter.GetMeleeDamage();
-        if (_nonPlayerCharacter.GetDamaged(diceRollValue, meleeDamage, _playerCharacter.MeleeWeapon.GetWeaponId(), _playerCharacter.MeleeWeapon.WeaponType)) {
+      if (_baseCharacter.MeleeWeapon.NotNull()) {
+        int diceRollValue = GetDiceRollValue(_baseCharacter.GetMeleeAccuracy());
+        Debug.Log($"<color=orange>{_baseCharacter.ClassType}</color>: атака ближним оружием.");
+        float meleeDamage = _baseCharacter.GetMeleeDamage();
+        if (_nonPlayerCharacter.GetDamaged(diceRollValue, meleeDamage, _baseCharacter.MeleeWeapon.GetWeaponId(), _baseCharacter.MeleeWeapon.WeaponType)) {
           Debug.Log(
-            $"<color=orange>{_playerCharacter.ClassType}</color>: значения бросков кубика <color=orange>{diceRollValue}</color> - <color=orange>{meleeDamage}</color> урон(а), тип оружия - <color=orange>{_playerCharacter.MeleeWeapon.WeaponType}</color>.");
+            $"<color=orange>{_baseCharacter.ClassType}</color>: значения бросков кубика <color=orange>{diceRollValue}</color> - <color=orange>{meleeDamage}</color> урон(а), тип оружия - <color=orange>{_baseCharacter.MeleeWeapon.WeaponType}</color>.");
           AttackButtonClicked?.Invoke(_nonPlayerCharacter.GetName(), _nonPlayerCharacter.GetPointsOfRisk());
         }
       }
@@ -86,23 +86,23 @@ namespace Core.Mono.Scenes.Fight {
         for (var i = 0; i < _nonPlayerCharacter.GetNumberOfAttack(); i++) {
           int index = i;
           int diceRollValue = GetDiceRollValue(_nonPlayerCharacter.Accuracy());
-          float damage = _nonPlayerCharacter.ToDamage(diceRollValue, _playerCharacter, index);
+          float damage = _nonPlayerCharacter.ToDamage(diceRollValue, _baseCharacter, index);
           Debug.Log($"<color=magenta>{_nonPlayerCharacter.GetName()}</color>: атакует всем одновременно.");
-          if (_playerCharacter.GetDamaged(diceRollValue, damage)) {
+          if (_baseCharacter.GetDamaged(diceRollValue, damage)) {
             Debug.Log(
               $"<color=magenta>{_nonPlayerCharacter.GetName()}</color>: значение броска кубиков <color=magenta>{diceRollValue}</color> - <color=magenta>{damage}</color> урон(а).");
-            AttackButtonClicked?.Invoke(_playerCharacter.Name, _playerCharacter.RiskPoints.GetPoints());
+            AttackButtonClicked?.Invoke(_baseCharacter.Name, _baseCharacter.RiskPoints.GetPoints());
           }
         }
       } else if (_nonPlayerCharacter.IsAttackWithOneWeapon()) {
         int weapon = Random.Range(0, _nonPlayerCharacter.GetNumberOfWeapon());
         int diceRollValue = GetDiceRollValue(_nonPlayerCharacter.Accuracy());
-        float damage = _nonPlayerCharacter.ToDamage(diceRollValue, _playerCharacter, weapon);
+        float damage = _nonPlayerCharacter.ToDamage(diceRollValue, _baseCharacter, weapon);
         Debug.Log($"<color=magenta>{_nonPlayerCharacter.GetName()}</color>: одна атака.");
-        if (_playerCharacter.GetDamaged(diceRollValue, damage)) {
+        if (_baseCharacter.GetDamaged(diceRollValue, damage)) {
           Debug.Log(
             $"<color=magenta>{_nonPlayerCharacter.GetName()}</color>: значение броска кубиков <color=magenta>{diceRollValue}</color> - <color=magenta>{damage}</color> урон(а).");
-          AttackButtonClicked?.Invoke(_playerCharacter.Name, _playerCharacter.RiskPoints.GetPoints());
+          AttackButtonClicked?.Invoke(_baseCharacter.Name, _baseCharacter.RiskPoints.GetPoints());
         }
       }
     }

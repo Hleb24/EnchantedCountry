@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Core.Support.Data;
+using Core.Main.Character;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Core.Main.GameRule;
-using Core.SO.Product;
+using Core.SO.ProductObjects;
 using UnityEngine;
 using UnityEngine.Serialization;
 
