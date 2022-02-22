@@ -13,18 +13,20 @@ namespace Core.Mono.Scenes.CharacterList {
     [SerializeField]
     private Image _background;
     private bool _isCurrentLevel;
+
     public void SetTextFields(int level, int gamePoints, int spellLevel, bool isCurrentLevel = false) {
       SetLevelText(level);
       SetGamePointsText(gamePoints);
       SetSpellLevelText(spellLevel);
       SetColorForBackground(isCurrentLevel);
     }
+
     public void SetTextFields(int level, int gamePoints, bool isCurrentLevel = false) {
       SetLevelText(level);
       SetGamePointsText(gamePoints);
       SetColorForBackground(isCurrentLevel);
     }
-    
+
     private void SetGamePointsText(int gamePoints) {
       _numberOfGamePoints.text = gamePoints.ToString();
     }

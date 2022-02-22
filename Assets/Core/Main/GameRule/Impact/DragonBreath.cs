@@ -1,19 +1,20 @@
 ﻿using Core.Main.Dice;
 
 namespace Core.Main.GameRule.Impact {
-    public sealed class DragonBreath : Impact<IImpactOnRiskPoints> {
-        #region Fields
-        #endregion
-        #region Constructors
-        public DragonBreath(ImpactType impactType = ImpactType.Negative,
-            string name = "Dragon Breath", int diceRollValue = 19, int protectiveThrow = 0) : base(impactType, name, diceRollValue, protectiveThrow) { }
+  public sealed class DragonBreath : Impact<IImpactOnRiskPoints> {
+    #region Constructors
+    public DragonBreath(ImpactType impactType = ImpactType.Negative, string name = "Dragon Breath", int diceRollValue = 19, int protectiveThrow = 0) : base(impactType, name,
+      diceRollValue, protectiveThrow) { }
+    #endregion
 
-        #endregion
-        #region Implementations
-        public override void ImpactAction(IImpactOnRiskPoints impactAction) {
-            int damage = KitOfDice.DicesKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].GetSumRollOfBoxDices();
-            impactAction.SetRiskPoints(typeOfImpact, damage, ProtectiveThrow);
-        }
-        #endregion
+    #region Implementations
+    public override void ImpactAction(IImpactOnRiskPoints impactAction) {
+      int damage = KitOfDice.DicesKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].GetSumRollOfBoxDices();
+      impactAction.SetRiskPoints(typeOfImpact, damage, ProtectiveThrow);
     }
+    #endregion
+
+    #region Fields
+    #endregion
+  }
 }

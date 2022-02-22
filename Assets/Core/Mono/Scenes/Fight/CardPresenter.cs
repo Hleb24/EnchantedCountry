@@ -16,7 +16,7 @@ namespace Core.Mono.Scenes.Fight {
     private Transform _anchorForNpc;
     [SerializeField]
     private PlayerBuilder _playerBuilder;
-    [FormerlySerializedAs("_npcBuilder"),SerializeField]
+    [FormerlySerializedAs("_npcBuilder"), SerializeField]
     private NpcHolder _npcHolder;
     [SerializeField]
     private Button _createCards;
@@ -38,14 +38,6 @@ namespace Core.Mono.Scenes.Fight {
       RemoveListeners();
     }
 
-    private void AddListeners() {
-      _createCards.onClick.AddListener(SpawnCards);
-    }
-
-    private void RemoveListeners() {
-      _createCards.onClick.RemoveListener(SpawnCards);
-    }
-    
     public void SpawnCards() {
       _baseCharacter = _playerBuilder.BaseCharacter;
       _nonPlayerCharacter = _npcHolder.NonPlayerCharacter;
@@ -56,6 +48,14 @@ namespace Core.Mono.Scenes.Fight {
       GameObject cardNpc = Instantiate(_cardPrefab, _anchorForNpc);
       _cardViews.Add(cardNpc.GetComponent<CardView>());
       _cardViews[1].SetFieldsInCard(_sprites[1], _nonPlayerCharacter.GetName(), _nonPlayerCharacter.GetPointsOfRisk(), _nonPlayerCharacter.GetClassOfArmor());
+    }
+
+    private void AddListeners() {
+      _createCards.onClick.AddListener(SpawnCards);
+    }
+
+    private void RemoveListeners() {
+      _createCards.onClick.RemoveListener(SpawnCards);
     }
   }
 }

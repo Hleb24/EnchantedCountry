@@ -11,10 +11,6 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
       SetLengthForArray(QualityTypeHandler.NUMBER_OF_QUALITY);
       SetDiceBox();
     }
-    
-    private void SetDiceBox() {
-      _die = new SixSidedDice();
-    }
 
     public void IncreaseQualitiesForWizard() {
       if (LengthIsEqualToPointer(_diceRollValueForQualitiesIncrease)) {
@@ -48,11 +44,13 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
       IncreaseQualitiesForKron();
     }
 
+    private void SetDiceBox() {
+      _die = new SixSidedDice();
+    }
+
     private void SetLengthForArray(int length) {
       _diceRollValueForQualitiesIncrease = new int[length];
     }
-
-    
 
     private int GetValueForWizard(int diceRollValue) {
       switch (diceRollValue) {

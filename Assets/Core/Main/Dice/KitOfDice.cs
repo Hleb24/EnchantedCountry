@@ -7,11 +7,11 @@ namespace Core.Main.Dice {
     private static readonly Dice[] OneTwelveSidedAndOneSixSidedDice = { new TwelveSidedDice(), new SixSidedDice() };
     private static readonly Dice[] FourSixSidedDice = { new SixSidedDice(), new SixSidedDice(), new SixSidedDice(), new SixSidedDice() };
 
-    public static readonly Dictionary<string, DiceBox> DicesKit = new Dictionary<string, DiceBox> {
-      [SetWithOneThreeSidedAndOneSixSidedDice] = new DiceBox(OneThreeSidedAndOneSixSidedDice),
-      [SetWithOneTwelveSidedAndOneSixSidedDice] = new DiceBox(OneTwelveSidedAndOneSixSidedDice),
-      [SetWithFourSixSidedDice] = new DiceBox(FourSixSidedDice),
-      [SetWithOneSixSidedDice] = new DiceBox(OneSixSidedDice)
+    public static readonly Dictionary<string, DiceBox> DicesKit = new() {
+      [SetWithOneThreeSidedAndOneSixSidedDice] = new(OneThreeSidedAndOneSixSidedDice),
+      [SetWithOneTwelveSidedAndOneSixSidedDice] = new(OneTwelveSidedAndOneSixSidedDice),
+      [SetWithFourSixSidedDice] = new(FourSixSidedDice),
+      [SetWithOneSixSidedDice] = new(OneSixSidedDice)
     };
 
     public const string SetWithOneThreeSidedAndOneSixSidedDice = "SetWithOneThreeSidedAndOneSixSidedDice";

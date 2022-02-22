@@ -4,6 +4,9 @@ namespace Core.Main.NonPlayerCharacters.Variants {
   public class Quant : NonPlayerCharacter {
     private static int _numberOfSuccessHit;
 
+    public Quant([NotNull] NpcMetadata npcMetadata, [NotNull] NpcMorality npcMorality, [NotNull] NpcCombatAttributes npcCombatAttributes, [NotNull] NpcEquipments npcEquipments) :
+      base(npcMetadata, npcMorality, npcCombatAttributes, npcEquipments) { }
+
     protected override float WeaponsDamage(int weapon = 0) {
       _numberOfSuccessHit++;
       if (_numberOfSuccessHit >= 3) {
@@ -13,7 +16,5 @@ namespace Core.Main.NonPlayerCharacters.Variants {
 
       return 0;
     }
-
-    public Quant([NotNull] NpcMetadata npcMetadata, [NotNull] NpcMorality npcMorality, [NotNull] NpcCombatAttributes npcCombatAttributes, [NotNull] NpcEquipments npcEquipments) : base(npcMetadata, npcMorality, npcCombatAttributes, npcEquipments) { }
   }
 }

@@ -5,25 +5,25 @@ using UnityEngine;
 
 namespace Core.Support.SaveSystem.SaveManagers {
   /// <summary>
-  /// Класс для разрешения зависимостей с использованием классов реалзизующих интерфейс <see cref="IDealer"/>.
+  ///   Класс для разрешения зависимостей с использованием классов реалзизующих интерфейс <see cref="IDealer" />.
   /// </summary>
   public class Dealers {
     /// <summary>
-    /// Получить метод для разрешения зависимость с использованием конкретной реализацией диллера.
+    ///   Получить метод для разрешения зависимость с использованием конкретной реализацией диллера.
     /// </summary>
     /// <typeparam name="T">Тип зависимости.</typeparam>
     /// <returns>Метод для разрешения зависимости.</returns>
-    public static Func<IDealer, T>Resolve<T>() {
+    public static Func<IDealer, T> Resolve<T>() {
       return d => d.Peek<T>();
     }
   }
-  
+
   /// <summary>
-  /// Интерфейс для диллеров зависимостей.
+  ///   Интерфейс для диллеров зависимостей.
   /// </summary>
   public interface IDealer {
     /// <summary>
-    /// Получить зависимость согласно типу.
+    ///   Получить зависимость согласно типу.
     /// </summary>
     /// <typeparam name="T">Тип зависимости.</typeparam>
     /// <returns>Требуемый экземпляр класса зависимости.</returns>
@@ -33,7 +33,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
   /// <summary>
   ///   Класс доступа к данным сохранений игры.
   /// </summary>
-  public class ScribeDealer: IDealer {
+  public class ScribeDealer : IDealer {
     private static Dictionary<Type, IScribe> _scribes;
 
     /// <summary>

@@ -14,7 +14,6 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
   public class PlayerBuilder : MonoBehaviour {
     [FormerlySerializedAs("_storageObject"), FormerlySerializedAs("_storageSo"), SerializeField]
     private StorageSO _storageSO;
-    private BaseCharacter _baseCharacter;
     [SerializeField]
     private Button _createPlayer;
     [SerializeField]
@@ -54,9 +53,9 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     }
 
     private void BuildPlayer() {
-      _baseCharacter = new BaseCharacter(GetQualities(), GetCharacterType(), GetLevels(), GetGamePoints(), GetRiskPoints(), GetWallet(), GetEquipmentsOfCharacter(),
+      BaseCharacter = new BaseCharacter(GetQualities(), GetCharacterType(), GetLevels(), GetGamePoints(), GetRiskPoints(), GetWallet(), GetEquipmentsOfCharacter(),
         GetEquipmentsUsed(), GetArmor(), GetShield(), GetRangeWeapon(), GetMeleeWeapon(), GetProjectiles());
-      Debug.LogWarning("Player create " + _baseCharacter.NotNull());
+      Debug.LogWarning("Player create " + BaseCharacter.NotNull());
     }
 
     private async void WaitLoad() {
@@ -170,10 +169,6 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
       return characterQualities;
     }
 
-    public BaseCharacter BaseCharacter {
-      get {
-        return _baseCharacter;
-      }
-    }
+    public BaseCharacter BaseCharacter { get; private set; }
   }
 }

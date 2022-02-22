@@ -13,22 +13,12 @@ using Core.Support.Data.Wallet;
 using Core.Support.SaveSystem.Scribe;
 
 namespace Core.Support.SaveSystem.SaveManagers {
-
-  
   /// <summary>
   ///   Класс игровых сохранений.
   /// </summary>
   [Serializable]
   public class Scrolls {
-    public DiceRollDataScroll DiceRollDataScroll;
-    public EquipmentsDataScroll EquipmentsDataScroll;
-    public EquipmentUsedDataScroll EquipmentUsedDataScroll;
-    public WalletDataScroll WalletDataScroll;
-    public GamePointsDataScroll GamePointsDataScroll;
-    public QualityPointsDataScroll QualityPointsDataScroll;
-    public RiskPointDataScroll RiskPointsDataScroll;
-    public ClassTypeDataScroll ClassTypeDataScroll;
-    public readonly Dictionary<Type, IScribe> _scribes = new Dictionary<Type, IScribe> {
+    public readonly Dictionary<Type, IScribe> _scribes = new() {
       { typeof(IDiceRoll), new DiceRollScribe() },
       { typeof(IEquipment), new EquipmentScribe() },
       { typeof(IEquipmentUsed), new EquipmentUsedScribe() },
@@ -38,6 +28,14 @@ namespace Core.Support.SaveSystem.SaveManagers {
       { typeof(IRiskPoints), new RiskPointsScribe() },
       { typeof(IClassType), new ClassTypeScribe() }
     };
+    public DiceRollDataScroll DiceRollDataScroll;
+    public EquipmentsDataScroll EquipmentsDataScroll;
+    public EquipmentUsedDataScroll EquipmentUsedDataScroll;
+    public WalletDataScroll WalletDataScroll;
+    public GamePointsDataScroll GamePointsDataScroll;
+    public QualityPointsDataScroll QualityPointsDataScroll;
+    public RiskPointDataScroll RiskPointsDataScroll;
+    public ClassTypeDataScroll ClassTypeDataScroll;
 
     /// <summary>
     ///   Создаёт новые сохранённые данные.

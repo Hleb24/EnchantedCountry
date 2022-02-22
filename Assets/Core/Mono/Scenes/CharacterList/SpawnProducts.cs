@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Core.Main.Character;
 using Core.Main.GameRule;
 using Core.SO.Equipment;
 using Core.SO.ProductObjects;

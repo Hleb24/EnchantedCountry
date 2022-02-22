@@ -2,8 +2,8 @@
 
 namespace Core.Main.NonPlayerCharacters {
   public class NpcMetadata {
-    private int _id;
     private readonly string _name;
+    private int _id;
     private string _description;
     private string _property;
     private Alignment _alignment;

@@ -6,12 +6,12 @@ using UnityEngine;
 
 namespace Core.Main.NonPlayerCharacters {
   public class WeaponSet {
-    private Weapon _meleeWeapon;
-    private Weapon _rangeWeapon;
-    private Weapon _projectiles;
     private readonly List<Weapon> _weapons;
     private readonly bool _hasWeapon;
     private readonly int _numberOfWeapon;
+    private Weapon _meleeWeapon;
+    private Weapon _rangeWeapon;
+    private Weapon _projectiles;
 
     public WeaponSet([NotNull, ItemNotNull] List<Weapon> weapons) {
       _weapons = weapons;

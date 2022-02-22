@@ -2,11 +2,11 @@ using System;
 
 namespace Core.Main.GameRule {
   /// <summary>
-  /// Интерфейс для сравнивания инициативы.
+  ///   Интерфейс для сравнивания инициативы.
   /// </summary>
   public interface IInitiative : IComparable<IInitiative> {
     /// <summary>
-    /// Значение инициативы.
+    ///   Значение инициативы.
     /// </summary>
     public int Initiative { get; set; }
   }

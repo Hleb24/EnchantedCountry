@@ -15,13 +15,6 @@ namespace Core.Support.SaveSystem.Saver {
       streamWriter.WriteLine(jsonSave);
     }
 
-    public void Save<T>(T type, string pathToFolder, string pathToFile) {
-      CreateDirectory(pathToFolder);
-      string jsonSave = JsonUtility.ToJson(type, true);
-      using var streamWriter = new StreamWriter(pathToFile);
-      streamWriter.WriteLine(jsonSave);
-    }
-
     public Scrolls Load(out bool isNewGame) {
       var jsonSave = string.Empty;
       try {
@@ -44,6 +37,18 @@ namespace Core.Support.SaveSystem.Saver {
       }
     }
 
+    public void DeleteSave() {
+      File.Delete(_pathToFile);
+      ClearPrefs();
+    }
+
+    public void Save<T>(T type, string pathToFolder, string pathToFile) {
+      CreateDirectory(pathToFolder);
+      string jsonSave = JsonUtility.ToJson(type, true);
+      using var streamWriter = new StreamWriter(pathToFile);
+      streamWriter.WriteLine(jsonSave);
+    }
+
     private void ClearPrefs() {
       PlayerPrefs.DeleteAll();
     }
@@ -53,16 +58,11 @@ namespace Core.Support.SaveSystem.Saver {
         Directory.CreateDirectory(_pathToFolder);
       }
     }
-    
+
     private void CreateDirectory(string pathToFolder) {
       if (!Directory.Exists(pathToFolder)) {
         Directory.CreateDirectory(pathToFolder);
       }
-    }
-
-    public void DeleteSave() {
-      File.Delete(_pathToFile);
-      ClearPrefs();
     }
   }
 }

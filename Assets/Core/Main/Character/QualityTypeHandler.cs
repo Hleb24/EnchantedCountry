@@ -1,6 +1,5 @@
 ﻿namespace Core.Main.Character {
   public class QualityTypeHandler {
-    public const int NUMBER_OF_QUALITY = 5;
     public static bool IsStrength(int index) {
       return (int)QualityType.Strength == index;
     }
@@ -20,6 +19,8 @@
     public static bool IsCourage(int index) {
       return (int)QualityType.Courage == index;
     }
+
+    public const int NUMBER_OF_QUALITY = 5;
 
     public bool IsStrength(QualityType qualityType) {
       return QualityType.Strength == qualityType;

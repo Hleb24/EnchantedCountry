@@ -15,13 +15,6 @@ namespace Core.Mono.Scenes.TrurlsShop {
       (ClassType.Kron, ArmorType.KronArmorKit),
       (ClassType.Gnom, ArmorType.GnomArmorKit)
     };
-    public event Action GetCharacterType;
-    [SerializeField]
-    protected ClassType _classTypeEnum;
-    [SerializeField]
-    protected bool _testCharacterType;
-    protected IStartGame _startGame;
-    private IClassType _classType;
 
     private readonly List<(ClassType, WeaponType)> _weaponKits = new() {
       (ClassType.Warrior, WeaponType.WarriorWeaponKit),
@@ -30,6 +23,13 @@ namespace Core.Mono.Scenes.TrurlsShop {
       (ClassType.Kron, WeaponType.KronWeaponKit),
       (ClassType.Gnom, WeaponType.GnomWeaponKit)
     };
+    public event Action GetCharacterType;
+    [SerializeField]
+    protected ClassType _classTypeEnum;
+    [SerializeField]
+    protected bool _testCharacterType;
+    protected IStartGame _startGame;
+    private IClassType _classType;
 
     protected virtual void Start() {
       TestCharacterType();

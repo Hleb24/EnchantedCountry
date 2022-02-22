@@ -4,6 +4,9 @@ namespace Core.Main.NonPlayerCharacters.Variants {
   public class Danav : NonPlayerCharacter {
     private int _numberOfHands = 6;
 
+    public Danav([NotNull] NpcMetadata npcMetadata, [NotNull] NpcMorality npcMorality, [NotNull] NpcCombatAttributes npcCombatAttributes, [NotNull] NpcEquipments npcEquipments) :
+      base(npcMetadata, npcMorality, npcCombatAttributes, npcEquipments) { }
+
     protected override bool IsHit(int hit) {
       if (hit >= 9 && _numberOfHands != 0) {
         _numberOfHands--;
@@ -16,7 +19,5 @@ namespace Core.Main.NonPlayerCharacters.Variants {
     internal override void PrepareNumberOfAttacks() {
       _npcCombatAttributes.SetNumberOfAttack(_numberOfHands);
     }
-
-    public Danav([NotNull] NpcMetadata npcMetadata, [NotNull] NpcMorality npcMorality, [NotNull] NpcCombatAttributes npcCombatAttributes, [NotNull] NpcEquipments npcEquipments) : base(npcMetadata, npcMorality, npcCombatAttributes, npcEquipments) { }
   }
 }

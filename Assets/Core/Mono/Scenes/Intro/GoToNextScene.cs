@@ -11,7 +11,6 @@ namespace Core.Mono.Scenes.Intro {
     private readonly StartSceneHolder _startSceneHolder;
     private Scene _nextScene;
 
-    
     public GoToNextScene(IStartGame startGame, StartSceneHolder startSceneHolder) {
       _startGame = startGame;
       _startSceneHolder = startSceneHolder;
@@ -31,18 +30,19 @@ namespace Core.Mono.Scenes.Intro {
     }
   }
 
-  public class StartSceneHolder{
+  public class StartSceneHolder {
     private readonly Scene _targetScene;
     private readonly Scene _startScene;
+
     public StartSceneHolder(Scene targetScene, Scene startScene) {
       _targetScene = targetScene;
       _startScene = startScene;
     }
-    
+
     public Scene GetTargetScene() {
       return _targetScene;
     }
-    
+
     public Scene GetStartScene() {
       return _startScene;
     }

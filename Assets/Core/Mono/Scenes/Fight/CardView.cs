@@ -4,12 +4,6 @@ using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.Fight {
   public class CardView : MonoBehaviour {
-    public void SetFieldsInCard(Sprite icon, string nameCard, float riskPoints, int armorClass) {
-      _icon.sprite = icon;
-      _name.text = nameCard;
-      _riskPoints.text = riskPoints.ToString("n2");
-      _armorClass.text = armorClass.ToString("n0");
-    }
     [SerializeField]
     private Image _icon;
     [SerializeField]
@@ -18,6 +12,7 @@ namespace Core.Mono.Scenes.Fight {
     private TMP_Text _riskPoints;
     [SerializeField]
     private TMP_Text _armorClass;
+
     private void OnEnable() {
       AddListeners();
     }
@@ -25,6 +20,14 @@ namespace Core.Mono.Scenes.Fight {
     private void OnDisable() {
       RemoveListeners();
     }
+
+    public void SetFieldsInCard(Sprite icon, string nameCard, float riskPoints, int armorClass) {
+      _icon.sprite = icon;
+      _name.text = nameCard;
+      _riskPoints.text = riskPoints.ToString("n2");
+      _armorClass.text = armorClass.ToString("n0");
+    }
+
     private void AddListeners() {
       CombatController.AttackButtonClicked += OnAttackButtonClicked;
     }

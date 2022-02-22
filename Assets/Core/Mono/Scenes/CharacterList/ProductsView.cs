@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Core.Mono.Scenes.CharacterList {
   public class ProductsView : MonoBehaviour, IPointerClickHandler {
-    private static readonly List<int> ThisProductUnusedList = new List<int>();
+    private static readonly List<int> ThisProductUnusedList = new();
 
     public static event Action<ProductsView> PointerClicked;
     public static event Action<int> ProductSelected;

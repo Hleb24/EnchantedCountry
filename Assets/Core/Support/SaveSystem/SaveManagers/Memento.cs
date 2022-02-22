@@ -26,7 +26,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
   /// </summary>
   public class Memento : IDataInit {
     private static bool StillInitializing { get; set; } = true;
-    private readonly Dictionary<Type, IScribe> _scribesMemento = new Dictionary<Type, IScribe> {
+    private readonly Dictionary<Type, IScribe> _scribesMemento = new() {
       { typeof(IDiceRoll), new DiceRollScribe() },
       { typeof(IEquipment), new EquipmentScribe() },
       { typeof(IEquipmentUsed), new EquipmentUsedScribe() },
@@ -58,11 +58,6 @@ namespace Core.Support.SaveSystem.SaveManagers {
       isNewGame = newGame;
       IsNewGame = isNewGame;
     }
-    
-    /// <summary>
-    /// Это новая игра. Истинна - новая игра, ложь - продолжение с сохранений.
-    /// </summary>
-    public bool IsNewGame { get; private set; }
 
     /// <summary>
     ///   Сохранить всё.
@@ -111,5 +106,10 @@ namespace Core.Support.SaveSystem.SaveManagers {
 
       newGame = isNewGame;
     }
+
+    /// <summary>
+    ///   Это новая игра. Истинна - новая игра, ложь - продолжение с сохранений.
+    /// </summary>
+    public bool IsNewGame { get; private set; }
   }
 }

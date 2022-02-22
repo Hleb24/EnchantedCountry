@@ -26,10 +26,6 @@ namespace Core.Main.NonPlayerCharacters {
       _npcEquipments = npcEquipments;
     }
 
-    public int CompareTo([NotNull] IInitiative other) {
-      return Initiative.CompareTo(other.Initiative);
-    }
-
     void IImpactOnRiskPoints.SetRiskPoints(ImpactType impactType, int points, int protectiveThrow) {
       int playerLuckRoll = KitOfDice.DicesKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].GetSumRollOfBoxDices();
       if (IsProtected()) {
@@ -55,6 +51,10 @@ namespace Core.Main.NonPlayerCharacters {
       }
     }
 
+    public int CompareTo([NotNull] IInitiative other) {
+      return Initiative.CompareTo(other.Initiative);
+    }
+
     public virtual int Accuracy(int index = 0) {
       return _npcEquipments.GetAccuracy(index);
     }
@@ -75,7 +75,7 @@ namespace Core.Main.NonPlayerCharacters {
       return damage;
     }
 
-    public virtual bool GetDamaged(int diceRoll, float damage, int weaponId , WeaponType type , bool isSpell = false) {
+    public virtual bool GetDamaged(int diceRoll, float damage, int weaponId, WeaponType type, bool isSpell = false) {
       if (СanKillIfIsKillOnlySpell(isSpell)) {
         return false;
       }

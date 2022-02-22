@@ -6,8 +6,6 @@ using Core.Main.GameRule;
 using Core.Main.GameRule.Impact;
 using Core.Main.NonPlayerCharacters;
 using Core.SO.ImpactObjects;
-using Core.SO.Npc;
-using Core.SO.NpcSet;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Assertions;

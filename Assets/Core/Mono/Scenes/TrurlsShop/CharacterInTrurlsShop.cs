@@ -1,3 +1,3 @@
 namespace Core.Mono.Scenes.TrurlsShop {
-	public class CharacterInTrurlsShop : CharacterIn { }
+  public class CharacterInTrurlsShop : CharacterIn { }
 }

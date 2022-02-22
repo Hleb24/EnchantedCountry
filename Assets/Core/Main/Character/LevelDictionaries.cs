@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Core.Main.Character {
   public class LevelDictionaries {
-    private static readonly Dictionary<ClassType, List<int>> CharacterLevels = new Dictionary<ClassType, List<int>> {
-      [ClassType.Human] = new List<int> {
+    private static readonly Dictionary<ClassType, List<int>> CharacterLevels = new() {
+      [ClassType.Human] = new() {
         0,
         1_000,
         2_000,
@@ -20,7 +20,7 @@ namespace Core.Main.Character {
         11_000,
         12_000
       },
-      [ClassType.Warrior] = new List<int> {
+      [ClassType.Warrior] = new() {
         0,
         2_000,
         4_000,
@@ -35,7 +35,7 @@ namespace Core.Main.Character {
         20_000,
         25_000
       },
-      [ClassType.Elf] = new List<int> {
+      [ClassType.Elf] = new() {
         0,
         2_000,
         4_000,
@@ -50,7 +50,7 @@ namespace Core.Main.Character {
         21_000,
         26_000
       },
-      [ClassType.Wizard] = new List<int> {
+      [ClassType.Wizard] = new() {
         0,
         500,
         1_000,
@@ -65,7 +65,7 @@ namespace Core.Main.Character {
         12_000,
         15_000
       },
-      [ClassType.Kron] = new List<int> {
+      [ClassType.Kron] = new() {
         0,
         1_000,
         2_000,
@@ -80,7 +80,7 @@ namespace Core.Main.Character {
         16_000,
         19_000
       },
-      [ClassType.Gnom] = new List<int> {
+      [ClassType.Gnom] = new() {
         0,
         1_400,
         2_300,
@@ -96,22 +96,22 @@ namespace Core.Main.Character {
         23_000
       }
     };
-    private static readonly Dictionary<ClassType, Dictionary<int, int>> CharacterSpellLevels = new Dictionary<ClassType, Dictionary<int, int>> {
-      [ClassType.Human] = new Dictionary<int, int> {
+    private static readonly Dictionary<ClassType, Dictionary<int, int>> CharacterSpellLevels = new() {
+      [ClassType.Human] = new() {
         [3] = 1,
         [6] = 2,
         [8] = 3,
         [10] = 4,
         [12] = 5
       },
-      [ClassType.Warrior] = new Dictionary<int, int> {
+      [ClassType.Warrior] = new() {
         [3] = 1,
         [6] = 2,
         [8] = 3,
         [10] = 4,
         [12] = 5
       },
-      [ClassType.Elf] = new Dictionary<int, int> {
+      [ClassType.Elf] = new() {
         [0] = 1,
         [1] = 2,
         [2] = 3,
@@ -126,7 +126,7 @@ namespace Core.Main.Character {
         [11] = 11,
         [12] = 12
       },
-      [ClassType.Wizard] = new Dictionary<int, int> {
+      [ClassType.Wizard] = new() {
         [1] = 1,
         [2] = 2,
         [3] = 3,
@@ -140,7 +140,7 @@ namespace Core.Main.Character {
         [11] = 11,
         [12] = 12
       },
-      [ClassType.Kron] = new Dictionary<int, int> {
+      [ClassType.Kron] = new() {
         [1] = 1,
         [2] = 2,
         [3] = 3,
@@ -154,7 +154,7 @@ namespace Core.Main.Character {
         [11] = 11,
         [12] = 12
       },
-      [ClassType.Gnom] = new Dictionary<int, int> {
+      [ClassType.Gnom] = new() {
         [1] = 1,
         [3] = 2,
         [5] = 3,

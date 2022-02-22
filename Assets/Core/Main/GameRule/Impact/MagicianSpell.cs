@@ -1,14 +1,14 @@
 ﻿namespace Core.Main.GameRule.Impact {
-    public sealed class MagicianSpell : Impact<IImpactOnRiskPoints> {
-        #region Constructors
-        public MagicianSpell(ImpactType impactType = ImpactType.Negative,
-            string name = "Magician Spell", int diceRollValue = 19, int protectiveThrow = 0) : base(impactType, name, diceRollValue, protectiveThrow) { }
-        #endregion
+  public sealed class MagicianSpell : Impact<IImpactOnRiskPoints> {
+    #region Constructors
+    public MagicianSpell(ImpactType impactType = ImpactType.Negative, string name = "Magician Spell", int diceRollValue = 19, int protectiveThrow = 0) : base(impactType, name,
+      diceRollValue, protectiveThrow) { }
+    #endregion
 
-        #region Implementations
-        public override void ImpactAction(IImpactOnRiskPoints impactAction) {
-            impactAction.SetRiskPoints(typeOfImpact, 0, ProtectiveThrow);
-        }
-        #endregion
+    #region Implementations
+    public override void ImpactAction(IImpactOnRiskPoints impactAction) {
+      impactAction.SetRiskPoints(typeOfImpact, 0, ProtectiveThrow);
     }
+    #endregion
+  }
 }

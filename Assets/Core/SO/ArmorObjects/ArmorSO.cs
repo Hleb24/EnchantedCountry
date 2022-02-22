@@ -18,9 +18,9 @@ namespace Core.SO.ArmorObjects {
     [FormerlySerializedAs("id"), SerializeField]
     private int _id;
 
-    public Main.GameRule.Armor GetArmor() {
+    public Armor GetArmor() {
       var armorClass = new ArmorClass(_armorClass);
-      return new Main.GameRule.Armor(_armorName, armorClass, _armorType, _effectName);
+      return new Armor(_armorName, armorClass, _armorType, _effectName);
     }
 
     [MustUseReturnValue]

@@ -3,6 +3,9 @@ using JetBrains.Annotations;
 
 namespace Core.Main.NonPlayerCharacters.Variants {
   public class BlackDragon : NonPlayerCharacter {
+    public BlackDragon([NotNull] NpcMetadata npcMetadata, [NotNull] NpcMorality npcMorality, [NotNull] NpcCombatAttributes npcCombatAttributes,
+      [NotNull] NpcEquipments npcEquipments) : base(npcMetadata, npcMorality, npcCombatAttributes, npcEquipments) { }
+
     public override bool GetDamaged(int diceRoll, float damage, int weaponId = 100, WeaponType type = WeaponType.None, bool isSpell = false) {
       if ((type & WeaponType.GoldDagger) == WeaponType.GoldDagger) {
         damage += 2f;
@@ -10,7 +13,5 @@ namespace Core.Main.NonPlayerCharacters.Variants {
 
       return base.GetDamaged(diceRoll, damage, weaponId, type, isSpell);
     }
-
-    public BlackDragon([NotNull] NpcMetadata npcMetadata, [NotNull] NpcMorality npcMorality, [NotNull] NpcCombatAttributes npcCombatAttributes, [NotNull] NpcEquipments npcEquipments) : base(npcMetadata, npcMorality, npcCombatAttributes, npcEquipments) { }
   }
 }

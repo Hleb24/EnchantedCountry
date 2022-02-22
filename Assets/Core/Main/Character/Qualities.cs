@@ -24,7 +24,5 @@ namespace Core.Main.Character {
     public int GetPointsOf(QualityType qualityType) {
       return _qualities[qualityType].GetQualityPoints();
     }
-
-    
   }
 }

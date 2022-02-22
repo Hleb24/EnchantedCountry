@@ -141,7 +141,7 @@ namespace Core.Support.Data.Equipment {
       if (equipmentCard is null) {
         return;
       }
-      
+
       equipmentCard.Quantity = newQuantityOfProduct;
     }
 
