@@ -11,11 +11,11 @@ namespace Core.Support.Data.Wallet {
   /// </summary>
   [Serializable]
   public class WalletScribe : IScribe, IWallet {
-    private const int StartMaxCoins = 100;
+    private const int START_MAX_COINS = 100;
     private WalletDataScroll _walletDataScroll;
 
     void IScribe.Init(Scrolls scrolls) {
-      _walletDataScroll = new WalletDataScroll(0, StartMaxCoins);
+      _walletDataScroll = new WalletDataScroll(0, START_MAX_COINS);
       if (scrolls.Null()) {
         return;
       }

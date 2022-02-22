@@ -8,7 +8,7 @@ namespace Core.Main.NonPlayerCharacters.Variants {
     public Cyclops([NotNull] NpcMetadata npcMetadata, [NotNull] NpcMorality npcMorality, [NotNull] NpcCombatAttributes npcCombatAttributes, [NotNull] NpcEquipments npcEquipments) :
       base(npcMetadata, npcMorality, npcCombatAttributes, npcEquipments) { }
 
-    public override bool GetDamaged(int diceRoll, float damage, int weaponId = 100, WeaponType type = WeaponType.None, bool isSpell = false) {
+    public override bool GetDamaged(int diceRoll, float damage, int weaponId, WeaponType type, bool isSpell = false) {
       if ((type & WeaponType.LongBow) == WeaponType.LongBow && diceRoll >= 16 || (type & WeaponType.ShortBow) == WeaponType.ShortBow && diceRoll >= 16) {
         _isBlind = true;
       }

@@ -1,23 +1,19 @@
-using System;
-using UnityEngine;
+using Aberrance.Extensions;
+using UnityEngine.Assertions;
 
 namespace Core.Main.GameRule.Impact {
-  [Serializable]
   public abstract class Impact<T> {
-    [SerializeField]
-    public ImpactType typeOfImpact;
-    [SerializeField]
-    public string impactName;
-    [SerializeField]
-    public int DiceRollValueForInvokeImpact;
-    [SerializeField]
-    public int ProtectiveThrow;
+    protected readonly ImpactType _typeOfImpact;
+    protected readonly int _protectiveThrow;
+    private string _impactName;
+    private int _diceRollValueForInvokeImpact;
 
     protected Impact(ImpactType impactType, string nameOfImpact, int diceRollValueForInvokeImpact, int protectiveThrow) {
-      typeOfImpact = impactType;
-      impactName = nameOfImpact;
-      DiceRollValueForInvokeImpact = diceRollValueForInvokeImpact;
-      ProtectiveThrow = protectiveThrow;
+      Assert.IsTrue(string.IsNullOrEmpty(nameOfImpact).False(), nameof(nameOfImpact));
+      _typeOfImpact = impactType;
+      _impactName = nameOfImpact;
+      _diceRollValueForInvokeImpact = diceRollValueForInvokeImpact;
+      _protectiveThrow = protectiveThrow;
     }
 
     public abstract void ImpactAction(T impactAction);

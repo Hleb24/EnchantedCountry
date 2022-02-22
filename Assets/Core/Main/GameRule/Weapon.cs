@@ -53,13 +53,13 @@ namespace Core.Main.GameRule {
       }
 
       if (IsEdgesEqualToNine(edges)) {
-        DiceBox diceBox = KitOfDice.DicesKit[KitOfDice.SetWithOneThreeSidedAndOneSixSidedDice];
+        DiceBox diceBox = KitOfDice.DicesKit[KitOfDice.SET_WITH_ONE_THREE_SIDED_AND_ONE_SIX_SIDED_DICE];
         int edge = diceBox.GetSumRollOfBoxDices();
         return _attack.GetDamage(edge);
       }
 
       if (IsEdgesEqualToEighteen(edges)) {
-        int edge = KitOfDice.DicesKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].GetSumRollOfBoxDices();
+        int edge = KitOfDice.DicesKit[KitOfDice.SET_WITH_ONE_TWELVE_SIDED_AND_ONE_SIX_SIDED_DICE].GetSumRollOfBoxDices();
         return _attack.GetDamage(edge);
       }
 

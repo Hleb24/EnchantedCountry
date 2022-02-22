@@ -7,7 +7,7 @@ using Core.Support.SaveSystem.Scribe;
 namespace Core.Support.Data.RiskPoints {
   [Serializable]
   public class RiskPointsScribe : IScribe, IRiskPoints {
-    private const int StartRiskPoints = 0;
+    private const int START_RISK_POINTS = 0;
     private RiskPointDataScroll _riskPointDataScroll;
 
     float IRiskPoints.GetRiskPoints() {
@@ -27,7 +27,7 @@ namespace Core.Support.Data.RiskPoints {
     }
 
     void IScribe.Init(Scrolls scrolls) {
-      _riskPointDataScroll = new RiskPointDataScroll(StartRiskPoints);
+      _riskPointDataScroll = new RiskPointDataScroll(START_RISK_POINTS);
       if (scrolls.Null()) {
         return;
       }

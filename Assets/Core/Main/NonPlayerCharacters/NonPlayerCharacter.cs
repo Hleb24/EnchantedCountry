@@ -27,7 +27,7 @@ namespace Core.Main.NonPlayerCharacters {
     }
 
     void IImpactOnRiskPoints.SetRiskPoints(ImpactType impactType, int points, int protectiveThrow) {
-      int playerLuckRoll = KitOfDice.DicesKit[KitOfDice.SetWithOneTwelveSidedAndOneSixSidedDice].GetSumRollOfBoxDices();
+      int playerLuckRoll = KitOfDice.DicesKit[KitOfDice.SET_WITH_ONE_TWELVE_SIDED_AND_ONE_SIX_SIDED_DICE].GetSumRollOfBoxDices();
       if (IsProtected()) {
         return;
       }

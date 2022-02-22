@@ -11,7 +11,7 @@ namespace Core.Support.Data.GamePonts {
   /// </summary>
   [Serializable]
   public class GamePointsScribe : IScribe, IGamePoints {
-    private const int StartGamePoints = 0;
+    private const int START_GAME_POINTS = 0;
     private GamePointsDataScroll _gamePoints;
 
     public bool EnoughGamePoints(int gamePoints) {
@@ -33,7 +33,7 @@ namespace Core.Support.Data.GamePonts {
     }
 
     void IScribe.Init(Scrolls scrolls) {
-      _gamePoints = new GamePointsDataScroll(StartGamePoints);
+      _gamePoints = new GamePointsDataScroll(START_GAME_POINTS);
       if (scrolls.Null()) {
         return;
       }

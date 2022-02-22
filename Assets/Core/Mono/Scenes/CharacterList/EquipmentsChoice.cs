@@ -1,4 +1,5 @@
 using System;
+using Aberrance.Extensions;
 using Core.Main.GameRule;
 using Core.Mono.MainManagers;
 using Core.SO.ArmorObjects;
@@ -7,6 +8,7 @@ using Core.SO.Storage;
 using Core.SO.WeaponObjects;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 using Zenject;
 
@@ -109,12 +111,16 @@ namespace Core.Mono.Scenes.CharacterList {
         return;
       }
 
-      ProductSO productSO = _storage.GetProductFromList(_id) ?? throw new ArgumentNullException("_storage.GetProductFromList(_id)");
+      ProductSO productSO = _storage.GetProductFromList(_id);
+      if (productSO is null) {
+        return;
+      }
+      
       ProductSO.ProductType productType = productSO.GetProductType();
       switch (productType) {
         case ProductSO.ProductType.Weapon:
           if (productSO.GetItem() is WeaponSO weapon) {
-            if ((weapon.weaponType & _oneHandedTuple.Item1) != WeaponType.None) {
+            if ((weapon.GetWeaponType() & _oneHandedTuple.Item1) != WeaponType.None) {
               TakeOffUsedEquipment(_oneHandedTuple.Item2);
               SetIdForOneHandedTuple();
               SetTextForOneHandedTuple(productSO.GetProductName());
@@ -125,7 +131,7 @@ namespace Core.Mono.Scenes.CharacterList {
               SetUsedEquipmentDataForTwoHandedWeapon();
             }
 
-            if ((weapon.weaponType & _twoHandedTuple.Item1) != WeaponType.None) {
+            if ((weapon.GetWeaponType() & _twoHandedTuple.Item1) != WeaponType.None) {
               TakeOffUsedEquipment(_twoHandedTuple.Item2);
               SetIdForTwoHandedTuple();
               SetTextForTwoHandedTuple(productSO.GetProductName());
@@ -140,7 +146,7 @@ namespace Core.Mono.Scenes.CharacterList {
               SetUsedEquipmentDataForOneHandedWeapon();
             }
 
-            if ((weapon.weaponType & _rangeTuple.Item1) != WeaponType.None) {
+            if ((weapon.GetWeaponType() & _rangeTuple.Item1) != WeaponType.None) {
               ChechRangeSetForRangeWeapon(weapon);
               TakeOffUsedEquipment(_rangeTuple.Item2);
               SetIdForRangeTuple();
@@ -148,7 +154,7 @@ namespace Core.Mono.Scenes.CharacterList {
               SetUsedEquipmentDataForRangeWeapon();
             }
 
-            if ((weapon.weaponType & _projectilesTuple.Item1) != WeaponType.None) {
+            if ((weapon.GetWeaponType() & _projectilesTuple.Item1) != WeaponType.None) {
               CheckRangeSetForProjectiles(weapon);
               TakeOffUsedEquipment(_projectilesTuple.Item2);
               SetIdForProjectiliesTuple();
@@ -214,23 +220,23 @@ namespace Core.Mono.Scenes.CharacterList {
         WeaponType rangeType = _storage.GetProductFromList(_rangeTuple.Item2).GetWeaponType();
 
         WeaponType rangeSet = default;
-        if ((weapon.weaponType & WeaponType.SlingSet) != WeaponType.None) {
+        if ((weapon.GetWeaponType() & WeaponType.SlingSet) != WeaponType.None) {
           rangeSet = WeaponType.SlingSet;
         }
 
-        if ((weapon.weaponType & WeaponType.CrossbowSet) != WeaponType.None) {
+        if ((weapon.GetWeaponType() & WeaponType.CrossbowSet) != WeaponType.None) {
           rangeSet = WeaponType.CrossbowSet;
         }
 
-        if ((weapon.weaponType & WeaponType.ShortBowSet) != WeaponType.None) {
+        if ((weapon.GetWeaponType() & WeaponType.ShortBowSet) != WeaponType.None) {
           rangeSet = WeaponType.ShortBowSet;
         }
 
-        if ((weapon.weaponType & WeaponType.LongBowSet) != WeaponType.None) {
+        if ((weapon.GetWeaponType() & WeaponType.LongBowSet) != WeaponType.None) {
           rangeSet = WeaponType.LongBowSet;
         }
 
-        if ((weapon.weaponType & WeaponType.CatapultSet) != WeaponType.None) {
+        if ((weapon.GetWeaponType() & WeaponType.CatapultSet) != WeaponType.None) {
           rangeSet = WeaponType.CatapultSet;
         }
 
@@ -249,23 +255,23 @@ namespace Core.Mono.Scenes.CharacterList {
         WeaponType projetiliesType = _storage.GetProductFromList(_projectilesTuple.Item2).GetWeaponType();
 
         WeaponType rangeSet = default;
-        if ((weapon.weaponType & WeaponType.SlingSet) != WeaponType.None) {
+        if ((weapon.GetWeaponType() & WeaponType.SlingSet) != WeaponType.None) {
           rangeSet = WeaponType.SlingSet;
         }
 
-        if ((weapon.weaponType & WeaponType.CrossbowSet) != WeaponType.None) {
+        if ((weapon.GetWeaponType() & WeaponType.CrossbowSet) != WeaponType.None) {
           rangeSet = WeaponType.CrossbowSet;
         }
 
-        if ((weapon.weaponType & WeaponType.ShortBowSet) != WeaponType.None) {
+        if ((weapon.GetWeaponType() & WeaponType.ShortBowSet) != WeaponType.None) {
           rangeSet = WeaponType.ShortBowSet;
         }
 
-        if ((weapon.weaponType & WeaponType.LongBowSet) != WeaponType.None) {
+        if ((weapon.GetWeaponType() & WeaponType.LongBowSet) != WeaponType.None) {
           rangeSet = WeaponType.LongBowSet;
         }
 
-        if ((weapon.weaponType & WeaponType.CatapultSet) != WeaponType.None) {
+        if ((weapon.GetWeaponType() & WeaponType.CatapultSet) != WeaponType.None) {
           rangeSet = WeaponType.CatapultSet;
         }
 
@@ -295,19 +301,19 @@ namespace Core.Mono.Scenes.CharacterList {
       switch (productType) {
         case ProductSO.ProductType.Weapon:
           var weapon = productSO.GetItem() as WeaponSO;
-          if ((weapon.weaponType & _oneHandedTuple.Item1) != WeaponType.None) {
+          if ((weapon.GetWeaponType() & _oneHandedTuple.Item1) != WeaponType.None) {
             SetTextForOneHandedTuple(productSO.GetProductName());
           }
 
-          if ((weapon.weaponType & _twoHandedTuple.Item1) != WeaponType.None) {
+          if ((weapon.GetWeaponType() & _twoHandedTuple.Item1) != WeaponType.None) {
             SetTextForTwoHandedTuple(productSO.GetProductName());
           }
 
-          if ((weapon.weaponType & _rangeTuple.Item1) != WeaponType.None) {
+          if ((weapon.GetWeaponType() & _rangeTuple.Item1) != WeaponType.None) {
             SetTextForRangeTuple(productSO.GetProductName());
           }
 
-          if ((weapon.weaponType & _projectilesTuple.Item1) != WeaponType.None) {
+          if ((weapon.GetWeaponType() & _projectilesTuple.Item1) != WeaponType.None) {
             SetTextForProjectiliesTuple(productSO.GetProductName());
           }
 

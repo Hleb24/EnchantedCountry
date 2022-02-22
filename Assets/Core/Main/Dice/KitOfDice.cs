@@ -8,15 +8,15 @@ namespace Core.Main.Dice {
     private static readonly Dice[] FourSixSidedDice = { new SixSidedDice(), new SixSidedDice(), new SixSidedDice(), new SixSidedDice() };
 
     public static readonly Dictionary<string, DiceBox> DicesKit = new() {
-      [SetWithOneThreeSidedAndOneSixSidedDice] = new(OneThreeSidedAndOneSixSidedDice),
-      [SetWithOneTwelveSidedAndOneSixSidedDice] = new(OneTwelveSidedAndOneSixSidedDice),
-      [SetWithFourSixSidedDice] = new(FourSixSidedDice),
-      [SetWithOneSixSidedDice] = new(OneSixSidedDice)
+      [SET_WITH_ONE_THREE_SIDED_AND_ONE_SIX_SIDED_DICE] = new(OneThreeSidedAndOneSixSidedDice),
+      [SET_WITH_ONE_TWELVE_SIDED_AND_ONE_SIX_SIDED_DICE] = new(OneTwelveSidedAndOneSixSidedDice),
+      [SET_WITH_FOUR_SIX_SIDED_DICE] = new(FourSixSidedDice),
+      [SET_WITH_ONE_SIX_SIDED_DICE] = new(OneSixSidedDice)
     };
 
-    public const string SetWithOneThreeSidedAndOneSixSidedDice = "SetWithOneThreeSidedAndOneSixSidedDice";
-    public const string SetWithOneTwelveSidedAndOneSixSidedDice = "SetWithOneTwelveSidedAndOneSixSidedDice";
-    public const string SetWithFourSixSidedDice = "SetWithFourSixSidedDice";
-    public const string SetWithOneSixSidedDice = "SetWithOnSixSidedDice";
+    public const string SET_WITH_ONE_THREE_SIDED_AND_ONE_SIX_SIDED_DICE = "SetWithOneThreeSidedAndOneSixSidedDice";
+    public const string SET_WITH_ONE_TWELVE_SIDED_AND_ONE_SIX_SIDED_DICE = "SetWithOneTwelveSidedAndOneSixSidedDice";
+    public const string SET_WITH_FOUR_SIX_SIDED_DICE = "SetWithFourSixSidedDice";
+    public const string SET_WITH_ONE_SIX_SIDED_DICE = "SetWithOnSixSidedDice";
   }
 }

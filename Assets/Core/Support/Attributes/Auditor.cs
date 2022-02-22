@@ -44,11 +44,11 @@ namespace Core.Support.Attributes {
 
     public class PrefsSaver : ISaver {
       [PrefsKeys]
-      private const string NewGame = nameof(NewGame);
+      private const string NEW_GAME = nameof(NEW_GAME);
 
       public void Save(Scrolls scrolls) {
         string json = JsonUtility.ToJson(scrolls);
-        PlayerPrefs.SetString(NewGame, json);
+        PlayerPrefs.SetString(NEW_GAME, json);
         PlayerPrefs.Save();
       }
 
@@ -58,7 +58,7 @@ namespace Core.Support.Attributes {
           return NewSave();
         }
 
-        string json = PlayerPrefs.GetString(NewGame);
+        string json = PlayerPrefs.GetString(NEW_GAME);
         isNewGame = false;
         return JsonUtility.FromJson<Scrolls>(json);
       }
@@ -79,7 +79,7 @@ namespace Core.Support.Attributes {
 
       private bool IsSaveExists {
         get {
-          return PlayerPrefs.HasKey(NewGame);
+          return PlayerPrefs.HasKey(NEW_GAME);
         }
       }
     }

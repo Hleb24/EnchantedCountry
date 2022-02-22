@@ -29,7 +29,7 @@ namespace Core.Main.Dice {
     /// <returns>Значение бросков кубика.</returns>
     [MustUseReturnValue]
     public int GetSumDiceRollForQuality() {
-      DiceBox diceBox = KitOfDice.DicesKit[KitOfDice.SetWithFourSixSidedDice];
+      DiceBox diceBox = KitOfDice.DicesKit[KitOfDice.SET_WITH_FOUR_SIX_SIDED_DICE];
       var dicesRollValues = new List<int>(diceBox.GetNumberOfDicesInBox());
       for (var i = 0; i < diceBox.GetNumberOfDicesInBox(); i++) {
         dicesRollValues.Add(diceBox[i].GetDiceRoll());
@@ -44,7 +44,7 @@ namespace Core.Main.Dice {
     /// <returns>Стартовое количество монет.</returns>
     [MustUseReturnValue]
     public int GetSumDiceRollForCoins() {
-      DiceBox diceBox = KitOfDice.DicesKit[KitOfDice.SetWithFourSixSidedDice];
+      DiceBox diceBox = KitOfDice.DicesKit[KitOfDice.SET_WITH_FOUR_SIX_SIDED_DICE];
       var dicesRollValues = new List<int>(diceBox.GetNumberOfDicesInBox());
       for (var i = 0; i < diceBox.GetNumberOfDicesInBox(); i++) {
         dicesRollValues.Add(diceBox[i].GetDiceRoll());

@@ -4,8 +4,8 @@ using UnityEngine.Assertions;
 
 namespace Core.Main.Dice {
   public sealed class SixSidedDice : Dice {
-    private const int MinEdges = 2;
-    private const int MaxEdges = 6;
+    private const int MIN_EDGES = 2;
+    private const int MAX_EDGES = 6;
 
     public override DiceType DiceType {
       get {
@@ -18,11 +18,11 @@ namespace Core.Main.Dice {
     /// <summary>
     ///   Бросок кости з указаным количеством граней.
     /// </summary>
-    /// <param name="edges">Количество граней. Должно быть в диапазоне от <see cref="MinEdges" /> до <see cref="MaxEdges" />.</param>
+    /// <param name="edges">Количество граней. Должно быть в диапазоне от <see cref="MIN_EDGES" /> до <see cref="MAX_EDGES" />.</param>
     /// <returns>Значение броска кости.</returns>
     [MustUseReturnValue]
     public int GetDiceRollAccordingToEdges(int edges) {
-      Assert.IsTrue(edges >= MinEdges && edges <= MaxEdges, nameof(edges));
+      Assert.IsTrue(edges >= MIN_EDGES && edges <= MAX_EDGES, nameof(edges));
       int randomIndex = Random.Range(0, Edges.Length);
       return edges switch {
                2 when randomIndex <= 2 => 1,

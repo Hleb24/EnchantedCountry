@@ -81,7 +81,7 @@ namespace Core.SO.ProductObjects {
       var weapon = _item as WeaponSO;
       Assert.IsNotNull(weapon, nameof(weapon));
 
-      return weapon.weaponType;
+      return weapon.GetWeaponType();
     }
 
     public ArmorType GetArmorType() {
@@ -113,15 +113,15 @@ namespace Core.SO.ProductObjects {
 
     private void IsWeaponObject() {
       if (_item is WeaponSO w) {
-        if (w.effectName != string.Empty) {
-          string tempName = w.effectName + " " + w.weaponName;
+        if (w.GetEffectName() != string.Empty) {
+          string tempName = w.GetEffectName() + " " + w.GetEffectName();
           _productName = tempName;
         } else {
-          _productName = w.weaponName;
+          _productName = w.GetEffectName();
         }
 
-        _property = w.minDamage + " - " + w.maxDamage;
-        _id = w.id;
+        _property = w.GetMinDamage() + " - " + w.GetMaxDamage();
+        _id = w.GetId();
       }
     }
 
