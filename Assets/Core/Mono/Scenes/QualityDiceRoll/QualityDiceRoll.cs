@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Core.Main.Character;
+using Core.Main.Character.Quality;
 using Core.Main.Dice;
 using UnityEngine;
 using UnityEngine.UI;

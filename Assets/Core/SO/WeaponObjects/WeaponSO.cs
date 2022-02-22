@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Core.Main.GameRule;
+using Core.Main.GameRule.Item;
 using UnityEngine;
 using UnityEngine.Serialization;
 

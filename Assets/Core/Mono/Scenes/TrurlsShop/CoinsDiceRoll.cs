@@ -1,4 +1,4 @@
-using Core.Main.Character;
+using Core.Main.Character.Item;
 using Core.Main.Dice;
 using TMPro;
 using UnityEngine;

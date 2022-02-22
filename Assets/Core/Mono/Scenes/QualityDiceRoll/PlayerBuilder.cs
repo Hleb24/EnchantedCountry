@@ -1,7 +1,13 @@
 using System.Threading.Tasks;
 using Aberrance.Extensions;
 using Core.Main.Character;
-using Core.Main.GameRule;
+using Core.Main.Character.Class;
+using Core.Main.Character.Item;
+using Core.Main.Character.Level;
+using Core.Main.Character.Quality;
+using Core.Main.GameRule.Equipment;
+using Core.Main.GameRule.Item;
+using Core.Main.GameRule.Point;
 using Core.Mono.MainManagers;
 using Core.SO.ProductObjects;
 using Core.SO.Storage;
@@ -72,8 +78,8 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
       return _gamePoints;
     }
 
-    private Level GetLevels() {
-      var levels = new Level(_gamePoints.GetPoints());
+    private BaseLevel GetLevels() {
+      var levels = new BaseLevel(_gamePoints.GetPoints());
       return levels;
     }
 
@@ -85,8 +91,8 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
       return _wallet;
     }
 
-    private EquipmentsOfCharacter GetEquipmentsOfCharacter() {
-      var equipmentsOfCharacter = new EquipmentsOfCharacter(_equipments.GetEquipmentCards());
+    private CharacterEquipments GetEquipmentsOfCharacter() {
+      var equipmentsOfCharacter = new CharacterEquipments(_equipments.GetEquipmentCards());
       return equipmentsOfCharacter;
     }
 

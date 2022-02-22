@@ -1,6 +1,6 @@
 ﻿using System;
 using Aberrance.Extensions;
-using Core.Main.Character;
+using Core.Main.Character.Quality;
 using Core.Support.SaveSystem.SaveManagers;
 using Core.Support.SaveSystem.Scribe;
 using UnityEngine;

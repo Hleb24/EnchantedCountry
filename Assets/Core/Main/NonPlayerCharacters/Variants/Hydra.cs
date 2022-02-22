@@ -1,4 +1,5 @@
 using System;
+using Core.Main.NonPlayerCharacters.Model;
 using JetBrains.Annotations;
 
 namespace Core.Main.NonPlayerCharacters.Variants {

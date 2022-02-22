@@ -1,4 +1,4 @@
-using Core.Main.Character;
+using Core.Main.Character.Level;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;

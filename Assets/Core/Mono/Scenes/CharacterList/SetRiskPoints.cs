@@ -1,5 +1,5 @@
 using System.Globalization;
-using Core.Main.GameRule;
+using Core.Main.GameRule.Point;
 using Core.Mono.MainManagers;
 using Core.Support.PrefsTools;
 using TMPro;

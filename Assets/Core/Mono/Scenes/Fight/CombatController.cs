@@ -2,7 +2,7 @@ using System;
 using Aberrance.Extensions;
 using Core.Main.Character;
 using Core.Main.Dice;
-using Core.Main.GameRule;
+using Core.Main.GameRule.Battle;
 using Core.Main.NonPlayerCharacters;
 using UnityEngine;
 using UnityEngine.UI;

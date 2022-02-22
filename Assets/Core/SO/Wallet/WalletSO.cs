@@ -1,4 +1,4 @@
-using Core.Main.Character;
+using Core.Main.Character.Item;
 using UnityEngine;
 using UnityEngine.Assertions;
 

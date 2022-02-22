@@ -1,5 +1,5 @@
 using System;
-using Core.Main.GameRule;
+using Core.Main.GameRule.Point;
 using Core.Mono.MainManagers;
 using TMPro;
 using UnityEngine;

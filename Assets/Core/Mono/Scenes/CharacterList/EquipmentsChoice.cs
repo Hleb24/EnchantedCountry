@@ -1,6 +1,6 @@
 using System;
-using Aberrance.Extensions;
-using Core.Main.GameRule;
+using Core.Main.GameRule.Equipment;
+using Core.Main.GameRule.Item;
 using Core.Mono.MainManagers;
 using Core.SO.ArmorObjects;
 using Core.SO.ProductObjects;
@@ -8,7 +8,6 @@ using Core.SO.Storage;
 using Core.SO.WeaponObjects;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.UI;
 using Zenject;
 
@@ -115,7 +114,7 @@ namespace Core.Mono.Scenes.CharacterList {
       if (productSO is null) {
         return;
       }
-      
+
       ProductSO.ProductType productType = productSO.GetProductType();
       switch (productType) {
         case ProductSO.ProductType.Weapon:

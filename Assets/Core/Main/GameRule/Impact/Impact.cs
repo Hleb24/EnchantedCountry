@@ -6,7 +6,7 @@ namespace Core.Main.GameRule.Impact {
     protected readonly ImpactType _typeOfImpact;
     protected readonly int _protectiveThrow;
     private string _impactName;
-    private int _diceRollValueForInvokeImpact;
+    private readonly int _diceRollValueForInvokeImpact;
 
     protected Impact(ImpactType impactType, string nameOfImpact, int diceRollValueForInvokeImpact, int protectiveThrow) {
       Assert.IsTrue(string.IsNullOrEmpty(nameOfImpact).False(), nameof(nameOfImpact));
@@ -14,6 +14,10 @@ namespace Core.Main.GameRule.Impact {
       _impactName = nameOfImpact;
       _diceRollValueForInvokeImpact = diceRollValueForInvokeImpact;
       _protectiveThrow = protectiveThrow;
+    }
+
+    public int GetDiceRollValueForInvokeImpact() {
+      return _diceRollValueForInvokeImpact;
     }
 
     public abstract void ImpactAction(T impactAction);

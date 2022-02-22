@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Core.Main.Character;
 using Core.Main.Dice;
-using Core.Main.GameRule;
 using Core.Main.GameRule.Impact;
+using Core.Main.GameRule.Item;
+using Core.Main.GameRule.Point;
 using Core.Main.NonPlayerCharacters;
+using Core.Main.NonPlayerCharacters.Item;
+using Core.Main.NonPlayerCharacters.Model;
+using Core.Main.NonPlayerCharacters.Point;
 using Core.SO.ImpactObjects;
 using JetBrains.Annotations;
 using UnityEngine;

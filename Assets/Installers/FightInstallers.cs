@@ -1,9 +1,15 @@
 using Core.Main.Character;
+using Core.Main.Character.Class;
+using Core.Main.Character.Item;
+using Core.Main.Character.Quality;
 using Core.Main.GameRule;
+using Core.Main.GameRule.Equipment;
+using Core.Main.GameRule.Point;
 using Core.Main.NonPlayerCharacters;
+using Core.Main.NonPlayerCharacters.Item;
 using Core.Mono.Scenes.Fight;
 using Core.SO.ImpactObjects;
-using Core.SO.NpcSet;
+using Core.SO.NpcObjects.NpcSet;
 using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using UnityEngine.Serialization;

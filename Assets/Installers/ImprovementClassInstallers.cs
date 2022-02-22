@@ -1,4 +1,5 @@
 using Core.Main.Character;
+using Core.Main.Character.Quality;
 using Core.Mono.Scenes.QualitiesImprovement;
 using Core.Support.SaveSystem.SaveManagers;
 using Zenject;

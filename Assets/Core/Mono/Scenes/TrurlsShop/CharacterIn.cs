@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Core.Main.Character;
-using Core.Main.GameRule;
+using Core.Main.Character.Class;
+using Core.Main.GameRule.Item;
 using Core.Mono.MainManagers;
 using UnityEngine;
 using Zenject;

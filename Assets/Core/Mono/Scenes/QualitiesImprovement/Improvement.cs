@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Core.Main.Character;
+using Core.Main.Character.Quality;
 using Core.Mono.MainManagers;
 using Core.SO.Mock;
 using TMPro;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Core.Main.GameRule;
+using Core.Main.GameRule.Equipment;
+using Core.Main.GameRule.Item;
 using Core.SO.Equipment;
 using Core.SO.ProductObjects;
 using Core.SO.Storage;

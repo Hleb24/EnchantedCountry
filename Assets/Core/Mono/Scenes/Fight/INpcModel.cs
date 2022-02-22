@@ -1,4 +1,4 @@
-﻿using Core.Main.NonPlayerCharacters;
+﻿using Core.Main.NonPlayerCharacters.Model;
 using JetBrains.Annotations;
 
 namespace Core.Mono.Scenes.Fight {

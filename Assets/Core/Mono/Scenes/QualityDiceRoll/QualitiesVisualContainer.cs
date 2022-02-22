@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Core.Main.Character;
+using Core.Main.Character.Quality;
 using UnityEngine;
 
 namespace Core.Mono.Scenes.QualityDiceRoll {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Aberrance.Extensions;
-using Core.Main.GameRule;
+using Core.Main.GameRule.Equipment;
 using Core.Support.Attributes;
 using JetBrains.Annotations;
 using UnityEngine;

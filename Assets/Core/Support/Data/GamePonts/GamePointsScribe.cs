@@ -1,6 +1,6 @@
 ﻿using System;
 using Aberrance.Extensions;
-using Core.Main.GameRule;
+using Core.Main.GameRule.Point;
 using Core.Support.SaveSystem.SaveManagers;
 using Core.Support.SaveSystem.Scribe;
 using UnityEngine.Assertions;

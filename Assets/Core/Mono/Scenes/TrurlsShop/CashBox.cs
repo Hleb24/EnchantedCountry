@@ -1,7 +1,7 @@
 using System;
 using Aberrance.Extensions;
-using Core.Main.Character;
-using Core.Main.GameRule;
+using Core.Main.Character.Item;
+using Core.Main.GameRule.Equipment;
 using Core.Mono.BaseClass;
 using Core.Mono.MainManagers;
 using Core.SO.Equipment;

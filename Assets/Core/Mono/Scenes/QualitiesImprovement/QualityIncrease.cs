@@ -1,4 +1,4 @@
-using Core.Main.Character;
+using Core.Main.Character.Quality;
 using Core.Main.Dice;
 
 namespace Core.Mono.Scenes.QualitiesImprovement {

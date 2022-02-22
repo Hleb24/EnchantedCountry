@@ -1,7 +1,9 @@
 ﻿using System;
 using Core.Main.Dice;
-using Core.Main.GameRule;
+using Core.Main.GameRule.Battle;
 using Core.Main.GameRule.Impact;
+using Core.Main.GameRule.Item;
+using Core.Main.NonPlayerCharacters.Model;
 using JetBrains.Annotations;
 using UnityEngine.Assertions;
 

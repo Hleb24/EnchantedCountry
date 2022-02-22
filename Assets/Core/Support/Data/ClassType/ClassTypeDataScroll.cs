@@ -5,11 +5,11 @@ namespace Core.Support.Data.ClassType {
   public struct ClassTypeDataScroll {
     public string ClassType;
 
-    public ClassTypeDataScroll(Main.Character.ClassType classType) {
+    public ClassTypeDataScroll(Main.Character.Class.ClassType classType) {
       ClassType = classType.ToString();
     }
 
-    internal void SetClassType(Main.Character.ClassType classType) {
+    internal void SetClassType(Main.Character.Class.ClassType classType) {
       ClassType = classType.ToString();
     }
   }

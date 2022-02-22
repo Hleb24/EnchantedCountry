@@ -1,5 +1,6 @@
 using System;
-using Core.Main.Character;
+using Core.Main.Character.Class;
+using Core.Main.Character.Quality;
 using Core.SO.Mock;
 using UnityEngine;
 using UnityEngine.UI;

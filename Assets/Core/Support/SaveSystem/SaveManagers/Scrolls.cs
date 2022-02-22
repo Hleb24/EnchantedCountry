@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Core.Main.Character;
+using Core.Main.Character.Class;
+using Core.Main.Character.Item;
+using Core.Main.Character.Quality;
 using Core.Main.Dice;
-using Core.Main.GameRule;
+using Core.Main.GameRule.Equipment;
+using Core.Main.GameRule.Point;
 using Core.Support.Data.ClassType;
 using Core.Support.Data.DiceRoll;
 using Core.Support.Data.Equipment;

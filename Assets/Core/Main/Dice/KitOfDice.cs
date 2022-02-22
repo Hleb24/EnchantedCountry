@@ -8,10 +8,10 @@ namespace Core.Main.Dice {
     private static readonly Dice[] FourSixSidedDice = { new SixSidedDice(), new SixSidedDice(), new SixSidedDice(), new SixSidedDice() };
 
     public static readonly Dictionary<string, DiceBox> DicesKit = new() {
-      [SET_WITH_ONE_THREE_SIDED_AND_ONE_SIX_SIDED_DICE] = new(OneThreeSidedAndOneSixSidedDice),
-      [SET_WITH_ONE_TWELVE_SIDED_AND_ONE_SIX_SIDED_DICE] = new(OneTwelveSidedAndOneSixSidedDice),
-      [SET_WITH_FOUR_SIX_SIDED_DICE] = new(FourSixSidedDice),
-      [SET_WITH_ONE_SIX_SIDED_DICE] = new(OneSixSidedDice)
+      [SET_WITH_ONE_THREE_SIDED_AND_ONE_SIX_SIDED_DICE] = new DiceBox(OneThreeSidedAndOneSixSidedDice),
+      [SET_WITH_ONE_TWELVE_SIDED_AND_ONE_SIX_SIDED_DICE] = new DiceBox(OneTwelveSidedAndOneSixSidedDice),
+      [SET_WITH_FOUR_SIX_SIDED_DICE] = new DiceBox(FourSixSidedDice),
+      [SET_WITH_ONE_SIX_SIDED_DICE] = new DiceBox(OneSixSidedDice)
     };
 
     public const string SET_WITH_ONE_THREE_SIDED_AND_ONE_SIX_SIDED_DICE = "SetWithOneThreeSidedAndOneSixSidedDice";

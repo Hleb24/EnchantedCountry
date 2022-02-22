@@ -1,4 +1,4 @@
-using Core.Main.GameRule;
+using Core.Main.GameRule.Item;
 using Core.SO.ArmorObjects;
 using Core.SO.WeaponObjects;
 using UnityEngine;

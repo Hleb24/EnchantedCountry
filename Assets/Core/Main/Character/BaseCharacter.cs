@@ -1,8 +1,15 @@
 using System;
 using Aberrance.Extensions;
+using Core.Main.Character.Class;
+using Core.Main.Character.Item;
+using Core.Main.Character.Level;
+using Core.Main.Character.Quality;
 using Core.Main.Dice;
-using Core.Main.GameRule;
+using Core.Main.GameRule.Battle;
+using Core.Main.GameRule.Equipment;
 using Core.Main.GameRule.Impact;
+using Core.Main.GameRule.Item;
+using Core.Main.GameRule.Point;
 using UnityEngine;
 
 namespace Core.Main.Character {
@@ -14,21 +21,21 @@ namespace Core.Main.Character {
     private readonly Weapon _projectiles;
     public event Action<string> IsDead;
     public string Name = "Kell";
-    private Level _level;
+    private BaseLevel _baseLevel;
     private IGamePoints _gamePoints;
     private IWallet _wallet;
-    private EquipmentsOfCharacter _equipmentsOfCharacter;
+    private CharacterEquipments _characterEquipments;
     private IEquipmentUsed _equipmentsUsed;
 
-    public BaseCharacter(Qualities qualities, ClassType classType, Level level, IGamePoints gamePoints, RiskPoints riskPoints, IWallet wallet,
-      EquipmentsOfCharacter equipmentsOfCharacter, IEquipmentUsed equipmentsUsed, Armor armor, Armor shield, Weapon rangeWeapon, Weapon meleeWeapon, Weapon projectiles) {
+    public BaseCharacter(Qualities qualities, ClassType classType, BaseLevel baseLevel, IGamePoints gamePoints, RiskPoints riskPoints, IWallet wallet,
+      CharacterEquipments characterEquipments, IEquipmentUsed equipmentsUsed, Armor armor, Armor shield, Weapon rangeWeapon, Weapon meleeWeapon, Weapon projectiles) {
       _qualities = qualities;
       ClassType = classType;
-      _level = level;
+      _baseLevel = baseLevel;
       _gamePoints = gamePoints;
       RiskPoints = riskPoints;
       _wallet = wallet;
-      _equipmentsOfCharacter = equipmentsOfCharacter;
+      _characterEquipments = characterEquipments;
       _equipmentsUsed = equipmentsUsed;
       Armor = armor;
       _shield = shield;

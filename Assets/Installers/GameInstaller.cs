@@ -1,5 +1,6 @@
 using Core.Main.Character;
 using Core.Main.Dice;
+using Core.Main.GameRule.Point;
 using Core.Support.Data.ClassType;
 using Core.Support.Data.DiceRoll;
 using Core.Support.Data.Equipment;

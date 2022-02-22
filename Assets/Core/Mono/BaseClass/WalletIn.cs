@@ -1,4 +1,4 @@
-using Core.Main.Character;
+using Core.Main.Character.Item;
 using Core.Mono.MainManagers;
 using Core.SO.Wallet;
 using TMPro;

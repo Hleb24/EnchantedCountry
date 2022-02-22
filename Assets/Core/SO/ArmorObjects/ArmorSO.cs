@@ -1,5 +1,5 @@
 using System;
-using Core.Main.GameRule;
+using Core.Main.GameRule.Item;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Serialization;

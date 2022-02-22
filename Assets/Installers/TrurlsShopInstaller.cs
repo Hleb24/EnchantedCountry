@@ -1,6 +1,9 @@
 using Core.Main.Character;
+using Core.Main.Character.Class;
+using Core.Main.Character.Item;
 using Core.Main.Dice;
 using Core.Main.GameRule;
+using Core.Main.GameRule.Equipment;
 using Core.Support.SaveSystem.SaveManagers;
 using Zenject;
 

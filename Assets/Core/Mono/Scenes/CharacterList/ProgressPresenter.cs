@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Aberrance.Extensions;
-using Core.Main.Character;
+using Core.Main.Character.Class;
+using Core.Main.Character.Level;
 using UnityEngine;
 using UnityEngine.UI;
 

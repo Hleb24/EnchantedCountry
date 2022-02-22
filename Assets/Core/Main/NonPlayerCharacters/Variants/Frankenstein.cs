@@ -1,3 +1,4 @@
+using Core.Main.NonPlayerCharacters.Model;
 using JetBrains.Annotations;
 using UnityEngine;
 

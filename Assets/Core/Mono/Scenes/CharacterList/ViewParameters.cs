@@ -1,5 +1,6 @@
-using Core.Main.Character;
-using Core.Main.GameRule;
+using Core.Main.Character.Quality;
+using Core.Main.GameRule.Equipment;
+using Core.Main.GameRule.Item;
 using Core.SO.ProductObjects;
 using Core.SO.Storage;
 using TMPro;
