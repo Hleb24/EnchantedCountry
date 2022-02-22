@@ -12,38 +12,42 @@ namespace Core.Support.Data.DiceRoll {
   /// </summary>
   [Serializable]
   public class DiceRollScribe : IScribe, IDiceRoll {
-    private readonly int[] _startRollValues = { 0, 0, 0, 0, 0 };
+    public static readonly int[] StartRollValues = { 0, 0, 0, 0, 0 };
     private DiceRollDataScroll _diceRollDataScroll;
 
-    int IDiceRoll.GetStatsRoll(StatRolls statRolls) {
-      // Assert.IsNotNull(_diceRollDataSave.DiceRollValues);
-      return statRolls switch {
-               StatRolls.First => _diceRollDataScroll.GetDiceRollValue((int)StatRolls.First),
-               StatRolls.Second => _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Second),
-               StatRolls.Third => _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Third),
-               StatRolls.Fourth => _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Fourth),
-               StatRolls.Fifth => _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Fifth),
+    public DiceRollScribe(DiceRollDataScroll diceRollDataScroll) {
+      _diceRollDataScroll = diceRollDataScroll;
+    }
+    
+    int IDiceRoll.GetQualitiesRoll(QualityRolls qualityRolls) {
+      Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
+      return qualityRolls switch {
+               QualityRolls.First => _diceRollDataScroll.GetDiceRollValue((int)QualityRolls.First),
+               QualityRolls.Second => _diceRollDataScroll.GetDiceRollValue((int)QualityRolls.Second),
+               QualityRolls.Third => _diceRollDataScroll.GetDiceRollValue((int)QualityRolls.Third),
+               QualityRolls.Fourth => _diceRollDataScroll.GetDiceRollValue((int)QualityRolls.Fourth),
+               QualityRolls.Fifth => _diceRollDataScroll.GetDiceRollValue((int)QualityRolls.Fifth),
                _ => default
              };
     }
 
-    void IDiceRoll.SetStatsRoll(StatRolls statRolls, int value) {
+    void IDiceRoll.SetStatsRoll(QualityRolls qualityRolls, int value) {
       Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
-      switch (statRolls) {
-        case StatRolls.First:
-          _diceRollDataScroll.SetDiceValue((int)StatRolls.First, value);
+      switch (qualityRolls) {
+        case QualityRolls.First:
+          _diceRollDataScroll.SetDiceValue((int)QualityRolls.First, value);
           break;
-        case StatRolls.Second:
-          _diceRollDataScroll.SetDiceValue((int)StatRolls.Second, value);
+        case QualityRolls.Second:
+          _diceRollDataScroll.SetDiceValue((int)QualityRolls.Second, value);
           break;
-        case StatRolls.Third:
-          _diceRollDataScroll.SetDiceValue((int)StatRolls.Third, value);
+        case QualityRolls.Third:
+          _diceRollDataScroll.SetDiceValue((int)QualityRolls.Third, value);
           break;
-        case StatRolls.Fourth:
-          _diceRollDataScroll.SetDiceValue((int)StatRolls.Fourth, value);
+        case QualityRolls.Fourth:
+          _diceRollDataScroll.SetDiceValue((int)QualityRolls.Fourth, value);
           break;
-        case StatRolls.Fifth:
-          _diceRollDataScroll.SetDiceValue((int)StatRolls.Fifth, value);
+        case QualityRolls.Fifth:
+          _diceRollDataScroll.SetDiceValue((int)QualityRolls.Fifth, value);
           break;
         default:
           Debug.LogWarning("Броска характеристики не существует");
@@ -51,31 +55,29 @@ namespace Core.Support.Data.DiceRoll {
       }
     }
 
-    void IDiceRoll.ChangeStatsRoll(StatRolls statRolls, int value) {
-      Debug.LogWarning(_diceRollDataScroll.DiceRollValues == null);
-
+    void IDiceRoll.ChangeStatsRoll(QualityRolls qualityRolls, int value) {
       Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
 
-      switch (statRolls) {
-        case StatRolls.First:
-          value += _diceRollDataScroll.GetDiceRollValue((int)StatRolls.First);
-          _diceRollDataScroll.SetDiceValue((int)StatRolls.First, value);
+      switch (qualityRolls) {
+        case QualityRolls.First:
+          value += _diceRollDataScroll.GetDiceRollValue((int)QualityRolls.First);
+          _diceRollDataScroll.SetDiceValue((int)QualityRolls.First, value);
           break;
-        case StatRolls.Second:
-          value += _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Second);
-          _diceRollDataScroll.SetDiceValue((int)StatRolls.Second, value);
+        case QualityRolls.Second:
+          value += _diceRollDataScroll.GetDiceRollValue((int)QualityRolls.Second);
+          _diceRollDataScroll.SetDiceValue((int)QualityRolls.Second, value);
           break;
-        case StatRolls.Third:
-          value += _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Third);
-          _diceRollDataScroll.SetDiceValue((int)StatRolls.Third, value);
+        case QualityRolls.Third:
+          value += _diceRollDataScroll.GetDiceRollValue((int)QualityRolls.Third);
+          _diceRollDataScroll.SetDiceValue((int)QualityRolls.Third, value);
           break;
-        case StatRolls.Fourth:
-          value += _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Fourth);
-          _diceRollDataScroll.SetDiceValue((int)StatRolls.Fourth, value);
+        case QualityRolls.Fourth:
+          value += _diceRollDataScroll.GetDiceRollValue((int)QualityRolls.Fourth);
+          _diceRollDataScroll.SetDiceValue((int)QualityRolls.Fourth, value);
           break;
-        case StatRolls.Fifth:
-          value += _diceRollDataScroll.GetDiceRollValue((int)StatRolls.Fifth);
-          _diceRollDataScroll.SetDiceValue((int)StatRolls.Fifth, value);
+        case QualityRolls.Fifth:
+          value += _diceRollDataScroll.GetDiceRollValue((int)QualityRolls.Fifth);
+          _diceRollDataScroll.SetDiceValue((int)QualityRolls.Fifth, value);
           break;
       }
     }
@@ -87,7 +89,6 @@ namespace Core.Support.Data.DiceRoll {
 
     int IDiceRoll.GetNumberOfDiceRolls() {
       Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
-      Assert.IsTrue(_diceRollDataScroll.DiceRollValues.Length > 0);
       return _diceRollDataScroll.DiceRollValues.Length;
     }
 
@@ -97,7 +98,7 @@ namespace Core.Support.Data.DiceRoll {
     }
 
     void IScribe.Init(Scrolls scrolls) {
-      _diceRollDataScroll = new DiceRollDataScroll(_startRollValues);
+      _diceRollDataScroll = new DiceRollDataScroll(StartRollValues);
       if (scrolls.Null()) {
         return;
       }

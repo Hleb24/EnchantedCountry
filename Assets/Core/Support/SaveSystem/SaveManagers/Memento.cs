@@ -30,7 +30,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
   public class Memento : IDataInit {
     private static bool StillInitializing { get; set; } = true;
     private readonly Dictionary<Type, IScribe> _scribesMemento = new() {
-      { typeof(IDiceRoll), new DiceRollScribe() },
+      { typeof(IDiceRoll), new DiceRollScribe(new DiceRollDataScroll(DiceRollScribe.StartRollValues)) },
       { typeof(IEquipment), new EquipmentScribe() },
       { typeof(IEquipmentUsed), new EquipmentUsedScribe() },
       { typeof(IWallet), new WalletScribe() },

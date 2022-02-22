@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using Aberrance.Extensions;
 using Core.Main.Character.Quality;
 using Core.Main.Dice;
+using Core.Mono.MainManagers;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -23,10 +26,9 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     private Button _save;
     [SerializeField]
     private Button _load;
-    [SerializeField]
-    private bool _usedGameSave;
     private DiceRollCalculator _diceRollCalculator;
     private IDiceRoll _diceRollData;
+    private IStartGame _startGame;
     private int _numberOfDiceRoll;
     private bool _isNumberOfDiceRollOverlay;
 
@@ -38,10 +40,11 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
       RemoveListener();
     }
 
-    [Inject]
-    public void Constructor(IDiceRoll diceRoll, DiceRollCalculator diceRollCalculator) {
+    [Inject, UsedImplicitly]
+    public void Constructor(IDiceRoll diceRoll, DiceRollCalculator diceRollCalculator, IStartGame startGame) {
       _diceRollData = diceRoll;
       _diceRollCalculator = diceRollCalculator;
+      _startGame = startGame;
     }
 
     private void AddListener() {
@@ -63,22 +66,23 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     }
 
     private void LoadAndSetDiceRollData() {
-      if (_usedGameSave) {
+      if (_startGame.UseGameSave() && _startGame.IsNewGame().False()) {
         SetTextsInListWithSave();
-        SetTextsInListWithSave();
+        _diceRollInfo.RefreshLoadInfo();
+        _numberOfDiceRoll = (int)QualityRolls.Fifth;
+        _isNumberOfDiceRollOverlay = true;
+        _qualitiesSelector.EnableDistribute();
+        return;
       }
 
-      _diceRollInfo.SetValueLoadForInfo();
-      _numberOfDiceRoll = (int)StatRolls.Fifth;
-      _isNumberOfDiceRollOverlay = true;
-      _qualitiesSelector.EnableDistribute();
+      _diceRollInfo.SetMustDiceRollInfo();
     }
 
     private void SetTextsInListWithSave() {
       var diceRollValues = new List<string>();
-      for (var i = 0; i < QualityTypeHandler.NUMBER_OF_QUALITY; i++) {
-        Debug.LogWarning(_diceRollData.GetStatsRoll((StatRolls)i));
-        diceRollValues.Add(_diceRollData.GetStatsRoll((StatRolls)i).ToString());
+      for (var roll = 0; roll < QualityTypeHandler.NUMBER_OF_QUALITY; roll++) {
+        Debug.LogWarning(_diceRollData.GetQualitiesRoll((QualityRolls)roll));
+        diceRollValues.Add(_diceRollData.GetQualitiesRoll((QualityRolls)roll).ToString());
       }
 
       _diceRollInfo.SetDiceRollValuesText(diceRollValues);
@@ -103,7 +107,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     private void ResetValuesOfDiceRoll() {
       _diceRollInfo.ResetTexts();
       for (var i = 0; i < QualityTypeHandler.NUMBER_OF_QUALITY; i++) {
-        _diceRollData.SetStatsRoll((StatRolls)i, 0);
+        _diceRollData.SetStatsRoll((QualityRolls)i, 0);
       }
 
       _numberOfDiceRoll = 0;
@@ -123,27 +127,28 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     private void SetRollValues() {
       _diceRollInfo.SetDiceRollForInfo();
       _valuesWithRollOfDice[_numberOfDiceRoll] = _diceRollCalculator.GetSumDiceRollForQuality();
-      _diceRollData.SetStatsRoll((StatRolls)_numberOfDiceRoll, _valuesWithRollOfDice[_numberOfDiceRoll]);
+      _diceRollData.SetStatsRoll((QualityRolls)_numberOfDiceRoll, _valuesWithRollOfDice[_numberOfDiceRoll]);
       _diceRollInfo.SetDiceRollTextValues(_numberOfDiceRoll, _valuesWithRollOfDice[_numberOfDiceRoll]);
     }
 
     private void OnDistributeValues() {
-      DisableAllButtons();
+      DisableButtonInteractable();
     }
 
     private void OnAllValuesSelected() {
-      DisableAllButtons();
+      DisableButtonInteractable();
     }
 
-    private void DisableAllButtons() {
-      DisableButtonInteractable(_diceRollButton);
-      DisableButtonInteractable(_load);
-      DisableButtonInteractable(_save);
-      DisableButtonInteractable(_reset);
+    private void DisableButtonInteractable() {
+      for (var i = 0; i < Buttons.Length; i++) {
+        Buttons[i].interactable = false;
+      }
     }
 
-    private void DisableButtonInteractable(Button button) {
-      button.interactable = false;
+    private Button[] Buttons {
+      get {
+        return new[] { _diceRollButton, _load, _save, _reset };
+      }
     }
   }
 }

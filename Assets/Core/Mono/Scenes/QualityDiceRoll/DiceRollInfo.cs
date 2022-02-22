@@ -13,12 +13,13 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     private const string SAVE = "Info: save.";
     private const string DICE_ROLL = "Info: dice roll.";
     private const string START_DICE_ROLL_VALUE = "0";
+    private const string SAVES_NOT_FOUND = "Info: save not found.";
     [SerializeField]
     private TMP_Text _info;
     [SerializeField]
     private List<TMP_Text> _diceRollValuesText;
 
-    public void SetValueLoadForInfo() {
+    public void RefreshLoadInfo() {
       _info.text = VALUES_LOAD;
     }
 
@@ -49,6 +50,10 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
 
     public void SetDiceRollTextValues(int index, int diceRollValue) {
       _diceRollValuesText[index].text = diceRollValue.ToString();
+    }
+
+    public void SetMustDiceRollInfo() {
+      _info.text = SAVES_NOT_FOUND;
     }
   }
 }

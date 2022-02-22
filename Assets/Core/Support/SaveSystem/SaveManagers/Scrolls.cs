@@ -22,7 +22,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
   [Serializable]
   public class Scrolls {
     public readonly Dictionary<Type, IScribe> _scribes = new() {
-      { typeof(IDiceRoll), new DiceRollScribe() },
+      { typeof(IDiceRoll), new DiceRollScribe(new DiceRollDataScroll(DiceRollScribe.StartRollValues)) },
       { typeof(IEquipment), new EquipmentScribe() },
       { typeof(IEquipmentUsed), new EquipmentUsedScribe() },
       { typeof(IWallet), new WalletScribe() },

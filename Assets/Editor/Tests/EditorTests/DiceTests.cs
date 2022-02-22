@@ -28,8 +28,8 @@ namespace Editor.Tests.EditorTests {
       yield return (new Dice[] { new SixSidedDice(), new SixSidedDice(), new SixSidedDice(), new SixSidedDice() }, (4, 24));
     }
 
-    private const int NumberOfRepeat = 10;
-    private const int NumberOfRepeatForBoxDicesRoll = 36;
+    private const int NUMBER_OF_REPEAT = 10;
+    private const int NUMBER_OF_REPEAT_FOR_BOX_DICES_ROLL = 36;
 
     [SetUp]
     public void ContainerSetup() {
@@ -39,7 +39,7 @@ namespace Editor.Tests.EditorTests {
       Container.Bind<DiceRollCalculator>().AsSingle();
     }
 
-    [Test, Repeat(NumberOfRepeat)]
+    [Test, Repeat(NUMBER_OF_REPEAT)]
     public void Rolls_of_three_sided_dice() {
       Dice sut = Container.Resolve<ThreeSidedDice>();
 
@@ -48,7 +48,7 @@ namespace Editor.Tests.EditorTests {
       diceRollValue.Should().BeOneOf(0, 2, 3);
     }
 
-    [Test, Repeat(NumberOfRepeat)]
+    [Test, Repeat(NUMBER_OF_REPEAT)]
     public void Rolls_of_six_sided_dice() {
       Dice sut = Container.Resolve<SixSidedDice>();
 
@@ -57,7 +57,7 @@ namespace Editor.Tests.EditorTests {
       diceRollValue.Should().BeInRange(1, 6);
     }
 
-    [Test, Repeat(NumberOfRepeat)]
+    [Test, Repeat(NUMBER_OF_REPEAT)]
     public void Rolls_of_twelve_sided_dice() {
       Dice sut = Container.Resolve<TwelveSidedDice>();
 
@@ -66,7 +66,7 @@ namespace Editor.Tests.EditorTests {
       diceRollValue.Should().BeOneOf(0, 6, 12);
     }
 
-    [Test, Repeat(NumberOfRepeat), TestCaseSource(nameof(GetEdgeAndMinMaxDiceRollValues))]
+    [Test, Repeat(NUMBER_OF_REPEAT), TestCaseSource(nameof(GetEdgeAndMinMaxDiceRollValues))]
     public void Rolls_according_to_edges(int edge, int min, int max) {
       var sut = Container.Resolve<SixSidedDice>();
 
@@ -84,7 +84,7 @@ namespace Editor.Tests.EditorTests {
       numberOfDicesInBox.Should().Be(tuple.numberOfDices);
     }
 
-    [Test, Repeat(NumberOfRepeatForBoxDicesRoll), TestCaseSource(nameof(GetDicesInBoxAndHisMinAndMaxSum))]
+    [Test, Repeat(NUMBER_OF_REPEAT_FOR_BOX_DICES_ROLL), TestCaseSource(nameof(GetDicesInBoxAndHisMinAndMaxSum))]
     public void Sum_of_roll_box_dices((Dice[] dices, (int min, int max) minMaxSum ) box) {
       var sut = new DiceBox(box.dices);
 
@@ -93,7 +93,7 @@ namespace Editor.Tests.EditorTests {
       numberOfDicesInBox.Should().BeInRange(box.minMaxSum.min, box.minMaxSum.max);
     }
 
-    [Test, Repeat(NumberOfRepeatForBoxDicesRoll)]
+    [Test, Repeat(NUMBER_OF_REPEAT_FOR_BOX_DICES_ROLL)]
     public void Roll_dices_for_qualities() {
       var sut = Container.Resolve<DiceRollCalculator>();
 
@@ -102,7 +102,7 @@ namespace Editor.Tests.EditorTests {
       rollForQuality.Should().BeInRange(3, 18);
     }
 
-    [Test, Repeat(NumberOfRepeatForBoxDicesRoll)]
+    [Test, Repeat(NUMBER_OF_REPEAT_FOR_BOX_DICES_ROLL)]
     public void Roll_dices_for_coins() {
       var sut = Container.Resolve<DiceRollCalculator>();
 

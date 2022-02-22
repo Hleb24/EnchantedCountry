@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Core.Support.Data.DiceRoll {
   [Serializable]
@@ -11,11 +12,7 @@ namespace Core.Support.Data.DiceRoll {
     }
 
     public void SetDiceValue(int index, int diceRollValue) {
-      if (DiceRollValues == default) {
-        Debug.LogWarning("Броски характеристик не существуют");
-        return;
-      }
-
+      Assert.IsNotNull(DiceRollValues, nameof(DiceRollValues));
       if (index >= DiceRollValues.Length || index < 0) {
         Debug.LogWarning($"Броска характеристики не существует: индекс {index}, длина массива {DiceRollValues.Length}");
         return;
@@ -25,10 +22,7 @@ namespace Core.Support.Data.DiceRoll {
     }
 
     public int GetDiceRollValue(int index) {
-      if (DiceRollValues == default) {
-        Debug.LogWarning("Броска характеристики не существует");
-        return -1;
-      }
+      Assert.IsNotNull(DiceRollValues, nameof(DiceRollValues));
 
       if (index < DiceRollValues.Length && index >= 0) {
         return DiceRollValues[index];
