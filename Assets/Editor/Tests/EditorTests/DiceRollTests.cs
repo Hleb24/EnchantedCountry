@@ -1,4 +1,5 @@
 using Core.Main.Dice;
+using Core.Support;
 using Core.Support.Data.DiceRoll;
 using FluentAssertions;
 using NUnit.Framework;
@@ -29,7 +30,7 @@ namespace Editor.Tests.EditorTests {
 
       int value = sut.GetDiceRollValue(DiceRollScribe.StartRollValues.Length);
 
-      value.Should().Be(-1);
+      value.Should().Be(Constants.INT_NOT_FOUND);
     }
   }
 }

@@ -29,7 +29,7 @@ namespace Core.Support.Data.DiceRoll {
       }
 
       Debug.LogWarning("Броска характеристики не существует");
-      return -1;
+      return Constants.INT_NOT_FOUND;
     }
   }
 }

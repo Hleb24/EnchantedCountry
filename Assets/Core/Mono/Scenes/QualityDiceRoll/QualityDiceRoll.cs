@@ -5,10 +5,97 @@ using Core.Main.Dice;
 using Core.Mono.MainManagers;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 using Zenject;
 
 namespace Core.Mono.Scenes.QualityDiceRoll {
+  public class DiceRoll {
+    private readonly int[] _valuesWithRollOfDice = new int[QualityTypeHandler.NUMBER_OF_QUALITY];
+    private readonly DiceRollCalculator _diceRollCalculator;
+    private readonly IDiceRoll _diceRollData;
+    private readonly IStartGame _startGame;
+    private QualitiesSelector _qualitiesSelector;
+    private DiceRollInfo _diceRollInfo;
+    private int _numberOfDiceRoll;
+    private bool _isNumberOfDiceRollOverlay;
+
+    public DiceRoll([NotNull] IDiceRoll diceRoll, [NotNull] DiceRollCalculator diceRollCalculator, [NotNull] IStartGame startGame) {
+      Assert.IsNotNull(diceRoll, nameof(diceRoll));
+      Assert.IsNotNull(diceRollCalculator, nameof(diceRollCalculator));
+      Assert.IsNotNull(startGame, nameof(startGame));
+      _diceRollData = diceRoll;
+      _diceRollCalculator = diceRollCalculator;
+      _startGame = startGame;
+    }
+
+    public void LoadAndSetDiceRollData() {
+      if (_startGame.UseGameSave() && _startGame.IsNewGame().False()) {
+        SetTextsInListWithSave();
+        _diceRollInfo.RefreshLoadInfo();
+        _numberOfDiceRoll = (int)QualityRolls.Fifth;
+        _isNumberOfDiceRollOverlay = true;
+        _qualitiesSelector.EnableDistribute();
+        return;
+      }
+
+      _diceRollInfo.SetMustDiceRollInfo();
+    }
+
+    public void SetDiceRollValuesAndIncreaseCount() {
+      if (_isNumberOfDiceRollOverlay) {
+        return;
+      }
+
+      if (AllDiceRollsCompleted()) {
+        _diceRollInfo.SetAllDiceRolledForInfo();
+        _isNumberOfDiceRollOverlay = true;
+        Save();
+        return;
+      }
+
+      SetRollValues();
+      _numberOfDiceRoll++;
+    }
+
+    public void ResetValuesOfDiceRoll() {
+      _diceRollInfo.ResetTexts();
+      for (var i = 0; i < QualityTypeHandler.NUMBER_OF_QUALITY; i++) {
+        _diceRollData.SetStatsRoll((QualityRolls)i, 0);
+      }
+
+      _numberOfDiceRoll = 0;
+      _isNumberOfDiceRollOverlay = false;
+      _qualitiesSelector.DisableUI();
+    }
+
+    private void SetTextsInListWithSave() {
+      var diceRollValues = new List<string>();
+      for (var roll = 0; roll < QualityTypeHandler.NUMBER_OF_QUALITY; roll++) {
+        Debug.LogWarning(_diceRollData.GetQualitiesRoll((QualityRolls)roll));
+        diceRollValues.Add(_diceRollData.GetQualitiesRoll((QualityRolls)roll).ToString());
+      }
+
+      _diceRollInfo.SetDiceRollValuesText(diceRollValues);
+    }
+
+    private void Save() {
+      _qualitiesSelector.EnableDistribute();
+      _diceRollInfo.SetSaveForInfo();
+    }
+
+    private bool AllDiceRollsCompleted() {
+      return _numberOfDiceRoll == QualityTypeHandler.NUMBER_OF_QUALITY;
+    }
+
+    private void SetRollValues() {
+      _diceRollInfo.SetDiceRollForInfo();
+      _valuesWithRollOfDice[_numberOfDiceRoll] = _diceRollCalculator.GetSumDiceRollForQuality();
+      _diceRollData.SetStatsRoll((QualityRolls)_numberOfDiceRoll, _valuesWithRollOfDice[_numberOfDiceRoll]);
+      _diceRollInfo.SetDiceRollTextValues(_numberOfDiceRoll, _valuesWithRollOfDice[_numberOfDiceRoll]);
+    }
+  }
+
   /// <summary>
   ///   Класс отвечает за броски костей для качества.
   /// </summary>
