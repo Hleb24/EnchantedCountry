@@ -52,7 +52,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
       _diceRollValuesText[index].text = diceRollValue.ToString();
     }
 
-    public void SetMustDiceRollInfo() {
+    public void SetSaveNotFound() {
       _info.text = SAVES_NOT_FOUND;
     }
   }
