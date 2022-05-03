@@ -15,6 +15,10 @@ namespace Core.Support.SaveSystem.Saver {
       streamWriter.WriteLine(jsonSave);
     }
 
+    public void SaveOnDestroy(Scrolls scrolls) {
+      throw new NotImplementedException();
+    }
+
     public Scrolls Load(out bool isNewGame) {
       var jsonSave = string.Empty;
       try {

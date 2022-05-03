@@ -80,7 +80,7 @@ namespace Core.Mono.MainManagers {
     }
 
     private void OnApplicationQuit() {
-      _memento.Save();
+      _memento.SaveOnQuit();
     }
 
     private bool StillInitializing { get; set; } = true;

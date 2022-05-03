@@ -70,6 +70,13 @@ namespace Core.Support.SaveSystem.SaveManagers {
     }
 
     /// <summary>
+    ///   Сохранить всё при выходе с игры.
+    /// </summary>
+    public void SaveOnQuit() {
+      _saver.Save(SaveAllOnQuit());
+    }
+
+    /// <summary>
     ///   Удалить сохранения.
     /// </summary>
     public void DeleteSave() {
@@ -95,6 +102,16 @@ namespace Core.Support.SaveSystem.SaveManagers {
 
       foreach (IScribe hollowData in _scribesMemento.Values) {
         hollowData.Save(save);
+      }
+
+      return save;
+    }
+
+    private Scrolls SaveAllOnQuit() {
+      var save = new Scrolls();
+
+      foreach (IScribe hollowData in _scribesMemento.Values) {
+        hollowData.SaveOnQuit(save);
       }
 
       return save;

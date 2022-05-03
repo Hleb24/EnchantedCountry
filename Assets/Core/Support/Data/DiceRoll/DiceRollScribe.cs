@@ -1,6 +1,7 @@
 ﻿using System;
 using Aberrance.Extensions;
 using Core.Main.Dice;
+using Core.Support.Data.Equipment;
 using Core.Support.SaveSystem.SaveManagers;
 using Core.Support.SaveSystem.Scribe;
 using UnityEngine;
@@ -13,12 +14,13 @@ namespace Core.Support.Data.DiceRoll {
   [Serializable]
   public class DiceRollScribe : IScribe, IDiceRoll {
     public static readonly int[] StartRollValues = { 0, 0, 0, 0, 0 };
+    private static DiceRollScribe _originDiceRollScribe;
     private DiceRollDataScroll _diceRollDataScroll;
 
     public DiceRollScribe(DiceRollDataScroll diceRollDataScroll) {
       _diceRollDataScroll = diceRollDataScroll;
     }
-    
+
     int IDiceRoll.GetQualitiesRoll(QualityRolls qualityRolls) {
       Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
       return qualityRolls switch {
@@ -32,6 +34,7 @@ namespace Core.Support.Data.DiceRoll {
     }
 
     void IDiceRoll.SetStatsRoll(QualityRolls qualityRolls, int value) {
+      UpdateLastChanged();
       Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
       switch (qualityRolls) {
         case QualityRolls.First:
@@ -57,7 +60,7 @@ namespace Core.Support.Data.DiceRoll {
 
     void IDiceRoll.ChangeStatsRoll(QualityRolls qualityRolls, int value) {
       Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
-
+      UpdateLastChanged();
       switch (qualityRolls) {
         case QualityRolls.First:
           value += _diceRollDataScroll.GetDiceRollValue((int)QualityRolls.First);
@@ -93,21 +96,53 @@ namespace Core.Support.Data.DiceRoll {
     }
 
     void IDiceRoll.SetDiceRollValues(int[] diceRollValues) {
+      UpdateLastChanged();
       Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
       _diceRollDataScroll.DiceRollValues = diceRollValues;
     }
 
+    public T Clone<T>() {
+      return (T)MemberwiseClone();
+    }
+
+    public T CloneWithTracking<T>() {
+      IsTracking = true;
+      return Clone<T>();
+    }
+
+    public void ReplaceOriginal<T>(T newOriginValue) {
+      if (newOriginValue is DiceRollScribe diceRollScribe) {
+        _originDiceRollScribe = diceRollScribe;
+      }
+    }
+
+    public void ReplaceOriginal() {
+      _originDiceRollScribe = this;
+    }
+
+    void IScribe.SaveOnQuit(Scrolls scrolls) {
+      bool changeOrigin = ScribeHandler.ChangeOrigin(this, this, _originDiceRollScribe);
+      if (changeOrigin) {
+        _originDiceRollScribe = this;
+      }
+
+      IsTracking = false;
+      scrolls.DiceRollDataScroll = _originDiceRollScribe._diceRollDataScroll;
+    }
+
     void IScribe.Init(Scrolls scrolls) {
       _diceRollDataScroll = new DiceRollDataScroll(StartRollValues);
+      UpdateLastChanged();
+      _originDiceRollScribe = this;
       if (scrolls.Null()) {
         return;
       }
 
-      scrolls.DiceRollDataScroll = _diceRollDataScroll;
+      scrolls.DiceRollDataScroll = _originDiceRollScribe._diceRollDataScroll;
     }
 
     void IScribe.Save(Scrolls scrolls) {
-      scrolls.DiceRollDataScroll = _diceRollDataScroll;
+      scrolls.DiceRollDataScroll = _originDiceRollScribe._diceRollDataScroll;
     }
 
     void IScribe.Loaded(Scrolls scrolls) {
@@ -115,6 +150,16 @@ namespace Core.Support.Data.DiceRoll {
       for (var i = 0; i < _diceRollDataScroll.DiceRollValues.Length; i++) {
         Debug.Log(_diceRollDataScroll.DiceRollValues[i]);
       }
+
+      _originDiceRollScribe = this;
     }
+
+    private void UpdateLastChanged() {
+      LastChanged = DateTime.Now;
+    }
+
+    public DateTime LastChanged { get; private set; }
+
+    public bool IsTracking { get; private set; }
   }
 }
