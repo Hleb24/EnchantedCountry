@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Aberrance.Extensions;
 
 namespace Core.Main.NonPlayerCharacters.Model {
   public class NpcMoralityModel {
@@ -11,7 +10,7 @@ namespace Core.Main.NonPlayerCharacters.Model {
       DontRunAway = IsDontRunAway();
 
       bool IsDontRunAway() {
-        return EscapePossibility.Empty();
+        return EscapePossibility.Count == 0;
       }
     }
 

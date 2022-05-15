@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
-using Core.Support.Attributes;
+using Aberrance.UnityEngine.Attributes;
 using Core.Support.SaveSystem.Saver;
 using UnityEngine;
 using UnityEngine.Serialization;

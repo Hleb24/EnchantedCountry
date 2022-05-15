@@ -43,7 +43,7 @@ namespace Core.Main.Character {
       _rangeWeapon = rangeWeapon;
       _projectiles = projectiles;
       _armorClassOfCharacter = new ArmorClass(Armor.GetArmorClass() + _qualities.GetModifierOf(QualityType.Agility));
-      if (_shield.NotNull()) {
+      if (_shield != null) {
         _armorClassOfCharacter = new ArmorClass(Armor.GetArmorClass() + _shield.GetArmorClass() + _qualities.GetModifierOf(QualityType.Agility));
       }
     }
@@ -92,7 +92,7 @@ namespace Core.Main.Character {
     }
 
     public int CompareTo(IInitiative other) {
-      if (other.NotNull()) {
+      if (other.IsNotNull()) {
         return Initiative.CompareTo(other.Initiative);
       }
 
@@ -100,21 +100,21 @@ namespace Core.Main.Character {
     }
 
     public int GetMeleeAccuracy() {
-      if (MeleeWeapon.Null()) {
-        return 0;
-      }
+      // if (MeleeWeapon.Null()) {
+      // return 0;
+      // }
 
       int meleeAccuracy = MeleeWeapon.GetAccuracy();
       return meleeAccuracy + _qualities.GetModifierOf(QualityType.Strength);
     }
 
     public int GetRangeAccuracy() {
-      if (_rangeWeapon.Null()) {
+      if (_rangeWeapon.IsNull()) {
         return 0;
       }
 
       int rangeAccuracy = _rangeWeapon.GetAccuracy();
-      if (_projectiles.Null()) {
+      if (_projectiles.IsNull()) {
         return rangeAccuracy + _qualities.GetModifierOf(QualityType.Agility);
       }
 
@@ -123,7 +123,7 @@ namespace Core.Main.Character {
     }
 
     public float GetMeleeDamage() {
-      if (MeleeWeapon.Null()) {
+      if (MeleeWeapon.IsNull()) {
         return 0;
       }
 
@@ -131,11 +131,11 @@ namespace Core.Main.Character {
     }
 
     public float GetRangeDamage() {
-      if (_rangeWeapon.Null()) {
+      if (_rangeWeapon.IsNull()) {
         return 0;
       }
 
-      if (_projectiles.NotNull()) {
+      if (_projectiles.IsNotNull()) {
         return _rangeWeapon.ToDamage() + _projectiles.ToDamage();
       }
 
@@ -143,7 +143,7 @@ namespace Core.Main.Character {
     }
 
     public virtual bool GetDamaged(int diceRoll, float damage, int weaponId = 100, WeaponType type = WeaponType.None) {
-      if (IsHit(diceRoll).False()) {
+      if (IsHit(diceRoll).IsFalse()) {
         return false;
       }
 

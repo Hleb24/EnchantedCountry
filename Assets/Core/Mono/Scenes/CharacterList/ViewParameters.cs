@@ -8,6 +8,10 @@ using UnityEngine;
 using Zenject;
 
 namespace Core.Mono.Scenes.CharacterList {
+  public enum IdBinding {
+    Equipment
+  }
+
   public class ViewParameters : MonoBehaviour {
     [SerializeField]
     private SpawnProducts _spawnProducts;
@@ -45,7 +49,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     [Inject]
-    public void Constructor(IEquipmentUsed equipmentUsed, Qualities qualities) {
+    public void Constructor([Inject(Id = IdBinding.Equipment)] IEquipmentUsed equipmentUsed, [Inject] Qualities qualities) {
       _equipmentUsed = equipmentUsed;
       _qualities = qualities;
     }

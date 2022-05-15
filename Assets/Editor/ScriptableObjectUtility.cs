@@ -2,7 +2,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace Aberrance.Editor {
+namespace EnchantedCountry.Editor {
   public class ScriptableObjectUtility : MonoBehaviour {
     /// <summary>
     ///   This makes it easy to create, name and place unique new ScriptableObject asset files.

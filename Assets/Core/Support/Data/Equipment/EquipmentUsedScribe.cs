@@ -78,13 +78,13 @@ namespace Core.Support.Data.Equipment {
     public T CloneWithTracking<T>() {
       IsTracking = true;
       Debug.LogWarning("CloneWithTracking");
-      
 
       var clone = Clone<T>();
-      if (_equipmentUsedStack.Contains(clone as EquipmentUsedScribe).False()) {
+      if (_equipmentUsedStack.Contains(clone as EquipmentUsedScribe).IsFalse()) {
         _equipmentUsedStack.Push(clone as EquipmentUsedScribe);
         Debug.LogWarning("Push");
       }
+
       return clone;
     }
 
@@ -100,7 +100,8 @@ namespace Core.Support.Data.Equipment {
 
     void IScribe.SaveOnQuit(Scrolls scrolls) {
       Debug.LogWarning($"Count {_equipmentUsedStack.Count}");
-      foreach (EquipmentUsedScribe equipmentUsedScribe in _equipmentUsedStack) {
+      while (_equipmentUsedStack.Count > 0) {
+        EquipmentUsedScribe equipmentUsedScribe = _equipmentUsedStack.Pop();
         bool changeOrigin = ScribeHandler.ChangeOrigin(equipmentUsedScribe, equipmentUsedScribe, _originEquipmentUsedScribe);
         if (changeOrigin) {
           _originEquipmentUsedScribe = equipmentUsedScribe;
@@ -109,7 +110,8 @@ namespace Core.Support.Data.Equipment {
         equipmentUsedScribe.IsTracking = false;
       }
 
-      _equipmentUsedStack.Clear();
+      Debug.LogWarning($"Count after {_equipmentUsedStack.Count}");
+
       scrolls.EquipmentUsedDataScroll = _originEquipmentUsedScribe._equipmentUsed;
     }
 
@@ -118,7 +120,7 @@ namespace Core.Support.Data.Equipment {
       UpdateLastChanged();
       _originEquipmentUsedScribe = this;
       _equipmentUsedStack.Push(this);
-      if (scrolls.Null()) {
+      if (scrolls.IsNull()) {
         return;
       }
 

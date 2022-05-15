@@ -47,7 +47,7 @@ namespace Core.Support.Data.ClassType {
       _classTypeDataScroll = new ClassTypeDataScroll(START_CLASS);
       UpdateLastChanged();
       _originClassTypeScribe = this;
-      if (scrolls.Null()) {
+      if (scrolls.IsNull()) {
         return;
       }
 
@@ -63,7 +63,7 @@ namespace Core.Support.Data.ClassType {
       if (changeOrigin) {
         _originClassTypeScribe = this;
       }
-      
+
       IsTracking = false;
       scrolls.ClassTypeDataScroll = _originClassTypeScribe._classTypeDataScroll;
     }

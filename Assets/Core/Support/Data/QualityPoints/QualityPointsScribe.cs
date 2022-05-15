@@ -1,5 +1,4 @@
 ﻿using System;
-using Aberrance.Extensions;
 using Core.Main.Character.Quality;
 using Core.Support.Data.Equipment;
 using Core.Support.SaveSystem.SaveManagers;
@@ -108,9 +107,9 @@ namespace Core.Support.Data.QualityPoints {
       _qualityPointsDataScroll = new QualityPointsDataScroll();
       UpdateLastChanged();
       _originQualityPointsScribe = this;
-      if (scrolls.Null()) {
-        return;
-      }
+      // if (scrolls.Null()) {
+      // return;
+      // }
 
       scrolls.QualityPointsDataScroll = _originQualityPointsScribe._qualityPointsDataScroll;
     }

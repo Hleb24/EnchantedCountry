@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Aberrance.Extensions;
+using Aberrance.UnityEngine.Attributes;
 using Core.Main.GameRule.Equipment;
-using Core.Support.Attributes;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -31,7 +31,7 @@ namespace Core.SO.Equipment {
     }
 
     public void IncreaseQuantityOfEquipment(int id, int amount = 1) {
-      if (ProductIdExistsInEquipmentCards(id).False()) {
+      if (ProductIdExistsInEquipmentCards(id).IsFalse()) {
         AddNewEquipmentCard(id, 0);
       }
 
@@ -41,7 +41,7 @@ namespace Core.SO.Equipment {
 
     [Button]
     public void RemoveAllEquipmentCards() {
-      for (int i = _equipmentCards.LastIndex(); i >= 0; i--) {
+      for (int i = _equipmentCards.Count - 1; i >= 0; i--) {
         if (_equipmentCards[i].Id == EquipmentIdConstants.NO_ARMOR_ID) {
           continue;
         }

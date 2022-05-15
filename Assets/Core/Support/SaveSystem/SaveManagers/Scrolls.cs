@@ -16,6 +16,10 @@ using Core.Support.Data.Wallet;
 using Core.Support.SaveSystem.Scribe;
 
 namespace Core.Support.SaveSystem.SaveManagers {
+  public interface ITest<T> {
+    public T type { get; }
+  }
+
   /// <summary>
   ///   Класс игровых сохранений.
   /// </summary>

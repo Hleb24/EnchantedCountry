@@ -16,7 +16,7 @@ namespace Core.Main.NonPlayerCharacters.Item {
     public WeaponSet([NotNull, ItemNotNull] List<Weapon> weapons) {
       _weapons = weapons;
       Debug.LogWarning("Weapons count " + weapons.Count);
-      if (_weapons.Empty()) {
+      if (_weapons.IsEmpty()) {
         return;
       }
 
@@ -57,7 +57,7 @@ namespace Core.Main.NonPlayerCharacters.Item {
     }
 
     private bool WeaponsNotExists(int weaponIndex) {
-      return _weapons.Null() || _weapons.CountLessThanOrEqual(weaponIndex);
+      return _weapons == null || _weapons.Count <= weaponIndex;
     }
   }
 }

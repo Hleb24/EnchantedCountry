@@ -15,10 +15,6 @@ namespace Core.Support.SaveSystem.Saver {
       streamWriter.WriteLine(jsonSave);
     }
 
-    public void SaveOnDestroy(Scrolls scrolls) {
-      throw new NotImplementedException();
-    }
-
     public Scrolls Load(out bool isNewGame) {
       var jsonSave = string.Empty;
       try {
@@ -44,6 +40,10 @@ namespace Core.Support.SaveSystem.Saver {
     public void DeleteSave() {
       File.Delete(_pathToFile);
       ClearPrefs();
+    }
+
+    public void SaveOnDestroy(Scrolls scrolls) {
+      throw new NotImplementedException();
     }
 
     public void Save<T>(T type, string pathToFolder, string pathToFile) {

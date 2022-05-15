@@ -1,5 +1,4 @@
 using System;
-using Aberrance.Extensions;
 using Core.Main.Character;
 using Core.Main.Dice;
 using Core.Main.GameRule.Battle;
@@ -65,7 +64,7 @@ namespace Core.Mono.Scenes.Fight {
     }
 
     private void PlayerTurn() {
-      if (_baseCharacter.MeleeWeapon.NotNull()) {
+      if (_baseCharacter.MeleeWeapon != null) {
         int diceRollValue = GetDiceRollValue(_baseCharacter.GetMeleeAccuracy());
         Debug.Log($"<color=orange>{_baseCharacter.ClassType}</color>: атака ближним оружием.");
         float meleeDamage = _baseCharacter.GetMeleeDamage();

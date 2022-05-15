@@ -1,20 +1,16 @@
-﻿using System;
-using Core.Support.Data.Equipment;
-using UnityEngine;
-
-namespace Core.Main.GameRule.Equipment {
+﻿namespace Core.Main.GameRule.Equipment {
   public interface ICloneable {
-    public bool IsTracking { get; }
     public T Clone<T>();
     public T CloneWithTracking<T>();
     public void ReplaceOriginal<T>(T newOriginValue);
     public void ReplaceOriginal();
+    public bool IsTracking { get; }
   }
-  
+
   /// <summary>
   ///   Интерфейс для работы с экипированым снаряжение.
   /// </summary>
-  public interface IEquipmentUsed: ICloneable {
+  public interface IEquipmentUsed : ICloneable {
     /// <summary>
     ///   Присвоить новое значение индефикатора эикипрированого снаяржения.
     /// </summary>
@@ -28,6 +24,5 @@ namespace Core.Main.GameRule.Equipment {
     /// <param name="type">Тип экиприованого снаряжения.</param>
     /// <returns>Индефикатора эикипрированого снаяржения.</returns>
     public int GetEquipment(EquipmentsUsedId type);
-    
   }
 }

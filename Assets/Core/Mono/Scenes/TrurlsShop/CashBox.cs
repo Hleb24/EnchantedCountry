@@ -56,12 +56,12 @@ namespace Core.Mono.Scenes.TrurlsShop {
       }
 
       _selectedId = id;
-      if (CanBuyProduct(_walletIn.GetCoins(), GetPrice(_selectedId)).False()) {
+      if (CanBuyProduct(_walletIn.GetCoins(), GetPrice(_selectedId)).IsFalse()) {
         DisableInteractableForBuyProductButton();
         return;
       }
 
-      if (_buyProduct.interactable.False()) {
+      if (_buyProduct.interactable.IsFalse()) {
         EnableInteractableForBuyProductButton();
       }
     }

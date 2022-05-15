@@ -67,7 +67,7 @@ namespace Core.Support.Data.GamePonts {
       _gamePoints = new GamePointsDataScroll(START_GAME_POINTS);
       UpdateLastChanged();
       _originGamePointsScribe = this;
-      if (scrolls.Null()) {
+      if (scrolls.IsNull()) {
         return;
       }
 

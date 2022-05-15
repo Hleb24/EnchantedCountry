@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Aberrance.Extensions;
 using Core.Main.Character.Class;
 using Core.Main.Character.Level;
 using UnityEngine;
@@ -79,7 +78,7 @@ namespace Core.Mono.Scenes.CharacterList {
         int level = i;
         bool isCurrentLevel = currentLevel == level;
         int gamePoints = LevelDictionaries.GetGamePointsByCharacterLevel(characterType, level);
-        if (LevelDictionaries.HasSpellLevelInCharacterLevel(characterType, level).False()) {
+        if (!LevelDictionaries.HasSpellLevelInCharacterLevel(characterType, level)) {
           _progressViewList[level].SetTextFields(level, gamePoints, isCurrentLevel);
         } else {
           int spellLevel = LevelDictionaries.GetSpellLevelByCharacterLevel(characterType, level);

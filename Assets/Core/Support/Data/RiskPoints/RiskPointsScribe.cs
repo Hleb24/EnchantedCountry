@@ -64,7 +64,7 @@ namespace Core.Support.Data.RiskPoints {
       _riskPointDataScroll = new RiskPointDataScroll(START_RISK_POINTS);
       UpdateLastChanged();
       _originRiskPointsScribe = this;
-      if (scrolls.Null()) {
+      if (scrolls.IsNull()) {
         return;
       }
 

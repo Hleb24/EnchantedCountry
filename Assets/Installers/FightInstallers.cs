@@ -1,11 +1,8 @@
-using Core.Main.Character;
 using Core.Main.Character.Class;
 using Core.Main.Character.Item;
 using Core.Main.Character.Quality;
-using Core.Main.GameRule;
 using Core.Main.GameRule.Equipment;
 using Core.Main.GameRule.Point;
-using Core.Main.NonPlayerCharacters;
 using Core.Main.NonPlayerCharacters.Item;
 using Core.Mono.Scenes.Fight;
 using Core.SO.ImpactObjects;
@@ -15,15 +12,15 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
 
-namespace Aberrance.Installers {
+namespace EnchantedCountry.Installers {
   public class FightInstallers : MonoInstaller {
     [SerializeField]
     private NpcSetSO _npcSetSO;
-    [FormerlySerializedAs("_npcWeaponSet"),SerializeField]
+    [FormerlySerializedAs("_npcWeaponSet"), SerializeField]
     private NpcWeaponSetSO _npcWeaponSetSO;
     [SerializeField]
     private ImpactsSet _impactsSet;
-    
+
     public override void InstallBindings() {
       Container.Bind<IClassType>().FromResolveGetter(Dealers.Resolve<IClassType>()).AsSingle();
       Container.Bind<IRiskPoints>().FromResolveGetter(Dealers.Resolve<IRiskPoints>()).AsSingle();

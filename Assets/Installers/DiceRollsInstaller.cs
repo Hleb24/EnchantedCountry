@@ -5,7 +5,7 @@ using Core.Support.SaveSystem.SaveManagers;
 using UnityEngine;
 using Zenject;
 
-namespace Aberrance.Installers {
+namespace EnchantedCountry.Installers {
   public class DiceRollsInstaller : MonoInstaller {
     [SerializeField]
     private DiceRollInfo _diceRollInfo;

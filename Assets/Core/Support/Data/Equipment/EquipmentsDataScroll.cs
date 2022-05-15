@@ -57,7 +57,7 @@ namespace Core.Support.Data.Equipment {
     }
 
     internal void IncreaseQuantityOfEquipment(int id, int amount = 1) {
-      if (ProductIdExistsInEquipmentCards(id).False()) {
+      if (ProductIdExistsInEquipmentCards(id).IsFalse()) {
         AddNewEquipmentCard(id, 0);
       }
 

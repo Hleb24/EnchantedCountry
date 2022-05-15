@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Aberrance.Extensions;
 using Core.Main.Character.Quality;
 using Core.Main.Dice;
 using Core.Mono.MainManagers;
@@ -31,7 +30,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     }
 
     public void LoadAndSetDiceRollData() {
-      if (_startGame.UseGameSave() && _startGame.IsNewGame().False()) {
+      if (!_startGame.UseGameSave() && _startGame.IsNewGame()) {
         SetTextsInListWithSave();
         _diceRollInfo.RefreshLoadInfo();
         _numberOfDiceRoll = (int)QualityRolls.Fifth;

@@ -68,7 +68,7 @@ namespace Core.Support.Data.Equipment {
       _equipments = new EquipmentsDataScroll(_startEquipments);
       UpdateLastChanged();
       _originEquipmentScribe = this;
-      if (scrolls.Null()) {
+      if (scrolls.IsNull()) {
         return;
       }
 

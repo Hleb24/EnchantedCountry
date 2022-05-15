@@ -5,11 +5,11 @@ namespace Core.Main.GameRule.Impact {
   public abstract class Impact<T> {
     protected readonly ImpactType _typeOfImpact;
     protected readonly int _protectiveThrow;
-    private string _impactName;
     private readonly int _diceRollValueForInvokeImpact;
+    private string _impactName;
 
     protected Impact(ImpactType impactType, string nameOfImpact, int diceRollValueForInvokeImpact, int protectiveThrow) {
-      Assert.IsTrue(string.IsNullOrEmpty(nameOfImpact).False(), nameof(nameOfImpact));
+      Assert.IsTrue(string.IsNullOrEmpty(nameOfImpact).IsFalse(), nameof(nameOfImpact));
       _typeOfImpact = impactType;
       _impactName = nameOfImpact;
       _diceRollValueForInvokeImpact = diceRollValueForInvokeImpact;

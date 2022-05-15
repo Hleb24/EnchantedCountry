@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
+using Aberrance.UnityEngine.Attributes;
 using Core.SO.ProductObjects;
-using Core.Support.Attributes;
 using Core.Support.SaveSystem.Saver;
 using JetBrains.Annotations;
 using UnityEngine;

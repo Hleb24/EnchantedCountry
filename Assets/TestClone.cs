@@ -1,10 +1,10 @@
+using Aberrance.UnityEngine.Attributes;
 using Core.Main.GameRule.Equipment;
-using Core.Support.Attributes;
 using Core.Support.Data.Equipment;
 using UnityEngine;
 using Zenject;
 
-namespace Aberrance {
+namespace EnchantedCountry {
   public class TestClone : MonoBehaviour {
     public IEquipmentUsed _equipmentUsedClone;
     public IEquipmentUsed _equipmentUsedOrigin;
@@ -16,7 +16,6 @@ namespace Aberrance {
       _equipmentUsedClone = equipmentUsed.Clone<EquipmentUsedScribe>();
     }
 
-    [Button]
     public void ChangeArmor() {
       int armorId = _equipmentUsedOrigin.GetEquipment(EquipmentsUsedId.ArmorId);
       Debug.LogWarning($"Origin armor {_equipmentUsedOrigin.GetEquipment(EquipmentsUsedId.ArmorId)}");

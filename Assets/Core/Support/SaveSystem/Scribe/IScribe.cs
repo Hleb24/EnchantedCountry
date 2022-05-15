@@ -6,7 +6,7 @@ namespace Core.Support.SaveSystem.Scribe {
   /// <summary>
   ///   Интерфейс для записи и загрузки сохранненных данных.
   /// </summary>
-  public interface IScribe: ICloneable {
+  public interface IScribe : ICloneable {
     /// <summary>
     ///   Инициализировать данные сохранений.
     /// </summary>
@@ -30,7 +30,7 @@ namespace Core.Support.SaveSystem.Scribe {
     /// </summary>
     /// <param name="scrolls">Данные сохранений.</param>
     public void Loaded(Scrolls scrolls);
-    
+
     public DateTime LastChanged { get; }
   }
 }

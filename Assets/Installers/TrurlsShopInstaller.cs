@@ -1,13 +1,11 @@
-using Core.Main.Character;
 using Core.Main.Character.Class;
 using Core.Main.Character.Item;
 using Core.Main.Dice;
-using Core.Main.GameRule;
 using Core.Main.GameRule.Equipment;
 using Core.Support.SaveSystem.SaveManagers;
 using Zenject;
 
-namespace Aberrance.Installers {
+namespace EnchantedCountry.Installers {
   public class TrurlsShopInstaller : MonoInstaller {
     public override void InstallBindings() {
       Container.Bind<IWallet>().FromResolveGetter(Dealers.Resolve<IWallet>()).AsSingle();

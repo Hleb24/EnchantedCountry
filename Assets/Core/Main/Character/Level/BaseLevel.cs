@@ -24,7 +24,7 @@ namespace Core.Main.Character.Level {
     }
 
     public void SetCurrentLevel(int newLevel) {
-      if (IsLevelInBorders(newLevel).False()) {
+      if (IsLevelInBorders(newLevel).IsFalse()) {
         Debug.LogWarning($"Новый уровень {newLevel} не входит в диапазон доступных уровней!");
         return;
       }

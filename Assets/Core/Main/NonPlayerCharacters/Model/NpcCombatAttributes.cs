@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Aberrance.Extensions;
 using Core.Main.GameRule.Impact;
 using Core.Main.GameRule.Point;
 using JetBrains.Annotations;
@@ -58,7 +57,7 @@ namespace Core.Main.NonPlayerCharacters.Model {
     }
 
     public bool IsHasImpact() {
-      return _impacts.CountGreaterThan(0);
+      return _impacts.Count > 0;
     }
 
     public int GetNumberOfImpacts() {

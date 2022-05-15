@@ -134,7 +134,7 @@ namespace Core.Support.Data.DiceRoll {
       _diceRollDataScroll = new DiceRollDataScroll(StartRollValues);
       UpdateLastChanged();
       _originDiceRollScribe = this;
-      if (scrolls.Null()) {
+      if (scrolls.IsNull()) {
         return;
       }
 

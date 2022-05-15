@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
+using Aberrance.UnityEngine.Attributes;
 using Core.Main.GameRule.Item;
 using Core.Main.NonPlayerCharacters.Item;
 using Core.SO.WeaponObjects;
-using Core.Support.Attributes;
 using Core.Support.SaveSystem.Saver;
 using JetBrains.Annotations;
 using UnityEngine;

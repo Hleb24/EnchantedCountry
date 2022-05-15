@@ -12,7 +12,7 @@ namespace Core.Main.GameRule.Item {
 
     public Attack([NotNull] List<float> damageList, int accuracy) {
       Assert.IsNotNull(damageList, nameof(damageList));
-      Assert.IsTrue(damageList.NotEmpty(), nameof(damageList));
+      Assert.IsTrue(damageList.IsNotEmpty(), nameof(damageList));
       _damageList = new List<float>(damageList);
       _minDamage = _damageList[0];
       _maxDamage = _damageList[_damageList.LastIndex()];
