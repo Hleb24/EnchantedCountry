@@ -1,4 +1,5 @@
-﻿using System;
+﻿// ReSharper disable once RedundantUsingDirective
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Main.Character.Class;
@@ -7,6 +8,7 @@ using Core.Main.Character.Quality;
 using Core.Main.Dice;
 using Core.Main.GameRule.Equipment;
 using Core.Main.GameRule.Point;
+using Core.Support.Attributes;
 using Core.Support.Data.ClassType;
 using Core.Support.Data.DiceRoll;
 using Core.Support.Data.Equipment;
@@ -93,7 +95,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
 #if UNITY_EDITOR
       _saver ??= new JsonScrollSaver();
 #elif UNITY_ANDROID
-      _saver ??= new Auditor.PrefsSaver();
+      // _saver ??= new Auditor.PrefsSaver();
 #endif
     }
 

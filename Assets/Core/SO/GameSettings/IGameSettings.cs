@@ -27,6 +27,6 @@ namespace Core.SO.GameSettings {
     ///   Получить стартовую сцену.
     /// </summary>
     /// <returns>Стартовая сцена</returns>
-    public Scene GetStartScene();
+    public Scene GetNewGameScene();
   }
 }

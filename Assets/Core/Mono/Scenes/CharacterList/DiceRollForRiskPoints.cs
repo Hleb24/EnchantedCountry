@@ -1,7 +1,6 @@
 using System;
 using Core.Main.Character.Class;
 using Core.Main.Character.Quality;
-using Core.Main.Dice;
 using Core.Main.GameRule.Point;
 using Core.Mono.MainManagers;
 using Core.Support.PrefsTools;
@@ -24,8 +23,8 @@ namespace Core.Mono.Scenes.CharacterList {
     private IStartGame _startGame;
     private IClassType _classType;
     private IRiskPoints _riskPoints;
-    private SixSidedDice _dice;
     private Qualities _qualities;
+    private CharacterClass _characterClass;
     private int _numberOfRiskPoints;
 
     private void Start() {
@@ -54,30 +53,11 @@ namespace Core.Mono.Scenes.CharacterList {
       }
 
       _classTypeEnum = _classType.GetClassType();
+      _characterClass = CharacterClassBuilder.GetCharacterClass(_classTypeEnum);
     }
 
     private int GetDiceRollValueForCharacterType() {
-      _dice = new SixSidedDice();
-      var riskPoints = 0;
-      switch (_classTypeEnum) {
-        case ClassType.Warrior:
-          riskPoints = _dice.GetDiceRollAccordingToEdges(2) + 6;
-          break;
-        case ClassType.Elf:
-          riskPoints = _dice.GetDiceRoll() + 3;
-          break;
-        case ClassType.Wizard:
-          riskPoints = _dice.GetDiceRoll() + 4;
-          break;
-        case ClassType.Kron:
-          riskPoints = _dice.GetDiceRollAccordingToEdges(3) + 4;
-          break;
-        case ClassType.Gnom:
-          riskPoints = _dice.GetDiceRollAccordingToEdges(3) + 5;
-          break;
-      }
-
-      return riskPoints;
+      return _characterClass.GetFirstRiskPoint();
     }
 
     private void OnDiceRollForRiskPointsButtonClicked() {

@@ -1,5 +1,6 @@
 using Core.Mono.BaseClass;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core.SO.GameSettings {
   [CreateAssetMenu(fileName = "GameSettings", menuName = "GameSettings")]
@@ -10,8 +11,8 @@ namespace Core.SO.GameSettings {
     private bool _useGameSave;
     [SerializeField]
     private Scene _targetScene;
-    [SerializeField]
-    private Scene _startScene;
+    [FormerlySerializedAs("_startScene"), SerializeField]
+    private Scene _newGameScene;
 
     public bool StartNewGame() {
       return _startNewGame;
@@ -25,8 +26,8 @@ namespace Core.SO.GameSettings {
       return _targetScene;
     }
 
-    public Scene GetStartScene() {
-      return _startScene;
+    public Scene GetNewGameScene() {
+      return _newGameScene;
     }
   }
 }

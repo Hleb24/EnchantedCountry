@@ -26,7 +26,7 @@ namespace Core.Mono.Scenes.Intro {
         await UniTask.Yield();
       }
 
-      _nextScene = _startGame.IsNewGame() ? _startSceneHolder.GetStartScene() : _startSceneHolder.GetTargetScene();
+      _nextScene = _startGame.IsNewGame() ? _startSceneHolder.GetNewGameScene() : _startSceneHolder.GetTargetScene();
       LoadNextSceneAsync().Forget();
     }
 
@@ -48,7 +48,7 @@ namespace Core.Mono.Scenes.Intro {
       return _targetScene;
     }
 
-    public Scene GetStartScene() {
+    public Scene GetNewGameScene() {
       return _startScene;
     }
   }

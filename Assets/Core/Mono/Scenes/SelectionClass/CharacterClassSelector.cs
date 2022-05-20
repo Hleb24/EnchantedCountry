@@ -11,7 +11,6 @@ namespace Core.Mono.Scenes.SelectionClass {
   ///   Класс отвечает за выбор класса персонажа.
   /// </summary>
   public class CharacterClassSelector : MonoBehaviour {
-    private readonly int _lowerLimitQualityValueForClass = 9;
     public event Action WizardSelected;
     public event Action KronSelected;
     public event Action ElseCharacterTypeSelected;
@@ -28,14 +27,9 @@ namespace Core.Mono.Scenes.SelectionClass {
     [SerializeField]
     private bool _useGameSave;
     private IQualityPoints _mockQualitiesPoints;
-    private IQualityPoints _qualityPoints;
     private IClassType _classType;
     private ClassType _classTypeEnum;
-    private bool _isCanBeWarrior;
-    private bool _isCanBeElf;
-    private bool _isCanBeWizard;
-    private bool _isCanBeKron;
-    private bool _isCanBeGnom;
+    private AvailableCharacterClass _availableCharacterClass;
 
     private void Awake() {
       _mockQualitiesPoints = Resources.Load<MockQualitiesPoints>(MockQualitiesPoints.PATH);
@@ -55,8 +49,9 @@ namespace Core.Mono.Scenes.SelectionClass {
 
     [Inject]
     public void Constructor(IQualityPoints qualityPoints, IClassType classType) {
-      _qualityPoints = qualityPoints;
       _classType = classType;
+      IQualityPoints tempQualityPoints = _useGameSave ? qualityPoints : _mockQualitiesPoints;
+      _availableCharacterClass = new AvailableCharacterClass(tempQualityPoints);
     }
 
     private void AddListener() {
@@ -76,74 +71,19 @@ namespace Core.Mono.Scenes.SelectionClass {
     }
 
     private void CheckAllowedClasses() {
-      SetAllowedClasses();
       EnableInteractableForButtonsIfAllowedByCondition();
     }
 
-    private void SetAllowedClasses() {
-      IsCanBeWarrior();
-      IsCanBeElf();
-      IsCanBeWizard();
-      IsCanBeKron();
-      IsCanBeGnom();
-    }
-
     private void EnableInteractableForButtonsIfAllowedByCondition() {
-      EnableUIAtCondition(_warriorButton, _isCanBeWarrior);
-      EnableUIAtCondition(_elfButton, _isCanBeElf);
-      EnableUIAtCondition(_wizardButton, _isCanBeWizard);
-      EnableUIAtCondition(_kronButton, _isCanBeKron);
-      EnableUIAtCondition(_gnomButton, _isCanBeGnom);
+      EnableUIAtCondition(_warriorButton, _availableCharacterClass.CanBe(ClassType.Warrior));
+      EnableUIAtCondition(_elfButton, _availableCharacterClass.CanBe(ClassType.Elf));
+      EnableUIAtCondition(_wizardButton, _availableCharacterClass.CanBe(ClassType.Wizard));
+      EnableUIAtCondition(_kronButton, _availableCharacterClass.CanBe(ClassType.Kron));
+      EnableUIAtCondition(_gnomButton, _availableCharacterClass.CanBe(ClassType.Gnom));
     }
 
     private void EnableUIAtCondition(Button button, bool allowed) {
       button.interactable = allowed;
-    }
-
-    private void IsCanBeWarrior() {
-      if (_useGameSave) {
-        _isCanBeWarrior = _qualityPoints.GetQualityPoints(QualityType.Strength) >= _lowerLimitQualityValueForClass;
-      } else {
-        _isCanBeWarrior = _mockQualitiesPoints.GetQualityPoints(QualityType.Strength) >= _lowerLimitQualityValueForClass;
-      }
-    }
-
-    private void IsCanBeElf() {
-      if (_useGameSave) {
-        _isCanBeElf = _qualityPoints.GetQualityPoints(QualityType.Strength) >= _lowerLimitQualityValueForClass &&
-                      _qualityPoints.GetQualityPoints(QualityType.Courage) >= _lowerLimitQualityValueForClass;
-      } else {
-        _isCanBeElf = _mockQualitiesPoints.GetQualityPoints(QualityType.Strength) >= _lowerLimitQualityValueForClass &&
-                      _mockQualitiesPoints.GetQualityPoints(QualityType.Courage) >= _lowerLimitQualityValueForClass;
-      }
-    }
-
-    private void IsCanBeWizard() {
-      if (_useGameSave) {
-        _isCanBeWizard = _qualityPoints.GetQualityPoints(QualityType.Wisdom) >= _lowerLimitQualityValueForClass;
-      } else {
-        _isCanBeWizard = _mockQualitiesPoints.GetQualityPoints(QualityType.Wisdom) >= _lowerLimitQualityValueForClass;
-      }
-    }
-
-    private void IsCanBeKron() {
-      if (_useGameSave) {
-        _isCanBeKron = _qualityPoints.GetQualityPoints(QualityType.Agility) >= _lowerLimitQualityValueForClass &&
-                       _qualityPoints.GetQualityPoints(QualityType.Wisdom) >= _lowerLimitQualityValueForClass;
-      } else {
-        _isCanBeKron = _mockQualitiesPoints.GetQualityPoints(QualityType.Agility) >= _lowerLimitQualityValueForClass &&
-                       _mockQualitiesPoints.GetQualityPoints(QualityType.Wisdom) >= _lowerLimitQualityValueForClass;
-      }
-    }
-
-    private void IsCanBeGnom() {
-      if (_useGameSave) {
-        _isCanBeGnom = _qualityPoints.GetQualityPoints(QualityType.Agility) >= _lowerLimitQualityValueForClass &&
-                       _qualityPoints.GetQualityPoints(QualityType.Constitution) >= _lowerLimitQualityValueForClass;
-      } else {
-        _isCanBeGnom = _mockQualitiesPoints.GetQualityPoints(QualityType.Agility) >= _lowerLimitQualityValueForClass &&
-                       _mockQualitiesPoints.GetQualityPoints(QualityType.Constitution) >= _lowerLimitQualityValueForClass;
-      }
     }
 
     private void SelectWarrior() {

@@ -5,7 +5,7 @@ using Zenject;
 namespace EnchantedCountry.Installers {
   public class IntroInstaller : MonoInstaller {
     public override void InstallBindings() {
-      Container.Bind<StartSceneHolder>().FromResolveGetter<IGameSettings>(x => new StartSceneHolder(x.GetTargetScene(), x.GetStartScene())).AsCached();
+      Container.Bind<StartSceneHolder>().FromResolveGetter<IGameSettings>(x => new StartSceneHolder(x.GetTargetScene(), x.GetNewGameScene())).AsCached();
       Container.Bind<GoToNextScene>().AsCached();
     }
   }
