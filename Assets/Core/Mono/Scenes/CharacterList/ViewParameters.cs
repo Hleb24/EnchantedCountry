@@ -49,7 +49,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     [Inject]
-    public void Constructor([Inject(Id = IdBinding.Equipment)] IEquipmentUsed equipmentUsed, [Inject] Qualities qualities) {
+    public void Constructor(IEquipmentUsed equipmentUsed, Qualities qualities) {
       _equipmentUsed = equipmentUsed;
       _qualities = qualities;
     }

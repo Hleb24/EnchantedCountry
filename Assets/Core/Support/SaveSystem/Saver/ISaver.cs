@@ -1,10 +1,13 @@
+using System;
 using Core.Support.SaveSystem.SaveManagers;
+using Cysharp.Threading.Tasks;
 
 namespace Core.Support.SaveSystem.Saver {
   public interface ISaver {
-    void Save(Scrolls scrolls);
+    UniTaskVoid Save(Scrolls scrolls, Action<Exception> handler = null);
 
-    Scrolls Load(out bool isNewGame);
+    UniTask<Scrolls> Load(Action<Exception> handler);
+    Scrolls Load();
     void DeleteSave();
   }
 }

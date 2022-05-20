@@ -96,8 +96,8 @@ namespace Core.Support.Data.DiceRoll {
     }
 
     void IDiceRoll.SetDiceRollValues(int[] diceRollValues) {
-      UpdateLastChanged();
       Assert.IsNotNull(_diceRollDataScroll.DiceRollValues);
+      UpdateLastChanged();
       _diceRollDataScroll.DiceRollValues = diceRollValues;
     }
 

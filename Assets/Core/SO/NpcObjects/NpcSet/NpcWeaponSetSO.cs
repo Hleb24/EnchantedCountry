@@ -28,7 +28,7 @@ namespace Core.SO.NpcObjects.NpcSet {
 
     [Button]
     public void SaveNpcToJson() {
-      var saver = new JsonSaver();
+      var saver = new JsonScrollSaver();
       string pathToFolder = Path.Combine(Application.persistentDataPath, "NpcWeapon");
       for (var i = 0; i < _weaponSet.Count; i++) {
         string pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "NpcWeapon"), $"{_weaponSet[i].GetWeaponName()}.json");

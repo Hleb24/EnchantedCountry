@@ -24,7 +24,7 @@ namespace EnchantedCountry.Installers {
         memento.DeleteSave();
       }
 
-      memento.Init(out bool _);
+      memento.Init();
       return memento;
     }
   }

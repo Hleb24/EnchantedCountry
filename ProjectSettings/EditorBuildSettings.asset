@@ -6,24 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Scene_Intro.unity
+    path: Assets/Scenes/Intro.unity
     guid: 84f0b5ab161b70c45b4e31c8a5ed4dbd
   - enabled: 1
-    path: Assets/Scenes/Scene_DiceRolls.unity
+    path: Assets/Scenes/DiceRolls.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Scene_SelectClass.unity
+    path: Assets/Scenes/SelectClass.unity
     guid: d028a04b28127d2428206cebc3282fd7
   - enabled: 1
-    path: Assets/Scenes/Scene_WizardImprovement.unity
+    path: Assets/Scenes/WizardImprovement.unity
     guid: 262beb78f18d5084181dec096364aed6
   - enabled: 1
-    path: Assets/Scenes/Scene_KronImprovement.unity
+    path: Assets/Scenes/KronImprovement.unity
     guid: 14efcdca8e4bb4f41a99c18d962f8aff
   - enabled: 1
-    path: Assets/Scenes/Scene_TrurlsShop.unity
+    path: Assets/Scenes/TrurlsShop.unity
     guid: 58330f2b175374c498c880afd642cba8
   - enabled: 1
-    path: Assets/Scenes/Scene_CharacterList.unity
+    path: Assets/Scenes/CharacterList.unity
     guid: 440c8a4d2e45bbf4e86d302a023eb5d8
   m_configObjects: {}

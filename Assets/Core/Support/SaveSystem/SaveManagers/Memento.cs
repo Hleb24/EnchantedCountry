@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Main.Character.Class;
 using Core.Main.Character.Item;
 using Core.Main.Character.Quality;
@@ -15,6 +16,8 @@ using Core.Support.Data.RiskPoints;
 using Core.Support.Data.Wallet;
 using Core.Support.SaveSystem.Saver;
 using Core.Support.SaveSystem.Scribe;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Core.Support.SaveSystem.SaveManagers {
   /// <summary>
@@ -48,7 +51,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
     /// <summary>
     ///   Инициализировать хранителей данных с загрузкой сохранений.
     /// </summary>
-    public void Init(out bool isNewGame) {
+    public void Init() {
       InitializeSaver();
 
       foreach (IScribe scribe in _scribesMemento.Values) {
@@ -56,24 +59,21 @@ namespace Core.Support.SaveSystem.SaveManagers {
       }
 
       ScribeDealer.Init(_scribesMemento);
-      Load(out bool newGame);
-      StillInitializing = false;
-      isNewGame = newGame;
-      IsNewGame = isNewGame;
+      Load().Forget();
     }
 
     /// <summary>
     ///   Сохранить всё.
     /// </summary>
     public void Save() {
-      _saver.Save(SaveAll());
+      _saver.Save(SaveAll(), SaveHandler).Forget();
     }
 
     /// <summary>
     ///   Сохранить всё при выходе с игры.
     /// </summary>
     public void SaveOnQuit() {
-      _saver.Save(SaveAllOnQuit());
+      _saver.Save(SaveAllOnQuit(), SaveHandler).Forget();
     }
 
     /// <summary>
@@ -84,14 +84,14 @@ namespace Core.Support.SaveSystem.SaveManagers {
       _saver.DeleteSave();
     }
 
-    private void Load(out bool isNewGame) {
-      LoadAll(out bool newGame);
-      isNewGame = newGame;
+    private async UniTaskVoid Load() {
+      IsNewGame = await LoadAll();
+      StillInitializing = false;
     }
 
     private void InitializeSaver() {
 #if UNITY_EDITOR
-      _saver ??= new JsonSaver();
+      _saver ??= new JsonScrollSaver();
 #elif UNITY_ANDROID
       _saver ??= new Auditor.PrefsSaver();
 #endif
@@ -104,6 +104,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
         hollowData.Save(save);
       }
 
+      save.isNewGame = false;
       return save;
     }
 
@@ -117,19 +118,33 @@ namespace Core.Support.SaveSystem.SaveManagers {
       return save;
     }
 
-    private void LoadAll(out bool newGame) {
-      Scrolls scrolls = _saver.Load(out bool isNewGame);
-
+    private async UniTask<bool> LoadAll() {
+      Scrolls scrolls = await _saver.Load(LoadHandler);
+      if (scrolls.DiceRollDataScroll.DiceRollValues is null) {
+        Debug.LogWarning("Null In Load All");
+      }
       foreach (IScribe scribe in _scribesMemento.Values) {
         scribe.Loaded(scrolls);
       }
 
-      newGame = isNewGame;
+      return await IsNewGameAsync(scrolls);
+    }
+
+    private void SaveHandler(Exception exception) {
+      Debug.LogError($"Exeption on save {exception.Message} trace {exception.StackTrace}");
+    }
+
+    private void LoadHandler(Exception exception) {
+      Debug.LogError($"Exeption on load {exception.Message} trace {exception.StackTrace}");
+    }
+
+    private async UniTask<bool> IsNewGameAsync(Scrolls scrolls) {
+      return await Task.Run(() => scrolls.isNewGame);
     }
 
     /// <summary>
     ///   Это новая игра. Истинна - новая игра, ложь - продолжение с сохранений.
     /// </summary>
-    public bool IsNewGame { get; private set; }
+    public bool? IsNewGame { get; private set; }
   }
 }

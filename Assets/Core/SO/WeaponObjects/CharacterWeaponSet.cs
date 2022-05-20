@@ -22,7 +22,7 @@ namespace Core.SO.WeaponObjects {
     #region SAVE_TO_JSON
     [Button]
     public void SaveNpcToJson() {
-      var saver = new JsonSaver();
+      var saver = new JsonScrollSaver();
       string pathToFolder = Path.Combine(Application.persistentDataPath, "CharacterWeapon");
       for (var i = 0; i < _weaponSet.Count; i++) {
         string pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "CharacterWeapon"), $"{_weaponSet[i].GetWeaponName()}.json");

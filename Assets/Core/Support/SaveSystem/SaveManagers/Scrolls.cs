@@ -14,17 +14,16 @@ using Core.Support.Data.QualityPoints;
 using Core.Support.Data.RiskPoints;
 using Core.Support.Data.Wallet;
 using Core.Support.SaveSystem.Scribe;
+using Newtonsoft.Json;
 
 namespace Core.Support.SaveSystem.SaveManagers {
-  public interface ITest<T> {
-    public T type { get; }
-  }
-
   /// <summary>
   ///   Класс игровых сохранений.
   /// </summary>
   [Serializable]
   public class Scrolls {
+    public bool isNewGame = true;
+    [JsonIgnore]
     public readonly Dictionary<Type, IScribe> _scribes = new() {
       { typeof(IDiceRoll), new DiceRollScribe(new DiceRollDataScroll(DiceRollScribe.StartRollValues)) },
       { typeof(IEquipment), new EquipmentScribe() },

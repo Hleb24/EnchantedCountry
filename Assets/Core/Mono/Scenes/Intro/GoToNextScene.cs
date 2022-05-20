@@ -1,4 +1,5 @@
 using Core.Mono.MainManagers;
+using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using Scene = Core.Mono.BaseClass.Scene;
 
@@ -17,16 +18,20 @@ namespace Core.Mono.Scenes.Intro {
     }
 
     public void Go() {
-      SetNameOfNextScene();
-      LoadNextSceneAsync();
+      SetNameOfNextScene().Forget();
     }
 
-    private void SetNameOfNextScene() {
+    private async UniTaskVoid SetNameOfNextScene() {
+      while (_startGame.StillInitializing()) {
+        await UniTask.Yield();
+      }
+
       _nextScene = _startGame.IsNewGame() ? _startSceneHolder.GetStartScene() : _startSceneHolder.GetTargetScene();
+      LoadNextSceneAsync().Forget();
     }
 
-    private void LoadNextSceneAsync() {
-      SceneManager.LoadSceneAsync((int)_nextScene);
+    private async UniTaskVoid LoadNextSceneAsync() {
+      await SceneManager.LoadSceneAsync((int)_nextScene);
     }
   }
 

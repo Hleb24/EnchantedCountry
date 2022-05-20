@@ -4,7 +4,6 @@ using Core.Main.Character.Level;
 using Core.Main.Character.Quality;
 using Core.Main.GameRule.Equipment;
 using Core.Main.GameRule.Point;
-using Core.Mono.Scenes.CharacterList;
 using Core.Support.SaveSystem.SaveManagers;
 using Zenject;
 
@@ -20,8 +19,8 @@ namespace EnchantedCountry.Installers {
       Container.Bind<IRiskPoints>().FromResolveGetter(Dealers.Resolve<IRiskPoints>()).AsSingle();
       Container.Bind<IEquipment>().FromResolveGetter(Dealers.Resolve<IEquipment>()).AsSingle();
       Container.Bind<IEquipmentUsed>().FromResolveGetter(Dealers.Resolve<IEquipmentUsed>()).AsSingle();
-      // Container.Bind<IEquipmentUsed>().FromResolveGetter(Dealers.ResolveClone<IEquipmentUsed>()).AsTransient();
-      Container.Bind<IEquipmentUsed>().WithId(IdBinding.Equipment).FromResolveGetter(Dealers.ResolveCloneWithTracking<IEquipmentUsed>()).AsTransient();
+      // Container.Bind<IEquipmentUsed>().FromResolveGetter(Dealers.Resolve<IEquipmentUsed>()).AsTransient();
+      // Container.Bind<IEquipmentUsed>().WithId(IdBinding.Equipment).FromResolveGetter(Dealers.ResolveCloneWithTracking<IEquipmentUsed>()).AsTransient();
       Container.Bind<IGamePoints>().FromResolveGetter(Dealers.Resolve<IGamePoints>()).AsSingle();
       Container.Bind<IWallet>().FromResolveGetter(Dealers.Resolve<IWallet>()).AsSingle();
       Container.Bind<IQualityPoints>().FromResolveGetter(Dealers.Resolve<IQualityPoints>()).AsSingle();

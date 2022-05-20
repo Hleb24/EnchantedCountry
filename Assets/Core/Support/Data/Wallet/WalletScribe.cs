@@ -1,4 +1,5 @@
 ﻿using System;
+using Aberrance.Extensions;
 using Core.Main.Character.Item;
 using Core.Support.Data.Equipment;
 using Core.Support.SaveSystem.SaveManagers;
@@ -48,9 +49,9 @@ namespace Core.Support.Data.Wallet {
       _walletDataScroll = new WalletDataScroll(0, START_MAX_COINS);
       UpdateLastChanged();
       _originWalletScribe = this;
-      // if (scrolls.Null()) {
-      // return;
-      // }
+      if (scrolls.IsNull()) {
+        return;
+      }
 
       scrolls.WalletDataScroll = _originWalletScribe._walletDataScroll;
     }

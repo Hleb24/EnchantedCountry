@@ -1,5 +1,7 @@
+using Aberrance.Extensions;
 using Core.SO.GameSettings;
 using Core.Support.SaveSystem.SaveManagers;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -17,10 +19,6 @@ namespace Core.Mono.MainManagers {
 
     private void Awake() {
       StartGame();
-    }
-
-    private void OnDestroy() {
-      Save();
     }
 
     bool IStartGame.UseGameSave() {
@@ -50,33 +48,22 @@ namespace Core.Mono.MainManagers {
     }
 
     private void StartGame() {
-      SetStartGameProperties();
-      SetDeviceSettings();
+      SetStartGameProperties().Forget();
     }
 
-    private void SetStartGameProperties() {
+    private async UniTaskVoid SetStartGameProperties() {
       StartNewGame = _gameSettings.StartNewGame();
-      IsNewGame = _memento.IsNewGame;
+      while (_memento.IsNewGame.HasValue.IsFalse()) {
+        await UniTask.Yield();
+      }
+
+      if (_memento.IsNewGame.HasValue) {
+        IsNewGame = _memento.IsNewGame.Value;
+      }
+
       StillInitializing = false;
       DataLoaded = true;
-    }
-
-    private void Save() {
-      _memento.Save();
-    }
-
-    private void OnApplicationPause(bool pauseStatus) {
-      if (pauseStatus) {
-        Save();
-      }
-    }
-
-    private void OnApplicationFocus(bool hasFocus) {
-      if (hasFocus) {
-        return;
-      }
-
-      Save();
+      SetDeviceSettings();
     }
 
     private void OnApplicationQuit() {

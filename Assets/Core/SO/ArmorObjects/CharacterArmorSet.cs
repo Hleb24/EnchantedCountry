@@ -13,7 +13,7 @@ namespace Core.SO.ArmorObjects {
     #region SAVE_TO_JSON
     [Button]
     public void SaveNpcToJson() {
-      var saver = new JsonSaver();
+      var saver = new JsonScrollSaver();
       string _pathToFolder = Path.Combine(Application.persistentDataPath, "CharacterArmor");
       string _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "CharacterArmor"), "Save.json");
       for (var i = 0; i < _armorSet.Count; i++) {

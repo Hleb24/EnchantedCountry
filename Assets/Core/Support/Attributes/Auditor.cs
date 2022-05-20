@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Core.Support.SaveSystem.SaveManagers;
 using Core.Support.SaveSystem.Saver;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Core.Support.Attributes {
@@ -46,25 +48,53 @@ namespace Core.Support.Attributes {
       [PrefsKeys]
       private const string NEW_GAME = nameof(NEW_GAME);
 
-      public void Save(Scrolls scrolls) {
-        string json = JsonUtility.ToJson(scrolls);
-        PlayerPrefs.SetString(NEW_GAME, json);
-        PlayerPrefs.Save();
+      public async UniTaskVoid Save(Scrolls scrolls, Action<Exception> handler) {
+        try {
+          string json = JsonSaver.Serialize(scrolls);
+          PlayerPrefs.SetString(NEW_GAME, json);
+          PlayerPrefs.Save();
+          await UniTask.Yield();
+        } catch (Exception ex) {
+          handler?.Invoke(ex);
+        }
       }
 
-      public Scrolls Load(out bool isNewGame) {
+      public async UniTask<Scrolls> Load(Action<Exception> handler = null) {
+        Scrolls scrolls = null;
         if (IsNewGame()) {
-          isNewGame = true;
-          return NewSave();
+          scrolls = NewSave();
+          return scrolls;
         }
 
         string json = PlayerPrefs.GetString(NEW_GAME);
-        isNewGame = false;
-        return JsonUtility.FromJson<Scrolls>(json);
+        try {
+          scrolls = await ReadAsync(json);
+        } catch (Exception ex) {
+          handler?.Invoke(ex);
+        }
+
+        return scrolls;
+      }
+
+      public Scrolls Load() {
+        Scrolls scrolls = null;
+        if (IsNewGame()) {
+          scrolls = NewSave();
+          return scrolls;
+        }
+
+        string json = PlayerPrefs.GetString(NEW_GAME);
+        scrolls = JsonSaver.Deserialize<Scrolls>(json);
+
+        return scrolls;
       }
 
       public void DeleteSave() {
         PlayerPrefs.DeleteAll();
+      }
+
+      private async ValueTask<Scrolls> ReadAsync(string json) {
+        return await Task.Run(() => JsonSaver.Deserialize<Scrolls>(json));
       }
 
       private bool IsNewGame() {
@@ -73,7 +103,8 @@ namespace Core.Support.Attributes {
 
       private Scrolls NewSave() {
         PlayerPrefs.DeleteAll();
-        Scrolls scrolls = new Scrolls().NewScrollGame();
+        var scrolls = new Scrolls();
+        scrolls.NewScrollGame();
         return scrolls;
       }
 
