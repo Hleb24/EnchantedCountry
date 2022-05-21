@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Core.Mono.Scenes.SelectionClass {
   /// <summary>
-  ///   Класс отвечает за выбор класса персонажа.
+  ///   The class is responsible for choosing a character class.
   /// </summary>
   public class CharacterClassSelector : MonoBehaviour {
     public event Action WizardSelected;
@@ -55,19 +55,19 @@ namespace Core.Mono.Scenes.SelectionClass {
     }
 
     private void AddListener() {
-      _warriorButton.onClick.AddListener(SelectWarrior);
-      _elfButton.onClick.AddListener(SelectElf);
-      _wizardButton.onClick.AddListener(SelectWizard);
-      _kronButton.onClick.AddListener(SelectKron);
-      _gnomButton.onClick.AddListener(SelectGnom);
+      _warriorButton.onClick.AddListener(() => SelectClassType(ClassType.Warrior));
+      _elfButton.onClick.AddListener(() => SelectClassType(ClassType.Elf));
+      _wizardButton.onClick.AddListener(() => SelectClassType(ClassType.Wizard));
+      _kronButton.onClick.AddListener(() => SelectClassType(ClassType.Kron));
+      _gnomButton.onClick.AddListener(() => SelectClassType(ClassType.Gnom));
     }
 
     private void RemoveListener() {
-      _warriorButton.onClick.RemoveListener(SelectWarrior);
-      _elfButton.onClick.RemoveListener(SelectElf);
-      _wizardButton.onClick.RemoveListener(SelectWizard);
-      _kronButton.onClick.RemoveListener(SelectKron);
-      _gnomButton.onClick.RemoveListener(SelectGnom);
+      _warriorButton.onClick.RemoveListener(() => SelectClassType(ClassType.Warrior));
+      _elfButton.onClick.RemoveListener(() => SelectClassType(ClassType.Elf));
+      _wizardButton.onClick.RemoveListener(() => SelectClassType(ClassType.Wizard));
+      _kronButton.onClick.RemoveListener(() => SelectClassType(ClassType.Kron));
+      _gnomButton.onClick.RemoveListener(() => SelectClassType(ClassType.Gnom));
     }
 
     private void CheckAllowedClasses() {
@@ -86,28 +86,8 @@ namespace Core.Mono.Scenes.SelectionClass {
       button.interactable = allowed;
     }
 
-    private void SelectWarrior() {
-      _classTypeEnum = ClassType.Warrior;
-      SaveClassOfCharacter();
-    }
-
-    private void SelectElf() {
-      _classTypeEnum = ClassType.Elf;
-      SaveClassOfCharacter();
-    }
-
-    private void SelectWizard() {
-      _classTypeEnum = ClassType.Wizard;
-      SaveClassOfCharacter();
-    }
-
-    private void SelectKron() {
-      _classTypeEnum = ClassType.Kron;
-      SaveClassOfCharacter();
-    }
-
-    private void SelectGnom() {
-      _classTypeEnum = ClassType.Gnom;
+    private void SelectClassType(ClassType classType) {
+      _classTypeEnum = classType;
       SaveClassOfCharacter();
     }
 

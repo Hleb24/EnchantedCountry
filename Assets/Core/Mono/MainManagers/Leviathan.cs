@@ -66,8 +66,33 @@ namespace Core.Mono.MainManagers {
       SetDeviceSettings();
     }
 
+    private void OnApplicationPause(bool pauseStatus) {
+      if (pauseStatus && _gameSettings.MustBeSave(SavePoints.OnPause)) {
+        Debug.LogWarning("Save on pause");
+        Save();
+      }
+    }
+
+    private void OnApplicationFocus(bool hasFocus) {
+      if (hasFocus) {
+        return;
+      }
+
+      if (_gameSettings.MustBeSave(SavePoints.OnLoseFocus)) {
+        Debug.LogWarning("Save on lose focus");
+        Save();
+      }
+    }
+
+    private void Save() {
+      _memento.Save();
+    }
+
     private void OnApplicationQuit() {
-      _memento.SaveOnQuit();
+      if (_gameSettings.MustBeSave(SavePoints.OnQuit)) {
+        Debug.LogWarning("Save on quit");
+        _memento.SaveOnQuit();
+      }
     }
 
     private bool StillInitializing { get; set; } = true;

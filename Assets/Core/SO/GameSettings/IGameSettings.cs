@@ -2,31 +2,38 @@
 
 namespace Core.SO.GameSettings {
   /// <summary>
-  ///   Интерфейс для настроек игры.
+  ///   Interface for game settings.
   /// </summary>
   public interface IGameSettings {
     /// <summary>
-    ///   Начать новую игру.
+    ///   Start a new game.
     /// </summary>
-    /// <returns>Истина - начать новую игру, ложь - продолжить текущую игру.</returns>
+    /// <returns>True - start a new game, false - continue the current game.</returns>
     public bool StartNewGame();
 
     /// <summary>
-    ///   Использовать сохранения.
+    ///   Use saves.
     /// </summary>
-    /// <returns>Истинна -использовать, ложь - не использовать.</returns>
+    /// <returns>True - use, false - do not use.</returns>
     public bool UseGameSave();
 
     /// <summary>
-    ///   Получить сцену, котороя будет открыватся принудительно сразу после сцены <see cref="Scene.Intro" />.
+    ///   Get a scene that will be forced to open right after the scene <see cref="Scene.Intro" />.
     /// </summary>
-    /// <returns>Целевая сцена.</returns>
+    /// <returns>Target scene.</returns>
     public Scene GetTargetScene();
 
     /// <summary>
-    ///   Получить стартовую сцену.
+    ///   Get the starting scene.
     /// </summary>
-    /// <returns>Стартовая сцена</returns>
+    /// <returns>starting scene.</returns>
     public Scene GetNewGameScene();
+
+    /// <summary>
+    ///   Checks for a permitted savepoint.
+    /// </summary>
+    /// <param name="savePoint">Save point.</param>
+    /// <returns>Can save.</returns>
+    public bool MustBeSave(SavePoints savePoint);
   }
 }

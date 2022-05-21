@@ -1,8 +1,16 @@
+using System;
 using Core.Mono.BaseClass;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Core.SO.GameSettings {
+  [Flags]
+  public enum SavePoints {
+    None = 0,
+    OnPause = 1,
+    OnLoseFocus = 2,
+    OnQuit = 1 << 2
+  }
+  
   [CreateAssetMenu(fileName = "GameSettings", menuName = "GameSettings")]
   public class GameSettings : ScriptableObject, IGameSettings {
     [SerializeField]
@@ -11,8 +19,14 @@ namespace Core.SO.GameSettings {
     private bool _useGameSave;
     [SerializeField]
     private Scene _targetScene;
-    [FormerlySerializedAs("_startScene"), SerializeField]
+    [SerializeField]
     private Scene _newGameScene;
+    [SerializeField]
+    private SavePoints _savePoints;
+
+    public bool MustBeSave(SavePoints savePoint) {
+      return (_savePoints & savePoint) == savePoint;
+    }
 
     public bool StartNewGame() {
       return _startNewGame;

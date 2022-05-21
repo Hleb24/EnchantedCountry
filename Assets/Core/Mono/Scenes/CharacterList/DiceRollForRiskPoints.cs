@@ -49,11 +49,11 @@ namespace Core.Mono.Scenes.CharacterList {
 
     private void SetCharacterType() {
       if (_useCharacterTypeForTest) {
+        _characterClass = CharacterClassBuilder.GetCharacterClass(_classTypeEnum);
         return;
       }
 
-      _classTypeEnum = _classType.GetClassType();
-      _characterClass = CharacterClassBuilder.GetCharacterClass(_classTypeEnum);
+      _characterClass = CharacterClassBuilder.GetCharacterClass(_classType);
     }
 
     private int GetDiceRollValueForCharacterType() {
