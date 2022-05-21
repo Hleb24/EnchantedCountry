@@ -113,10 +113,11 @@ namespace Core.Support.SaveSystem.SaveManagers {
     private Scrolls SaveAllOnQuit() {
       var save = new Scrolls();
 
-      foreach (IScribe hollowData in _scribesMemento.Values) {
-        hollowData.SaveOnQuit(save);
+      foreach (IScribe scribe in _scribesMemento.Values) {
+        scribe.SaveOnQuit(save);
       }
 
+      save.isNewGame = false;
       return save;
     }
 

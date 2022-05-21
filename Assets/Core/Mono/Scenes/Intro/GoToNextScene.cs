@@ -1,5 +1,6 @@
 using Core.Mono.MainManagers;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using Scene = Core.Mono.BaseClass.Scene;
 
@@ -26,6 +27,7 @@ namespace Core.Mono.Scenes.Intro {
         await UniTask.Yield();
       }
 
+      Debug.LogWarning("Is new game " + _startGame.IsNewGame());
       _nextScene = _startGame.IsNewGame() ? _startSceneHolder.GetNewGameScene() : _startSceneHolder.GetTargetScene();
       LoadNextSceneAsync().Forget();
     }

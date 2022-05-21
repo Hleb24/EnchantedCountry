@@ -68,7 +68,6 @@ namespace Core.Mono.MainManagers {
 
     private void OnApplicationPause(bool pauseStatus) {
       if (pauseStatus && _gameSettings.MustBeSave(SavePoints.OnPause)) {
-        Debug.LogWarning("Save on pause");
         Save();
       }
     }
@@ -79,7 +78,6 @@ namespace Core.Mono.MainManagers {
       }
 
       if (_gameSettings.MustBeSave(SavePoints.OnLoseFocus)) {
-        Debug.LogWarning("Save on lose focus");
         Save();
       }
     }
@@ -90,7 +88,6 @@ namespace Core.Mono.MainManagers {
 
     private void OnApplicationQuit() {
       if (_gameSettings.MustBeSave(SavePoints.OnQuit)) {
-        Debug.LogWarning("Save on quit");
         _memento.SaveOnQuit();
       }
     }
