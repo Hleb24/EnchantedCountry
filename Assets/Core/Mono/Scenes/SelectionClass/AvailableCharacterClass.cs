@@ -3,17 +3,18 @@ using Core.Main.Character.Class;
 using Core.Main.Character.Quality;
 using JetBrains.Annotations;
 using UnityEngine.Assertions;
+using Zenject;
 
 namespace Core.Mono.Scenes.SelectionClass {
   public class AvailableCharacterClass {
-    private readonly int _lowerLimitQualityValueForClass;
+    private readonly int _lowerLimitQualityValueForClass = 9;
     private readonly bool[] _canBeSet = new bool[Enum.GetValues(typeof(ClassType)).Length];
     private readonly IQualityPoints _qualityPoints;
 
-    public AvailableCharacterClass([NotNull] IQualityPoints qualityPoints, int lowerLimit = 9) {
+    [Inject]
+    public AvailableCharacterClass([NotNull] IQualityPoints qualityPoints) {
       Assert.IsNotNull(qualityPoints, nameof(qualityPoints));
       _qualityPoints = qualityPoints;
-      _lowerLimitQualityValueForClass = lowerLimit;
       FillCanBeSet();
     }
 

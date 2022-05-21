@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09be728ee12c9fe438b0d6396bfdbe1a, type: 3}
-  m_Name: QualitiesPoints
+  m_Name: MockQualitiesPoints
   m_EditorClassIdentifier: 
   _strength: 13
-  _agility: 13
-  _constitution: 13
-  _wisdom: 13
-  _courage: 13
+  _agility: 8
+  _constitution: 8
+  _wisdom: 8
+  _courage: 8

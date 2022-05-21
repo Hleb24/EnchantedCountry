@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a07b4f1efee784eabd49e6567e0c5f, type: 3}
   m_Name: EnchantedCountrySettings
   m_EditorClassIdentifier: 
-  _startNewGame: 0
+  _startNewGame: 1
   _useGameSave: 1
   _targetScene: 6
   _newGameScene: 1

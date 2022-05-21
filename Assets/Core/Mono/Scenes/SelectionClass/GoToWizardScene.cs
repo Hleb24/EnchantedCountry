@@ -1,17 +1,14 @@
 using Core.Mono.BaseClass;
-using UnityEngine;
 
 namespace Core.Mono.Scenes.SelectionClass {
-  public class GoToWizardScene : GoToScene {
-    [SerializeField]
-    private CharacterClassSelector _selector;
-
-    private void Start() {
-      _selector.WizardSelected += OnWizardSelected;
+  public class GoToWizardScene : GoToScene, ICharacterClassSelectorUser {
+    private void OnDestroy() {
+      ClassSelector.WizardSelected -= OnWizardSelected;
     }
 
-    private void OnDestroy() {
-      _selector.WizardSelected -= OnWizardSelected;
+    public void SetSelector(CharacterClassSelector characterClassSelector) {
+      ClassSelector = characterClassSelector;
+      ClassSelector.WizardSelected += OnWizardSelected;
     }
 
     private void OnWizardSelected() {
@@ -19,5 +16,7 @@ namespace Core.Mono.Scenes.SelectionClass {
       AddListener();
       EnableInteractableForButton();
     }
+
+    public CharacterClassSelector ClassSelector { get; private set; }
   }
 }

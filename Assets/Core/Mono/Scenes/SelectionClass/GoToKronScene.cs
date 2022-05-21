@@ -1,17 +1,14 @@
 using Core.Mono.BaseClass;
-using UnityEngine;
 
 namespace Core.Mono.Scenes.SelectionClass {
-  public class GoToKronScene : GoToScene {
-    [SerializeField]
-    private CharacterClassSelector _selector;
-
-    private void Start() {
-      _selector.KronSelected += OnKronSelected;
+  public class GoToKronScene : GoToScene, ICharacterClassSelectorUser {
+    private void OnDestroy() {
+      ClassSelector.KronSelected -= OnKronSelected;
     }
 
-    private void OnDestroy() {
-      _selector.KronSelected -= OnKronSelected;
+    public void SetSelector(CharacterClassSelector characterClassSelector) {
+      ClassSelector = characterClassSelector;
+      ClassSelector.KronSelected += OnKronSelected;
     }
 
     private void OnKronSelected() {
@@ -19,5 +16,7 @@ namespace Core.Mono.Scenes.SelectionClass {
       AddListener();
       EnableInteractableForButton();
     }
+
+    public CharacterClassSelector ClassSelector { get; private set; }
   }
 }

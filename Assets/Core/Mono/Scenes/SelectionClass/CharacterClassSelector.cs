@@ -1,33 +1,23 @@
 using System;
 using Core.Main.Character.Class;
-using Core.Main.Character.Quality;
-using Core.Mono.MainManagers;
-using Core.SO.Mock;
-using UnityEngine;
 using Zenject;
 
 namespace Core.Mono.Scenes.SelectionClass {
   /// <summary>
   ///   The class is responsible for choosing a character class.
   /// </summary>
-  public class CharacterClassSelector : MonoBehaviour {
+  public class CharacterClassSelector {
+    private readonly IClassType _classType;
+    private readonly AvailableCharacterClass _availableCharacterClass;
     public event Action WizardSelected;
     public event Action KronSelected;
     public event Action ElseCharacterTypeSelected;
-    private IQualityPoints _mockQualitiesPoints;
-    private IClassType _classType;
     private ClassType _classTypeEnum;
-    private AvailableCharacterClass _availableCharacterClass;
-
-    private void Awake() {
-      _mockQualitiesPoints = Resources.Load<MockQualitiesPoints>(MockQualitiesPoints.PATH);
-    }
 
     [Inject]
-    public void Constructor(IQualityPoints qualityPoints, IClassType classType, IStartGame startGame) {
+    public CharacterClassSelector(AvailableCharacterClass availableCharacterClass, IClassType classType) {
       _classType = classType;
-      IQualityPoints tempQualityPoints = startGame.UseGameSave() ? qualityPoints : _mockQualitiesPoints;
-      _availableCharacterClass = new AvailableCharacterClass(tempQualityPoints);
+      _availableCharacterClass = availableCharacterClass;
     }
 
     public void SelectClassType(ClassType classType) {

@@ -375,6 +375,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceddb9e1ae9f175478f0b4af6cb15187, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mockQualitiesPoints: {fileID: 11400000, guid: feb2acc5253ef034d9d9368a26a817b5, type: 2}
+  _gameSettings: {fileID: 11400000, guid: d6c460a63637efe428ddda0c8791fb38, type: 2}
 --- !u!114 &118749021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1670,7 +1672,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nameOfScene: 3
   _goToScene: {fileID: 776279713}
-  _selector: {fileID: 1882573924}
 --- !u!114 &1585015015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1685,7 +1686,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nameOfScene: 4
   _goToScene: {fileID: 776279713}
-  _selector: {fileID: 1882573924}
 --- !u!114 &1585015016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1700,7 +1700,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nameOfScene: 5
   _goToScene: {fileID: 776279713}
-  _selector: {fileID: 1882573924}
 --- !u!1 &1867108691
 GameObject:
   m_ObjectHideFlags: 0
@@ -1738,55 +1737,6 @@ RectTransform:
   m_AnchoredPosition: {x: -250, y: 110}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1882573922
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1882573923}
-  - component: {fileID: 1882573924}
-  m_Layer: 0
-  m_Name: CharacterClassSelector
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1882573923
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1882573922}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1269.3138, y: 563.05457, z: -252.25381}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1882573924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1882573922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64b1adc86fd7a4c44ba9856853ce1138, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _warriorButton: {fileID: 2007056167}
-  _elfButton: {fileID: 16586734}
-  _wizardButton: {fileID: 144812443}
-  _kronButton: {fileID: 1177642927}
-  _gnomButton: {fileID: 876180142}
 --- !u!224 &2007056166 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2611403032609962507, guid: 43ef3cccfc575434aab1aac862dadadd, type: 3}
@@ -1832,13 +1782,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 911db614a2f84e019a9ff20017b68d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterClassSelector: {fileID: 1882573924}
   _characterClassSelectionButtons:
   - {fileID: 2611403031261545775}
   - {fileID: 16586736}
   - {fileID: 144812445}
   - {fileID: 1177642929}
   - {fileID: 876180144}
+  _goToKronScene: {fileID: 1585015015}
+  _goToWizardScene: {fileID: 1585015014}
+  _goToShopScene: {fileID: 1585015016}
 --- !u!4 &2026050114
 Transform:
   m_ObjectHideFlags: 0
@@ -1852,7 +1804,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2611403031261545773
 PrefabInstance:

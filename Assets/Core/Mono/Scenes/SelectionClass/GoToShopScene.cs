@@ -1,17 +1,14 @@
 using Core.Mono.BaseClass;
-using UnityEngine;
 
 namespace Core.Mono.Scenes.SelectionClass {
-  public class GoToShopScene : GoToScene {
-    [SerializeField]
-    private CharacterClassSelector _selector;
-
-    private void Start() {
-      _selector.ElseCharacterTypeSelected += OnElseCharacterTypeSelected;
+  public class GoToShopScene : GoToScene, ICharacterClassSelectorUser {
+    private void OnDestroy() {
+      ClassSelector.ElseCharacterTypeSelected -= OnElseCharacterTypeSelected;
     }
 
-    private void OnDestroy() {
-      _selector.ElseCharacterTypeSelected -= OnElseCharacterTypeSelected;
+    public void SetSelector(CharacterClassSelector characterClassSelector) {
+      ClassSelector = characterClassSelector;
+      ClassSelector.ElseCharacterTypeSelected += OnElseCharacterTypeSelected;
     }
 
     private void OnElseCharacterTypeSelected() {
@@ -19,5 +16,7 @@ namespace Core.Mono.Scenes.SelectionClass {
       AddListener();
       EnableInteractableForButton();
     }
+
+    public CharacterClassSelector ClassSelector { get; private set; }
   }
 }
