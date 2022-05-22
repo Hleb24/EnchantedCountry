@@ -4,9 +4,9 @@ using Cysharp.Threading.Tasks;
 
 namespace Core.Support.SaveSystem.Saver {
   public interface ISaver {
-    UniTaskVoid Save(Scrolls scrolls, Action<Exception> handler = null);
+    UniTaskVoid SaveAsync(Scrolls scrolls, Action<Exception> handler = null);
 
-    UniTask<Scrolls> Load(Action<Exception> handler);
+    UniTask<Scrolls> LoadAsync(Action<Exception> handler);
     Scrolls Load();
     void DeleteSave();
   }

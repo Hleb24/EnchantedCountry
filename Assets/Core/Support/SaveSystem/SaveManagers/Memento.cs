@@ -68,14 +68,14 @@ namespace Core.Support.SaveSystem.SaveManagers {
     ///   Сохранить всё.
     /// </summary>
     public void Save() {
-      _saver.Save(SaveAll(), SaveHandler).Forget();
+      _saver.SaveAsync(SaveAll(), SaveHandler).Forget();
     }
 
     /// <summary>
     ///   Сохранить всё при выходе с игры.
     /// </summary>
     public void SaveOnQuit() {
-      _saver.Save(SaveAllOnQuit(), SaveHandler).Forget();
+      _saver.SaveAsync(SaveAllOnQuit(), SaveHandler).Forget();
     }
 
     /// <summary>
@@ -122,7 +122,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
     }
 
     private async UniTask<bool> LoadAll() {
-      Scrolls scrolls = await _saver.Load(LoadHandler);
+      Scrolls scrolls = await _saver.LoadAsync(LoadHandler);
       if (scrolls.DiceRollDataScroll.DiceRollValues is null) {
         Debug.LogWarning("Null In Load All");
       }

@@ -1,17 +1,13 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 using Zenject;
 
 namespace Core.Mono.Scenes.SelectionClass {
-  public class SelectionHolder : MonoBehaviour {
+  public class SelectionHolder : SerializedMonoBehaviour {
     [SerializeField]
     private CharacterClassSelectionButton[] _characterClassSelectionButtons;
     [SerializeField]
-    private GoToKronScene _goToKronScene;
-    [SerializeField]
-    private GoToWizardScene _goToWizardScene;
-    [SerializeField]
-    private GoToShopScene _goToShopScene;
-
+    private CharacterClassSelectorUserComposite _classSelectorUserComposite;
     private CharacterClassSelector _characterClassSelector;
 
     private void Start() {
@@ -28,9 +24,7 @@ namespace Core.Mono.Scenes.SelectionClass {
         _characterClassSelectionButtons[i].SetCharacterClassSelector(_characterClassSelector);
       }
 
-      _goToKronScene.SetSelector(_characterClassSelector);
-      _goToWizardScene.SetSelector(_characterClassSelector);
-      _goToShopScene.SetSelector(_characterClassSelector);
+      _classSelectorUserComposite.SetSelector(_characterClassSelector);
     }
   }
 }

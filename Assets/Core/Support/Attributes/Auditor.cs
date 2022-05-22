@@ -48,7 +48,7 @@ namespace Core.Support.Attributes {
       [PrefsKeys]
       private const string NEW_GAME = nameof(NEW_GAME);
 
-      public async UniTaskVoid Save(Scrolls scrolls, Action<Exception> handler) {
+      public async UniTaskVoid SaveAsync(Scrolls scrolls, Action<Exception> handler) {
         try {
           string json = JsonSaver.Serialize(scrolls);
           PlayerPrefs.SetString(NEW_GAME, json);
@@ -59,7 +59,7 @@ namespace Core.Support.Attributes {
         }
       }
 
-      public async UniTask<Scrolls> Load(Action<Exception> handler = null) {
+      public async UniTask<Scrolls> LoadAsync(Action<Exception> handler = null) {
         Scrolls scrolls = null;
         if (IsNewGame()) {
           scrolls = NewSave();

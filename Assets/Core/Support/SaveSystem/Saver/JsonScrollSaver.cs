@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using Aberrance.Extensions;
 using Core.Support.SaveSystem.SaveManagers;
 using Cysharp.Threading.Tasks;
@@ -10,12 +11,12 @@ namespace Core.Support.SaveSystem.Saver {
     private readonly string _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "Save"), "Save.json");
     private readonly string _pathToFolder = Path.Combine(Application.persistentDataPath, "Save");
 
-    public async UniTaskVoid Save(Scrolls scrolls, Action<Exception> handler) {
+    public async UniTaskVoid SaveAsync(Scrolls scrolls, Action<Exception> handler) {
       CreateDirectory(_pathToFolder);
       await using var streamWriter = new StreamWriter(_pathToFile);
       try {
         string jsonSave = JsonSaver.Serialize(scrolls);
-        await streamWriter.WriteAsync(jsonSave);
+        await streamWriter.WriteAsync(jsonSave).AsUniTask().TimeoutWithoutException(TimeSpan.FromSeconds(5));
       } catch (Exception e) {
         handler?.Invoke(e);
       } finally {
@@ -23,7 +24,7 @@ namespace Core.Support.SaveSystem.Saver {
       }
     }
 
-    public async UniTask<Scrolls> Load(Action<Exception> handler) {
+    public async UniTask<Scrolls> LoadAsync(Action<Exception> handler) {
       var jsonSave = string.Empty;
       if (File.Exists(_pathToFile).IsFalse()) {
         ClearPrefs();
