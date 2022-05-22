@@ -1,15 +1,13 @@
-﻿// ReSharper disable once RedundantUsingDirective
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Aberrance.UnityEngine.Saver;
 using Core.Main.Character.Class;
 using Core.Main.Character.Item;
 using Core.Main.Character.Quality;
 using Core.Main.Dice;
 using Core.Main.GameRule.Equipment;
 using Core.Main.GameRule.Point;
-using Core.Support.Attributes;
 using Core.Support.Data.ClassType;
 using Core.Support.Data.DiceRoll;
 using Core.Support.Data.Equipment;
@@ -46,7 +44,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
       { typeof(IClassType), new ClassTypeScribe() }
     };
     private ISaver _saver;
-    private string _pathToFile = ""; 
+    private string _pathToFile = "";
 
     bool IDataInit.StillInitializing() {
       return StillInitializing;
@@ -95,11 +93,11 @@ namespace Core.Support.SaveSystem.SaveManagers {
 
     private void InitializeSaver() {
 #if UNITY_EDITOR
-      _pathToFile = SavePath.PathToXmlFile;
-      _saver ??= new XmlSaver();
+      _pathToFile = SavePath.PathToJsonFile;
+      _saver ??= new JsonSaver();
 #elif UNITY_ANDROID
-      _saver ??= new PrefsSaver();
-      pathToFile = SavePath.PathToPrefsFile;
+      // _saver ??= new PrefsSaver();
+      // _pathToFile = SavePath.PathToPrefsFile;
 #endif
     }
 
