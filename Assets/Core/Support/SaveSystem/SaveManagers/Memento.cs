@@ -1,4 +1,5 @@
 ﻿// ReSharper disable once RedundantUsingDirective
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -45,6 +46,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
       { typeof(IClassType), new ClassTypeScribe() }
     };
     private ISaver _saver;
+    private string _pathToFile = ""; 
 
     bool IDataInit.StillInitializing() {
       return StillInitializing;
@@ -68,14 +70,14 @@ namespace Core.Support.SaveSystem.SaveManagers {
     ///   Сохранить всё.
     /// </summary>
     public void Save() {
-      _saver.SaveAsync(SaveAll(), SaveHandler).Forget();
+      _saver.SaveAsync(SaveAll(), SavePath.PathToFolder, _pathToFile, handler: SaveHandler).Forget();
     }
 
     /// <summary>
     ///   Сохранить всё при выходе с игры.
     /// </summary>
     public void SaveOnQuit() {
-      _saver.SaveAsync(SaveAllOnQuit(), SaveHandler).Forget();
+      _saver.SaveAsync(SaveAllOnQuit(), SavePath.PathToFolder, _pathToFile, handler: SaveHandler).Forget();
     }
 
     /// <summary>
@@ -83,7 +85,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
     /// </summary>
     public void DeleteSave() {
       InitializeSaver();
-      _saver.DeleteSave();
+      _saver.DeleteSaves(_pathToFile);
     }
 
     private async UniTaskVoid Load() {
@@ -93,9 +95,11 @@ namespace Core.Support.SaveSystem.SaveManagers {
 
     private void InitializeSaver() {
 #if UNITY_EDITOR
-      _saver ??= new JsonScrollSaver();
+      _pathToFile = SavePath.PathToXmlFile;
+      _saver ??= new XmlSaver();
 #elif UNITY_ANDROID
-      // _saver ??= new Auditor.PrefsSaver();
+      _saver ??= new PrefsSaver();
+      pathToFile = SavePath.PathToPrefsFile;
 #endif
     }
 
@@ -106,7 +110,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
         hollowData.Save(save);
       }
 
-      save.isNewGame = false;
+      save.IsNewGame = false;
       return save;
     }
 
@@ -117,15 +121,13 @@ namespace Core.Support.SaveSystem.SaveManagers {
         scribe.SaveOnQuit(save);
       }
 
-      save.isNewGame = false;
+      save.IsNewGame = false;
       return save;
     }
 
     private async UniTask<bool> LoadAll() {
-      Scrolls scrolls = await _saver.LoadAsync(LoadHandler);
-      if (scrolls.DiceRollDataScroll.DiceRollValues is null) {
-        Debug.LogWarning("Null In Load All");
-      }
+      var scrolls = await _saver.LoadAsync<Scrolls>(SavePath.PathToFolder, _pathToFile, handler: LoadHandler);
+      scrolls ??= new Scrolls().NewScrollGame();
       foreach (IScribe scribe in _scribesMemento.Values) {
         scribe.Loaded(scrolls);
       }
@@ -134,15 +136,15 @@ namespace Core.Support.SaveSystem.SaveManagers {
     }
 
     private void SaveHandler(Exception exception) {
-      Debug.LogError($"Exeption on save {exception.Message} trace {exception.StackTrace}");
+      Debug.LogError($"Exeption on save {exception.Message},type {exception}, trace {exception.StackTrace}");
     }
 
     private void LoadHandler(Exception exception) {
-      Debug.LogError($"Exeption on load {exception.Message} trace {exception.StackTrace}");
+      Debug.LogError($"Exeption on load {exception.Message}, type {exception}, trace {exception.StackTrace}");
     }
 
     private async UniTask<bool> IsNewGameAsync(Scrolls scrolls) {
-      return await Task.Run(() => scrolls.isNewGame);
+      return await Task.Run(() => scrolls.IsNewGame);
     }
 
     /// <summary>

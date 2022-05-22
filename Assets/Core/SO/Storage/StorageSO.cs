@@ -109,7 +109,7 @@ namespace Core.SO.Storage {
     #region SAVE_TO_JSON
     [Button]
     public void SaveArmorToJson() {
-      var saver = new JsonScrollSaver();
+      var saver = new JsonSaver();
       string pathToFolder = Path.Combine(Application.persistentDataPath, "Storage/Armor");
       for (var i = 0; i < _armorList.Count; i++) {
         string pathToFile = Path.Combine(pathToFolder, $"{_armorList[i].GetProductName()}.json");
@@ -119,7 +119,7 @@ namespace Core.SO.Storage {
 
     [Button]
     public void SaveWeaponToJson() {
-      var saver = new JsonScrollSaver();
+      var saver = new JsonSaver();
       string pathToFolder = Path.Combine(Application.persistentDataPath, "Storage/Weapon");
       for (var i = 0; i < _weaponList.Count; i++) {
         string pathToFile = Path.Combine(pathToFolder, $"{_weaponList[i].GetProductName()}.json");
@@ -129,7 +129,7 @@ namespace Core.SO.Storage {
 
     [Button]
     public void SaveRangeToJson() {
-      var saver = new JsonScrollSaver();
+      var saver = new JsonSaver();
       string pathToFolder = Path.Combine(Application.persistentDataPath, "Storage/Projectlies");
       for (var i = 0; i < _projectilesList.Count; i++) {
         string pathToFile = Path.Combine(pathToFolder, $"{_projectilesList[i].GetProductName()}.json");
@@ -139,7 +139,7 @@ namespace Core.SO.Storage {
 
     [Button]
     public void SaveItemToJson() {
-      var saver = new JsonScrollSaver();
+      var saver = new JsonSaver();
       string pathToFolder = Path.Combine(Application.persistentDataPath, "Storage/Item");
       for (var i = 0; i < _itemList.Count; i++) {
         string pathToFile = Path.Combine(pathToFolder, $"{_itemList[i].GetProductName()}.json");

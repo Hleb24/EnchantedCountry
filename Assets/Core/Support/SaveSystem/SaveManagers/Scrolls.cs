@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using Core.Main.Character.Class;
 using Core.Main.Character.Item;
 using Core.Main.Character.Quality;
@@ -22,8 +23,8 @@ namespace Core.Support.SaveSystem.SaveManagers {
   /// </summary>
   [Serializable]
   public class Scrolls {
-    public bool isNewGame = true;
-    [JsonIgnore]
+    public bool IsNewGame = true;
+    [JsonIgnore, XmlIgnore]
     public readonly Dictionary<Type, IScribe> _scribes = new() {
       { typeof(IDiceRoll), new DiceRollScribe(new DiceRollDataScroll(DiceRollScribe.StartRollValues)) },
       { typeof(IEquipment), new EquipmentScribe() },

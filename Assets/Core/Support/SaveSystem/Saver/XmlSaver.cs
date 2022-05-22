@@ -1,21 +1,17 @@
 ﻿using System;
 using System.IO;
+using System.Xml.Serialization;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Core.Support.SaveSystem.Saver {
-  public class JsonSaver : ISaver {
-    private const string TIME_OUT_MESSAGE = "Time out on load async!";
-
+  public class XmlSaver : ISaver {
     public async UniTaskVoid SaveAsync<T>(T data, string pathToFolder, string pathToFile, float timeOut = 5, Action<Exception> handler = null) {
       CreateDirectory(pathToFolder);
       await using var streamWriter = new StreamWriter(pathToFile);
+      var serializer = new XmlSerializer(typeof(T));
       try {
-        string jsonSave = JsonConvertProxy.Serialize(data);
-        bool timeout = await streamWriter.WriteAsync(jsonSave).AsUniTask().TimeoutWithoutException(TimeSpan.FromSeconds(timeOut));
-        if (timeout) {
-          handler?.Invoke(new TimeoutException(TIME_OUT_MESSAGE));
-        }
+        serializer.Serialize(streamWriter, data);
       } catch (Exception e) {
         handler?.Invoke(e);
       } finally {
@@ -26,9 +22,9 @@ namespace Core.Support.SaveSystem.Saver {
     public void Save<T>(T data, string pathToFolder, string pathToFile, Action<Exception> handler = null) {
       CreateDirectory(pathToFolder);
       using var streamWriter = new StreamWriter(pathToFile);
+      var serializer = new XmlSerializer(typeof(T));
       try {
-        string jsonSave = JsonConvertProxy.Serialize(data);
-        streamWriter.WriteLine(jsonSave);
+        serializer.Serialize(streamWriter, data);
       } catch (Exception e) {
         handler?.Invoke(e);
       } finally {
@@ -42,20 +38,15 @@ namespace Core.Support.SaveSystem.Saver {
         return default;
       }
 
-      using var streamReader = new StreamReader(pathToFile);
+      await using var fileStream = new FileStream(pathToFile, FileMode.Open);
+      var serializer = new XmlSerializer(typeof(T));
       try {
-        (bool isTimeOut, string json) = await streamReader.ReadToEndAsync().AsUniTask().TimeoutWithoutException(TimeSpan.FromSeconds(timeOut));
-        if (isTimeOut) {
-          handler?.Invoke(new TimeoutException(TIME_OUT_MESSAGE));
-          return default;
-        }
-
-        var save = JsonConvertProxy.Deserialize<T>(json);
+        var save = (T)serializer.Deserialize(fileStream);
         return save;
       } catch (Exception e) {
         handler?.Invoke(e);
       } finally {
-        streamReader.Close();
+        fileStream.Close();
       }
 
       return default;
@@ -67,15 +58,15 @@ namespace Core.Support.SaveSystem.Saver {
         return default;
       }
 
-      using var streamReader = new StreamReader(pathToFile);
+      using var fileStream = new FileStream(pathToFile, FileMode.Open);
+      var serializer = new XmlSerializer(typeof(T));
       try {
-        string json = streamReader.ReadToEnd();
-        var save = JsonConvertProxy.Deserialize<T>(json);
+        var save = (T)serializer.Deserialize(fileStream);
         return save;
       } catch (Exception e) {
         handler?.Invoke(e);
       } finally {
-        streamReader.Close();
+        fileStream.Close();
       }
 
       return default;
