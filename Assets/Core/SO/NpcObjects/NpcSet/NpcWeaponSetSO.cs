@@ -32,7 +32,7 @@ namespace Core.SO.NpcObjects.NpcSet {
       string pathToFolder = Path.Combine(Application.persistentDataPath, "NpcWeapon");
       for (var i = 0; i < _weaponSet.Count; i++) {
         string pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "NpcWeapon"), $"{_weaponSet[i].GetWeaponName()}.json");
-        saver.Save(_weaponSet[i], pathToFolder, pathToFile);
+        saver.Save(_weaponSet[i], pathToFile);
       }
     }
   }

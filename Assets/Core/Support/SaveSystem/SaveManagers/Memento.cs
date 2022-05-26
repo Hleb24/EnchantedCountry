@@ -68,14 +68,14 @@ namespace Core.Support.SaveSystem.SaveManagers {
     ///   Сохранить всё.
     /// </summary>
     public void Save() {
-      _saver.SaveAsync(SaveAll(), SavePath.PathToFolder, _pathToFile, handler: SaveHandler).Forget();
+      _saver.SaveAsync(SaveAll(), _pathToFile, SaveHandler).Forget();
     }
 
     /// <summary>
     ///   Сохранить всё при выходе с игры.
     /// </summary>
     public void SaveOnQuit() {
-      _saver.SaveAsync(SaveAllOnQuit(), SavePath.PathToFolder, _pathToFile, handler: SaveHandler).Forget();
+      _saver.SaveAsync(SaveAllOnQuit(), _pathToFile, SaveHandler).Forget();
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
     private void InitializeSaver() {
 #if UNITY_EDITOR
       _pathToFile = SavePath.PathToJsonFile;
-      _saver ??= new JsonSaver();
+      _saver ??= new JsonSaver(); 
 #elif UNITY_ANDROID
       // _saver ??= new PrefsSaver();
       // _pathToFile = SavePath.PathToPrefsFile;
@@ -124,7 +124,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
     }
 
     private async UniTask<bool> LoadAll() {
-      var scrolls = await _saver.LoadAsync<Scrolls>(SavePath.PathToFolder, _pathToFile, handler: LoadHandler);
+      var scrolls = await _saver.LoadAsync<Scrolls>(_pathToFile, LoadHandler);
       scrolls ??= new Scrolls().NewScrollGame();
       foreach (IScribe scribe in _scribesMemento.Values) {
         scribe.Loaded(scrolls);

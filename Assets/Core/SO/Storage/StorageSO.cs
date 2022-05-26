@@ -113,7 +113,7 @@ namespace Core.SO.Storage {
       string pathToFolder = Path.Combine(Application.persistentDataPath, "Storage/Armor");
       for (var i = 0; i < _armorList.Count; i++) {
         string pathToFile = Path.Combine(pathToFolder, $"{_armorList[i].GetProductName()}.json");
-        saver.Save(_armorList[i], pathToFolder, pathToFile);
+        saver.Save(_armorList[i], pathToFile);
       }
     }
 
@@ -123,7 +123,7 @@ namespace Core.SO.Storage {
       string pathToFolder = Path.Combine(Application.persistentDataPath, "Storage/Weapon");
       for (var i = 0; i < _weaponList.Count; i++) {
         string pathToFile = Path.Combine(pathToFolder, $"{_weaponList[i].GetProductName()}.json");
-        saver.Save(_weaponList[i], pathToFolder, pathToFile);
+        saver.Save(_weaponList[i], pathToFile);
       }
     }
 
@@ -133,7 +133,7 @@ namespace Core.SO.Storage {
       string pathToFolder = Path.Combine(Application.persistentDataPath, "Storage/Projectlies");
       for (var i = 0; i < _projectilesList.Count; i++) {
         string pathToFile = Path.Combine(pathToFolder, $"{_projectilesList[i].GetProductName()}.json");
-        saver.Save(_projectilesList[i], pathToFolder, pathToFile);
+        saver.Save(_projectilesList[i], pathToFile);
       }
     }
 
@@ -143,7 +143,7 @@ namespace Core.SO.Storage {
       string pathToFolder = Path.Combine(Application.persistentDataPath, "Storage/Item");
       for (var i = 0; i < _itemList.Count; i++) {
         string pathToFile = Path.Combine(pathToFolder, $"{_itemList[i].GetProductName()}.json");
-        saver.Save(_itemList[i], pathToFolder, pathToFile);
+        saver.Save(_itemList[i], pathToFile);
       }
     }
     #endregion

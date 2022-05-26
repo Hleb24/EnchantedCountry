@@ -18,7 +18,7 @@ namespace Core.SO.ArmorObjects {
       string _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "CharacterArmor"), "Save.json");
       for (var i = 0; i < _armorSet.Count; i++) {
         _pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "CharacterArmor"), $"{_armorSet[i].GetArmorName()}.json");
-        saver.Save(_armorSet[i], _pathToFolder, _pathToFile);
+        saver.Save(_armorSet[i], _pathToFile);
       }
     }
     #endregion

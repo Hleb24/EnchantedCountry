@@ -26,7 +26,7 @@ namespace Core.SO.WeaponObjects {
       string pathToFolder = Path.Combine(Application.persistentDataPath, "CharacterWeapon");
       for (var i = 0; i < _weaponSet.Count; i++) {
         string pathToFile = Path.Combine(Path.Combine(Application.persistentDataPath, "CharacterWeapon"), $"{_weaponSet[i].GetWeaponName()}.json");
-        saver.Save(_weaponSet[i], pathToFolder, pathToFile);
+        saver.Save(_weaponSet[i], pathToFile);
       }
     }
     #endregion
