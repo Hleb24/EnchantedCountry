@@ -16,7 +16,7 @@ namespace Core.Mono.Scenes.CharacterList {
     private TMP_Text _numberOfRiskPointsText;
     [SerializeField]
     private bool _useRiskPointsDataForTest;
-    private IStartGame _startGame;
+    private ILauncher _launcher;
     private IRiskPoints _riskPoints;
 
     private void Start() {
@@ -32,8 +32,8 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     [Inject]
-    public void Constructor(IStartGame startGame, IRiskPoints riskPoints) {
-      _startGame = startGame;
+    public void Constructor(ILauncher launcher, IRiskPoints riskPoints) {
+      _launcher = launcher;
       _riskPoints = riskPoints;
     }
 
@@ -51,7 +51,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void LoadData() {
-      if (_startGame.UseGameSave()) {
+      if (_launcher.UseGameSave()) {
         SetNumberOfRiskPointsText();
       }
     }

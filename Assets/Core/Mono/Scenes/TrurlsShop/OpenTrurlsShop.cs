@@ -13,7 +13,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
     private GameObject _diceRollForCoinsCanvas;
     [SerializeField]
     private Button _openTrurlsShop;
-    private IStartGame _startGame;
+    private ILauncher _launcher;
 
     private void Start() {
       FirstTimeOpenTrurlsShop();
@@ -28,8 +28,8 @@ namespace Core.Mono.Scenes.TrurlsShop {
     }
 
     [Inject]
-    public void Constructor(IStartGame startGame) {
-      _startGame = startGame;
+    public void Constructor(ILauncher launcher) {
+      _launcher = launcher;
     }
 
     private void OnDiceRollButtonClicked() {
@@ -38,7 +38,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
     }
 
     private void FirstTimeOpenTrurlsShop() {
-      if (_startGame.IsNewGame()) {
+      if (_launcher.IsNewGame()) {
         OpenDiceRollForCoinsCanvas();
         return;
       }

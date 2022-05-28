@@ -12,20 +12,11 @@ namespace EnchantedCountry.Installers {
     private GameObject _leviathanPrefab;
 
     public override void InstallBindings() {
-      Container.Bind<Memento>().FromMethod(GetMemento).AsSingle();
+      Container.Bind<Memento>().AsSingle();
+      Container.Bind<MementoLoader>().AsSingle();
       Container.Bind<IGameSettings>().To<GameSettings>().FromScriptableObject(_gameSettings).AsSingle();
-      Container.Bind<IStartGame>().To<Leviathan>().FromComponentInNewPrefab(_leviathanPrefab).AsSingle();
+      Container.Bind<ILauncher>().To<Leviathan>().FromComponentInNewPrefab(_leviathanPrefab).AsSingle();
       Container.Bind<IDealer>().To<ScribeDealer>().AsSingle();
-    }
-
-    private Memento GetMemento() {
-      var memento = new Memento();
-      if (_gameSettings.StartNewGame()) {
-        memento.DeleteSave();
-      }
-
-      memento.Init();
-      return memento;
     }
   }
 }

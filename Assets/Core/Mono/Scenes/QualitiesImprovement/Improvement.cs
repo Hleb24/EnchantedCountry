@@ -19,7 +19,7 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
     [SerializeField]
     protected QualitiesTexts _finallyQualitiesTexts;
     protected QualityIncrease QualityIncrease;
-    private IStartGame _startGame;
+    private ILauncher _launcher;
     private IQualityPoints _qualityPoints;
     private IQualityPoints _mockQualitiesPoints;
 
@@ -36,8 +36,8 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
     }
 
     [Inject]
-    public void Constructor(IStartGame startGame, IQualityPoints qualityPoints, QualityIncrease qualityIncrease) {
-      _startGame = startGame;
+    public void Constructor(ILauncher launcher, IQualityPoints qualityPoints, QualityIncrease qualityIncrease) {
+      _launcher = launcher;
       _qualityPoints = qualityPoints;
       QualityIncrease = qualityIncrease;
     }
@@ -45,7 +45,7 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
     protected virtual void DiceRollsQualityIncrease() { }
 
     private void GetSum() {
-      if (_startGame.UseGameSave()) {
+      if (_launcher.UseGameSave()) {
         _qualityPoints.ChangeQualityPoints(QualityType.Strength, QualityIncrease[0]);
         _qualityPoints.ChangeQualityPoints(QualityType.Agility, QualityIncrease[1]);
         _qualityPoints.ChangeQualityPoints(QualityType.Constitution, QualityIncrease[2]);

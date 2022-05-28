@@ -9,12 +9,12 @@ namespace Core.Mono.Scenes.Intro {
   ///   Класс для перехода на слудующую сцену со сцены <see cref="BaseClass.Scene.Intro" />
   /// </summary>
   public class GoToNextScene {
-    private readonly IStartGame _startGame;
+    private readonly ILauncher _launcher;
     private readonly StartSceneHolder _startSceneHolder;
     private Scene _nextScene;
 
-    public GoToNextScene(IStartGame startGame, StartSceneHolder startSceneHolder) {
-      _startGame = startGame;
+    public GoToNextScene(ILauncher launcher, StartSceneHolder startSceneHolder) {
+      _launcher = launcher;
       _startSceneHolder = startSceneHolder;
     }
 
@@ -23,12 +23,12 @@ namespace Core.Mono.Scenes.Intro {
     }
 
     private async UniTaskVoid SetNameOfNextScene() {
-      while (_startGame.StillInitializing()) {
+      while (_launcher.StillInitializing()) {
         await UniTask.Yield();
       }
 
-      Debug.LogWarning("Is new game " + _startGame.IsNewGame());
-      _nextScene = _startGame.IsNewGame() ? _startSceneHolder.GetNewGameScene() : _startSceneHolder.GetTargetScene();
+      Debug.LogWarning("Is new game " + _launcher.IsNewGame());
+      _nextScene = _launcher.IsNewGame() ? _startSceneHolder.GetNewGameScene() : _startSceneHolder.GetTargetScene();
       LoadNextSceneAsync().Forget();
     }
 

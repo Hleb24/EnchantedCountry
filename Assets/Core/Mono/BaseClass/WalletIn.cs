@@ -13,7 +13,7 @@ namespace Core.Mono.BaseClass {
     protected WalletSO _walletSo;
     private IWallet _iWallet;
     private Wallet _wallet;
-    private IStartGame _startGame;
+    private ILauncher _launcher;
 
     protected virtual void OnEnable() {
       SetWalletText();
@@ -22,10 +22,10 @@ namespace Core.Mono.BaseClass {
     protected virtual void OnDisable() { }
 
     [Inject]
-    public void Constructor(IStartGame startGame, IWallet wallet) {
-      _startGame = startGame;
+    public void Constructor(ILauncher launcher, IWallet wallet) {
+      _launcher = launcher;
       _iWallet = wallet;
-      _wallet = _startGame.UseGameSave() ? new Wallet(_iWallet) : new Wallet(_walletSo);
+      _wallet = _launcher.UseGameSave() ? new Wallet(_iWallet) : new Wallet(_walletSo);
     }
 
     public void SetMaxCoins(int coins) {

@@ -28,7 +28,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
     protected ClassType _classTypeEnum;
     [SerializeField]
     protected bool _testCharacterType;
-    protected IStartGame _startGame;
+    protected ILauncher Launcher;
     private IClassType _classType;
 
     protected virtual void Start() {
@@ -37,8 +37,8 @@ namespace Core.Mono.Scenes.TrurlsShop {
     }
 
     [Inject]
-    public void Constructor(IStartGame startGame, IClassType classType) {
-      _startGame = startGame;
+    public void Constructor(ILauncher launcher, IClassType classType) {
+      Launcher = launcher;
       _classType = classType;
     }
 
@@ -67,7 +67,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
         return;
       }
 
-      if (_startGame.UseGameSave()) {
+      if (Launcher.UseGameSave()) {
         SetClassTypeEnum();
       }
     }

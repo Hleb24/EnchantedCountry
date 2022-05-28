@@ -23,7 +23,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     private Button _createPlayer;
     [SerializeField]
     private bool _buildOnStart;
-    private IStartGame _startGame;
+    private ILauncher _launcher;
     private IEquipment _equipments;
     private IEquipmentUsed _equipmentUsed;
     private IGamePoints _gamePoints;
@@ -45,9 +45,9 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     }
 
     [Inject]
-    public void Constructor(IStartGame startGame, IEquipment equipment, IEquipmentUsed equipmentUsed, IGamePoints gamePoints, IRiskPoints riskPoints, IQualityPoints qualityPoints,
+    public void Constructor(ILauncher launcher, IEquipment equipment, IEquipmentUsed equipmentUsed, IGamePoints gamePoints, IRiskPoints riskPoints, IQualityPoints qualityPoints,
       IClassType classType, IWallet wallet) {
-      _startGame = startGame;
+      _launcher = launcher;
       _equipments = equipment;
       _equipmentUsed = equipmentUsed;
       _gamePoints = gamePoints;
@@ -64,7 +64,7 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
     }
 
     private async void WaitLoad() {
-      while (_startGame.StillInitializing()) {
+      while (_launcher.StillInitializing()) {
         await Task.Yield();
       }
 

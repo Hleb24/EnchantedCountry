@@ -20,7 +20,7 @@ namespace Core.Mono.Scenes.CharacterList {
     private ClassType _classTypeEnum;
     [SerializeField]
     private bool _useCharacterTypeForTest;
-    private IStartGame _startGame;
+    private ILauncher _launcher;
     private IClassType _classType;
     private IRiskPoints _riskPoints;
     private Qualities _qualities;
@@ -40,8 +40,8 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     [Inject]
-    public void Constructor(IStartGame startGame, IClassType classType, IRiskPoints riskPoints, Qualities qualities) {
-      _startGame = startGame;
+    public void Constructor(ILauncher launcher, IClassType classType, IRiskPoints riskPoints, Qualities qualities) {
+      _launcher = launcher;
       _classType = classType;
       _riskPoints = riskPoints;
       _qualities = qualities;
@@ -75,7 +75,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void LoadData() {
-      if (_startGame.UseGameSave()) {
+      if (_launcher.UseGameSave()) {
         SetCharacterType();
       }
     }

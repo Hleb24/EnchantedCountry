@@ -11,7 +11,7 @@ namespace Core.Mono.Scenes.CharacterList {
     private GameObject _diceRollForRiskPointsCanvas;
     [SerializeField]
     private GameObject _characterListCanvas;
-    private IStartGame _startGame;
+    private ILauncher _launcher;
 
     private void Start() {
       WhichCanvasToOpenFirst();
@@ -26,8 +26,8 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     [Inject]
-    public void Constructor(IStartGame startGame) {
-      _startGame = startGame;
+    public void Constructor(ILauncher launcher) {
+      _launcher = launcher;
     }
 
     private void AddListeners() {
@@ -39,7 +39,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void WhichCanvasToOpenFirst() {
-      if (_startGame.StartNewGame()) {
+      if (_launcher.StartNewGame()) {
         OpenDiceRollForRiskPointsCanvas();
       } else {
         OpenCharacterListCanvas();

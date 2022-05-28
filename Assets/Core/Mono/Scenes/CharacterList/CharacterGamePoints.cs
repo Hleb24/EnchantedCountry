@@ -14,7 +14,7 @@ namespace Core.Mono.Scenes.CharacterList {
     private int _testPoints;
     [SerializeField]
     private bool _useTestPoints;
-    private IStartGame _startGame;
+    private ILauncher _launcher;
     private IGamePoints _gamePoints;
 
     private void Start() {
@@ -27,13 +27,13 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     [Inject]
-    public void Constructor(IStartGame startGame, IGamePoints gamePoints) {
-      _startGame = startGame;
+    public void Constructor(ILauncher launcher, IGamePoints gamePoints) {
+      _launcher = launcher;
       _gamePoints = gamePoints;
     }
 
     private void LoadGamePointsDataWithInvoke() {
-      if (_startGame.UseGameSave()) {
+      if (_launcher.UseGameSave()) {
         SetGamePointsAndGamePointsTextAfterLoad();
       }
     }

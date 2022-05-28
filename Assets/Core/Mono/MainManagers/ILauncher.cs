@@ -2,7 +2,7 @@
   /// <summary>
   ///   Интерфейс для получения данных о начале игры.
   /// </summary>
-  public interface IStartGame {
+  public interface ILauncher {
     /// <summary>
     ///   Это новая игра.
     /// </summary>

@@ -8,6 +8,6 @@ namespace Core.Mono.MainManagers {
   /// </summary>
   public class CallLeviathan : MonoBehaviour {
     [Inject, UsedImplicitly]
-    private IStartGame _leviathan;
+    private ILauncher _leviathan;
   }
 }

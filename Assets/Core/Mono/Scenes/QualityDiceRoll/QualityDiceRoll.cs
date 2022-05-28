@@ -11,26 +11,26 @@ namespace Core.Mono.Scenes.QualityDiceRoll {
   public class QualityDiceRoll {
     private readonly DiceRollCalculator _diceRollCalculator;
     private readonly IDiceRoll _diceRollData;
-    private readonly IStartGame _startGame;
+    private readonly ILauncher _launcher;
     private readonly DiceRollInfo _diceRollInfo;
     private readonly int[] _valuesWithRollOfDice = new int[QualityTypeHandler.NUMBER_OF_QUALITY];
     public Action UseDiceRollWithSave;
     private int _numberOfDiceRoll;
     private bool _isNumberOfDiceRollOverlay;
 
-    public QualityDiceRoll([NotNull] IDiceRoll diceRoll, [NotNull] DiceRollCalculator diceRollCalculator, [NotNull] DiceRollInfo diceRollInfo, [NotNull] IStartGame startGame) {
+    public QualityDiceRoll([NotNull] IDiceRoll diceRoll, [NotNull] DiceRollCalculator diceRollCalculator, [NotNull] DiceRollInfo diceRollInfo, [NotNull] ILauncher launcher) {
       Assert.IsNotNull(diceRoll, nameof(diceRoll));
       Assert.IsNotNull(diceRollCalculator, nameof(diceRollCalculator));
-      Assert.IsNotNull(startGame, nameof(startGame));
+      Assert.IsNotNull(launcher, nameof(launcher));
       Assert.IsNotNull(diceRollInfo, nameof(diceRollInfo));
       _diceRollData = diceRoll;
       _diceRollCalculator = diceRollCalculator;
       _diceRollInfo = diceRollInfo;
-      _startGame = startGame;
+      _launcher = launcher;
     }
 
     public void LoadAndSetDiceRollData() {
-      if (!_startGame.UseGameSave() && _startGame.IsNewGame()) {
+      if (!_launcher.UseGameSave() && _launcher.IsNewGame()) {
         SetTextsInListWithSave();
         _diceRollInfo.RefreshLoadInfo();
         _numberOfDiceRoll = (int)QualityRolls.Fifth;

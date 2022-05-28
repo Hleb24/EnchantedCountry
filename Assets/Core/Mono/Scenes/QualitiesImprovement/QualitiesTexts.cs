@@ -10,7 +10,7 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
   public class QualitiesTexts : MonoBehaviour {
     [SerializeField]
     private List<TMP_Text> _listOfValues;
-    private IStartGame _startGame;
+    private ILauncher _launcher;
     private IQualityPoints _qualityPoints;
     private IQualityPoints _mockQualitiesPoints;
 
@@ -23,13 +23,13 @@ namespace Core.Mono.Scenes.QualitiesImprovement {
     }
 
     [Inject]
-    public void Constructor(IStartGame startGame, IQualityPoints qualityPoints) {
-      _startGame = startGame;
+    public void Constructor(ILauncher launcher, IQualityPoints qualityPoints) {
+      _launcher = launcher;
       _qualityPoints = qualityPoints;
     }
 
     public void SetQualitiesText() {
-      if (_startGame.UseGameSave()) {
+      if (_launcher.UseGameSave()) {
         _listOfValues[0].text = _qualityPoints.GetQualityPoints(QualityType.Strength).ToString();
         _listOfValues[1].text = _qualityPoints.GetQualityPoints(QualityType.Agility).ToString();
         _listOfValues[2].text = _qualityPoints.GetQualityPoints(QualityType.Constitution).ToString();

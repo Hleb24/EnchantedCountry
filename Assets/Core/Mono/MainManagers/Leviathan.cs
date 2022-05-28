@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Aberrance.Extensions;
 using Core.SO.GameSettings;
 using Core.Support.SaveSystem.SaveManagers;
@@ -9,42 +10,51 @@ namespace Core.Mono.MainManagers {
   /// <summary>
   ///   Класс отвечает за начальный запуск приложения.
   /// </summary>
-  public class Leviathan : MonoBehaviour, IStartGame {
+  public class Leviathan : MonoBehaviour, ILauncher {
     private static void SetDeviceSettings() {
       Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
     private IGameSettings _gameSettings;
     private Memento _memento;
+    private ILoader _loader;
 
-    private void Awake() {
+    private async void Awake() {
+      await Launch();
+    }
+
+    private async UniTask Launch() {
+      _loader.Load().Forget();
+      await UniTask.WaitUntil(() => _loader.IsLoad);
       StartGame();
     }
 
-    bool IStartGame.UseGameSave() {
+    bool ILauncher.UseGameSave() {
       return _gameSettings.UseGameSave();
     }
 
-    bool IStartGame.IsNewGame() {
+    bool ILauncher.IsNewGame() {
       return IsNewGame;
     }
 
-    bool IStartGame.StartNewGame() {
+    bool ILauncher.StartNewGame() {
       return StartNewGame;
     }
 
-    bool IStartGame.DataLoaded() {
+    bool ILauncher.DataLoaded() {
       return DataLoaded;
     }
 
-    bool IStartGame.StillInitializing() {
+    bool ILauncher.StillInitializing() {
       return StillInitializing;
     }
 
     [Inject]
-    public void Constructor(Memento memento, IGameSettings gameSettings) {
+    public void Constructor(Memento memento, IGameSettings gameSettings, MementoLoader mementoLoader) {
       _memento = memento;
       _gameSettings = gameSettings;
+      IReadOnlyList<ILoader> loaders = new List<ILoader> { mementoLoader };
+      _loader = new LoaderComposite(loaders);
     }
 
     private void StartGame() {

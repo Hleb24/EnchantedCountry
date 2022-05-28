@@ -23,7 +23,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
     private StorageSO _storage;
     [SerializeField]
     private Button _buyProduct;
-    private IStartGame _startGame;
+    private ILauncher _launcher;
     private int _selectedId;
 
     private void Awake() {
@@ -44,9 +44,9 @@ namespace Core.Mono.Scenes.TrurlsShop {
     }
 
     [Inject]
-    public void Constructor(IEquipment equipment, IStartGame startGame, IWallet wallet) {
-      _startGame = startGame;
-      Equipments = _startGame.UseGameSave() ? equipment : _equipment;
+    public void Constructor(IEquipment equipment, ILauncher launcher, IWallet wallet) {
+      _launcher = launcher;
+      Equipments = _launcher.UseGameSave() ? equipment : _equipment;
     }
 
     private void OnProductSelected(int id) {
@@ -89,7 +89,7 @@ namespace Core.Mono.Scenes.TrurlsShop {
     }
 
     private void RemoveAllEquipmentCardsForFirstTrurlsShopOpening() {
-      if (_startGame.StartNewGame()) {
+      if (_launcher.StartNewGame()) {
         _equipment.RemoveAllEquipmentCards();
       }
     }

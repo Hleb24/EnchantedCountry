@@ -42,7 +42,7 @@ namespace Core.Mono.Scenes.CharacterList {
     private TMP_Text _carriage;
     [SerializeField]
     private bool _testUsedEquipment;
-    private IStartGame _startGame;
+    private ILauncher _launcher;
     private IEquipmentUsed _equipmentUsed;
     private (ArmorType, TMP_Text) _armorTupleForText;
     private (ArmorType, TMP_Text) _shieldTupleForText;
@@ -85,8 +85,8 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     [Inject]
-    public void Constructor(IStartGame startGame, IEquipmentUsed equipmentUsed) {
-      _startGame = startGame;
+    public void Constructor(ILauncher launcher, IEquipmentUsed equipmentUsed) {
+      _launcher = launcher;
       _equipmentUsed = equipmentUsed;
     }
 
@@ -592,7 +592,7 @@ namespace Core.Mono.Scenes.CharacterList {
     }
 
     private void SaveUsedEquipmentData() {
-      if (_startGame.UseGameSave()) {
+      if (_launcher.UseGameSave()) {
         EquipmentChanged?.Invoke();
       }
     }
@@ -602,7 +602,7 @@ namespace Core.Mono.Scenes.CharacterList {
         return;
       }
 
-      if (_startGame.UseGameSave()) {
+      if (_launcher.UseGameSave()) {
         SetTuplesAfterLoadUsedEquipmentData();
       }
     }
