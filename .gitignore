@@ -43,7 +43,7 @@ Library/FailedAssetImports.txt
 # ============ #
 # Custom #
 # ============ #
-.plastic
-Logs
-UserSettings
+.plastic/
+Logs/
+UserSettings/
     
