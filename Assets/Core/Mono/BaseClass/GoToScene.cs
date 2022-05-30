@@ -1,5 +1,5 @@
 using System;
-using Core.Animations;
+using Aberrance.Extensions;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,9 +14,7 @@ namespace Core.Mono.BaseClass {
     protected Scene _nameOfScene;
     [SerializeField]
     protected Button _goToScene;
-    [SerializeField]
-    private LevelLoaderAnimation _levelLoader;
-    
+
     private void OnEnable() {
       AddListener();
     }
@@ -26,7 +24,7 @@ namespace Core.Mono.BaseClass {
     }
 
     protected void AddListener() {
-      _goToScene.onClick.AddListener(GoToNextSceneAsync);
+      _goToScene.onClick.AddListener(GoToNextSceneFuncAsync);
     }
 
     protected void RemoveAllListener() {
@@ -41,17 +39,20 @@ namespace Core.Mono.BaseClass {
       _goToScene.interactable = false;
     }
 
-    private async void GoToNextSceneAsync() {
-      await _levelLoader.StartTransitionAnimation().ContinueWith(GoToNextScene());
-    }
+    private async void GoToNextSceneFuncAsync() {
+      if (PreloadSceneAction.IsNotNull()) {
+        await PreloadSceneAction.Invoke();
+      }
 
-    private Func<UniTask> GoToNextScene() {
-      return async () => await SceneManager.LoadSceneAsync((int)_nameOfScene);
+      await SceneManager.LoadSceneAsync((int)_nameOfScene);
     }
 
     private void RemoveListener() {
-      _goToScene.onClick.RemoveListener(() => SceneManager.LoadSceneAsync((int)_nameOfScene));
+      _goToScene.onClick.RemoveListener(GoToNextSceneFuncAsync);
+      PreloadSceneAction = null;
     }
+
+    public Func<UniTask> PreloadSceneAction { get; set; }
   }
 
   public enum Scene {
