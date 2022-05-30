@@ -39,3 +39,11 @@ Library/FailedAssetImports.txt
 */.vs/*
 /Logs
 .idea/
+
+# ============ #
+# Custom #
+# ============ #
+.plastic
+Logs
+UserSettings
+    
