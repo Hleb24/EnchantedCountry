@@ -17,21 +17,18 @@ namespace Core.Mono.Scenes.Intro {
       _startSceneHolder = startSceneHolder;
     }
 
-    public void Go() {
-      SetNameOfNextScene().Forget();
+    public async UniTask GoAsync() {
+      await SetNameOfNextScene();
     }
 
-    private async UniTaskVoid SetNameOfNextScene() {
+    private async UniTask SetNameOfNextScene() {
       await UniTask.WaitUntil(() => _launcher.DataLoaded());
-
       _nextScene = _launcher.IsNewGame() ? _startSceneHolder.GetNewGameScene() : _startSceneHolder.GetTargetScene();
       LoadNextSceneAsync().Forget();
     }
 
-    private async UniTaskVoid LoadNextSceneAsync() {
-      var scene = SceneManager.GetActiveScene();
-      await SceneManager.LoadSceneAsync((int)_nextScene, LoadSceneMode.Additive);
-      
+    private async UniTask LoadNextSceneAsync() {
+      await SceneManager.LoadSceneAsync((int)_nextScene);
     }
   }
 

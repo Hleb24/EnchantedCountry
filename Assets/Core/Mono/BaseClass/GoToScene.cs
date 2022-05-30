@@ -1,3 +1,6 @@
+using System;
+using Core.Animations;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,7 +14,9 @@ namespace Core.Mono.BaseClass {
     protected Scene _nameOfScene;
     [SerializeField]
     protected Button _goToScene;
-
+    [SerializeField]
+    private LevelLoaderAnimation _levelLoader;
+    
     private void OnEnable() {
       AddListener();
     }
@@ -21,7 +26,7 @@ namespace Core.Mono.BaseClass {
     }
 
     protected void AddListener() {
-      _goToScene.onClick.AddListener(() => SceneManager.LoadSceneAsync((int)_nameOfScene));
+      _goToScene.onClick.AddListener(GoToNextSceneAsync);
     }
 
     protected void RemoveAllListener() {
@@ -34,6 +39,14 @@ namespace Core.Mono.BaseClass {
 
     protected void DisableInteractableForButton() {
       _goToScene.interactable = false;
+    }
+
+    private async void GoToNextSceneAsync() {
+      await _levelLoader.StartTransitionAnimation().ContinueWith(GoToNextScene());
+    }
+
+    private Func<UniTask> GoToNextScene() {
+      return async () => await SceneManager.LoadSceneAsync((int)_nameOfScene);
     }
 
     private void RemoveListener() {
