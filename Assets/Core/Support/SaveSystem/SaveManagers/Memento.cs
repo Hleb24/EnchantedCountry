@@ -8,6 +8,7 @@ using Core.Main.Character.Quality;
 using Core.Main.Dice;
 using Core.Main.GameRule.Equipment;
 using Core.Main.GameRule.Point;
+using Core.Mono.MainManagers;
 using Core.Support.Data.ClassType;
 using Core.Support.Data.DiceRoll;
 using Core.Support.Data.Equipment;
@@ -115,11 +116,11 @@ namespace Core.Support.SaveSystem.SaveManagers {
     }
 
     private void SaveHandler(Exception exception) {
-      Debug.LogError($"Exeption on save {exception.Message},type {exception}, trace {exception.StackTrace}");
+      Notifier.LogError($"Exeption on save {exception.Message},type {exception}, trace {exception.StackTrace}");
     }
 
     private void LoadHandler(Exception exception) {
-      Debug.LogError($"Exeption on load {exception.Message}, type {exception}, trace {exception.StackTrace}");
+      Notifier.LogError($"Exeption on load {exception.Message}, type {exception}, trace {exception.StackTrace}");
     }
 
     private async UniTask<bool> IsNewGameAsync(Scrolls scrolls) {
