@@ -7,11 +7,11 @@ using Zenject;
 
 namespace Core.Mono.MainManagers {
   public class MementoLoader : ILoader {
-    private readonly Memento _memento;
+    private readonly IMemento _memento;
     private readonly IGameSettings _gameSettings;
 
     [Inject]
-    public MementoLoader(Memento memento, IGameSettings gameSettings) {
+    public MementoLoader(IMemento memento, IGameSettings gameSettings) {
       Assert.IsNotNull(memento, nameof(memento));
       Assert.IsNotNull(gameSettings, nameof(gameSettings));
       _memento = memento;

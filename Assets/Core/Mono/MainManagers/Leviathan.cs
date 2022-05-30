@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using Aberrance.Extensions;
+using System;
 using Core.SO.GameSettings;
 using Core.Support.SaveSystem.SaveManagers;
 using Cysharp.Threading.Tasks;
@@ -16,17 +15,17 @@ namespace Core.Mono.MainManagers {
     }
 
     private IGameSettings _gameSettings;
-    private Memento _memento;
+    private IMemento _memento;
     private ILoader _loader;
 
     private async void Awake() {
+      SetDeviceSettings();
+      UniTaskScheduler.UnobservedTaskException += OnUnobservedTaskException;
       await Launch();
     }
 
-    private async UniTask Launch() {
-      _loader.Load().Forget();
-      await UniTask.WaitUntil(() => _loader.IsLoad);
-      StartGame();
+    private void OnDestroy() {
+      UniTaskScheduler.UnobservedTaskException -= OnUnobservedTaskException;
     }
 
     bool ILauncher.UseGameSave() {
@@ -50,11 +49,20 @@ namespace Core.Mono.MainManagers {
     }
 
     [Inject]
-    public void Constructor(Memento memento, IGameSettings gameSettings, MementoLoader mementoLoader) {
+    public void Constructor(IMemento memento, IGameSettings gameSettings, ILoader loader) {
       _memento = memento;
       _gameSettings = gameSettings;
-      IReadOnlyList<ILoader> loaders = new List<ILoader> { mementoLoader };
-      _loader = new LoaderComposite(loaders);
+      _loader = loader;
+    }
+
+    private void OnUnobservedTaskException(Exception exception) {
+      Notifier.LogError($"Exception: {exception.Message}. Source: {exception.Source}. Trace: {exception.Data} ");
+    }
+
+    private async UniTask Launch() {
+      _loader.Load().Forget();
+      await UniTask.WaitUntil(() => _loader.IsLoad);
+      StartGame();
     }
 
     private void StartGame() {
@@ -63,9 +71,7 @@ namespace Core.Mono.MainManagers {
 
     private async UniTaskVoid SetStartGameProperties() {
       StartNewGame = _gameSettings.StartNewGame();
-      while (_memento.IsNewGame.HasValue.IsFalse()) {
-        await UniTask.Yield();
-      }
+      await UniTask.WaitUntil(() => _memento.IsNewGame.HasValue);
 
       if (_memento.IsNewGame.HasValue) {
         IsNewGame = _memento.IsNewGame.Value;
@@ -73,7 +79,6 @@ namespace Core.Mono.MainManagers {
 
       StillInitializing = false;
       DataLoaded = true;
-      SetDeviceSettings();
     }
 
     private void OnApplicationPause(bool pauseStatus) {

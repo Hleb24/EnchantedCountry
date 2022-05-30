@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Core.Mono.MainManagers;
 using Core.SO.GameSettings;
 using Core.Support.SaveSystem.SaveManagers;
@@ -12,11 +13,17 @@ namespace EnchantedCountry.Installers {
     private GameObject _leviathanPrefab;
 
     public override void InstallBindings() {
-      Container.Bind<Memento>().AsSingle();
-      Container.Bind<MementoLoader>().AsSingle();
+      Container.Bind<IMemento>().To<Memento>().AsSingle();
       Container.Bind<IGameSettings>().To<GameSettings>().FromScriptableObject(_gameSettings).AsSingle();
       Container.Bind<ILauncher>().To<Leviathan>().FromComponentInNewPrefab(_leviathanPrefab).AsSingle();
       Container.Bind<IDealer>().To<ScribeDealer>().AsSingle();
+      Container.Bind<MementoLoader>().AsSingle();
+      Container.Bind<ILoader>().FromMethod(CreateLoader).AsSingle();
+    }
+
+    private static ILoader CreateLoader(InjectContext arg) {
+      var mementoLoader = arg.Container.Resolve<MementoLoader>();
+      return new LoaderComposite(new List<ILoader> { mementoLoader });
     }
   }
 }

@@ -4,9 +4,9 @@ using Zenject;
 
 namespace Core.Mono.MainManagers {
   /// <summary>
-  ///   Класс для вызова через Zenject Левиафана.
+  ///   The class to call via Zenject <see cref="ILauncher"/>.
   /// </summary>
-  public class CallLeviathan : MonoBehaviour {
+  public class LauncherCaller : MonoBehaviour {
     [Inject, UsedImplicitly]
     private ILauncher _leviathan;
   }

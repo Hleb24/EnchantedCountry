@@ -22,16 +22,9 @@ using UnityEngine;
 
 namespace Core.Support.SaveSystem.SaveManagers {
   /// <summary>
-  ///   Интерфей для получение информации о процессе инициализации данных.
-  /// </summary>
-  public interface IDataInit {
-    public bool StillInitializing();
-  }
-
-  /// <summary>
   ///   Класс для работы с сохранёнными данных.
   /// </summary>
-  public class Memento : IDataInit {
+  public class Memento : IMemento {
     private static bool StillInitializing { get; set; } = true;
     private readonly Dictionary<Type, IScribe> _scribesMemento = new() {
       { typeof(IDiceRoll), new DiceRollScribe(new DiceRollDataScroll(DiceRollScribe.StartRollValues)) },
@@ -46,13 +39,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
     private ISaver _saver;
     private string _pathToFile = "";
 
-    bool IDataInit.StillInitializing() {
-      return StillInitializing;
-    }
-
-    /// <summary>
-    ///   Инициализировать хранителей данных с загрузкой сохранений.
-    /// </summary>
+   
     public void Init() {
       InitializeSaver();
 
@@ -64,23 +51,17 @@ namespace Core.Support.SaveSystem.SaveManagers {
       Load().Forget();
     }
 
-    /// <summary>
-    ///   Сохранить всё.
-    /// </summary>
+    
     public void Save() {
       _saver.SaveAsync(SaveAll(), _pathToFile, SaveHandler).Forget();
     }
 
-    /// <summary>
-    ///   Сохранить всё при выходе с игры.
-    /// </summary>
+    
     public void SaveOnQuit() {
       _saver.SaveAsync(SaveAllOnQuit(), _pathToFile, SaveHandler).Forget();
     }
 
-    /// <summary>
-    ///   Удалить сохранения.
-    /// </summary>
+   
     public void DeleteSave() {
       InitializeSaver();
       _saver.DeleteSaves(_pathToFile);
@@ -94,7 +75,7 @@ namespace Core.Support.SaveSystem.SaveManagers {
     private void InitializeSaver() {
 #if UNITY_EDITOR
       _pathToFile = SavePath.PathToJsonFile;
-      _saver ??= new JsonSaver(); 
+      _saver ??= new JsonSaver();
 #elif UNITY_ANDROID
       // _saver ??= new PrefsSaver();
       // _pathToFile = SavePath.PathToPrefsFile;
