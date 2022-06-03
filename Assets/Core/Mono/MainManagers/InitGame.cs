@@ -9,6 +9,7 @@ namespace Core.Mono.MainManagers {
     private SceneLoaderAnimation _sceneLoader;
     private GoToNextScene _goToNextScene;
 
+   
     private async void Start() {
       await _sceneLoader.StartTransitionAnimation();
       await _goToNextScene.GoAsync();
