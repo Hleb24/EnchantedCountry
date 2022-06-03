@@ -21,7 +21,7 @@ namespace Core.Mono.MainManagers {
     [Conditional(ENABLE_NOTIFIER)]
 
     public static void LogError([NotNull] string message) {
-#if ENABLE_LOGS
+#if ENABLE_LOGS_ERROR
       if (string.IsNullOrEmpty(message)) {
         return;
       }
@@ -33,7 +33,7 @@ namespace Core.Mono.MainManagers {
     [Conditional(ENABLE_NOTIFIER)]
 
     public static void LogWarning([NotNull] string message) {
-#if ENABLE_LOGS
+#if ENABLE_LOGS_WARNING
       if (string.IsNullOrEmpty(message)) {
         return;
       }
