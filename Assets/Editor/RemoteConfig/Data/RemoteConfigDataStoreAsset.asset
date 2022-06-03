@@ -12,8 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
   m_Name: RemoteConfigDataStoreAsset
   m_EditorClassIdentifier: 
-  _rsKeyList: '[]'
-  _rsLastCachedKeyList: '[]'
+  _rsKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"7f9a6ece-60ab-4825-a039-86223ff96dd3\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"remoteConnectionInfo\",\r\n      \"type\":
+    \"json\",\r\n      \"schemaId\": null,\r\n      \"value\": {\r\n        \"ConnectionMessage\":
+    \"production\"\r\n      }\r\n    }\r\n  }\r\n]"
+  _rsLastCachedKeyList: "[\r\n  {\r\n    \"metadata\": {\r\n      \"entityId\": \"7f9a6ece-60ab-4825-a039-86223ff96dd3\"\r\n   
+    },\r\n    \"rs\": {\r\n      \"key\": \"remoteConnectionInfo\",\r\n      \"type\":
+    \"json\",\r\n      \"schemaId\": null,\r\n      \"value\": {\r\n        \"ConnectionMessage\":
+    \"production\"\r\n      }\r\n    }\r\n  }\r\n]"
   _environments: "[\r\n  {\r\n    \"projectId\": \"65dcea36-aace-4216-92af-23db452b200a\",\r\n   
     \"name\": \"production\",\r\n    \"id\": \"85628059-328d-4580-9597-2f7e2895a403\",\r\n   
     \"isDefault\": true,\r\n    \"createdAt\": \"2021-08-22T12:25:05Z\",\r\n    \"updatedAt\":

@@ -1,5 +1,6 @@
 using System;
 using Core.SO.GameSettings;
+using Core.Support.RemoteConfigsService;
 using Core.Support.SaveSystem.SaveManagers;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -79,6 +80,7 @@ namespace Core.Mono.MainManagers {
 
       StillInitializing = false;
       DataLoaded = true;
+      Notifier.LogWarning($"Remote environment: <color=orange>{RemoteEntity<RemoteConnectionInfo>.Instance.ConnectionMessage}</color>.");
     }
 
     private void OnApplicationPause(bool pauseStatus) {

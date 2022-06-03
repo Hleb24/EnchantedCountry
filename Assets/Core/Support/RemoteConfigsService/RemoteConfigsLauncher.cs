@@ -1,4 +1,5 @@
 using Core.Mono.MainManagers;
+using Core.Support.RemoteConfigsService;
 using Cysharp.Threading.Tasks;
 using Unity.RemoteConfig;
 using UnityEngine;
@@ -53,14 +54,13 @@ namespace EnchantedCountry.Utils.RemoteConfigsService {
         ConfigManager.FetchConfigs(new UserAttributes(), new AppAttributes());
         _isReconnected = true;
       } else {
-        Debug.LogWarning("Failed to connect...");
+        Notifier.LogWarning("Failed to connect...");
         ApplySettings();
       }
     }
 
     private void ApplySettings(bool isConnected = false) {
       ConfigManager.FetchCompleted -= Response;
-      IsLoad = true;
 
 #if DISABLE_REMOTE_CONFIGS
       return;
@@ -71,6 +71,8 @@ namespace EnchantedCountry.Utils.RemoteConfigsService {
       } else {
         RemoteConfigsSettings.InitializeDefaultData();
       }
+
+      IsLoad = true;
     }
 
     public bool IsLoad { get; private set; }
