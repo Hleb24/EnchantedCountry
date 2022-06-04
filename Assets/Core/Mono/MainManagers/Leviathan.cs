@@ -80,7 +80,7 @@ namespace Core.Mono.MainManagers {
 
       StillInitializing = false;
       DataLoaded = true;
-      Notifier.LogWarning($"Remote environment: <color=orange>{RemoteEntity<RemoteConnectionInfo>.Instance.ConnectionMessage}</color>.");
+      Notifier.LogWarning($"Remote environment: <color=orange>{RemoteDTO<RemoteConnectionInfo>.Instance.ConnectionMessage}</color>.");
     }
 
     private void OnApplicationPause(bool pauseStatus) {

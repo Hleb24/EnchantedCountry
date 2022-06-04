@@ -1,12 +1,13 @@
 using Core.Mono.MainManagers;
-using Core.Support.RemoteConfigsService;
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using Unity.RemoteConfig;
 using UnityEngine;
 
-namespace EnchantedCountry.Utils.RemoteConfigsService {
-  public class RemoteConfigsLauncher : ILoader {
+namespace Core.Support.RemoteConfigsService {
+  public class RemoteConfigsLoader : ILoader {
     private const string PRODUCTION_ID = "85628059-328d-4580-9597-2f7e2895a403";
+    [UsedImplicitly]
     private const string DEVELOPMENT_ID = "c7603307-2d47-4c50-9e91-d932c017c7f0";
 
     private bool _isReconnected;
@@ -41,11 +42,11 @@ namespace EnchantedCountry.Utils.RemoteConfigsService {
     }
 
     private void OnRemoteConnectionFailure(ConfigResponse configResponse) {
-      Notifier.Log("Remote config response status:" + configResponse.status);
+      Notifier.Log($"Remote configs: response status - <color=silver>{configResponse.status}</color>.");
       Notifier.Log("Checking internet connection...");
       bool internetReachable = Application.internetReachability != NetworkReachability.NotReachable;
       if (internetReachable) {
-        Notifier.Log("Connected");
+        Notifier.Log("Remote configs: <color=green>connected</color>...");
         if (_isReconnected) {
           ApplySettings();
           return;
@@ -54,7 +55,7 @@ namespace EnchantedCountry.Utils.RemoteConfigsService {
         ConfigManager.FetchConfigs(new UserAttributes(), new AppAttributes());
         _isReconnected = true;
       } else {
-        Notifier.LogWarning("Failed to connect...");
+        Notifier.Log("Remote configs: <color=red>failed to connect</color>...");
         ApplySettings();
       }
     }

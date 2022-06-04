@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Core.Mono.MainManagers;
 using Core.SO.GameSettings;
+using Core.Support.RemoteConfigsService;
 using Core.Support.SaveSystem.SaveManagers;
-using EnchantedCountry.Utils.RemoteConfigsService;
 using UnityEngine;
 using Zenject;
 
@@ -19,13 +19,13 @@ namespace EnchantedCountry.Installers {
       Container.Bind<ILauncher>().To<Leviathan>().FromComponentInNewPrefab(_leviathanPrefab).AsSingle();
       Container.Bind<IDealer>().To<ScribeDealer>().AsSingle();
       Container.Bind<MementoLoader>().AsSingle();
-      Container.Bind<RemoteConfigsLauncher>().AsSingle();
+      Container.Bind<RemoteConfigsLoader>().AsSingle();
       Container.Bind<ILoader>().FromMethod(CreateLoader).AsSingle();
     }
 
     private static ILoader CreateLoader(InjectContext arg) {
       var mementoLoader = arg.Container.Resolve<MementoLoader>();
-      var remoteConfigsLauncher = arg.Container.Resolve<RemoteConfigsLauncher>();
+      var remoteConfigsLauncher = arg.Container.Resolve<RemoteConfigsLoader>();
       return new LoaderComposite(new List<ILoader> { mementoLoader, remoteConfigsLauncher });
     }
   }

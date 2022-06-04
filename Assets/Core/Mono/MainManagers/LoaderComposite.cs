@@ -11,8 +11,7 @@ namespace Core.Mono.MainManagers {
     }
 
     public async UniTaskVoid Load() {
-      const double timeOut = 2;
-
+      const double timeOut = 3.0;
       var timeoutController = new TimeoutController();
       try {
         for (var i = 0; i < _loaders.Count; i++) {
