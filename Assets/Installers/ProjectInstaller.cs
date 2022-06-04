@@ -8,6 +8,14 @@ using Zenject;
 
 namespace EnchantedCountry.Installers {
   public class ProjectInstaller : MonoInstaller {
+    private static ILoader CreateLoader(InjectContext arg) {
+      var srDebuggerLoader = arg.Container.Resolve<SrDebuggerLoader>();
+      var mementoLoader = arg.Container.Resolve<MementoLoader>();
+      var remoteConfigsLauncher = arg.Container.Resolve<RemoteConfigsLoader>();
+
+      return new LoaderComposite(new List<ILoader> { srDebuggerLoader, mementoLoader, remoteConfigsLauncher });
+    }
+
     [SerializeField]
     private GameSettings _gameSettings;
     [SerializeField]
@@ -20,13 +28,8 @@ namespace EnchantedCountry.Installers {
       Container.Bind<IDealer>().To<ScribeDealer>().AsSingle();
       Container.Bind<MementoLoader>().AsSingle();
       Container.Bind<RemoteConfigsLoader>().AsSingle();
+      Container.Bind<SrDebuggerLoader>().AsSingle();
       Container.Bind<ILoader>().FromMethod(CreateLoader).AsSingle();
-    }
-
-    private static ILoader CreateLoader(InjectContext arg) {
-      var mementoLoader = arg.Container.Resolve<MementoLoader>();
-      var remoteConfigsLauncher = arg.Container.Resolve<RemoteConfigsLoader>();
-      return new LoaderComposite(new List<ILoader> { mementoLoader, remoteConfigsLauncher });
     }
   }
 }
